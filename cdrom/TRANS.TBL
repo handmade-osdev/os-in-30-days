@@ -1,7 +1,0 @@
-F AUTORUN.INF;1                                                                                                                                                                                                   	Autorun.inf
-F BOOT.CAT;1                                                                                                                                                                                                      	boot.catalog
-F HARIBOTE.IMG;1                                                                                                                                                                                                  	haribote.img
-D OMAKE                                                                                                                                                                                                           	omake
-D PROJECTS                                                                                                                                                                                                        	projects
-F README.TXT;1                                                                                                                                                                                                    	readme.txt
-D TOLSET                                                                                                                                                                                                          	tolset

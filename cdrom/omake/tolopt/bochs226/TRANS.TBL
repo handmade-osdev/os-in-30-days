@@ -1,6 +1,0 @@
-F BIOS.BIN;1                                                                                                                                                                                                      	bios.bin
-F BOCHSRC.TXT;1                                                                                                                                                                                                   	bochsrc.txt
-F BOCHS_SM.EXE;1                                                                                                                                                                                                  	bochs-smp.exe
-F MAKEFILE.;1                                                                                                                                                                                                     	Makefile
-F README.TXT;1                                                                                                                                                                                                    	readme.txt
-F VGABIOS.BIN;1                                                                                                                                                                                                   	vgabios.bin
