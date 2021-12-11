@@ -1,50 +1,28 @@
-本文に組み込めなかった注意事項（本文編集に間に合わなかった）
+Precautions that could not be incorporated into text (I could not edit the
+text in time)
 
 *
 
-  CD-ROMからハードディスクへコピーするともれなく「読み取り専用」の属性がついて
-しまうようです。筆者はこれをすっかり忘れていて、本文で注意を書き忘れていました。
+Every copy of CD-ROM has a read-only attribute attached to it. I completely
+forgot about it and forgot to write a note in the text.
 
-  ファイルに読み取り専用属性がついたままだと、そのファイルを変更したり上書きし
-たりすることができません。これではたのしい改造ができないことになってしまいます。
-
-  読み取り専用属性をはずすには、CD-ROMからハードディスクへファイルをコピーした
-あとで、そのファイルのプロパティを開いてチェックをはずしてOKを押します。
-
-  Windows2000ではフォルダのプロパティで読み取り専用属性をはずしてOKを押すと、
-
-これらの変更をこのフォルダのみに適用するか、またはすべてのサブフォルダやファイルにも適用
-するか選択してください。
-
-と表示されて、
-
-このフォルダ、およびサブフォルダとファイルに変更を適用する
-
-が選べます。この機能を利用して、たとえばharib00aのフォルダので読み取り専用属性
-をはずしてOKを押せば、中のファイルを一度にすべて読み書き可能に設定できることに
-なります。
-
-  他のWindowsではこのような便利な機能があるかどうかは（時間がなくて）確認でき
-ませんでした。みなさんで工夫して何とかしてください。
+TN: Anyway, when copying files from the ISO I had already fixed these issues
+by removing the read-only attribute from the files. They should be registered
+by git. In the original ISO file this section also contained instructions to
+remove the files, which I had removed.
 
 *
 
-  tolsetに入れたQEMUは、Windows2000以降でないとうまく動いてくれないようです。
-どうもすみませんでした。
+QEMU in ./tolset doesn't seem to work unless it's Windows 2000 or later.
+I'm sorry. So when I searched for an older version of QEMU I found one that
+works on Windows 95 and above.
 
-  それでもっと古いバージョンのQEMUを探したところ、Windows95以降でも動くものを
-見つけられました。この古いバージョンのQEMUを使いたい人は、 tolset/z_tools/ の
-qemuフォルダの名前をqemu_ntに変更して、さらにqemu_9xフォルダの名前をqemuに変更
-してください。
-
-  この古いバージョンのqemuはWindows2000以降でも問題なく動くように見えますが、
-一部の操作が本文での説明とは異なります。たとえばマウスをQEMUから解放するのは、
- Ctrl+Alt ではなく、 Shift+Ctrl です。
-
-  また一部の環境では、この古いバージョンのQEMUは色がおかしくなるなどの誤動作も
-あるようです。それでも全く動かないよりはマシだと思うので、必要に応じて活用して
-ください。
+TN: I nuked windows 95 support. Idk if doing something as bad as this would
+still make me a "translator", but my motivation is not only to translate this
+book but to reiterate on it and try making it even simpler to follow. Nuking
+the support for the OS that no one uses is enough of internal simplification
+in itself.
 
 *
 
-  以上についてよく分からないことがあればサポートページで質問してください。
+If you have any questions about the above please ask on the support page.
