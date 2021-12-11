@@ -1,0 +1,8 @@
+F CC1SUB.C;1                                                                                                                                                                                                      	cc1sub.c
+F GOSTRLEN.C;1                                                                                                                                                                                                    	gostrlen.c
+F MSGOUT.C;1                                                                                                                                                                                                      	msgout.c
+F M_GASNAS.C;1                                                                                                                                                                                                    	m_gasnas.c
+F M_GOLIB.C;1                                                                                                                                                                                                     	m_golib.c
+F M_NASKCV.C;1                                                                                                                                                                                                    	m_naskcv.c
+F M_SJISCV.C;1                                                                                                                                                                                                    	m_sjiscv.c
+F NASKSUB.C;1                                                                                                                                                                                                     	nasksub.c

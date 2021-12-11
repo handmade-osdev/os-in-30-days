@@ -1,0 +1,122 @@
+
+    OSASK/AT ver.4.7(image版) の著作権情報
+
+  このアーカイブに含まれるファイルは、以下の8個です。
+
+・OSAIMGAT.BIN
+・README0.TXT
+・README1.TXT
+・README2.TXT
+・INSTALL.BAT
+・IMGTOL.COM
+・COPYRIGH.TXT
+・LICENSE.TXT
+
+  これらの著作権は以下の人々にあります。
+
+・平木敬太郎さん  (OSAIMGAT.BIN内のANKフォント部分)
+    URL     http://hp.vector.co.jp/authors/VA000874/
+    e-mail  PAF03513@nifty.ne.jp
+
+・今原修一郎さん  (OSAIMGAT.BIN内のビデオドライバーの一部)
+    URL     http://www.wizard.elec.waseda.ac.jp/~shoe16/
+    e-mail  shoe16@wizard.elec.waseda.ac.jp
+
+・小柳雅明さん  (OSAIMGAT.BIN内のPOKON47の一部とKMANDEL5.BINの一部とS_WORLD.BIN
+                 、MMLPLAY.BIN、LALALU.MMLの全て)
+    URL     http://homepage1.nifty.com/dreaming/
+    e-mail  Koyanagi.Masaaki@nifty.ne.jp
+
+・Solidさん  (OSAIMGAT.BIN内のKTETRAC1.BINとKCUBE02.BINの大半)
+    URL     http://www.geocities.co.jp/SiliconValley/1157/
+    e-mail  solid_k@geocities.co.jp
+
+・Myurika(尾藤主和)さん  (OSAIMGAT.BIN内のMOSKEY.BINの全て)
+    e-mail  myurika@pop06.odn.ne.jp
+
+・光成滋生さん  (OSAIMGAT.BIN内のKMANDEL5.BINの大半)
+    URL     http://homepage1.nifty.com/herumi/
+    e-mail  herumi@nifty.com
+
+・かりんさん  (OSAIMGAT.BIN内のCALM21.BINとMSWP08.BINとOSAGAME.BINの全て)
+    URL     http://home.catv.ne.jp/ff/karin/osask/
+    e-mail  karin@mx.catv.ne.jp
+
+・Gakuさん  (OSAIMGAT.BIN内のICALC1.BINの大半)
+    URL     http://eieweb.yz.yamagata-u.ac.jp/~m01873/
+    e-mail  gaku_geo@geocities.co.jp
+
+・Yu=Izumi(泊何水)さん (OSAIMGAT.BIN内の日本語フォントの大半)
+    e-mail  yu_izumi@plum.freemail.ne.jp
+
+・RisaPapaさん (SAMPLEJP.TXTとSAMPLEKR.TXTの全て)
+
+・大串憲正さん  (OSAIMGAT.BIN内のJKTEXT01.TXT～JKTEXT03.TXTの全て) 
+    e-mail  hiancheng@pop.707.to
+
+・hideyosiさん  (OSAIMGAT.BIN内のTEST128.BMPの全てと、キャラクターとしてのカ
+                 オちゃん)
+    URL     http://www.geocities.co.jp/AnimeComic-Pen/5107/
+
+・ZAKKYさん  (OSAIMGAT.BIN内のOSASK.BMPとONKAN.BINの全て)
+    URL     http://z-slash.net/
+
+・KIYOTOさん (OSAIMGAT.BIN内のAPIルーチンの一部、ウィンドウマネージャーの一部
+                 、シェルの一部、BTNTEST.BINの全て、ANKフォントの一部、98用IPL
+                 の大半、日本語フォントの一部、)
+    URL     http://www.geocities.jp/development_room/
+    e-mail  pc98_fmr@yahoo.co.jp
+
+・くーみんさん  (OSAIMGAT.BIN内のKATAKK.BINのほとんどとPICTURE0.BINの一部)
+    URL     http://www2.csc.ne.jp/~takotyu/
+    e-mail  t_a_k_o@24i.net
+
+・nikqさん  (OSAIMGAT.BIN内の日時表示の曜日判定部分と壁紙JPEGデコーダエンジン
+             とPICTURE0.BINの一部)
+    URL     http://nikq.nothing.sh/
+
+・あっきぃさん  (OSAIMGAT.BIN内のCVTG03.BINの全て)
+    URL     http://koya.marokun.net/
+    e-mail  akkiesoft@marokun.net
+
+・JUGZZYさん (OSAIMGAT.BIN内のSOL.BINのすべて)
+    URL     http://hp.vector.co.jp/authors/VA036512/
+
+・ベイサイドさん (OSAIMGAT.BIN内のWABA.BINと各種WRPファイルのすべて)
+    URL     http://bayside.upper.jp/
+
+・Makkenさん  (OSAIMGAT.BIN内のRROSE.BINの中の回転ルーチンの原作者)
+
+・I.Tak.さん  (README0.TXTとREADME1.TXTとOSAIMGAT.BIN内のBBALL3.BIN、CNTDWN3.
+                 BIN、HELO.BIN、RROSE.BIN、KAOSC.HEL、KAOS2C.HEL、ROSE.BMP、
+                 CANVAS.BIN、OYAJI.BINとビデオドライバ、APIルーチンの一部、
+                 ウィンドウマネージャの一部、そのほかにもたくさん)
+    URL     http://user.ecc.u-tokyo.ac.jp/~g240845/
+    e-mail  g240845@mail.ecc.u-tokyo.ac.jp
+
+・川合秀実  (残り全部)
+    URL     http://k.osask.jp/
+    e-mail  kawai@osask.jp
+
+ TE_DICT0とWABA以外のファイルについては、著作権者の総意によりKL-01によってライ
+センスされています。このライセンスの範囲でご利用くださいますようお願いいたしま
+す。ライセンスの内容につきましては、LICENSE.TXTをご覧ください。なお、音楽データ
+や文書情報などは一部KL-01の適用外になっています。それらの扱いについては事前にご
+相談ください。
+
+  TE_DICT0.TXTはNGというエディタにバンドルされていた辞書データを変換して、さら
+に大幅に改良を加えたものです。ライセンスはGPL-2が適用されています。TE_DICT0.BIN
+はこのテキストをコンパイルして生成したので、やはりGPL-2が適用されます。
+
+  WABAのライセンスはGPLです。
+
+  著作権に関するお問い合わせは、川合秀実が代表で受け付けます。
+
+  上記ファイルのソースファイルや開発ツールは公開されています。入手を希望される
+方は、下記ページを参照してください。
+
+    http://osask.jp/developers.html
+
+  なお、川合の2002.10.03～2003.02.28の期間のおける開発成果は、特別認可法人 情報
+処理振興事業協会 (IPA) の「未踏ソフトウェア創造事業未踏ユース」での委託業務によ
+るものです。この場を借りて支援をいただけたことにたいしてお礼申し上げます。

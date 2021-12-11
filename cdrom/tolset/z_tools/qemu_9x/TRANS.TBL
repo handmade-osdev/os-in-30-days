@@ -1,0 +1,5 @@
+F BIOS.BIN;1                                                                                                                                                                                                      	bios.bin
+F MAKEFILE.;1                                                                                                                                                                                                     	Makefile
+F QEMU.EXE;1                                                                                                                                                                                                      	qemu.exe
+F SDL.DLL;1                                                                                                                                                                                                       	SDL.dll
+F VGABIOS.BIN;1                                                                                                                                                                                                   	vgabios.bin

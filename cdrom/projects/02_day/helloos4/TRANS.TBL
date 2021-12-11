@@ -1,0 +1,7 @@
+F ASM.BAT;1                                                                                                                                                                                                       	asm.bat
+F INSTALL.BAT;1                                                                                                                                                                                                   	install.bat
+F IPL.NAS;1                                                                                                                                                                                                       	ipl.nas
+F MAKEIMG.BAT;1                                                                                                                                                                                                   	makeimg.bat
+F RUN.BAT;1                                                                                                                                                                                                       	run.bat
+F _CONS_9X.BAT;1                                                                                                                                                                                                  	!cons_9x.bat
+F _CONS_NT.BAT;1                                                                                                                                                                                                  	!cons_nt.bat

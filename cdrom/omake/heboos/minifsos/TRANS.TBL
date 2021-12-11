@@ -1,0 +1,5 @@
+F FDIMAGE.BIN;1                                                                                                                                                                                                   	fdimage.bin
+F IPL.BIN;1                                                                                                                                                                                                       	ipl.bin
+F IPL.NAS;1                                                                                                                                                                                                       	ipl.nas
+F OS.COM;1                                                                                                                                                                                                        	os.com
+F OS.NAS;1                                                                                                                                                                                                        	os.nas
