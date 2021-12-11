@@ -848,7 +848,7 @@ comp_array_types (cmp, t1, t2, strict)
   /* The type of the array elements must be the same.  */
   if (!(TREE_TYPE (t1) == TREE_TYPE (t2)
 	|| (*cmp) (TREE_TYPE (t1), TREE_TYPE (t2), 
-		   strict & ~COMPARE_REDECLARATION)))
+		   strict & ‾COMPARE_REDECLARATION)))
     return 0;
 
   d1 = TYPE_DOMAIN (t1);
@@ -899,7 +899,7 @@ comptypes (t1, t2, strict)
        int (*i)[8];
 
      is not legal, for example.  */
-  strict &= ~COMPARE_REDECLARATION;
+  strict &= ‾COMPARE_REDECLARATION;
 
   /* Suppress errors caused by previously reported errors */
   if (t1 == t2)
@@ -2031,7 +2031,7 @@ build_component_ref (datum, component, basetype_path, protect)
     {
       if (TYPE_IDENTIFIER (basetype) != TREE_OPERAND (component, 0))
 	{
-	  error ("destructor specifier `%T::~%T' must have matching names",
+	  error ("destructor specifier `%T::‾%T' must have matching names",
 		    basetype, TREE_OPERAND (component, 0));
 	  return error_mark_node;
 	}
@@ -2227,7 +2227,7 @@ invalid offsetof from non-POD type `%#T'; use pointer to member instead",
 	 field itself, is const (volatile).  But, a mutable field is
 	 not const, even within a const object.  */
       if (DECL_MUTABLE_P (field))
-	type_quals &= ~TYPE_QUAL_CONST;
+	type_quals &= ‾TYPE_QUAL_CONST;
       field_type = cp_build_qualified_type (field_type, type_quals);
     }
 
@@ -3904,10 +3904,10 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 
 	  /* Warn if two unsigned values are being compared in a size
 	     larger than their original size, and one (and only one) is the
-	     result of a `~' operator.  This comparison will always fail.
+	     result of a `‾' operator.  This comparison will always fail.
 
 	     Also warn if one operand is a constant, and the constant does not
-	     have all bits set that are set in the ~ operand when it is
+	     have all bits set that are set in the ‾ operand when it is
 	     extended.  */
 
 	  if ((TREE_CODE (primop0) == BIT_NOT_EXPR)
@@ -3942,9 +3942,9 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 		  if (bits < TYPE_PRECISION (result_type)
 		      && bits < HOST_BITS_PER_LONG && unsignedp)
 		    {
-		      mask = (~ (HOST_WIDE_INT) 0) << bits;
+		      mask = (‾ (HOST_WIDE_INT) 0) << bits;
 		      if ((mask & constant) != mask)
-			warning ("comparison of promoted ~unsigned with constant");
+			warning ("comparison of promoted ‾unsigned with constant");
 		    }
 		}
 	      else if (unsignedp0 && unsignedp1
@@ -3952,7 +3952,7 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 			   < TYPE_PRECISION (result_type))
 		       && (TYPE_PRECISION (TREE_TYPE (primop1))
 			   < TYPE_PRECISION (result_type)))
-		warning ("comparison of promoted ~unsigned with unsigned");
+		warning ("comparison of promoted ‾unsigned with unsigned");
 	    }
 	}
     }

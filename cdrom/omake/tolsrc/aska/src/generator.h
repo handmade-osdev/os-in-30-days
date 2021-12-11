@@ -1,5 +1,5 @@
 /*
-	ƒR[ƒh¶¬ƒNƒ‰ƒX@`generator.h + generator.cpp`
+	ã‚³ãƒ¼ãƒ‰ç”Ÿæˆã‚¯ãƒ©ã‚¹ã€€ã€œgenerator.h + generator.cppã€œ
 */
 #ifndef	__GENERATOR_H
 #define	__GENERATOR_H
@@ -33,13 +33,13 @@ class Generator{
 	Tag				TagData;
 	Label			LocalData;
 	Label			GlobalData;
-	bool			bExistMain;			// ƒ\[ƒXƒtƒ@ƒCƒ‹“à‚Émain()‚ªo‚Ä‚«‚½‚çtrue
+	bool			bExistMain;			// ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«å†…ã«main()ãŒå‡ºã¦ããŸã‚‰true
 
-	string			OutFileName;		// ƒR[ƒh‚ğo—Í‚·‚éƒtƒ@ƒCƒ‹–¼
-	TextModule		OutFile;			// ƒR[ƒho—Í—pƒtƒ@ƒCƒ‹ƒ‚ƒWƒ…[ƒ‹
-	Scanner*		scanner;			// Scanner‚Ìƒ|ƒCƒ“ƒ^iError()‚Åg‚¤j
-	FILE*			lpLogFP;			// ƒGƒ‰[ƒƒbƒZ[ƒWo—Í—pFP
-	int				nErrorCount;		// ‚±‚Ìƒ\[ƒX‚Å‹N‚±‚Á‚½ƒGƒ‰[‚Ì”
+	string			OutFileName;		// ã‚³ãƒ¼ãƒ‰ã‚’å‡ºåŠ›ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«å
+	TextModule		OutFile;			// ã‚³ãƒ¼ãƒ‰å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+	Scanner*		scanner;			// Scannerã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆError()ã§ä½¿ã†ï¼‰
+	FILE*			lpLogFP;			// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”¨FP
+	int				nErrorCount;		// ã“ã®ã‚½ãƒ¼ã‚¹ã§èµ·ã“ã£ãŸã‚¨ãƒ©ãƒ¼ã®æ•°
 
 	int				CheckPower2(int x);
 	void			FlushStaticData(void);
@@ -57,15 +57,15 @@ class Generator{
 	void			RegistShr(Parameter& param1, Parameter& param2);
 	void			OpenSegment(SegmentList* segment);
 	void			CloseSegment(SegmentList* segment);
-	void			Error(LPSTR str);	// ƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦
+	void			Error(LPSTR str);	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤º
 
   public:
-	SegmentList*	prevseg;		// ‘O‚Éˆ—‚µ‚Ä‚¢‚½ƒZƒOƒƒ“ƒg‚ğ“ü‚ê‚é
-	SegmentList*	seg;			// Œ»İˆ—’†‚ÌƒZƒOƒƒ“ƒg‚ğ“ü‚ê‚é
+	SegmentList*	prevseg;		// å‰ã«å‡¦ç†ã—ã¦ã„ãŸã‚»ã‚°ãƒ¡ãƒ³ãƒˆã‚’å…¥ã‚Œã‚‹
+	SegmentList*	seg;			// ç¾åœ¨å‡¦ç†ä¸­ã®ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã‚’å…¥ã‚Œã‚‹
 
 	void	debug(void);
 	Generator();
-	~Generator(){}
+	â€¾Generator(){}
 	
 	void			BeginGenerate(string& outfilename, Scanner* s);
 	void			EndGenerate(void);
@@ -106,7 +106,7 @@ class Generator{
 	
 	LPSTR			ConstString(LPSTR str);
 	
-	// b’èƒRƒ}ƒ“ƒh
+	// æš«å®šã‚³ãƒãƒ³ãƒ‰
 	void			Asmout(LPSTR buf);
 
 	void			SetLogFile(FILE* fp){ lpLogFP = fp; }

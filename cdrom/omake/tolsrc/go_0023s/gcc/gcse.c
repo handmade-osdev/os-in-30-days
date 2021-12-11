@@ -1117,7 +1117,7 @@ get_bitmap_width (n, x, y)
 
    SETP controls which hash table to look at.  If zero, this routine looks at
    the expr hash table; if nonzero this routine looks at the set hash table.
-   Additionally, TRANSP is computed as ~TRANSP, since this is really cprop's
+   Additionally, TRANSP is computed as ‾TRANSP, since this is really cprop's
    ABSALTERED.  */
  
 static void
@@ -4473,7 +4473,7 @@ compute_pre_data ()
 
   /* Compute ae_kill for each basic block using:
 
-     ~(TRANSP | COMP)
+     ‾(TRANSP | COMP)
 
      This is significantly faster than compute_ae_kill.  */
 

@@ -257,7 +257,7 @@ static INT_TYPE *allocnos_live;
 
 #define CLEAR_ALLOCNO_LIVE(I)				\
   (allocnos_live[(unsigned) (I) / INT_BITS]		\
-     &= ~((INT_TYPE) 1 << ((unsigned) (I) % INT_BITS)))
+     &= ‾((INT_TYPE) 1 << ((unsigned) (I) % INT_BITS)))
 
 /* This is turned off because it doesn't work right for DImode.
    (And it is only used for DImode, so the other cases are worthless.)

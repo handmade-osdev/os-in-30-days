@@ -1,39 +1,39 @@
-doscmd(copy.exe��del.exe)�ɂ���                           �썇�G��
+doscmd(copy.exeとdel.exe)について                           川合秀実
 
-[����͂ȂɁH]
+[これはなに？]
 
-  doscmd�́ACygwin���C���X�g�[�������copy�R�}���h��del�R�}���h���g���Ȃ�����
-���܂��Ƃ����d��Ȗ��i��Q�Ƃ����Ă����������j���A�ǂ��ɂ����ĉ������邽�߂�
-�J������܂����Bcopy.exe��del.exe�̒��g��doscmd.exe�ƑS�������ł��B
+  doscmdは、Cygwinをインストールするとcopyコマンドやdelコマンドを使えなくして
+しまうという重大な問題（障害といってもいいかも）を、どうにかして解決するために
+開発されました。copy.exeやdel.exeの中身はdoscmd.exeと全く同じです。
 
-  doscmd�̓t�@�C������ς���ƁA���̃R�}���h�Ɂu�����v�܂��B���Ƃ���copy.exe��
-�����DOS�v�����v�g��copy�R�}���h�̑���ɂȂ�܂��B�܂�tolset���g�����ɂ́A
-�����ɓ����Ă���copy.exe��del.exe��������΁A�Ƃ肠�����s���R�͖����ł��傤�B
+  doscmdはファイル名を変えると、そのコマンドに「化け」ます。たとえばcopy.exeに
+するとDOSプロンプトのcopyコマンドの代わりになります。まあtolsetを使う分には、
+ここに入っているcopy.exeとdel.exeさえあれば、とりあえず不自由は無いでしょう。
 
-  �܂�ACygwin���g���ĂȂ��l�͂���ȃ\�t�g���g���K�v�͑S������܂���B�����
-���܂������������ƂȂ�ĖY��Ă��܂��܂��傤�I
+  つまり、Cygwinを使ってない人はこんなソフトを使う必要は全くありません。こんな
+おまけがあったことなんて忘れてしまいましょう！
 
-  ���̃A�[�J�C�u�̃��C�Z���X��KL-01�ł��B
+  このアーカイブのライセンスはKL-01です。
 
-[��������]
+[つかいかた]
 
-  ���̃t�H���_�̒���copy.exe��del.exe���A���Ƃ���C:\WINDOWS�ɃR�s�[���܂�
-�i���ꂪ�Ȃ����C:\WINNT��������܂���j�B����ő���Cygwin�̃t�@�C�������D��
-���Ă���copy.exe��del.exe�����s����邱�ƂɂȂ�A�u�͂�ڂ�OS�v��Makefile��
-���C���Ő��퓮�삷��͂��ł��B�߂ł����A�߂ł����B
+  このフォルダの中のcopy.exeとdel.exeを、たとえばC:\WINDOWSにコピーします
+（これがなければC:\WINNTかもしれません）。これで多分Cygwinのファイルよりも優先
+してこのcopy.exeやdel.exeが実行されることになり、「はりぼてOS」のMakefileが
+無修正で正常動作するはずです。めでたし、めでたし。
 
-  ��L�ł��܂������Ȃ��ꍇ�A����copy.exe��del.exe���ǂ��ɃR�s�[�����炢������
-path�R�}���h�����s���ăt�H���_�̗D��x���m�F���A�ł��邾���D�揇�ʂ̍����Ƃ���
-�ɒu���ƌ��ʂ�����Ǝv���܂��B
+  上記でうまくいかない場合、このcopy.exeやdel.exeをどこにコピーしたらいいかは
+pathコマンドを実行してフォルダの優先度を確認し、できるだけ優先順位の高いところ
+に置くと効果があると思います。
 
-[�㋉�Ҍ���]
+[上級者向け]
 
-  doscmd�̓t�@�C������ς��Ȃ��Ă��A���܂��܂ȓ����R�}���h�����s���邱�Ƃ��ł�
-�܂��B���Ƃ��΂���ȕ��ɁB
+  doscmdはファイル名を変えなくても、さまざまな内蔵コマンドを実行することができ
+ます。たとえばこんな風に。
 
 prompt>doscmd --dir a:\
 
-�|�C���g�͍ŏ��� --�R�}���h�� �����邱�Ƃł��B
+ポイントは最初に --コマンド名 をつけることです。
 
-  �܂��������Ƃ� cmd.exe /C dir a:\ �ȂǂƂ��΂ł���̂ł����Adoscmd���g����
-Win9X�n�ł�WinNT�n�ł������\���ŏ�����̂ł�����ƕ֗���������܂���B
+  まあ同じことは cmd.exe /C dir a:\ などとやればできるのですが、doscmdを使うと
+Win9X系でもWinNT系でも同じ表現で書けるのでちょっと便利かもしれません。

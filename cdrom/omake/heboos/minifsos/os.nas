@@ -1,30 +1,30 @@
-; NASK�ō����.COM�t�@�C���^�ւ�OS (AT�݊��@��p)
+; NASKで作った.COMファイル型へぼOS (AT互換機専用)
 ;		mini-FirstStepOS
 ;
 ; TAB = 4
-; copyright(C) 2003 �썇�G��, KL-01
+; copyright(C) 2003 川合秀実, KL-01
 ;
-; .COM�t�@�C���̓v���O������64KB���z���Ȃ�����ɂ����Ă͂����Ƃ��ȒP
-; �����Ă��̐l�͍ŏI�I��OS��64KB���z���邩��Ƃ������R��.COM��
-; �I���������Ȃ��Ǝv�����낤�B�������ŏ�����.EXE�̋�J�𖡂키�K�v�͂Ȃ��B
-; 64KB���z�����炻�̎���.EXE������΂����ł͂Ȃ����B
-; .COM�Ȃ�Z�O�����g���C�ɂ��Ȃ��Ă����̂ŋC�y�Ȃ��̂��B
+; .COMファイルはプログラムが64KBを越えない限りにおいてはもっとも簡単
+; たいていの人は最終的にOSが64KBを越えるからという理由で.COMを
+; 選択したくないと思うだろう。しかし最初から.EXEの苦労を味わう必要はない。
+; 64KBを越えたらその時に.EXE化すればいいではないか。
+; .COMならセグメントも気にしなくていいので気楽なものだ。
 
 ;	prompt>nask os.nas os.com os.lst
-; �ŃA�Z���u���ł��܂��Bnask��tolset05�ȍ~�Ɋ܂܂�Ă��܂��B
-; tolset05�� http://www.imasy.orr/~kawai/osask/developers.html �ɂ���܂��B
+; でアセンブルできます。naskはtolset05以降に含まれています。
+; tolset05は http://www.imasy.orr/‾kawai/osask/developers.html にあります。
 
 [FORMAT "BIN"]
 [INSTRSET "i386"]
 [OPTIMIZE 1]
 [OPTION 1]
 [BITS 16]
-			ORG		0x0100 ; .COM�͕K��ORG 0x0100�Ŏn�܂�
+			ORG		0x0100 ; .COMは必ずORG 0x0100で始まる
 
-; ���ĉ������悤���B�Ƃ肠����320x200x256�F�ł�����ăO���f�[�V������
-; �o���ėV�Ԃ��ȁH�i"hello"�Ƃ��͕��}�����邾�낤����j
+; さて何をしようか。とりあえず320x200x256色でもやってグラデーションを
+; 出して遊ぶかな？（"hello"とかは平凡すぎるだろうから）
 
-;	��ʃ��[�h�ƃp���b�g�ݒ�
+;	画面モードとパレット設定
 
 			MOV 	AX,0x0013
 			INT		0x10
@@ -47,14 +47,14 @@ PALLOP:
 			MOV		CX,0x3f3f
 			INT		0x10
 
-;	VRAM�ւ̏�������
+;	VRAMへの書き込み
 
 			PUSH	DS
 			MOV		AX,0xa000
 			MOV		DS,AX
 			XOR		BX,BX
 
-;	�܂�8���C�����N���A
+;	まず8ラインをクリア
 
 			XOR		AX,AX
 CLR8LOP:
@@ -63,7 +63,7 @@ CLR8LOP:
 			CMP		BX,320*8
 			JB		CLR8LOP
 
-;	�O���f�[�V��������
+;	グラデーション生成
 
 GRALOP0:
 			MOV		CX,320*3/2
@@ -78,4 +78,4 @@ GRALOP1:
 
 			POP		DS
 
-			JMP		$	; �����܂��i���Z�b�g�{�^���������Ăˁj
+			JMP		$	; おしまい（リセットボタンを押してね）

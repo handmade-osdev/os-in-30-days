@@ -901,7 +901,7 @@ static const char *const yytname[] =
   "','", "';'", "THROW", "':'", "ASSIGN", "'='", "'?'", "OROR", "ANDAND", 
   "'|'", "'^'", "'&'", "MIN_MAX", "EQCOMPARE", "ARITHCOMPARE", "'<'", 
   "'>'", "LSHIFT", "RSHIFT", "'+'", "'-'", "'*'", "'/'", "'%'", 
-  "POINTSAT_STAR", "DOT_STAR", "UNARY", "PLUSPLUS", "MINUSMINUS", "'~'", 
+  "POINTSAT_STAR", "DOT_STAR", "UNARY", "PLUSPLUS", "MINUSMINUS", "'‾'", 
   "HYPERUNARY", "POINTSAT", "'.'", "'('", "'['", "TRY", "CATCH", 
   "EXTERN_LANG_STRING", "ALL", "PRE_PARSED_CLASS_DECL", "DEFARG", 
   "DEFARG_MARKER", "PRE_PARSED_FUNCTION_DECL", "TYPENAME_DEFN", 

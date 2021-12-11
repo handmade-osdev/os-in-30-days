@@ -6,8 +6,8 @@ void HariMain(void)
 	char c, cmdline[30], *p;
 
 	api_cmdline(cmdline, 30);
-	for (p = cmdline; *p > ' '; p++) { }	/* �X�y�[�X������܂œǂݔ�΂� */
-	for (; *p == ' '; p++) { }	/* �X�y�[�X��ǂݔ�΂� */
+	for (p = cmdline; *p > ' '; p++) { }	/* スペースが来るまで読み飛ばす */
+	for (; *p == ' '; p++) { }	/* スペースを読み飛ばす */
 	fh = api_fopen(p);
 	if (fh != 0) {
 		for (;;) {

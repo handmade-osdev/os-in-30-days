@@ -28,7 +28,7 @@ COPY     = copy
 LIBPATH  = $(INCPATH)
 LIBS     = $(LIBPATH)libmingw.lib
 
-# �ȏ�̍��ڂ͂��Ȃ��̃f�B���N�g���\���ɂ��킹�ď���������
+# 以上の項目はあなたのディレクトリ構成にあわせて書き換える
 
 ALL:
 	$(MAKE) $(TARGET).$(MODE)

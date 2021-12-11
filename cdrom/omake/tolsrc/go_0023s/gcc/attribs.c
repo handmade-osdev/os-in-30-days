@@ -351,7 +351,7 @@ decl_attributes (node, attributes, flags)
       if (spec->type_required && DECL_P (*anode))
 	{
 	  anode = &TREE_TYPE (*anode);
-	  flags &= ~(int) ATTR_FLAG_TYPE_IN_PLACE;
+	  flags &= ‾(int) ATTR_FLAG_TYPE_IN_PLACE;
 	}
 
       if (spec->function_type_required && TREE_CODE (*anode) != FUNCTION_TYPE

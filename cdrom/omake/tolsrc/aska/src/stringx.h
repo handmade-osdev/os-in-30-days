@@ -1,5 +1,5 @@
 /*
-	•¶š—ñ‘€ìƒNƒ‰ƒX@`stringx.h`		Ver.[2000/02/11]
+	æ–‡å­—åˆ—æ“ä½œã‚¯ãƒ©ã‚¹ã€€ã€œstringx.hã€œ		Ver.[2000/02/11]
 */
 #ifndef	__STRINGX_H
 #define	__STRINGX_H
@@ -25,11 +25,11 @@ class stringx{
   protected:
 	string		str;
 
-// •¶š—ñ‘€ìƒXƒ^ƒeƒBƒbƒNƒ‹[ƒ`ƒ“ŒQ
+// æ–‡å­—åˆ—æ“ä½œã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ãƒ«ãƒ¼ãƒãƒ³ç¾¤
   public:
 	static size_type	strlen(char* s);
 
-// string‘€ìƒ‹[ƒ`ƒ“ŒQ
+// stringæ“ä½œãƒ«ãƒ¼ãƒãƒ³ç¾¤
   public:
 	void		set(string s){ str=s; }
 	string		get(){ return str; }

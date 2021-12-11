@@ -3569,7 +3569,7 @@ finish_file ()
 
     if (stream)
       {
-	dump_node (global_namespace, flags & ~TDF_SLIM, stream);
+	dump_node (global_namespace, flags & ‾TDF_SLIM, stream);
 	dump_end (TDI_all, stream);
       }
   }

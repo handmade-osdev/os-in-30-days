@@ -85,7 +85,7 @@ class CReverseBitTreeEncoder2
   UInt32 NumBitLevels;
 public:
   CReverseBitTreeEncoder2(): Models(0) { }
-  ~CReverseBitTreeEncoder2() { delete []Models; }
+  ‾CReverseBitTreeEncoder2() { delete []Models; }
   void Create(UInt32 numBitLevels)
   {
     NumBitLevels = numBitLevels;
@@ -134,7 +134,7 @@ class CReverseBitTreeDecoder2
   UInt32 NumBitLevels;
 public:
   CReverseBitTreeDecoder2(): Models(0) { }
-  ~CReverseBitTreeDecoder2() { delete []Models; }
+  ‾CReverseBitTreeDecoder2() { delete []Models; }
   void Create(UInt32 numBitLevels)
   {
     NumBitLevels = numBitLevels;

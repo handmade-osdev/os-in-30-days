@@ -7,12 +7,12 @@ typedef unsigned long long UINT64;
 typedef unsigned char UCHAR;
 typedef UINT32 tek_TPRB;
 
-int tek_checkformat(int siz, UCHAR *p); /* “WŠJŒã‚ÌƒTƒCƒY‚ğ•Ô‚· */
-	/* -1:”ñosacmp */
-	/* -2:osacmp‚¾‚ª‘Î‰‚Å‚«‚È‚¢ */
+int tek_checkformat(int siz, UCHAR *p); /* å±•é–‹å¾Œã®ã‚µã‚¤ã‚ºã‚’è¿”ã™ */
+	/* -1:éosacmp */
+	/* -2:osacmpã ãŒå¯¾å¿œã§ããªã„ */
 
-int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ¬Œ÷‚µ‚½‚ç0 */
-	/* ³‚Ì’l‚ÍƒtƒH[ƒ}ƒbƒg‚ÌˆÙíE–¢‘Î‰A•‰‚Ì’l‚Íƒƒ‚ƒŠ•s‘« */
+int tek_decode(int siz, UCHAR *p, UCHAR *q); /* æˆåŠŸã—ãŸã‚‰0 */
+	/* æ­£ã®å€¤ã¯ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ç•°å¸¸ãƒ»æœªå¯¾å¿œã€è² ã®å€¤ã¯ãƒ¡ãƒ¢ãƒªä¸è¶³ */
 
 static unsigned int tek_getnum_s7s(UCHAR **pp);
 static int tek_lzrestore_tek5(int srcsiz, UCHAR *src, int outsiz, UCHAR *outbuf);
@@ -53,7 +53,7 @@ int tek_decode(int siz, UCHAR *p, UCHAR *q)
 				if (dsiz > bsiz)
 					return 1;
 				if (hed & 0x40)
-					tek_getnum_s7s(&p); /* ƒIƒvƒVƒ‡ƒ“î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ“Ç‚İ”ò‚Î‚· */
+					tek_getnum_s7s(&p); /* ã‚ªãƒ—ã‚·ãƒ§ãƒ³æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’èª­ã¿é£›ã°ã™ */
 				st = tek_lzrestore_tek5(p1 - p, p, dsiz, q);
 			}
 		}
@@ -62,8 +62,8 @@ int tek_decode(int siz, UCHAR *p, UCHAR *q)
 }
 
 static unsigned int tek_getnum_s7s(UCHAR **pp)
-/* ‚±‚ê‚Í•K‚¸big-endian */
-/* ‰º‘Ê‚ª‚È‚¢‚Ì‚Å’†g‚ğ‚¢‚¶‚è‚â‚·‚¢ */
+/* ã“ã‚Œã¯å¿…ãšbig-endian */
+/* ä¸‹é§„ãŒãªã„ã®ã§ä¸­èº«ã‚’ã„ã˜ã‚Šã‚„ã™ã„ */
 {
 	unsigned int s = 0;
 	UCHAR *p = *pp;
@@ -114,7 +114,7 @@ static int tek_lzrestore_tek5(int srcsiz, UCHAR *src, int outsiz, UCHAR *outbuf)
 		lp = pb;
 		pb = wrksiz;
 	}
-	wrksiz = 0x180 * sizeof (UINT32) + (0x840 + (0x300 << (lc + lp))) * sizeof (tek_TPRB); /* Å’á15KB, lc+lp=3‚È‚çA36KB */
+	wrksiz = 0x180 * sizeof (UINT32) + (0x840 + (0x300 << (lc + lp))) * sizeof (tek_TPRB); /* æœ€ä½15KB, lc+lp=3ãªã‚‰ã€36KB */
 	work = malloc(wrksiz);
 	if (work == NULL)
 		return -1;
@@ -156,12 +156,12 @@ static void tek_setbm5(struct tek_STR_BITMODEL *bm, int t, int m)
 	bm->t = t;
 	bm->m = m;
 	bm->prb1 = -1 << (m + t);
-	bm->prb0 = ~bm->prb1;
+	bm->prb0 = â€¾bm->prb1;
 	bm->prb1 |= 1 << t;
 	bm->tmsk = (-1 << t) & 0xffff;
 	bm->prb0 &= bm->tmsk;
 	bm->prb1 &= bm->tmsk;
-	bm->ntm = ~bm->tmsk;
+	bm->ntm = â€¾bm->tmsk;
 	return;
 }
 
@@ -179,7 +179,7 @@ static int tek_rdget0(struct tek_STR_RNGDEC *rd, int n, int i)
 			i |= 1;
 		}
 	} while (--n);
-	return ~i;
+	return â€¾i;
 }
 
 static int tek_rdget1(struct tek_STR_RNGDEC *rd, tek_TPRB *prob0, int n, int j, struct tek_STR_BITMODEL *bm)
@@ -191,9 +191,9 @@ static int tek_rdget1(struct tek_STR_RNGDEC *rd, tek_TPRB *prob0, int n, int j, 
 		p = *(prob = prob0 + j);
 		if (bm->lt > 0) {
 			if (--bm->lt == 0) {
-				/* õ–½Ø‚ê */
+				/* å¯¿å‘½åˆ‡ã‚Œ */
 				if (tek_rdget1(rd, &rd->probs.fchglt, 0x71, 0, &rd->bm[3]) == 0) {
-					/* õ–½•ÏX‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢ */
+					/* å¯¿å‘½å¤‰æ›´ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„ */
 err:
 					longjmp(rd->errjmp, 1);
 				}
@@ -269,8 +269,8 @@ static int tek_getlen5(struct tek_STR_RNGDEC *rd, int m, int s_pos, int stk)
 			if (i < 6 && stk == 0)
 				i = tek_rdget1(rd, &rd->probs.lenext[(1 << i) - 2], i | 0x70, 1, rd->ptbm[7]);
 			else
-				i = tek_rdget0(rd, i, ~1);
-			i = tek_rdget0(rd, i - 1, ~1) - 1;
+				i = tek_rdget0(rd, i, â€¾1);
+			i = tek_rdget0(rd, i - 1, â€¾1) - 1;
 		}
 		i += 256 - 8 + 16;
 	}
@@ -290,13 +290,13 @@ static int tek_decmain5(int *work, UCHAR *src, int osiz, UCHAR *q, int lc, int p
 	rd->range |= -1;
 	rd->code = src[0] << 24 | src[1] << 16 | src[2] << 8 | src[3];
 	for (i = 0; i < 4; i++)
-		rep[i] = ~i;
+		rep[i] = â€¾i;
 	if (setjmp(rd->errjmp))
 		goto err;
 	for (i = sizeof (struct tek_STR_PRB) / sizeof (tek_TPRB) + (0x300 << (lc + lp)) - 2; i >= 0; i--)
 		((tek_TPRB *) prb)[i] = 1 << 15;
 	for (i = 0; i < 32; i++) {
-		rd->bm[i].lt = (i >= 4); /* 0..3‚Íõ–½‚È‚µ */
+		rd->bm[i].lt = (i >= 4); /* 0..3ã¯å¯¿å‘½ãªã— */
 		rd->bm[i].lt0 = (i < 24) ? 16 * 1024 : 8 * 1024;
 		rd->bm[i].s &= 0;
 		rd->bm[i].t = rd->bm[i].m = 5;
@@ -305,7 +305,7 @@ static int tek_decmain5(int *work, UCHAR *src, int osiz, UCHAR *q, int lc, int p
 	if (stk) {
 		rd->rmsk = -1 << 11;
 		for (i = 0; i < 32; i++)
-			rd->bm[i].lt = 0; /* ‘S‚Äõ–½‚È‚µ */
+			rd->bm[i].lt = 0; /* å…¨ã¦å¯¿å‘½ãªã— */
 		for (i = 0; i < 14; i++)
 			rd->ptbm[i] = &rd->bm[0];
 	} else {
@@ -332,7 +332,7 @@ static int tek_decmain5(int *work, UCHAR *src, int osiz, UCHAR *q, int lc, int p
 		rd->bm[22].t = 0; rd->bm[22].m = 1;
 		prb->repg3 = 0xffff;
 		if (flags == -2) { /* z1 */
-			rd->bm[22].lt = 0; /* repg3‚Ìlt‚ğ0‚É */
+			rd->bm[22].lt = 0; /* repg3ã®ltã‚’0ã« */
 			for (i = 0; i < 14; i++)
 				pt[i] = pt1[i];
 		} else {
@@ -356,14 +356,14 @@ static int tek_decmain5(int *work, UCHAR *src, int osiz, UCHAR *q, int lc, int p
 	pmch &= 0; s &= 0; pos = 1;
 	while (pos < osiz) {
 		s_pos = pos & m_pos;
-		if (tek_rdget1(rd, &prb->pb[s_pos].st[s].mch, 0x71, 0, rd->ptbm[s > 0]) ^ stk) { /* ”ñlz */
+		if (tek_rdget1(rd, &prb->pb[s_pos].st[s].mch, 0x71, 0, rd->ptbm[s > 0]) ^ stk) { /* élz */
 			i = (q[-1] >> lcr | (pos & m_lp) << lc) << 8;
 			s = state_table[s];
 			if (pmch == 0)
 				*q = tek_rdget1(rd, &prb->lit[i], lit0cntmsk, 1, &rd->bm[24]) & 0xff;
 			else {
 				struct tek_STR_BITMODEL *bm = &rd->bm[24];
-				j = 1; /* lit1‚ÍÅ‰‚©‚ç2‚ğŒ¸‚¶‚Ä‚ ‚é */
+				j = 1; /* lit1ã¯æœ€åˆã‹ã‚‰2ã‚’æ¸›ã˜ã¦ã‚ã‚‹ */
 				k = 8;
 				pmch = q[rep[0]];
 				do {
@@ -401,15 +401,15 @@ static int tek_decmain5(int *work, UCHAR *src, int osiz, UCHAR *q, int lc, int p
 					else {
 						if (stk == 0) {
 							if (k -= 6)
-								rep[0] |= tek_rdget0(rd, k, ~0) << 6;
+								rep[0] |= tek_rdget0(rd, k, â€¾0) << 6;
 							rep[0] |= tek_revbit(tek_rdget1(rd, prb->algn, 0x76, 1, rd->ptbm[12]), 6);
 						} else {
-							rep[0] |= tek_rdget0(rd, k - 4, ~0) << 4;
+							rep[0] |= tek_rdget0(rd, k - 4, â€¾0) << 4;
 							rep[0] |= tek_revbit(tek_rdget1(rd, prb->algn, 0x74, 1, rd->ptbm[12]), 4);
 						}
 					}
 				}
-				rep[0] = ~rep[0];
+				rep[0] = â€¾rep[0];
 			} else { /* repeat-dis */
 				if (tek_rdget1(rd, &prb->st[s].repg0, 0x71, 0, rd->ptbm[13]) ^ stk) { /* rep0 */
 					i |= -1;

@@ -1,8 +1,8 @@
 /* "LL.c":Lilte-Linker */
 /* Copyright(C) 2002 H.Kawai */
 
-/* •ûjF’x‚­‚Ä‚à‚¢‚¢‚©‚çA‚Æ‚è‚ ‚¦‚¸“®‚­‚±‚ÆI */
-/* ƒAƒ‹ƒSƒŠƒYƒ€‚É‹Ã‚é‚Ì‚ÍA“®‚­‚æ‚¤‚É‚È‚Á‚Ä‚©‚ç */
+/* æ–¹é‡ï¼šé…ãã¦ã‚‚ã„ã„ã‹ã‚‰ã€ã¨ã‚Šã‚ãˆãšå‹•ãã“ã¨ï¼ */
+/* ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã«å‡ã‚‹ã®ã¯ã€å‹•ãã‚ˆã†ã«ãªã£ã¦ã‹ã‚‰ */
 
 #define	DEBUG			0
 
@@ -33,20 +33,20 @@ struct STR_VALUE {
 	struct STR_SIGMA sigma[MAXSIGMAS];
 };
 
-#define	VFLG_ERROR			0x01	/* ƒGƒ‰[ */
-#define	VFLG_SLFREF			0x02	/* ©ŒÈQÆƒGƒ‰[ */
-#define	VFLG_UNDEF			0x04	/* –¢’è‹`ƒGƒ‰[ */
-#define	VFLG_EXTERN			0x10	/* ŠO•”ƒ‰ƒxƒ‹ */
-#define	VFLG_CALC			0x20	/* ŒvZ’† */
-#define	VFLG_ENABLE			0x40	/* STR_LABEL‚Å—LŒø‚È‚±‚Æ‚ğ¦‚· */
+#define	VFLG_ERROR			0x01	/* ã‚¨ãƒ©ãƒ¼ */
+#define	VFLG_SLFREF			0x02	/* è‡ªå·±å‚ç…§ã‚¨ãƒ©ãƒ¼ */
+#define	VFLG_UNDEF			0x04	/* æœªå®šç¾©ã‚¨ãƒ©ãƒ¼ */
+#define	VFLG_EXTERN			0x10	/* å¤–éƒ¨ãƒ©ãƒ™ãƒ« */
+#define	VFLG_CALC			0x20	/* è¨ˆç®—ä¸­ */
+#define	VFLG_ENABLE			0x40	/* STR_LABELã§æœ‰åŠ¹ãªã“ã¨ã‚’ç¤ºã™ */
 
 struct STR_LABEL {
 	struct STR_VALUE value;
-	UCHAR *define; /* ‚±‚ê‚ªNULL‚¾‚ÆAextlabel */
+	UCHAR *define; /* ã“ã‚ŒãŒNULLã ã¨ã€extlabel */
 };
 
 struct STR_SUBSECTION {
-	unsigned int min, delta, unsolved; /* unsolved == 0 ‚È‚çÅ“K‰»‚Ì•K—v‚È‚µ */
+	unsigned int min, delta, unsolved; /* unsolved == 0 ãªã‚‰æœ€é©åŒ–ã®å¿…è¦ãªã— */
 	UCHAR *sect0, *sect1;
 };
 
@@ -76,7 +76,7 @@ void init_value(struct STR_VALUE *value)
 }
 
 unsigned int get_id(int len, UCHAR **ps, int i)
-/* len = 0`3 */
+/* len = 0ã€œ3 */
 {
 	union UINT_UCHAR {
 		unsigned int i;
@@ -123,7 +123,7 @@ void enable_label(struct STR_LABEL *label)
 			value.flags |= VFLG_SLFREF;
 		}
 	} else /* if ((label->value.flags & VFLG_EXTERN) == 0) */ {
-		/* EXTERN‚Ì‚Í‚·‚®‚ÉENABLE‚É‚È‚é‚Ì‚ÅA‚±‚±‚É—ˆ‚é‚Í‚¸‚È‚¢ */
+		/* EXTERNã®æ™‚ã¯ã™ãã«ENABLEã«ãªã‚‹ã®ã§ã€ã“ã“ã«æ¥ã‚‹ã¯ãšãªã„ */
 		init_value(&value);
 		value.flags |= VFLG_UNDEF;
 	}
@@ -141,7 +141,7 @@ void calc_value0(struct STR_VALUE *value, UCHAR **pexpr)
 	c = *expr++;
 	init_value(value);
 	if (c <= 6) {
-		/* ’è” */
+		/* å®šæ•° */
 		i = 0;
 		if (c & 0x01)
 			i--;
@@ -149,12 +149,12 @@ void calc_value0(struct STR_VALUE *value, UCHAR **pexpr)
 		goto fin;
 	}
 	if (c == 0x07) {
-		/* ’è”1 */
+		/* å®šæ•°1 */
 		value->min = 1;
 		goto fin;
 	}
 	if (c <= 0x0b) {
-		/* ƒ‰ƒxƒ‹ˆø—p */
+		/* ãƒ©ãƒ™ãƒ«å¼•ç”¨ */
 		struct STR_LABEL *label;
 		label = &label0[i = get_id(c - 8, &expr, 0)];
 		if ((label->value.flags & VFLG_ENABLE) == 0) {
@@ -172,12 +172,12 @@ void calc_value0(struct STR_VALUE *value, UCHAR **pexpr)
 			goto dberr;
 	#endif
 	if (c < 0x20) {
-		/* ‰‰Zq */
+		/* æ¼”ç®—å­ */
 		calc_value0(value, &expr);
 		if (c == 0x10)
-			goto fin; /* ’P€‰‰Zq + */
+			goto fin; /* å˜é …æ¼”ç®—å­ + */
 		if (c == 0x11) {
-			/* ’P€‰‰Zq - */
+			/* å˜é …æ¼”ç®—å­ - */
 			value->min = - (int) (value->min + value->delta);
 	minus2:
 			value->scale[0] *= -1;
@@ -187,15 +187,15 @@ void calc_value0(struct STR_VALUE *value, UCHAR **pexpr)
 			goto fin;
 		}
 		if (c == 0x12) {
-			/* ’P€‰‰Zq ~ */
-			/* ~a == - a - 1 */
+			/* å˜é …æ¼”ç®—å­ â€¾ */
+			/* â€¾a == - a - 1 */
 			value->min = - (int) (value->min + value->delta) - 1;
 			goto minus2;
 		}
 		calc_value0(&tmp, &expr);
 		value->flags |= tmp.flags;
 		if (c == 0x13) {
-			/* “ñ€‰‰Zq + */
+			/* äºŒé …æ¼”ç®—å­ + */
 add2:
 			for (i = 0; i < 2; i++) {
 				if (value->scale[i] == 0)
@@ -206,9 +206,9 @@ add2:
 					break;
 				for (k = 0; k < i; k++) {
 					if (value->label[k] == tmp.label[j]) {
-						/* “¯—Ş€ŒŸo */
+						/* åŒé¡é …æ¤œå‡º */
 						if ((value->scale[k] += tmp.scale[j]) == 0) {
-							/* €‚ÌÁ–Å */
+							/* é …ã®æ¶ˆæ»… */
 							i--;
 							value->label[k] = 0xffffffff;
 							if (k)
@@ -221,7 +221,7 @@ add2:
 						goto next_product;
 					}
 				}
-				/* “¯—Ş€‚ª–³‚©‚Á‚½‚Ì‚ÅA€‚Ì’Ç‰Á */
+				/* åŒé¡é …ãŒç„¡ã‹ã£ãŸã®ã§ã€é …ã®è¿½åŠ  */
 				if (i >= 2) {
 					value->flags |= VFLG_ERROR;
 					goto fin;
@@ -242,7 +242,7 @@ next_product:
 			goto fin;
 		}
 		if (c == 0x14) {
-			/* “ñ€‰‰Zq - */
+			/* äºŒé …æ¼”ç®—å­ - */
 			tmp.min = - (int) (tmp.min + tmp.delta);
 			tmp.scale[0] *= -1;
  			tmp.scale[1] *= -1;
@@ -265,8 +265,8 @@ next_product:
 				goto no_exchange;
 			if (tmp.sigma[0].scale) {
 		exchange:
-				/* €‚ÌŒğŠ· */
-				/* •s’è’l‚ğ1€–Ú‚É‚Á‚Ä‚­‚é‚½‚ß‚ÉŒğŠ· */
+				/* é …ã®äº¤æ› */
+				/* ä¸å®šå€¤ã‚’1é …ç›®ã«æŒã£ã¦ãã‚‹ãŸã‚ã«äº¤æ› */
 				tmp.flags = value->flags;
 				tmp2 = *value;
 				*value = tmp;
@@ -276,15 +276,15 @@ next_product:
 	no_exchange:
 		calcsigma(&tmp);
 		if (tmp.delta) {
-			/* •s’è’l‚ğg‚¤‚½‚ß‚ÉA’l‚ª‚Ü‚¾Œˆ’è‚Å‚«‚È‚¢ */
+			/* ä¸å®šå€¤ã‚’ä½¿ã†ãŸã‚ã«ã€å€¤ãŒã¾ã æ±ºå®šã§ããªã„ */
 			value->flags |= VFLG_ERROR;
 			goto fin;
 		}
 		if (c == 0x15) {
-			/* “ñ€‰‰Zq * (signed) */
+			/* äºŒé …æ¼”ç®—å­ * (signed) */
 			if (tmp.scale[0]) {
 	error:
-				/* —¼•û‚Æ‚àlabel‚ğŠÜ‚ñ‚Å‚¢‚ê‚ÎƒGƒ‰[ */
+				/* ä¸¡æ–¹ã¨ã‚‚labelã‚’å«ã‚“ã§ã„ã‚Œã°ã‚¨ãƒ©ãƒ¼ */
 				value->flags |= VFLG_ERROR;
 				goto fin;
 			}
@@ -308,14 +308,14 @@ minmax:
 			}
 			goto fin;
 		}
-		/* ‚±‚êˆÈ~‚Ítmp‘¤‚Ìlabel‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚é */
+		/* ã“ã‚Œä»¥é™ã¯tmpå´ã®labelã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã‚‹ */
 		if (c == 0x16) {
-			/* “ñ€‰‰Zq << */
+			/* äºŒé …æ¼”ç®—å­ << */
 			tmp.min = 1 << tmp.min;
 			goto multiply2;
 		}
 		if (c == 0x17) {
-			/* “ñ€‰‰Zq / (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ / (unsigned) */
 divu2:
 			if (tmp.min == 0)
 				goto error;
@@ -340,7 +340,7 @@ divall:
 			goto minmax;
 		}
 		if (c == 0x19) {
-			/* “ñ€‰‰Zq / (signed) */
+			/* äºŒé …æ¼”ç®—å­ / (signed) */
 divs2:
 			if (tmp.min == 0)
 				goto error;
@@ -356,19 +356,19 @@ divs_ij:
 			goto divall;
 		}
 		if (c == 0x1b) {
-			/* “ñ€‰‰Zq >> (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ >> (unsigned) */
 			tmp.min = 1 << tmp.min;
 			goto divu2;
 		}
 		if (c == 0x1c) {
-			/* “ñ€‰‰Zq >> (signed) */
+			/* äºŒé …æ¼”ç®—å­ >> (signed) */
 			tmp.min = 1 << tmp.min;
 			goto divs2;
 		}
-		value->scale[0] = value->scale[1] = 0; /* ©“®ƒLƒƒƒ“ƒZƒ‹ */
+		value->scale[0] = value->scale[1] = 0; /* è‡ªå‹•ã‚­ãƒ£ãƒ³ã‚»ãƒ« */
 		calcsigma(value);
 		if (c == 0x18) {
-			/* “ñ€‰‰Zq % (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ % (unsigned) */
 			if (tmp.min == 0)
 				goto error;
 			value->min = (unsigned int) value->min % (unsigned int) tmp.min;
@@ -379,7 +379,7 @@ divs_ij:
 			goto fin;
 		}
 		if (c == 0x1a) {
-			/* “ñ€‰‰Zq % (signed) */
+			/* äºŒé …æ¼”ç®—å­ % (signed) */
 			if (tmp.min == 0)
 				goto error;
 			value->min = (signed int) value->min % (signed int) tmp.min;
@@ -397,30 +397,30 @@ divs_ij:
 			goto fin;
 		}
 		if (c == 0x1d) {
-			/* “ñ€‰‰Zq & (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ & (unsigned) */
 			if (tmp.min == -1)
-				goto fin; /* ‘f’Ê‚è */
+				goto fin; /* ç´ é€šã‚Š */
 			if (value->delta == 0) {
 				value->min &= tmp.min;
 				goto fin;
 			}
 			if (tmp.min & 0x80000000)
-				goto error; /* è‚ª•t‚¯‚ç‚ê‚È‚¢ */
-			/* –{“–‚Í‚à‚Á‚Æ×‚©‚­‚Å‚«‚é‚ªA–Ê“|‚È‚Ì‚Å‚â‚Á‚Ä‚È‚¢ */
+				goto error; /* æ‰‹ãŒä»˜ã‘ã‚‰ã‚Œãªã„ */
+			/* æœ¬å½“ã¯ã‚‚ã£ã¨ç´°ã‹ãã§ãã‚‹ãŒã€é¢å€’ãªã®ã§ã‚„ã£ã¦ãªã„ */
 			value->min = 0;
 			value->delta = tmp.min;
 			goto fin;
 		}
 		if (c == 0x1e) {
-			/* “ñ€‰‰Zq | (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ | (unsigned) */
 			if (tmp.min == 0)
-				goto fin; /* ‘f’Ê‚è */
+				goto fin; /* ç´ é€šã‚Š */
 			if (value->delta == 0) {
 				value->min |= tmp.min;
 				goto fin;
 			}
 			if (tmp.min & 0x80000000)
-				goto error; /* è‚ª•t‚¯‚ç‚ê‚È‚¢ */
+				goto error; /* æ‰‹ãŒä»˜ã‘ã‚‰ã‚Œãªã„ */
 			value->delta += tmp.min;
 			if ((value->delta & 0x80000000) == 0)
 				goto fin;
@@ -428,21 +428,21 @@ divs_ij:
 			goto error;
 		}
 	//	if (c == 0x1f) {
-			/* “ñ€‰‰Zq ^ (unsigned) */
+			/* äºŒé …æ¼”ç®—å­ ^ (unsigned) */
 			if (tmp.min == 0)
-				goto fin; /* ‘f’Ê‚è */
+				goto fin; /* ç´ é€šã‚Š */
 			if (value->delta == 0) {
 				value->min ^= tmp.min;
 				goto fin;
 			}
 			if (tmp.min & 0x80000000)
-				goto error; /* è‚ª•t‚¯‚ç‚ê‚È‚¢ */
+				goto error; /* æ‰‹ãŒä»˜ã‘ã‚‰ã‚Œãªã„ */
 			if ((signed int) value->min > (signed int) 0 && value->min >= tmp.min) {
 				value->min -= tmp.min;
 				value->delta += tmp.min;
 				goto fin;
 			}
-			goto error; /* è‚ª•t‚¯‚ç‚ê‚È‚¢ */
+			goto error; /* æ‰‹ãŒä»˜ã‘ã‚‰ã‚Œãªã„ */
 	//	}
 	}
 	#if (DEBUG)
@@ -452,7 +452,7 @@ divs_ij:
 #if 0
 	if (c == 0x80) {
 		/* subsect size sum */
-		/* sum‚ÍAdelta‚ª2GB‚È‚çƒGƒ‰[‚É‚µ‚Ä‚µ‚Ü‚¤(–Ê“|‚È‚Ì‚Å) */
+		/* sumã¯ã€deltaãŒ2GBãªã‚‰ã‚¨ãƒ©ãƒ¼ã«ã—ã¦ã—ã¾ã†(é¢å€’ãªã®ã§) */
 		calc_value(&tmp, &expr);
 		i = tmp.min;
 		calc_value(&tmp, &expr);
@@ -486,14 +486,14 @@ static UCHAR *skip_expr(UCHAR *expr)
 
 
 
-/* ƒ‰ƒxƒ‹‚Ì’è‹`•û–@:
-	ˆê”Ê®
-	80 variable-sum, 0000bbaa(aa:€”-1, bb:Å‰‚Ì”Ô†), 
-	84`87 sum, i - 1, expr, expr, ...
+/* ãƒ©ãƒ™ãƒ«ã®å®šç¾©æ–¹æ³•:
+	ä¸€èˆ¬å¼
+	80 variable-sum, 0000bbaa(aa:é …æ•°-1, bb:æœ€åˆã®ç•ªå·), 
+	84ã€œ87 sum, i - 1, expr, expr, ...
 
-  E80`8f:LL‚ª“à•”ˆ——p‚Ég‚¤
-	80`83:variableQÆ(1`4ƒoƒCƒg)
-	88`8f:sum(variable), (1`4, 1`4) : Å‰‚Í€”-1, Ÿ‚ÍÅ‰‚Ì”Ô†
+  ãƒ»80ã€œ8f:LLãŒå†…éƒ¨å‡¦ç†ç”¨ã«ä½¿ã†
+	80ã€œ83:variableå‚ç…§(1ã€œ4ãƒã‚¤ãƒˆ)
+	88ã€œ8f:sum(variable), (1ã€œ4, 1ã€œ4) : æœ€åˆã¯é …æ•°-1, æ¬¡ã¯æœ€åˆã®ç•ªå·
 		{ "|>", 12, 18 }, { "&>", 12, 17 },
 		{ "<<", 12, 16 }, { ">>", 12, 17 },
 		{ "//", 14,  9 }, { "%%", 14, 10 },
@@ -505,7 +505,7 @@ static UCHAR *skip_expr(UCHAR *expr)
 
 	s+
 	s-
-	s~
+	sâ€¾
 
 	+, -, *, <<, /u, %u, /s, %s
 	>>u, >>s, &, |, ^
@@ -519,59 +519,59 @@ static UCHAR *skip_expr(UCHAR *expr)
 
 #if 0
 
-	< •¶–@ >
+	< æ–‡æ³• >
 
-Å‰‚Íƒwƒbƒ_B
-Eƒwƒbƒ_ƒTƒCƒY(DW) = 12
-Eƒo[ƒWƒ‡ƒ“ƒR[ƒh(DW)
-Eƒ‰ƒxƒ‹‘”(DW)
-
-
-  E38:®‚Ì’l‚ğDB‚É‚µ‚Äİ’u
-  E39:®‚Ì’l‚ğDW‚É‚µ‚Äİ’u
-  E3a:®‚Ì’l‚ğ3ƒoƒCƒg‚Åİ’u
-  E3b:®‚Ì’l‚ğDD‚É‚µ‚Äİ’u
-  ˆÈ‰ºAE3f‚Ü‚Å‚ ‚éB
-  E40`47:ƒuƒƒbƒNƒRƒ}ƒ“ƒhBif•¶‚È‚Ç‚ÌŒã‘±•¶‚ğƒuƒƒbƒN‰»‚·‚é(2`9)B
-  E48:ƒoƒCƒgƒuƒƒbƒNiƒuƒƒbƒN’·‚ªƒoƒCƒg‚ÅŒã‘±jB
-  E49:ƒ[ƒhƒuƒƒbƒNB
-  E4a:ƒoƒCƒgƒuƒƒbƒNB
-  E4b:ƒ_ƒuƒ‹ƒ[ƒhƒuƒƒbƒNB
-  E4c:”r‘¼“IifŠJnB
-  E4d:‘I‘ğ“IifŠJnB
-  E4e:‘I‘ğ“IƒoƒEƒ“ƒ_ƒŠ[ifŠJnB•Ï”İ’è‚Ì’¼ŒãAƒoƒEƒ“ƒ_ƒŠ[’l‚ª‘±‚­B
-  E4f:endifB
-  ”r‘¼“Iif‚ÍAendif‚ª—ˆ‚é‚Ü‚Å‚¢‚­‚Â‚à•À‚×‚ç‚ê‚éBendif‚ª—ˆ‚é‚Ü‚ÅA
-  ‘S‚Äelse-if‚Æ‚µ‚Äˆµ‚í‚ê‚éBÅŒã‚Éelse‚ğì‚è‚½‚¯‚ê‚ÎAğŒ‚ğ’è”1‚É‚¹‚æB
-  Eƒ^[ƒ~ƒl[ƒ^[‚Íƒ‰ƒxƒ‹’è‹`‚Å0xffffffffB
-
-  E58:ORG
-
-  E60:ƒAƒ‰ƒCƒ“BƒoƒCƒg‚Ì–„‚ß•û‚ÍŒÂ•Ê‚Éİ’è‚·‚éBEEE‚±‚ê‚Í”r‘¼“Iif‚Å‚à‹Lq‚Å‚«‚éB
-
-  E70`77:‰Â•Ï’·ƒoƒCƒgéŒ¾(•¶–@ã‚Å‚Í40`4b‚ªŒã‘±‚·‚é‚±‚Æ‚ğ‹–‚·‚ªAƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢B‹–‚³‚ê‚é‚Ì‚Í30`3f)
-  E78`7f:‰Â•Ï’·ƒoƒCƒgQÆ
-
-  E80`8f:LL‚ª“à•”ˆ——p‚Ég‚¤
-	80`83:variableQÆ(1`4ƒoƒCƒg)
-	88`8f:sum(variable), (1`4, 1`4) : Å‰‚Í€”-1, Ÿ‚ÍÅ‰‚Ì”Ô†
+æœ€åˆã¯ãƒ˜ãƒƒãƒ€ã€‚
+ãƒ»ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚º(DW) = 12
+ãƒ»ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚³ãƒ¼ãƒ‰(DW)
+ãƒ»ãƒ©ãƒ™ãƒ«ç·æ•°(DW)
 
 
-  if•¶’†‚Å‚ÍA‰Â•Ï’·ƒoƒCƒgéŒ¾‚µ‚©‚Å‚«‚È‚¢B
+  ãƒ»38:å¼ã®å€¤ã‚’DBã«ã—ã¦è¨­ç½®
+  ãƒ»39:å¼ã®å€¤ã‚’DWã«ã—ã¦è¨­ç½®
+  ãƒ»3a:å¼ã®å€¤ã‚’3ãƒã‚¤ãƒˆã§è¨­ç½®
+  ãƒ»3b:å¼ã®å€¤ã‚’DDã«ã—ã¦è¨­ç½®
+  ä»¥ä¸‹ã€ãƒ»3fã¾ã§ã‚ã‚‹ã€‚
+  ãƒ»40ã€œ47:ãƒ–ãƒ­ãƒƒã‚¯ã‚³ãƒãƒ³ãƒ‰ã€‚ifæ–‡ãªã©ã®å¾Œç¶šæ–‡ã‚’ãƒ–ãƒ­ãƒƒã‚¯åŒ–ã™ã‚‹(2ã€œ9)ã€‚
+  ãƒ»48:ãƒã‚¤ãƒˆãƒ–ãƒ­ãƒƒã‚¯ï¼ˆãƒ–ãƒ­ãƒƒã‚¯é•·ãŒãƒã‚¤ãƒˆã§å¾Œç¶šï¼‰ã€‚
+  ãƒ»49:ãƒ¯ãƒ¼ãƒ‰ãƒ–ãƒ­ãƒƒã‚¯ã€‚
+  ãƒ»4a:ãƒã‚¤ãƒˆãƒ–ãƒ­ãƒƒã‚¯ã€‚
+  ãƒ»4b:ãƒ€ãƒ–ãƒ«ãƒ¯ãƒ¼ãƒ‰ãƒ–ãƒ­ãƒƒã‚¯ã€‚
+  ãƒ»4c:æ’ä»–çš„ifé–‹å§‹ã€‚
+  ãƒ»4d:é¸æŠçš„ifé–‹å§‹ã€‚
+  ãƒ»4e:é¸æŠçš„ãƒã‚¦ãƒ³ãƒ€ãƒªãƒ¼ifé–‹å§‹ã€‚å¤‰æ•°è¨­å®šã®ç›´å¾Œã€ãƒã‚¦ãƒ³ãƒ€ãƒªãƒ¼å€¤ãŒç¶šãã€‚
+  ãƒ»4f:endifã€‚
+  æ’ä»–çš„ifã¯ã€endifãŒæ¥ã‚‹ã¾ã§ã„ãã¤ã‚‚ä¸¦ã¹ã‚‰ã‚Œã‚‹ã€‚endifãŒæ¥ã‚‹ã¾ã§ã€
+  å…¨ã¦else-ifã¨ã—ã¦æ‰±ã‚ã‚Œã‚‹ã€‚æœ€å¾Œã«elseã‚’ä½œã‚ŠãŸã‘ã‚Œã°ã€æ¡ä»¶ã‚’å®šæ•°1ã«ã›ã‚ˆã€‚
+  ãƒ»ã‚¿ãƒ¼ãƒŸãƒãƒ¼ã‚¿ãƒ¼ã¯ãƒ©ãƒ™ãƒ«å®šç¾©ã§0xffffffffã€‚
 
-	ORG‚É‚Â‚¢‚ÄB–{—ˆˆø”‚Í®‚Å‚ ‚Á‚Ä‚æ‚¢‚ªA‚±‚Ìƒo[ƒWƒ‡ƒ“‚Å‚Í’è”®‚ğ‰¼’è‚µ‚Ä‚¢‚éB
+  ãƒ»58:ORG
+
+  ãƒ»60:ã‚¢ãƒ©ã‚¤ãƒ³ã€‚ãƒã‚¤ãƒˆã®åŸ‹ã‚æ–¹ã¯å€‹åˆ¥ã«è¨­å®šã™ã‚‹ã€‚ãƒ»ãƒ»ãƒ»ã“ã‚Œã¯æ’ä»–çš„ifã§ã‚‚è¨˜è¿°ã§ãã‚‹ã€‚
+
+  ãƒ»70ã€œ77:å¯å¤‰é•·ãƒã‚¤ãƒˆå®£è¨€(æ–‡æ³•ä¸Šã§ã¯40ã€œ4bãŒå¾Œç¶šã™ã‚‹ã“ã¨ã‚’è¨±ã™ãŒã€ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ãªã„ã€‚è¨±ã•ã‚Œã‚‹ã®ã¯30ã€œ3f)
+  ãƒ»78ã€œ7f:å¯å¤‰é•·ãƒã‚¤ãƒˆå‚ç…§
+
+  ãƒ»80ã€œ8f:LLãŒå†…éƒ¨å‡¦ç†ç”¨ã«ä½¿ã†
+	80ã€œ83:variableå‚ç…§(1ã€œ4ãƒã‚¤ãƒˆ)
+	88ã€œ8f:sum(variable), (1ã€œ4, 1ã€œ4) : æœ€åˆã¯é …æ•°-1, æ¬¡ã¯æœ€åˆã®ç•ªå·
+
+
+  ifæ–‡ä¸­ã§ã¯ã€å¯å¤‰é•·ãƒã‚¤ãƒˆå®£è¨€ã—ã‹ã§ããªã„ã€‚
+
+	ORGã«ã¤ã„ã¦ã€‚æœ¬æ¥å¼•æ•°ã¯å¼ã§ã‚ã£ã¦ã‚ˆã„ãŒã€ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯å®šæ•°å¼ã‚’ä»®å®šã—ã¦ã„ã‚‹ã€‚
 
 
 
 
 #endif
 
-/* ibuf, obuf‚ÌŠî‘b\‘¢ */
-/* ƒVƒOƒlƒ`ƒƒ[8ƒoƒCƒg, ‘’·4ƒoƒCƒg, ƒŠƒU[ƒu4ƒoƒCƒg */
-/* ƒƒCƒ“ƒf[ƒ^ƒŒƒ“ƒOƒX4B, ƒƒCƒ“ƒf[ƒ^ƒXƒ^[ƒg4B */
+/* ibuf, obufã®åŸºç¤æ§‹é€  */
+/* ã‚·ã‚°ãƒãƒãƒ£ãƒ¼8ãƒã‚¤ãƒˆ, ç·é•·4ãƒã‚¤ãƒˆ, ãƒªã‚¶ãƒ¼ãƒ–4ãƒã‚¤ãƒˆ */
+/* ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿ãƒ¬ãƒ³ã‚°ã‚¹4B, ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚¹ã‚¿ãƒ¼ãƒˆ4B */
 
-/* ª‚±‚¤‚¢‚¤‚â‚â‚±‚µ‚¢‚±‚Æ‚Í‚â‚ç‚È‚¢ */
-/* ƒXƒLƒbƒvƒRƒ}ƒ“ƒh‚ğì‚Á‚Ä‘Îˆ‚·‚é */
+/* â†‘ã“ã†ã„ã†ã‚„ã‚„ã“ã—ã„ã“ã¨ã¯ã‚„ã‚‰ãªã„ */
+/* ã‚¹ã‚­ãƒƒãƒ—ã‚³ãƒãƒ³ãƒ‰ã‚’ä½œã£ã¦å¯¾å‡¦ã™ã‚‹ */
 
 static UCHAR table98typlen[] = { 0x38, 0x38, 0x39, 0x39, 0x3b, 0x3b, 0x38 };
 static UCHAR table98range [] = { 0x00, 0x02, 0x00, 0x03, 0x00, 0x03, 0x03 };
@@ -636,8 +636,8 @@ UCHAR *lccbug_LL_mc90_func(UCHAR *src0, struct STR_LL_VB *vbb, struct STR_LL_VB 
 }
 
 UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
-/* ‚È‚¨src‚É‘‚«‚İ‚ğ‚·‚é‚Ì‚Å—v’ˆÓ */
-/* Vdest1‚ğ•Ô‚· */
+/* ãªãŠsrcã«æ›¸ãè¾¼ã¿ã‚’ã™ã‚‹ã®ã§è¦æ³¨æ„ */
+/* æ–°dest1ã‚’è¿”ã™ */
 {
 	struct STR_SUBSECTION *subsect1, *subsect;
 	unsigned int l0, min, max, unsolved, unsolved0;
@@ -652,22 +652,22 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 	value = malloc(sizeof (struct STR_VALUE));
 	labelvalue = malloc(sizeof (struct STR_VALUE));
 
-	/* ƒ‰ƒxƒ‹®‚ğ“o˜^‚·‚é */
-//	l0 = 0; /* Œ»İ‚ÌƒAƒhƒŒƒX‚Íl0‚©‚çlcŒÂ‚Ì˜a */
+	/* ãƒ©ãƒ™ãƒ«å¼ã‚’ç™»éŒ²ã™ã‚‹ */
+//	l0 = 0; /* ç¾åœ¨ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯l0ã‹ã‚‰lcå€‹ã®å’Œ */
 //	lc = 0;
-//	min = max = 0; /* Ÿ‚É¶¬‚·‚é‚Ì‚ÍAvariable0[l0 + lc] */
+//	min = max = 0; /* æ¬¡ã«ç”Ÿæˆã™ã‚‹ã®ã¯ã€variable0[l0 + lc] */
 
 	label = label0;
 	for (unsolved = nask_maxlabels; unsolved > 0; label++, unsolved--) {
-		label->value.flags = 0; /* enable‚ğÁ‚·‚½‚ß */
+		label->value.flags = 0; /* enableã‚’æ¶ˆã™ãŸã‚ */
 		label->define = NULL;
 	}
 
-	/* Ø‚è•ª‚¯‚é */
-	/* ƒ‰ƒxƒ‹‚ğŒŸo‚·‚é */
+	/* åˆ‡ã‚Šåˆ†ã‘ã‚‹ */
+	/* ãƒ©ãƒ™ãƒ«ã‚’æ¤œå‡ºã™ã‚‹ */
 	subsect = subsect0;
 	subsect->sect0 = src0;
-	init_value(labelvalue); /* ƒ‰ƒxƒ‹•Û */
+	init_value(labelvalue); /* ãƒ©ãƒ™ãƒ«ä¿æŒ */
 	while (src0 < src1) {
 		c = *src0;
 		if (c == 0x2d) {
@@ -680,7 +680,7 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 			continue;
 		}
 		if (c == 0x0e) {
-			/* ƒ‰ƒxƒ‹’è‹` */
+			/* ãƒ©ãƒ™ãƒ«å®šç¾© */
 			struct STR_SIGMA sigma;
 			sigma.scale = 1;
 			sigma.subsect = subsect - subsect0;
@@ -698,7 +698,7 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 			continue;
 		}
 		if (c == 0x2c) {
-			/* externƒ‰ƒxƒ‹éŒ¾ */
+			/* externãƒ©ãƒ™ãƒ«å®£è¨€ */
 			src0++;
 			calc_value(value, &src0);
 			label = &label0[value->min];
@@ -800,7 +800,7 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 					dest0[2 - 8] = value->label[0] & 0xff;
 					dest0[3 - 8] = (value->label[0] >> 8) & 0xff;
 				//	if (value->scale[0] != 1 || value->scale[1] != 0) {
-				//		/* ƒGƒ‰[‚ğo—Í */
+				//		/* ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ› */
 				//	}
 				}
 				continue;
@@ -819,7 +819,7 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 					goto dberr0;
 			#endif
 			if (c < 0x37) {
-				/* 30`37:ƒVƒ‡[ƒgDB(’è”A0`7ƒoƒCƒg) */
+				/* 30ã€œ37:ã‚·ãƒ§ãƒ¼ãƒˆDB(å®šæ•°ã€0ã€œ7ãƒã‚¤ãƒˆ) */
 				len = c & 0x07;
 	copy:
 				*dest0++ = c;
@@ -832,39 +832,39 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 					if (times_count == 0) {
 	times_expand:
 						s = skip_expr(times_src0 + 4); /* len */
-						calc_value(value, &s); /* ŒJ‚è•Ô‚µ‰ñ” */
+						calc_value(value, &s); /* ç¹°ã‚Šè¿”ã—å›æ•° */
 						c = 0;
 						value->min = times_src0[0] | times_src0[1] << 8
 							| times_src0[2] << 16 | times_src0[3] << 24;
-						/* ªforce‚È‚Ç‚ÅH‚¢ˆá‚¢‚ª¶‚¶‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß */
+						/* â†‘forceãªã©ã§é£Ÿã„é•ã„ãŒç”Ÿã˜ãªã„ã‚ˆã†ã«ã™ã‚‹ãŸã‚ */
 						if (value->delta) {
-							/* •s’è’lƒGƒ‰[ */
+							/* ä¸å®šå€¤ã‚¨ãƒ©ãƒ¼ */
 							c = 1;
 							*dest0++ = 0xe9;
 						}
 						if (value->flags & VFLG_UNDEF) {
-							/* –¢’è‹`ƒGƒ‰[ */
+							/* æœªå®šç¾©ã‚¨ãƒ©ãƒ¼ */
 							c = 1;
 							*dest0++ = 0xec;
 						}
 						if (value->flags & VFLG_SLFREF) {
-							/* ©ŒÈQÆƒGƒ‰[ */
+							/* è‡ªå·±å‚ç…§ã‚¨ãƒ©ãƒ¼ */
 							c = 1;
 							*dest0++ = 0xea;
 						}
 						if (value->flags & VFLG_ERROR) {
-							/* ƒ‰ƒxƒ‹’lˆê”ÊƒGƒ‰[ */
+							/* ãƒ©ãƒ™ãƒ«å€¤ä¸€èˆ¬ã‚¨ãƒ©ãƒ¼ */
 							c = 1;
 							*dest0++ = 0xeb;
 						}
 						if (c != 0 || (unsigned int) value->min >= 0xfffffff0) {
 							*dest0++ = 0xe6; /* TIMES error */
-							dest0 = times_dest0; /* ŒJ‚è•Ô‚µ‰ñ”0‚Æ‚İ‚È‚· */
+							dest0 = times_dest0; /* ç¹°ã‚Šè¿”ã—å›æ•°0ã¨ã¿ãªã™ */
 							continue;
 						}
 						value->delta = dest0 - times_dest0;
 						if (dest0 + value->delta * value->min + 64 >= dest1)
-							goto error; /* 1‰ñ•ª—]Œv‚É”äŠr‚µ‚Ä‚¢‚é‚ªA‚ÜA‚¢‚¢‚© */
+							goto error; /* 1å›åˆ†ä½™è¨ˆã«æ¯”è¼ƒã—ã¦ã„ã‚‹ãŒã€ã¾ã€ã„ã„ã‹ */
 						for (dest0 = times_src0 = times_dest0; value->min > 0; value->min--) {
 							s = times_src0;
 							for (times_count = value->delta; times_count > 0; times_count--)
@@ -877,53 +877,53 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 				continue;
 			}
 			if (c < 0x3c) {
-				/* ®‚Ì’l‚ğ’u‚­ */
+				/* å¼ã®å€¤ã‚’ç½®ã */
 				len = c - 0x37;
 				range = *src0++;
 				calc_value(value, &src0);
 	putvalue:
 				if (value->scale[0] && len == 4 && value->delta == 0
 					&& (value->flags & (VFLG_UNDEF | VFLG_SLFREF | VFLG_ERROR)) == 0) {
-					/* —vƒŠƒƒP[ƒVƒ‡ƒ“(1‚©-1) */
+					/* è¦ãƒªãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³(1ã‹-1) */
 					if (value->delta == 0 && value->flags)
 					if (value->scale[0] == -1) {
 						value->label[0] = value->label[1];
 						value->scale[1] = -1;
 					}
-					/* ‚±‚±‚Å‘z’è‚·‚×‚«ƒP[ƒX */
-					/* scale[0] == 1, scale[1] ==  0 : â‘Î•â³ */
-					/* scale[0] == 1, scale[1] == -1 : ‘Š‘Î•â³ */
-					/* 0x2e : â‘Î•â³—v‹, 0x2f : ‘Š‘Î•â³—v‹ */
+					/* ã“ã“ã§æƒ³å®šã™ã¹ãã‚±ãƒ¼ã‚¹ */
+					/* scale[0] == 1, scale[1] ==  0 : çµ¶å¯¾è£œæ­£ */
+					/* scale[0] == 1, scale[1] == -1 : ç›¸å¯¾è£œæ­£ */
+					/* 0x2e : çµ¶å¯¾è£œæ­£è¦æ±‚, 0x2f : ç›¸å¯¾è£œæ­£è¦æ±‚ */
 					dest0[0] = 0x2e - value->scale[1];
 					dest0[1] = 0x09;
 					dest0[2] = value->label[0] & 0xff;
 					dest0[3] = (value->label[0] >> 8) & 0xff;
 					dest0 += 4;
 				}
-				*dest0++ = 0x30 | len; /* 31`34 */
-				/* ƒŒƒ“ƒWƒ`ƒFƒbƒN‚È‚Ç‚ğ‚â‚é */
-				/* scaleƒ`ƒFƒbƒN‚à‚â‚Á‚ÄA•K—v‚È‚çƒŠƒ“ƒN‚É•K—v‚Èî•ñ‚ğ‚Â‚¯‚é */
+				*dest0++ = 0x30 | len; /* 31ã€œ34 */
+				/* ãƒ¬ãƒ³ã‚¸ãƒã‚§ãƒƒã‚¯ãªã©ã‚’ã‚„ã‚‹ */
+				/* scaleãƒã‚§ãƒƒã‚¯ã‚‚ã‚„ã£ã¦ã€å¿…è¦ãªã‚‰ãƒªãƒ³ã‚¯ã«å¿…è¦ãªæƒ…å ±ã‚’ã¤ã‘ã‚‹ */
 	putvalue0:
-				/* lenƒoƒCƒg‚ğ’u‚­ */
+				/* lenãƒã‚¤ãƒˆã‚’ç½®ã */
 				dest0[0] = value->min         & 0xff;
 				dest0[1] = (value->min >>  8) & 0xff;
 				dest0[2] = (value->min >> 16) & 0xff;
 				dest0[3] = (value->min >> 24) & 0xff;
 				dest0 += len;
 				if (value->delta) {
-					/* •s’è’lƒGƒ‰[ */
+					/* ä¸å®šå€¤ã‚¨ãƒ©ãƒ¼ */
 					*dest0++ = 0xe9;
 				}
 				if (value->flags & VFLG_UNDEF) {
-					/* –¢’è‹`ƒGƒ‰[ */
+					/* æœªå®šç¾©ã‚¨ãƒ©ãƒ¼ */
 					*dest0++ = 0xec;
 				}
 				if (value->flags & VFLG_SLFREF) {
-					/* ©ŒÈQÆƒGƒ‰[ */
+					/* è‡ªå·±å‚ç…§ã‚¨ãƒ©ãƒ¼ */
 					*dest0++ = 0xea;
 				}
 				if (value->flags & VFLG_ERROR) {
-					/* ƒ‰ƒxƒ‹’lˆê”ÊƒGƒ‰[ */
+					/* ãƒ©ãƒ™ãƒ«å€¤ä¸€èˆ¬ã‚¨ãƒ©ãƒ¼ */
 					*dest0++ = 0xeb;
 				}
 				if ((times_count -= len) == 0)
@@ -945,7 +945,7 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 				times_src0 = src0;
 				src0 += 4;
 				calc_value(value, &src0); /* len */
-				/* len‚Ì•”•ª‚ÉƒGƒ‰[‚Í‚È‚¢‚Æ‚¢‚¤‚±‚Æ‚É‚È‚Á‚Ä‚¢‚é(è”²‚«) */
+				/* lenã®éƒ¨åˆ†ã«ã‚¨ãƒ©ãƒ¼ã¯ãªã„ã¨ã„ã†ã“ã¨ã«ãªã£ã¦ã„ã‚‹(æ‰‹æŠœã) */
 				times_count = value->min;
 				src0 = skip_expr(src0);
 				continue;
@@ -960,12 +960,12 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 					goto dberr0;
 			#endif
 			if (c < 0x78) {
-				/* 0x70`0x77:virtual byte’è‹` */
+				/* 0x70ã€œ0x77:virtual byteå®šç¾© */
 				src0 = LL_define_VB(&virtualbyte[c & 0x07], src0);
 				continue;
 			}
 			if (c < 0x80) {
-				/* 0x78`0x7f:virtual byte“WŠJ */
+				/* 0x78ã€œ0x7f:virtual byteå±•é–‹ */
 				vba = &virtualbyte[c & 0x07];
 				s = vba->expr;
 				if (vba->typlen < 0x38) {
@@ -1084,12 +1084,12 @@ UCHAR *LL(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1)
 					goto dberr0;
 			#endif
 			if (c < 0xf0) {
-				/* 1ƒoƒCƒgƒŠƒ}[ƒN */
+				/* 1ãƒã‚¤ãƒˆãƒªãƒãƒ¼ã‚¯ */
 				*dest0++ = c;
 				continue;
 			}
 			if (c < 0xf8) {
-				/* nƒoƒCƒgƒŠƒ}[ƒN */
+				/* nãƒã‚¤ãƒˆãƒªãƒãƒ¼ã‚¯ */
 				len = c - 0xef;
 				goto copy;
 			}
@@ -1116,8 +1116,8 @@ UCHAR *skip_mc30(UCHAR *s, UCHAR *bytes, char flag)
 }
 
 unsigned int solve_subsection(struct STR_SUBSECTION *subsect, char force)
-/* unsolved”‚ğ•Ô‚· */
-/* subsect->unsolved == 0 ‚È‚çŒÄ‚Î‚È‚¢‚±‚Æ */
+/* unsolvedæ•°ã‚’è¿”ã™ */
+/* subsect->unsolved == 0 ãªã‚‰å‘¼ã°ãªã„ã“ã¨ */
 {
 	struct {
 		signed char min, max;
@@ -1130,20 +1130,20 @@ unsigned int solve_subsection(struct STR_SUBSECTION *subsect, char force)
 	for (s = subsect->sect0; s < subsect->sect1; ) {
 		c = *s++;
 		if (c == 0x2d) {
-			/* EQUƒ‰ƒxƒ‹’è‹` */
+			/* EQUãƒ©ãƒ™ãƒ«å®šç¾© */
 			s = skip_expr(s);
 			s = skip_expr(s);
 			continue;
 		}
 		if (c == 0x0e) {
-			/* ”ñEQUƒ‰ƒxƒ‹‚Ì’è‹` */
-			/* ¡‚Íè”²‚«‚È‚Ì‚Åæ‚è‡‚¦‚¸–³‹ */
+			/* éEQUãƒ©ãƒ™ãƒ«ã®å®šç¾© */
+			/* ä»Šã¯æ‰‹æŠœããªã®ã§å–ã‚Šåˆãˆãšç„¡è¦– */
 			s = skip_expr(s);
 			continue;
-			/* –{—ˆ‚Í‚±‚ê‚Í—ˆ‚È‚¢(H) */
+			/* æœ¬æ¥ã¯ã“ã‚Œã¯æ¥ãªã„(ï¼Ÿ) */
 		}
 		if (c == 0x0f) {
-			s += s[1] - (0x08 - 3); /* GLOBAL—p•ÏŠ· */
+			s += s[1] - (0x08 - 3); /* GLOBALç”¨å¤‰æ› */
 			continue;
 		}
 		if (c == 0x2c) {
@@ -1156,8 +1156,8 @@ unsigned int solve_subsection(struct STR_SUBSECTION *subsect, char force)
 		#endif
 		if (c < 0x3c) {
 skipmc30:
-			/* 30`37:ƒVƒ‡[ƒgDB(’è”A0`7ƒoƒCƒg) */
-			/* ®‚ğDB`DD‚Å’u‚­ */
+			/* 30ã€œ37:ã‚·ãƒ§ãƒ¼ãƒˆDB(å®šæ•°ã€0ã€œ7ãƒã‚¤ãƒˆ) */
+			/* å¼ã‚’DBã€œDDã§ç½®ã */
 			s = skip_mc30(s - 1, &c, 1);
 			min += c;
 			continue;
@@ -1173,18 +1173,18 @@ skipmc30:
 			i = s[0] | s[1] << 8 | s[2] << 16 | s[3] << 24;
 			s += 4;
 			calc_value(&value, &s); /* len */
-			/* len‚ÉƒGƒ‰[‚Í‚È‚¢‚Æ‚¢‚¤‘O’ñ(ƒvƒƒOƒ‰ƒ€ƒJƒEƒ“ƒ^‚ğŠÜ‚Ü‚È‚¢’è”®) */
+			/* lenã«ã‚¨ãƒ©ãƒ¼ã¯ãªã„ã¨ã„ã†å‰æ(ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚«ã‚¦ãƒ³ã‚¿ã‚’å«ã¾ãªã„å®šæ•°å¼) */
 			if ((unsigned int) i < 0xfffffff0) {
-				min += (i - 1) * value.min; /* i‚ÍŒJ‚è•Ô‚µ‰ñ” */
+				min += (i - 1) * value.min; /* iã¯ç¹°ã‚Šè¿”ã—å›æ•° */
 				s = skip_expr(s);
 				continue;
 			}
 			i = value.min;
-			calc_value(&value, &s); /* ŒJ‚è•Ô‚µ‰ñ” */
-			if (value.flags & (VFLG_SLFREF | VFLG_UNDEF)) /* ©ŒÈQÆƒGƒ‰[ */
+			calc_value(&value, &s); /* ç¹°ã‚Šè¿”ã—å›æ•° */
+			if (value.flags & (VFLG_SLFREF | VFLG_UNDEF)) /* è‡ªå·±å‚ç…§ã‚¨ãƒ©ãƒ¼ */
 				goto mc59_force;
 			if (value.flags & VFLG_ERROR) {
-				/* ƒ‰ƒxƒ‹’lˆê”ÊƒGƒ‰[ */
+				/* ãƒ©ãƒ™ãƒ«å€¤ä¸€èˆ¬ã‚¨ãƒ©ãƒ¼ */
 				if (force >= 2)
 					goto mc59_force;
 				delta = INVALID_DELTA;
@@ -1221,14 +1221,14 @@ skipmc30:
 				goto dberr0;
 		#endif
 		if (c < 0x78) {
-			/* 0x70`0x77:virtual byte’è‹` */
+			/* 0x70ã€œ0x77:virtual byteå®šç¾© */
 			vba = &vb[c & 0x07];
 			s = skip_mc30(s, &vba->min, 1);
 			vba->max = vba->min;
 			continue;
 		}
 		if (c < 0x80) {
-			/* 0x78`0x7f:virtual byte“WŠJ */
+			/* 0x78ã€œ0x7f:virtual byteå±•é–‹ */
 			vba = &vb[c & 0x07];
 			min += vba->min;
 			delta += vba->max - vba->min;
@@ -1242,8 +1242,8 @@ skipmc30:
 			/* microcode90, microcode91 */
 			/* [90 decision z-bbb-d-aaa expr] [3x (d,w)] [3x (b)] ([3x (z)]) */
 			/* [91 decision z-bbb-d-aaa expr] [3x 3x (d,w)] [3x 3x (b)] ([3x 3x (z)]) */
-			/* ğŒ®‚Ívba‚Ö */
-			/* decision‚Í2ƒoƒCƒgB‘I‘ğ”Ô†‚Æbbbb-aaaa */
+			/* æ¡ä»¶å¼ã¯vbaã¸ */
+			/* decisionã¯2ãƒã‚¤ãƒˆã€‚é¸æŠç•ªå·ã¨bbbb-aaaa */
 			d = c;
 			c = s[2]; /* z-bbb-d-aaa */
 			vba = &vb[c        & 0x07];
@@ -1252,7 +1252,7 @@ skipmc30:
 			if (d == 0x90)
 				vbc = NULL;
 			if (((e = s[0]) & 0x0f) != 0x0f) {
-				/* Šù‚É‰ğŒˆÏ‚İ */
+				/* æ—¢ã«è§£æ±ºæ¸ˆã¿ */
 				d = s[1];
 				s = skip_expr(s + 3);
 				vba->min = vba->max = d        & 0x0f;
@@ -1300,7 +1300,7 @@ skipmc30:
 				else
 					d = 2;
 			}
-			if ((c & 0x80) == 0) { /* zero‚È‚µ */
+			if ((c & 0x80) == 0) { /* zeroãªã— */
 				if ((d &= (1 | 2)) == 0)
 					d = 2; /* byte */
 			}
@@ -1362,8 +1362,8 @@ skipmc30:
 			/* microcode94, microcode95 */
 			/* [94 decision 0-bbb-0-aaa expr] [len] [def-a def-b] ([expr def-a def-b] ...) */
 			/* [95 decision 0-bbb-0-aaa expr] [len] [def-a def-b def-c] ([expr def-a def-b def-c] ...) */
-			/* def-a ‚Í 0x98`0x9e (’l‚ÍğŒ®) */
-			/* len‚ÍÅ’á1(case‚È‚µ), Å‰‚Í–³ğŒ’è‹`, Œã‘±‚Íˆê’v‚µ‚½‚ç’è‹`, ˆê’v‚ª‰½“x‚à‚ ‚ê‚ÎAÅŒã‚ª—LŒø */
+			/* def-a ã¯ 0x98ã€œ0x9e (å€¤ã¯æ¡ä»¶å¼) */
+			/* lenã¯æœ€ä½1(caseãªã—), æœ€åˆã¯ç„¡æ¡ä»¶å®šç¾©, å¾Œç¶šã¯ä¸€è‡´ã—ãŸã‚‰å®šç¾©, ä¸€è‡´ãŒä½•åº¦ã‚‚ã‚ã‚Œã°ã€æœ€å¾ŒãŒæœ‰åŠ¹ */
 			d = c;
 			c = s[2]; /* 0-bbb-0-aaa */
 			vba = &vb[c        & 0x07];
@@ -1372,7 +1372,7 @@ skipmc30:
 			if (d == 0x94)
 				vbc = NULL;
 			if (((g = s[0]) & 0x0f) != 0x0f) {
-				/* Šù‚É‰ğŒˆÏ‚İ */
+				/* æ—¢ã«è§£æ±ºæ¸ˆã¿ */
 				d = s[1];
 				s = skip_expr(s + 3);
 				e = *s++; /* len */
@@ -1410,8 +1410,8 @@ skipmc30:
 				if (value.delta != 0 || (value.flags & VFLG_ERROR) != 0)
 					f = 0xff;
 				for (g = 1; g < c; g++) {
-					/* ‚Ç‚¤‚â‚Á‚Ä“™‚µ‚¢‚±‚Æ‚ğŒ©‹É‚ß‚é‚Ì‚©H */
-					/* –Ê“|‚È‚Ì‚ÅA‘S‚Ä‚ªŠm’è‚·‚é‚Ü‚ÅAdecide‚µ‚È‚¢ */
+					/* ã©ã†ã‚„ã£ã¦ç­‰ã—ã„ã“ã¨ã‚’è¦‹æ¥µã‚ã‚‹ã®ã‹ï¼Ÿ */
+					/* é¢å€’ãªã®ã§ã€å…¨ã¦ãŒç¢ºå®šã™ã‚‹ã¾ã§ã€decideã—ãªã„ */
 					calc_value(&tmp, &s);
 					if (tmp.delta != 0 || (tmp.flags & VFLG_ERROR) != 0)
 						f = 0xff;
@@ -1467,9 +1467,9 @@ skipmc30:
 				goto dberr0;
 		#endif
 		if (c < 0xf0)
-			continue; /* 1ƒoƒCƒgƒŠƒ}[ƒN */
+			continue; /* 1ãƒã‚¤ãƒˆãƒªãƒãƒ¼ã‚¯ */
 		if (c < 0xf8) {
-			/* nƒoƒCƒgƒŠƒ}[ƒN */
+			/* nãƒã‚¤ãƒˆãƒªãƒãƒ¼ã‚¯ */
 			s += c - 0xef;
 			continue;
 		}
@@ -1481,13 +1481,13 @@ dberr0:
 
 
 /*
-  [90(91‚à“¯“™)] [disp®] [ba] : a‚Í0`7, b‚à0`7 : virtual byte”Ô† : B=8‚Í–¢g—p‚ğˆÓ–¡‚·‚é
-  a‚Ìbit3‚ÍADƒrƒbƒgBa‚É‚Â‚¢‚Ä‚ÍA®‚ª“ü‚éBƒŒƒ“ƒWƒ`ƒFƒbƒN‚Í03ƒ^ƒCƒvB
-  [90] [disp®] [09] [31, 00-nnn-r/m] [31 01-nnn-r/m] [31 10-nnn-r/m]
-  [bits 32]‚Å‚ÌPUSH‚Í‚±‚¤‚È‚é:[91] [imm®] [3a] [31 6a] [31 68]
-  94‚à—‚½‚æ‚¤‚ÈŒ`®‚É•ÏX(a‚Ì©“®’è‹`‚Í‚È‚¢)B
-  [94] [®] [ba] [case] [def0] [def1] [case] [def0] [def1] ...
-  ‚Ü‚½ˆÈ‰º‚ğ’è‹`
+  [90(91ã‚‚åŒç­‰)] [dispå¼] [ba] : aã¯0ã€œ7, bã‚‚0ã€œ7 : virtual byteç•ªå· : B=8ã¯æœªä½¿ç”¨ã‚’æ„å‘³ã™ã‚‹
+  aã®bit3ã¯ã€Dãƒ“ãƒƒãƒˆã€‚aã«ã¤ã„ã¦ã¯ã€å¼ãŒå…¥ã‚‹ã€‚ãƒ¬ãƒ³ã‚¸ãƒã‚§ãƒƒã‚¯ã¯03ã‚¿ã‚¤ãƒ—ã€‚
+  [90] [dispå¼] [09] [31, 00-nnn-r/m] [31 01-nnn-r/m] [31 10-nnn-r/m]
+  [bits 32]ã§ã®PUSHã¯ã“ã†ãªã‚‹:[91] [immå¼] [3a] [31 6a] [31 68]
+  94ã‚‚ä¼¼ãŸã‚ˆã†ãªå½¢å¼ã«å¤‰æ›´(aã®è‡ªå‹•å®šç¾©ã¯ãªã„)ã€‚
+  [94] [å¼] [ba] [case] [def0] [def1] [case] [def0] [def1] ...
+  ã¾ãŸä»¥ä¸‹ã‚’å®šç¾©
   [98] = [38 00 08 00] UCHAR
   [99] = [38 02 08 00] SCHAR
   [9a] = [39 00 08 00] USHORT
@@ -1499,18 +1499,18 @@ dberr0:
 
 
 
-  E70`77:‰Â•Ï’·ƒoƒCƒgéŒ¾(•¶–@ã‚Å‚Í40`4b‚ªŒã‘±‚·‚é‚±‚Æ‚ğ‹–‚·‚ªAƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢B‹–‚³‚ê‚é‚Ì‚Í30`3f)
-  E78`7f:‰Â•Ï’·ƒoƒCƒgQÆ
+  ãƒ»70ã€œ77:å¯å¤‰é•·ãƒã‚¤ãƒˆå®£è¨€(æ–‡æ³•ä¸Šã§ã¯40ã€œ4bãŒå¾Œç¶šã™ã‚‹ã“ã¨ã‚’è¨±ã™ãŒã€ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ãªã„ã€‚è¨±ã•ã‚Œã‚‹ã®ã¯30ã€œ3f)
+  ãƒ»78ã€œ7f:å¯å¤‰é•·ãƒã‚¤ãƒˆå‚ç…§
 
-  E80`8f:LL‚ª“à•”ˆ——p‚Ég‚¤
-	80`83:variableQÆ(1`4ƒoƒCƒg)
-	88`8f:sum(variable), (1`4, 1`4) : Å‰‚Í€”-1, Ÿ‚ÍÅ‰‚Ì”Ô†
+  ãƒ»80ã€œ8f:LLãŒå†…éƒ¨å‡¦ç†ç”¨ã«ä½¿ã†
+	80ã€œ83:variableå‚ç…§(1ã€œ4ãƒã‚¤ãƒˆ)
+	88ã€œ8f:sum(variable), (1ã€œ4, 1ã€œ4) : æœ€åˆã¯é …æ•°-1, æ¬¡ã¯æœ€åˆã®ç•ªå·
 
-  E90:0-B-elseƒoƒEƒ“ƒ_ƒŠ[if
-  E91:B-elseƒoƒEƒ“ƒ_ƒŠ[if
-  E92:0BWDƒoƒEƒ“ƒ_ƒŠ[if
-  E93:else
-  E‘I‘ğ“I’è”if
+  ãƒ»90:0-B-elseãƒã‚¦ãƒ³ãƒ€ãƒªãƒ¼if
+  ãƒ»91:B-elseãƒã‚¦ãƒ³ãƒ€ãƒªãƒ¼if
+  ãƒ»92:0BWDãƒã‚¦ãƒ³ãƒ€ãƒªãƒ¼if
+  ãƒ»93:else
+  ãƒ»é¸æŠçš„å®šæ•°if
 */
 
 	}
@@ -1524,7 +1524,7 @@ dberr0:
 }
 
 void calcsigma(struct STR_VALUE *value)
-/* sigma‚ğ‘S‚Ä“WŠJ‚µ‚Ä‚µ‚Ü‚¤ */
+/* sigmaã‚’å…¨ã¦å±•é–‹ã—ã¦ã—ã¾ã† */
 {
 	int i, j, s, t, min;
 	unsigned int delta;

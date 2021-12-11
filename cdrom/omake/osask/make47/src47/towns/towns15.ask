@@ -1,8 +1,8 @@
 /* "TOWNS15.ASK" for TOWNS ver.0.0 copyright(C) 2004 I.Tak */
 
-/* ���̂Ƃ���, towns/vesa16.ask �Ƌ��p�ł�
- * HWcursor �Ȃǂ̖�]�����邵 (���匾�s��)
- * makefile�������̂��߂�ǂ��̂ł���Ȃ�� */
+/* 今のところ, towns/vesa16.ask と共用です
+ * HWcursor などの野望もあるし (←大言壮語)
+ * makefileを書くのもめんどいのでこんなんで */
 
 #define TOWNS15
 #include "vesa16.ask"

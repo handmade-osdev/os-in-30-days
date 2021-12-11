@@ -1,5 +1,5 @@
-/* "IMGTOL.ASK":ƒfƒBƒXƒNƒCƒ[ƒW‘€ìƒc[ƒ‹DOS”Ä—p”Å */
-/* DOSƒtƒ@ƒ“ƒNƒVƒ‡ƒ“‚Ì“s‡‚ÅAmax‚ª32MB */
+/* "IMGTOL.ASK":ãƒ‡ã‚£ã‚¹ã‚¯ã‚¤ãƒ¡ãƒ¼ã‚¸æ“ä½œãƒ„ãƒ¼ãƒ«DOSæ±ç”¨ç‰ˆ */
+/* DOSãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³ã®éƒ½åˆã§ã€maxãŒ32MB */
 
 /*	read.   >imgtol r [opt] drive: filename  size (drv -> file)		*/
 /*	write.  >imgtol w [opt] drive: filename [size] (file -> drv)	*/
@@ -176,7 +176,7 @@ writeloop:
 			AX = 0;
 			asmout("REP STOSB");
 			POP(AX);
-			AX++; /* ’[”‚ª‚ ‚ê‚ÎØ‚èã‚° */
+			AX++; /* ç«¯æ•°ãŒã‚ã‚Œã°åˆ‡ã‚Šä¸Šã’ */
 		}
 		POP(DX);
 		CX = AX;
@@ -351,7 +351,7 @@ cmd_exe2sys:
 		goto infile_err;
 	CX = [DS:FILENAME0 + 0x0006];
 	if ((unsigned) CX > 6144)
-		goto infile_err; /* ƒŠƒƒP[ƒVƒ‡ƒ“€–Ú‚ª‘½‚·‚¬‚é */
+		goto infile_err; /* ãƒªãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³é …ç›®ãŒå¤šã™ãã‚‹ */
 	CX *= 4;
 	AH = 0x3f;
 	DX = FILEBUF;
@@ -423,7 +423,7 @@ cmd_exe2sys:
 			goto outfile_err;
 		if (AX != CX)
 			goto outfile_err;
-		BP += 1024; /* 16KB‚Í1024ƒpƒ‰ƒOƒ‰ƒt */
+		BP += 1024; /* 16KBã¯1024ãƒ‘ãƒ©ã‚°ãƒ©ãƒ• */
 	}
 
 cmd_release:
@@ -447,15 +447,15 @@ cmd_release:
 		goto infile_err;
 
 	if ((unsigned) DX < 5) /* 0x50000 (320KB) */
-		goto infile_err; /* ƒtƒ@ƒCƒ‹‚ª¬‚³‚·‚¬‚ÄˆÓ–¡‚È‚¢ */
-	/* ‚±‚ê‚ğƒZƒNƒ^”‚É•ÏŠ·i512‚ÅŠ„‚éj */
+		goto infile_err; /* ãƒ•ã‚¡ã‚¤ãƒ«ãŒå°ã•ã™ãã¦æ„å‘³ãªã„ */
+	/* ã“ã‚Œã‚’ã‚»ã‚¯ã‚¿æ•°ã«å¤‰æ›ï¼ˆï¼512ã§å‰²ã‚‹ï¼‰ */
 	AL = AH;
 	AH = DL;
 	DL = DH;
 	DH = 0;
 	SHR(DX, 1);
 	RCR(AX, 1);
-	[DS:SECTORS + 0] = AX; /* 32MBˆÈã‚Í‚ ‚è‚¦‚È‚¢ */
+	[DS:SECTORS + 0] = AX; /* 32MBä»¥ä¸Šã¯ã‚ã‚Šãˆãªã„ */
 	[DS:SECTORS + 2] = DX;
 
 	AX = 0x4200;
@@ -469,7 +469,7 @@ cmd_release:
 	if (CF != 0)
 		goto infile_err;
 
-	/* KHBIOS‚ÅSF16‚Å‚ ‚é‚±‚Æ‚ğŠm”F */
+	/* KHBIOSã§SF16ã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèª */
 	AX = 0;
 	if ((unsigned) (short) [DS:FILEBUF + 0x0040] != 0x4653) /* SF */
 		goto infile_err;
@@ -559,7 +559,7 @@ cmd_release:
 		SI += 128;
 	} while ((unsigned) SI < FILEBUF + 0x8000);
 
-	/* BPB‚Ì‰ğÍ */
+	/* BPBã®è§£æ */
 	SI = FILEBUF;
 	AX = [DS:SI + 68];
 	[DS:LBA] = AX; /* fat limit */
@@ -567,7 +567,7 @@ cmd_release:
 	AH = 0;
 	[DS:HANDLE1] = AX;
 
-	/* FAT‚Ì‰ğÍ */
+	/* FATã®è§£æ */
 	read32k();
 	if (CF != 0)
 		goto infile_err;
@@ -632,8 +632,8 @@ cmd_release:
 		} while ((unsigned) SI < FILEBUF + 0x8000);
 	}
 
-	/* ‚±‚ê‚Å[LBA+2]‚Ü‚Å‚ªg—p’†‚¾‚Æ”»–¾ */
-	/* VƒŠƒ~ƒbƒg‚Í[LBA+2]+1‚É‚È‚é */
+	/* ã“ã‚Œã§[LBA+2]ã¾ã§ãŒä½¿ç”¨ä¸­ã ã¨åˆ¤æ˜ */
+	/* æ–°ãƒªãƒŸãƒƒãƒˆã¯[LBA+2]+1ã«ãªã‚‹ */
 	AX = [DS:LBA + 2];
 	AX--;
 	MUL((short) [DS:HANDLE1]);
@@ -647,7 +647,7 @@ cmd_release:
 	[DS:SECTORS + 0] = AX;
 	[DS:SECTORS + 2] = DX;
 
-	/* ‰ÁH‚µ‚Äo—Í */
+	/* åŠ å·¥ã—ã¦å‡ºåŠ› */
 	AX = 0x4200;
 	DX = 0x0000;
 	CX = 0;
@@ -663,7 +663,7 @@ cmd_release:
 		goto outfile_err;
 	[DS:HANDLE1] = AX;
 
-	/* VƒTƒCƒY”½‰f */
+	/* æ–°ã‚µã‚¤ã‚ºåæ˜  */
 	read32k();
 	if (CF != 0)
 		goto infile_err;
@@ -699,11 +699,11 @@ cmd_release:
 	if (CF != 0)
 		goto outfile_err;
 
-	/* FATƒNƒŠƒA */
+	/* FATã‚¯ãƒªã‚¢ */
 	comp_sub0();
 	comp_sub0();
 
-	(short) [DS:SECTORS + 0] -= 576; /* 64KƒZƒNƒ^ˆÈã‚Í‚È‚¢‚Æ‰¼’è‚Å‚«‚é */
+	(short) [DS:SECTORS + 0] -= 576; /* 64Kã‚»ã‚¯ã‚¿ä»¥ä¸Šã¯ãªã„ã¨ä»®å®šã§ãã‚‹ */
 //	SBB((short) [DS:SECTORS + 2], 0);
 	if ((unsigned) (short) [DS:SECTORS] >= 64) {
 		do {
@@ -751,7 +751,7 @@ size_err:
 cmd_format:
 	format_sub0();
 format2:
-	/* BPB•â³ */
+	/* BPBè£œæ­£ */
 	MUL(CX);
 	AX += 640;
 	ADC(DX, 0);
@@ -764,13 +764,13 @@ format2:
 
 	AL = [DS:SI + 0x0c];
 	asmout("MOV [dat.seclen+1],AL");
-	AX = [DS:SECTORS + 0]; /* 32MBˆÈã‚Í‚ ‚è‚¦‚È‚¢ */
+	AX = [DS:SECTORS + 0]; /* 32MBä»¥ä¸Šã¯ã‚ã‚Šãˆãªã„ */
 	AX -= 64;
 	asmout("MOV WORD [dat.size],AX");
 	asmout("MOV WORD [dat.clulen],32*1024");
 
 	DX = 0;
-	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
+	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
 	goto writeloop;
 
 cmd_fake:
@@ -778,7 +778,7 @@ cmd_fake:
 	if ((unsigned) AX > 0xff5)
 		goto format2;
 
-	/* BPB•â³ */
+	/* BPBè£œæ­£ */
 	[DS:TEMP] = AX;
 	AX = 0xffee;
 	MUL(CX);
@@ -793,15 +793,15 @@ cmd_fake:
 
 	AL = [DS:SI + 0x0c];
 	asmout("MOV [dat.seclen+1],AL");
-	AX = [DS:SECTORS + 0]; /* 32MBˆÈã‚Í‚ ‚è‚¦‚È‚¢ */
+	AX = [DS:SECTORS + 0]; /* 32MBä»¥ä¸Šã¯ã‚ã‚Šãˆãªã„ */
 	AX -= 576;
 	asmout("MOV WORD [dat.size],AX");
 	asmout("MOV WORD [dat.clulen],32*1024");
 
 	DX = 0;
-	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
+	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
 
-	/* 128KBx2‚ÌFAT‚ğ‰ÁH */
+	/* 128KBx2ã®FATã‚’åŠ å·¥ */
 	fake_fat();
 	fake_fat();
 	goto writeloop;
@@ -1056,7 +1056,7 @@ void format_sub0()
 	asmout("JNZ get_param0.err");
 
 	AL = [DS:DRIVE];
-	CX = 1; /* 1ƒZƒNƒ^ƒŠ[ƒh */
+	CX = 1; /* 1ã‚»ã‚¯ã‚¿ãƒªãƒ¼ãƒ‰ */
 	DX = 0;
 	BX = FILEBUF + 32 * 1024;
 	INT(0x25);
@@ -1069,8 +1069,8 @@ void format_sub0()
 	INT(0x21);
 	if (CF != 0)
 		goto file_err;
-	[DS:HANDLE0] = AX; /* read32k‚ğ‚Â‚©‚¤‚½‚ß */
-	[DS:HANDLE1] = AX; /* writeloop‚ğ‚Â‚©‚¤‚½‚ß */
+	[DS:HANDLE0] = AX; /* read32kã‚’ã¤ã‹ã†ãŸã‚ */
+	[DS:HANDLE1] = AX; /* writeloopã‚’ã¤ã‹ã†ãŸã‚ */
 	BX = AX;
 	AX = 0x4202;
 	DX = 0;
@@ -1079,8 +1079,8 @@ void format_sub0()
 	if (CF != 0)
 		goto file_err;
 	if ((unsigned) DX < 5) /* 0x50000 (320KB) */
-		goto file_err; /* ƒtƒ@ƒCƒ‹‚ª¬‚³‚·‚¬‚ÄˆÓ–¡‚È‚¢ */
-	/* ‚±‚ê‚ğƒZƒNƒ^”‚É•ÏŠ·i512‚ÅŠ„‚éj */
+		goto file_err; /* ãƒ•ã‚¡ã‚¤ãƒ«ãŒå°ã•ã™ãã¦æ„å‘³ãªã„ */
+	/* ã“ã‚Œã‚’ã‚»ã‚¯ã‚¿æ•°ã«å¤‰æ›ï¼ˆï¼512ã§å‰²ã‚‹ï¼‰ */
 	AL = AH;
 	AH = DL;
 	DL = DH;
@@ -1088,7 +1088,7 @@ void format_sub0()
 	SHR(DX, 1);
 	RCR(AX, 1);
 
-	[DS:SECTORS + 0] = AX; /* 32MBˆÈã‚Í‚ ‚è‚¦‚È‚¢ */
+	[DS:SECTORS + 0] = AX; /* 32MBä»¥ä¸Šã¯ã‚ã‚Šãˆãªã„ */
 	[DS:SECTORS + 2] = DX;
 	SI = FILEBUF + 0x8000;
 	if ((unsigned) (short) [DS:SI + 0x40] == 0x4653) {
@@ -1106,7 +1106,7 @@ void format_sub0()
 		DX = [DS:SI + 0x22];
 	}
 	CL = [DS:SI + 0x0c];
-	(unsigned char) CL /= 4; /* 512ƒoƒCƒgƒZƒNƒ^‚È‚ç0‚É‚È‚é */
+	(unsigned char) CL /= 4; /* 512ãƒã‚¤ãƒˆã‚»ã‚¯ã‚¿ãªã‚‰0ã«ãªã‚‹ */
 	if (!= 0) {
 		do {
 			AX *= 2;
@@ -1116,14 +1116,14 @@ void format_sub0()
 	}
 skip0:
 	if ((unsigned) DX >= 0x1000)
-		goto drive_err; /* ƒhƒ‰ƒCƒu‚ª‚Å‚©‚·‚¬‚ÄŒë‘€ì‚Ì‰Â”\«‚ ‚è(2.0GB‚Ü‚Å) */
-	[DS:TEMP + 0] = AX; /* ƒp[ƒeƒBƒVƒ‡ƒ“‘—e—Ê(512’PˆÊ) */
+		goto drive_err; /* ãƒ‰ãƒ©ã‚¤ãƒ–ãŒã§ã‹ã™ãã¦èª¤æ“ä½œã®å¯èƒ½æ€§ã‚ã‚Š(2.0GBã¾ã§) */
+	[DS:TEMP + 0] = AX; /* ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ç·å®¹é‡(512å˜ä½) */
 	[DS:TEMP + 2] = DX;
 	CMP(AX, [DS:SECTORS + 0]);
 	SBB(DX, [DS:SECTORS + 2]);
 	if ((unsigned) < 0)
-		goto drive_err; /* —e—Ê‚ª‘«‚è‚È‚¢ */
-	BX = [DS:HANDLE0]; /* writeloop‚ğ‚Â‚©‚¤‚½‚ß */
+		goto drive_err; /* å®¹é‡ãŒè¶³ã‚Šãªã„ */
+	BX = [DS:HANDLE0]; /* writeloopã‚’ã¤ã‹ã†ãŸã‚ */
 	AX = 0x4200;
 	DX = 0;
 	CX = 0;
@@ -1141,23 +1141,23 @@ skip0:
 	if ((unsigned) (short) [DS:SI + 0x42] != 0x3631) /* 16 */
 		goto file_err;
 
-	AX = [DS:TEMP + 0]; /* ƒp[ƒeƒBƒVƒ‡ƒ“‘—e—Ê(512’PˆÊ) */
+	AX = [DS:TEMP + 0]; /* ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ç·å®¹é‡(512å˜ä½) */
 	DX = [DS:TEMP + 2];
 	[DS:SI + 0x48] = AX;
 	[DS:SI + 0x4a] = DX;
-	[DS:FILEBUF + 0x6020] = AX; /* ƒfƒoƒCƒX‘—e—Êiˆê‰j */
+	[DS:FILEBUF + 0x6020] = AX; /* ãƒ‡ãƒã‚¤ã‚¹ç·å®¹é‡ï¼ˆä¸€å¿œï¼‰ */
 	[DS:FILEBUF + 0x6022] = DX;
 	[DS:FILEBUF + 0x6850] = AX; /* usesiz */
 	[DS:FILEBUF + 0x6852] = DX;
 	[DS:FILEBUF + 0x6860] = AX; /* alcsiz */
 	[DS:FILEBUF + 0x6862] = DX;
 
-	AX -= 640; /* ƒtƒ@ƒCƒ‹—Ìˆæ‚Æ‚µ‚Ä—˜—p‰Â”\‚ÈƒZƒNƒ^” */
+	AX -= 640; /* ãƒ•ã‚¡ã‚¤ãƒ«é ˜åŸŸã¨ã—ã¦åˆ©ç”¨å¯èƒ½ãªã‚»ã‚¯ã‚¿æ•° */
 	SBB(DX, 0);
-	CL = [DS:SI + 0x0d]; /* ƒNƒ‰ƒXƒ^ƒTƒCƒY */
+	CL = [DS:SI + 0x0d]; /* ã‚¯ãƒ©ã‚¹ã‚¿ã‚µã‚¤ã‚º */
 	CH = 0;
 	if (DX >= CX)
-		goto skip1; /* ffee‚ÉŠm’è */
+		goto skip1; /* ffeeã«ç¢ºå®š */
 	DIV(CX);
 	if ((unsigned) AX >= 0xffee) {
 skip1:
@@ -1165,12 +1165,12 @@ skip1:
 	}
 	AX += 2;
 	[DS:SI + 0x44] = AX;
-	AL = [DS:BX + 0x0c]; /* ƒZƒNƒ^’· */
+	AL = [DS:BX + 0x0c]; /* ã‚»ã‚¯ã‚¿é•· */
 	[DS:SI + 0x0c] = AL;
 	(char) [DS:SI + 0x13] = 0;
 	(char) [DS:SI + 0x14] = 0;
-	AX = [DS:BX + 0x18]; /* 1ƒgƒ‰ƒbƒN‚ ‚½‚è‚ÌƒZƒNƒ^” */
-	DX = [DS:BX + 0x1a]; /* 1ƒVƒŠƒ“ƒ_‚ ‚½‚è‚Ìƒwƒbƒh” */
+	AX = [DS:BX + 0x18]; /* 1ãƒˆãƒ©ãƒƒã‚¯ã‚ãŸã‚Šã®ã‚»ã‚¯ã‚¿æ•° */
+	DX = [DS:BX + 0x1a]; /* 1ã‚·ãƒªãƒ³ãƒ€ã‚ãŸã‚Šã®ãƒ˜ãƒƒãƒ‰æ•° */
 	[DS:SI + 0x18] = AX;
 	[DS:SI + 0x1a] = DX;
 	AX = [DS:BX + 0x1c]; /* LBA0 */
@@ -1178,13 +1178,13 @@ skip1:
 	[DS:SI + 0x1c] = AX;
 	[DS:SI + 0x1e] = DX;
 
-	/* KHBIOSî•ñ‚Ì•â³ */
+	/* KHBIOSæƒ…å ±ã®è£œæ­£ */
 	[DS:FILEBUF + 0x6870] = AX;
 	[DS:FILEBUF + 0x6872] = DX;
 
 	AX = [DS:SI + 0x44];
 	AX -= 2;
-//	CL = [DS:SI + 0x0d]; /* ƒNƒ‰ƒXƒ^ƒTƒCƒY */
+//	CL = [DS:SI + 0x0d]; /* ã‚¯ãƒ©ã‚¹ã‚¿ã‚µã‚¤ã‚º */
 //	CH = 0;
 	return;
 file_err:
@@ -1195,9 +1195,9 @@ drive_err:
 
 void drvwrite32k()
 {
-	AX = 32 * 4; /* 32KBi256ƒoƒCƒg’PˆÊj */
+	AX = 32 * 4; /* 32KBï¼ˆ256ãƒã‚¤ãƒˆå˜ä½ï¼‰ */
 	asmout("DIV BYTE [dat.seclen+1]");
-	CX = AX; /* ‚ ‚Ü‚è‚Í‚Å‚È‚¢ */
+	CX = AX; /* ã‚ã¾ã‚Šã¯ã§ãªã„ */
 	AL = [DS:DRIVE];
 	BX = FILEBUF;
 	PUSH(DX);
@@ -1212,13 +1212,13 @@ void drvwrite32k()
 }
 
 void fake_fat()
-/* ÀƒNƒ‰ƒXƒ^”‚Í0xff5ˆÈ‰º */
+/* å®Ÿã‚¯ãƒ©ã‚¹ã‚¿æ•°ã¯0xff5ä»¥ä¸‹ */
 {
 	PUSH(DX);
 	read32k();
 	POP(DX);
 	BX = [DS:TEMP];
-	/* fff7‚Å–„‚ß‚é•K—v‚ª‚ ‚é */
+	/* fff7ã§åŸ‹ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ */
 	BX += 2;
 	AX = 0xfff7;
 	BX *= 2;
@@ -1228,7 +1228,7 @@ void fake_fat()
 		BX += 2;
 	} while ((unsigned) BX < FILEBUF + 0x8000);
 
-	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
+	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
 
 	PUSH(DX);
 	read32k();
@@ -1242,9 +1242,9 @@ void fake_fat()
 		BX += 2;
 	} while ((unsigned) BX < FILEBUF + 0x8000);
 
-	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
-	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
-//	drvwrite32k(); /* ƒGƒ‰[ˆ—•t‚« */
+	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
+	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
+//	drvwrite32k(); /* ã‚¨ãƒ©ãƒ¼å‡¦ç†ä»˜ã */
 //	return;
 	asmout("JMP drvwrite32k");
 }

@@ -381,7 +381,7 @@ gen_fake_label ()
    PREV is the number describing the target, value or element type.
    DT_type describes how to transform that type.  */
 #define PUSH_DERIVED_LEVEL(DT_type,PREV)		\
-  ((((PREV) & ~(int) N_BTMASK) << (int) N_TSHIFT)		\
+  ((((PREV) & ‾(int) N_BTMASK) << (int) N_TSHIFT)		\
    | ((int) DT_type << (int) N_BTSHFT)			\
    | ((PREV) & (int) N_BTMASK))
 

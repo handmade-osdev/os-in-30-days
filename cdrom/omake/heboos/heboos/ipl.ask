@@ -1,31 +1,31 @@
-/* ‚Ö‚ÚOS—pIPL copyright(C) 2003 ì‡GŽÀ, KL-01 */
+/* ã¸ã¼OSç”¨IPL copyright(C) 2003 å·åˆç§€å®Ÿ, KL-01 */
 
-/* ASKA‚ª‚¢‚ë‚¢‚ë‚¤‚é‚³‚¢‚Ì‚ÅA‚Æ‚è‚ ‚¦‚¸‘‚¢‚Ä‚¨‚­ */
+/* ASKAãŒã„ã‚ã„ã‚ã†ã‚‹ã•ã„ã®ã§ã€ã¨ã‚Šã‚ãˆãšæ›¸ã„ã¦ãŠã */
 segment CODE(USE32, PARA);
 default(code == CODE);
 
 void readsec();
 
 void header()
-// MS-DOSŒÝŠ·‚Ì‚½‚ß‚Ìƒwƒbƒ_
+// MS-DOSäº’æ›ã®ãŸã‚ã®ãƒ˜ãƒƒãƒ€
 {
 	asmout("[BITS 16]");
 	ORG(0x7c00);
-	asmout("JMP boot"); // ƒwƒbƒ_‚ðƒXƒLƒbƒv‚·‚é‚½‚ß‚ÌƒWƒƒƒ“ƒv–½—ß
+	asmout("JMP boot"); // ãƒ˜ãƒƒãƒ€ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ãŸã‚ã®ã‚¸ãƒ£ãƒ³ãƒ—å‘½ä»¤
 	NOP();
 	asmout("DB 'heboOS  '"); // OEM name & version.
-	DW(512); // ƒZƒNƒ^’·(ƒoƒCƒg’PˆÊ)
-	DB(1); // ƒNƒ‰ƒXƒ^’·(ƒZƒNƒ^’PˆÊ)
-	DW(1); // ƒu[ƒgƒZƒNƒ^’·(ƒZƒNƒ^’PˆÊ)
-	DB(2); // FAT‚Ì”
+	DW(512); // ã‚»ã‚¯ã‚¿é•·(ãƒã‚¤ãƒˆå˜ä½)
+	DB(1); // ã‚¯ãƒ©ã‚¹ã‚¿é•·(ã‚»ã‚¯ã‚¿å˜ä½)
+	DW(1); // ãƒ–ãƒ¼ãƒˆã‚»ã‚¯ã‚¿é•·(ã‚»ã‚¯ã‚¿å˜ä½)
+	DB(2); // FATã®æ•°
 	DW(0x00e0); // root directory entries.
-	DW(2880); // ‘ƒZƒNƒ^”
+	DW(2880); // ç·ã‚»ã‚¯ã‚¿æ•°
 	DB(0xf0); // media descriptor byte.
-	DW(9); // 1‚Â‚ÌFAT‚Ì’·‚³(ƒZƒNƒ^’PˆÊ)
-	DW(18); // 1ƒgƒ‰ƒbƒN‚ÉŽû—e‚³‚ê‚Ä‚¢‚éƒZƒNƒ^”
-	DW(2); // ƒwƒbƒh”
-	DD(0); // •s‰ÂŽ‹ƒZƒNƒ^”
-	DD(2880); // ‘ƒZƒNƒ^”
+	DW(9); // 1ã¤ã®FATã®é•·ã•(ã‚»ã‚¯ã‚¿å˜ä½)
+	DW(18); // 1ãƒˆãƒ©ãƒƒã‚¯ã«åŽå®¹ã•ã‚Œã¦ã„ã‚‹ã‚»ã‚¯ã‚¿æ•°
+	DW(2); // ãƒ˜ãƒƒãƒ‰æ•°
+	DD(0); // ä¸å¯è¦–ã‚»ã‚¯ã‚¿æ•°
+	DD(2880); // ç·ã‚»ã‚¯ã‚¿æ•°
 	DB(0, 0); /* unknown */
 	DB(0x29);
 	DD(0xffffffff);
@@ -97,8 +97,8 @@ void footer()
 }
 
 void FAT()
-/* HEBOOS.SYS‚Í64KB‚Æ‚¢‚¤‚±‚Æ‚É‚µ‚Ä‚¨‚­ */
-/* ‚¾‚©‚ç64KB‚ÌFATƒ`ƒFƒCƒ“‚ð */
+/* HEBOOS.SYSã¯64KBã¨ã„ã†ã“ã¨ã«ã—ã¦ãŠã */
+/* ã ã‹ã‚‰64KBã®FATãƒã‚§ã‚¤ãƒ³ã‚’ */
 {
 	DB(0xf0, 0xff, 0xff, 0x03, 0x40, 0x00, 0x05, 0x60);
 	DB(0x00, 0x07, 0x80, 0x00, 0x09, 0xa0, 0x00, 0x0b);

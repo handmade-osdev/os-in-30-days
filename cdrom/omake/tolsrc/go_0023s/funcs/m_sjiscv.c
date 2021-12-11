@@ -20,7 +20,7 @@ static UCHAR *convmain(UCHAR *src0, UCHAR *src1, UCHAR *dest0, UCHAR *dest1, str
 				*dest0++ = c;
 				continue;
 			}
-			if (0xa0 <= c && c <= 0xdf) { /* ”¼Šp‚©‚È */
+			if (0xa0 <= c && c <= 0xdf) { /* åŠè§’ã‹ãª */
 escape1:
 				escape(dest0, c);
 				dest0 += 4;

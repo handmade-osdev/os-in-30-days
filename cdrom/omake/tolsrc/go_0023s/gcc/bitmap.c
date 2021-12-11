@@ -344,7 +344,7 @@ bitmap_clear_bit (head, bit)
       unsigned bit_num  = bit % (unsigned) HOST_BITS_PER_WIDE_INT;
       unsigned word_num = ((bit / (unsigned) HOST_BITS_PER_WIDE_INT)
 			   % BITMAP_ELEMENT_WORDS);
-      ptr->bits[word_num] &= ~ (((unsigned HOST_WIDE_INT) 1) << bit_num);
+      ptr->bits[word_num] &= ‾ (((unsigned HOST_WIDE_INT) 1) << bit_num);
 
       /* If we cleared the entire word, free up the element */
       if (bitmap_element_zerop (ptr))
@@ -485,7 +485,7 @@ bitmap_last_set_bit (a)
  #error "Fill out the table."
 #endif
 #if HOST_BITS_PER_WIDE_INT > 32
-  if (word & ~ (unsigned HOST_WIDE_INT) 0xffffffff)
+  if (word & ‾ (unsigned HOST_WIDE_INT) 0xffffffff)
     word >>= 32, bit_num += 32;
 #endif
   if (word & 0xffff0000)
@@ -514,7 +514,7 @@ bitmap_operation (to, from1, from2, operation)
      bitmap from2;
      enum bitmap_bits operation;
 {
-#define HIGHEST_INDEX (unsigned int) ~0
+#define HIGHEST_INDEX (unsigned int) ‾0
 
   bitmap_element *from1_ptr = from1->first;
   bitmap_element *from2_ptr = from2->first;
@@ -621,14 +621,14 @@ bitmap_operation (to, from1, from2, operation)
 	  break;
 
 	case BITMAP_AND_COMPL:
-	  DOIT (&~);
+	  DOIT (&‾);
 	  break;
 
 	case BITMAP_IOR:
 	  DOIT (|);
 	  break;
 	case BITMAP_IOR_COMPL:
-	  DOIT (|~);
+	  DOIT (|‾);
 	  break;
 	case BITMAP_XOR:
 	  DOIT (^);

@@ -1,10 +1,10 @@
 ; naskfunc
 ; TAB=4
 
-[FORMAT "WCOFF"]				; �I�u�W�F�N�g�t�@�C������郂�[�h	
-[INSTRSET "i486p"]				; 486�̖��߂܂Ŏg�������Ƃ����L�q
-[BITS 32]						; 32�r�b�g���[�h�p�̋@�B�����点��
-[FILE "naskfunc.nas"]			; �\�[�X�t�@�C�������
+[FORMAT "WCOFF"]				; オブジェクトファイルを作るモード	
+[INSTRSET "i486p"]				; 486の命令まで使いたいという記述
+[BITS 32]						; 32ビットモード用の機械語を作らせる
+[FILE "naskfunc.nas"]			; ソースファイル名情報
 
 		GLOBAL	_io_hlt, _io_cli, _io_sti, _io_stihlt
 		GLOBAL	_io_in8,  _io_in16,  _io_in32
@@ -77,14 +77,14 @@ _io_out32:	; void io_out32(int port, int data);
 		RET
 
 _io_load_eflags:	; int io_load_eflags(void);
-		PUSHFD		; PUSH EFLAGS �Ƃ����Ӗ�
+		PUSHFD		; PUSH EFLAGS という意味
 		POP		EAX
 		RET
 
 _io_store_eflags:	; void io_store_eflags(int eflags);
 		MOV		EAX,[ESP+4]
 		PUSH	EAX
-		POPFD		; POP EFLAGS �Ƃ����Ӗ�
+		POPFD		; POP EFLAGS という意味
 		RET
 
 _load_gdtr:		; void load_gdtr(int limit, int addr);
@@ -177,7 +177,7 @@ _asm_inthandler2c:
 		IRETD
 
 _memtest_sub:	; unsigned int memtest_sub(unsigned int start, unsigned int end)
-		PUSH	EDI						; �iEBX, ESI, EDI ���g�������̂Łj
+		PUSH	EDI						; （EBX, ESI, EDI も使いたいので）
 		PUSH	ESI
 		PUSH	EBX
 		MOV		ESI,0xaa55aa55			; pat0 = 0xaa55aa55;
@@ -219,10 +219,10 @@ _farcall:		; void farcall(int eip, int cs);
 
 _asm_cons_putchar:
 		PUSH	1
-		AND		EAX,0xff	; AH��EAX�̏�ʂ�0�ɂ��āAEAX�ɕ����R�[�h����������Ԃɂ���B
+		AND		EAX,0xff	; AHやEAXの上位を0にして、EAXに文字コードが入った状態にする。
 		PUSH	EAX
-		PUSH	DWORD [0x0fec]	; �������̓��e��ǂݍ���ł��̒l��PUSH����
+		PUSH	DWORD [0x0fec]	; メモリの内容を読み込んでその値をPUSHする
 		CALL	_cons_putchar
-		ADD		ESP,12		; �X�^�b�N�ɐς񂾃f�[�^���̂Ă�
+		ADD		ESP,12		; スタックに積んだデータを捨てる
 		RETF
 

@@ -1,4 +1,4 @@
-/* "VESA16.ASK" for PC/AT ver.0.5 copyright(C) 2004 ì‡GÀ */
+/* "VESA16.ASK" for PC/AT ver.0.5 copyright(C) 2004 å·åˆç§€å®Ÿ */
 
 segment CODE(USE32, PARA);
 default(code == CODE);
@@ -15,20 +15,20 @@ struct GAPI_WORK {
 	void [636];
 	int backup_buf[576]; /* +704 */
 	int mouse_pattern[2304]; /* 1280 */
-	void [512]; /* ƒtƒHƒ“ƒgŠÇ——pƒ[ƒN */
-	/* ˆÈã4KB */
+	void [512]; /* ãƒ•ã‚©ãƒ³ãƒˆç®¡ç†ç”¨ãƒ¯ãƒ¼ã‚¯ */
+	/* ä»¥ä¸Š4KB */
 };
 
 void far GAPI_entry()
-/* •K‚¸AEFLAGS.IF == 1‚ÅŒÄ‚Ô‚±‚Æ */
+/* å¿…ãšã€EFLAGS.IF == 1ã§å‘¼ã¶ã“ã¨ */
 {
 	goto syscmd;
 //	ORG(0x0008);
 //	ORG(0x0010);
 	asmout("RESB 0x10-$");
 	asmout("DD OFFSET #syscmd, 0, 0, 0");
-	DD(4096); /* ‰Šú‰»‚É•K—v‚Èƒ[ƒNƒGƒŠƒAƒTƒCƒY */
-	DD(0); /* Å‘åƒ[ƒJƒ‹ƒXƒ^ƒbƒNÁ”ï—Ê */
+	DD(4096); /* åˆæœŸåŒ–æ™‚ã«å¿…è¦ãªãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã‚µã‚¤ã‚º */
+	DD(0); /* æœ€å¤§ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚¿ãƒƒã‚¯æ¶ˆè²»é‡ */
 //	ORG(0x0040);
 	asmout("RESB 0x40-$");
 syscmd:
@@ -180,7 +180,7 @@ void colortable16()
 
 void GAPI_fontwrite()
 {
-	/* 8x16‚ÌƒtƒHƒ“ƒg‚ğ•`‰æ(”wŒiF•t‚«) */
+	/* 8x16ã®ãƒ•ã‚©ãƒ³ãƒˆã‚’æç”»(èƒŒæ™¯è‰²ä»˜ã) */
 	int *cmd == FS:EBX;
 	GAPI_WORK *work == ES:0x0000;
 
@@ -198,7 +198,7 @@ void GAPI_fontwrite()
 	ESI = cmd[12]; /* y */
 	TEST(AL, 0x01);
 	if (!= 0)
-		goto error; /* 2‚Ì”{”ˆÈŠO‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢ */
+		goto error; /* 2ã®å€æ•°ä»¥å¤–ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„ */
 
 	IMUL(ESI, work->linebytes);
 	LEA(ESI, [ESI + EAX * 2 + 0xe0000000]);
@@ -472,7 +472,7 @@ opt2:
 	ESI = cmd[12]; /* y */
 //	TEST(AL, 0x03);
 //	if (!= 0)
-//		goto error; /* 4‚Ì”{”ˆÈŠO‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢ */
+//		goto error; /* 4ã®å€æ•°ä»¥å¤–ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„ */
 
 	IMUL(ESI, work->linebytes);
 	LEA(ESI, [ESI + EAX * 2 + 0xe0000000]);
@@ -591,14 +591,14 @@ opt3:
 opt_high:
 /*
 	0x0101, opt, x, y, col, bcol[20], dummy[24], dummy[28], len, str...
-	opt‚É‚æ‚Á‚ÄAx, y‚ªofs:sel‚É‚È‚é
-	opt8-10 : 0, 1, 2, 4(3) (0ˆÈŠO‚ÍRAM•`‰æ, dmy[24]‚ªƒ‰ƒCƒ“ƒoƒCƒg)
-	opt11 : extƒtƒ‰ƒO, str‚ğfar-ptr‚É‚·‚é(‚Å‚à‰¿’l–³‚µ‚¾‚È)
-	opt12 : col–³Œø‰»ƒtƒ‰ƒO‚É
-	opt13 : bcol–³Œø‰»ƒtƒ‰ƒO
+	optã«ã‚ˆã£ã¦ã€x, yãŒofs:selã«ãªã‚‹
+	opt8-10 : 0, 1, 2, 4(3) (0ä»¥å¤–ã¯RAMæç”», dmy[24]ãŒãƒ©ã‚¤ãƒ³ãƒã‚¤ãƒˆ)
+	opt11 : extãƒ•ãƒ©ã‚°, strã‚’far-ptrã«ã™ã‚‹(ã§ã‚‚ä¾¡å€¤ç„¡ã—ã ãª)
+	opt12 : colç„¡åŠ¹åŒ–ãƒ•ãƒ©ã‚°ã«
+	opt13 : bcolç„¡åŠ¹åŒ–ãƒ•ãƒ©ã‚°
 	opt14-15 : pset, and, or, xor
-	‚Æ‚è‚ ‚¦‚¸Aopt:0x0100‚Ì‚İ‚ÌƒTƒ|[ƒg‚ğ’Ç‰Á‚µ‚æ‚¤B
-	opt‚ÅŠÖ”‚ÌƒAƒhƒŒƒX‚ªŒˆ‚Ü‚èA‚»‚ê‚ğƒ‹[ƒv‚²‚Æ‚ÉŒÄ‚ÔBjmp‚Å‚à‚æ‚¢B
+	ã¨ã‚Šã‚ãˆãšã€opt:0x0100ã®ã¿ã®ã‚µãƒãƒ¼ãƒˆã‚’è¿½åŠ ã—ã‚ˆã†ã€‚
+	optã§é–¢æ•°ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒæ±ºã¾ã‚Šã€ãã‚Œã‚’ãƒ«ãƒ¼ãƒ—ã”ã¨ã«å‘¼ã¶ã€‚jmpã§ã‚‚ã‚ˆã„ã€‚
 */
 	if (EAX != 0x0100)
 		goto error;
@@ -687,7 +687,7 @@ void init_mousecursor()
 
 	CH = 16;
 	do {
-		/* 1loop“–‚½‚èA1line */
+		/* 1loopå½“ãŸã‚Šã€1line */
 		CL = 0x80;
 		do {
 			EAX = 0x0000ffff;
@@ -755,7 +755,7 @@ void init_mousecursor()
 		CH--;
 	} while (!= 0);
 
-	/* ‚¸‚ç‚µƒpƒ^[ƒ“‚Ì—pˆÓ */
+	/* ãšã‚‰ã—ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç”¨æ„ */
 //	LEA((offset) cursor_buf, work->mouse_pattern[1152]);
 	CH = 16;
 	do {
@@ -787,13 +787,13 @@ void GAPI_init()
 	int all_sel == 1 * 8;
 	int *cmd == FS:EBX;
 
-	cmd[4] = 0xffffffff; /* I—¹ */
+	cmd[4] = 0xffffffff; /* çµ‚äº† */
 	(offset) cmd += 12;
 
 	GAPI_WORK *workES == ES:0x0000;
 
 	ECX = 0;
-	workES->mx1 = 0x80000000; /* ”ñ•\¦ */
+	workES->mx1 = 0x80000000; /* éè¡¨ç¤º */
 	workES->lockcount = /* 0 */ ECX;
 	workES->mouselock = /* 0 */ ECX;
 	workES->VGA_mode = /* 0 */ ECX;
@@ -808,7 +808,7 @@ void GAPI_resetdevice()
 	int *cmd == FS:EBX;
 
 	if (cmd[8] == 0x0020) {
-		/* ‰ğ‘œ“x“`’B */
+		/* è§£åƒåº¦ä¼é” */
 		EAX = cmd[12];
 		ECX = cmd[16];
 		work->x2 = EAX;
@@ -819,15 +819,15 @@ void GAPI_resetdevice()
 		asmout("JMP next_command");
 	}
 
-	// ƒpƒŒƒbƒg‰Šú‰»
+	// ãƒ‘ãƒ¬ãƒƒãƒˆåˆæœŸåŒ–
 
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
 #if 0
 palette_table: // Red, Green, Blue
-	// 0:•, 7:ˆÃ‚¢ŠDF, 8:–¾‚é‚¢ŠDF, 6:ƒoƒbƒN‚ÌF, 15:”’
+	// 0:é»’, 7:æš—ã„ç°è‰², 8:æ˜ã‚‹ã„ç°è‰², 6:ãƒãƒƒã‚¯ã®è‰², 15:ç™½
 
 	asmout("DB 000H, 000H, 000H,   084H, 000H, 000H,   000H, 084H, 000H,   084H, 084H, 000H");
 	asmout("DB 000H, 000H, 084H,   084H, 000H, 084H,   000H, 084H, 084H,   084H, 084H, 084H");
@@ -843,7 +843,7 @@ palette_table: // Red, Green, Blue
 }
 
 void GAPI_putmouse()
-/* ”j‰óƒŒƒWƒXƒ^FEAX, ECX, EDX, ESI, EDI */
+/* ç ´å£Šãƒ¬ã‚¸ã‚¹ã‚¿ï¼šEAX, ECX, EDX, ESI, EDI */
 {
 	GAPI_WORK *work == ES:0x0000;
 	int *b /* backup */ == ES:EDX, *p /* cursor */ == DS:ESI, *q /* pattern */ == ES:EDI;
@@ -935,7 +935,7 @@ skip:
 }
 
 void GAPI_removemouse()
-/* ”j‰óƒŒƒWƒXƒ^FEAX, ECX, EDX, ESI, EDI */
+/* ç ´å£Šãƒ¬ã‚¸ã‚¹ã‚¿ï¼šEAX, ECX, EDX, ESI, EDI */
 {
 	GAPI_WORK *work == ES:0x0000;
 	int *b /* backup */ == ES:EDI, *p /* cursor */ == DS:ESI;
@@ -987,19 +987,19 @@ skip:
 }
 
 void GAPI_clippingmouse()
-/* ‰½‚à§ŒÀ‚µ‚È‚¢ */
-/* (mx, my) : ‹¤‚É•„†•t‚«®” */
-/* EBXˆÈŠO‚ğ”j‰ó */
+/* ä½•ã‚‚åˆ¶é™ã—ãªã„ */
+/* (mx, my) : å…±ã«ç¬¦å·ä»˜ãæ•´æ•° */
+/* EBXä»¥å¤–ã‚’ç ´å£Š */
 {
 	GAPI_WORK *work == ES:0x0000;
-	char *p == DS:EDI /* ƒJ[ƒ\ƒ‹ƒAƒhƒŒƒX */, *q == ES:EAX;
+	char *p == DS:EDI /* ã‚«ãƒ¼ã‚½ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ */, *q == ES:EAX;
 	signed int x == ESI, y == EBP;
 
 	ECX = 0; /* start */
 	EDX = 0x1012; /* len */
 	x = work->mx;
 	y = work->my;
-	x &= /* ~0x01 */ 0xfffffffe;
+	x &= /* â€¾0x01 */ 0xfffffffe;
 	EAX = x;
 	/* (false) */ if (x < 0) {
 		/* (false) */ if (x <= -18)
@@ -1073,8 +1073,8 @@ full_outside:
 
 void GAPI_accesslock()
 /* opt bit0  0:Lock 1:Unlock
-       bit1  Lock‚ÌƒIƒvƒVƒ‡ƒ“   0:nearƒ|ƒCƒ“ƒ^‚ ‚è 1:‚È‚µ
-             Unlock‚ÌƒIƒvƒVƒ‡ƒ“ 0:”ÍˆÍw’è‚È‚µ 1:‚ ‚è
+       bit1  Lockæ™‚ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³   0:nearãƒã‚¤ãƒ³ã‚¿ã‚ã‚Š 1:ãªã—
+             Unlockæ™‚ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ 0:ç¯„å›²æŒ‡å®šãªã— 1:ã‚ã‚Š
        bit8-31  Unlock-opt */
 {
 	int *cmd == FS:EBX;
@@ -1097,7 +1097,7 @@ lock_bitset:
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
 	EBP = cmd[28]; // ofs
-	cmd[4] = 0xffffffff; /* I—¹ */
+	cmd[4] = 0xffffffff; /* çµ‚äº† */
 	(offset) cmd += 32;
 	CLI();
 	work->lockcount++;
@@ -1122,7 +1122,7 @@ lock_bitnoset:
 	ECX = cmd[16]; // y0
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
-	cmd[4] = 0xffffffff; /* I—¹ */
+	cmd[4] = 0xffffffff; /* çµ‚äº† */
 	(offset) cmd += 28;
 	CLI();
 	work->lockcount++;
@@ -1149,26 +1149,26 @@ unlock_optbit:
 		if (!= 0) {
 			work->mouselock--;
 			if (== 0) {
-				/* ƒ}ƒEƒX‚ğˆÚ“®‚³‚¹‚é‚ÉAmouselock‚ª0x80000000‚É‚³‚ê‚é‚Ì‚ÅA
-				   ƒ}ƒEƒX‚ª”ñ•\¦’†‚ÉˆÚ“®‚·‚é‚ÆA‚±‚ê‚Í¬—§‚µ‚È‚­‚È‚éB */
+				/* ãƒã‚¦ã‚¹ã‚’ç§»å‹•ã•ã›ã‚‹æ™‚ã«ã€mouselockãŒ0x80000000ã«ã•ã‚Œã‚‹ã®ã§ã€
+				   ãƒã‚¦ã‚¹ãŒéè¡¨ç¤ºä¸­ã«ç§»å‹•ã™ã‚‹ã¨ã€ã“ã‚Œã¯æˆç«‹ã—ãªããªã‚‹ã€‚ */
 				GAPI_putmouse(); /* put mouse (mouseflag = 1) */
-				/* mx1‚ğƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚¢‚¢‚Ì‚©H */
+				/* mx1ã‚’ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã„ã„ã®ã‹ï¼Ÿ */
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; /* I—¹ */
+		cmd[4] = 0xffffffff; /* çµ‚äº† */
 		(offset) cmd += 12;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1‚ª‚±‚Ì’l‚Ì‚ÍA”ñ•\¦‚ğˆÓ–¡‚·‚é */) {
+	if (work->mx1 != 0x80000000 /* mx1ãŒã“ã®å€¤ã®æ™‚ã¯ã€éè¡¨ç¤ºã‚’æ„å‘³ã™ã‚‹ */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1‚ğİ’è */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1ã‚’è¨­å®š */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; /* I—¹ */
+	cmd[4] = 0xffffffff; /* çµ‚äº† */
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
@@ -1186,9 +1186,9 @@ unlock_area:
 					if ((signed) EDI /* y1 */ > work->my0) {
 						work->mouselock--;
 						if (== 0) {
-							/* ƒ}ƒEƒX‚ğˆÚ“®‚³‚¹‚é‚ÉAmouselock‚ª0‚É‚³‚ê‚é‚Ì‚ÅA
-							   ƒ}ƒEƒX‚ªˆêÁ‹’†‚ÉˆÚ“®‚·‚é‚ÆA‚±‚ê‚Í¬—§‚µ‚È‚­‚È‚éB
-							   ƒ}ƒEƒX‚ª”ñ•\¦’†‚ÍÅ‰‚Ìmx1‚Ì”äŠr‚ª¬—§‚µ‚È‚¢ */
+							/* ãƒã‚¦ã‚¹ã‚’ç§»å‹•ã•ã›ã‚‹æ™‚ã«ã€mouselockãŒ0ã«ã•ã‚Œã‚‹ã®ã§ã€
+							   ãƒã‚¦ã‚¹ãŒä¸€æ™‚æ¶ˆå»ä¸­ã«ç§»å‹•ã™ã‚‹ã¨ã€ã“ã‚Œã¯æˆç«‹ã—ãªããªã‚‹ã€‚
+							   ãƒã‚¦ã‚¹ãŒéè¡¨ç¤ºä¸­ã¯æœ€åˆã®mx1ã®æ¯”è¼ƒãŒæˆç«‹ã—ãªã„ */
 							GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 						}
 					}
@@ -1196,35 +1196,35 @@ unlock_area:
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; /* I—¹ */
+		cmd[4] = 0xffffffff; /* çµ‚äº† */
 		(offset) cmd += 28;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1‚ª‚±‚Ì’l‚Ì‚ÍA”ñ•\¦‚ğˆÓ–¡‚·‚é */) {
+	if (work->mx1 != 0x80000000 /* mx1ãŒã“ã®å€¤ã®æ™‚ã¯ã€éè¡¨ç¤ºã‚’æ„å‘³ã™ã‚‹ */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1‚ğİ’è */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1ã‚’è¨­å®š */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; /* I—¹ */
+	cmd[4] = 0xffffffff; /* çµ‚äº† */
 	(offset) cmd += 28;
 	asmout("JMP next_command");
 }
 
 void GAPI_mouse()
-/* option:bit0  ’¼Úw’è(0)/ŠÔÚw’è(1)
+/* option:bit0  ç›´æ¥æŒ‡å®š(0)/é–“æ¥æŒ‡å®š(1)
    option:bit5,4  16x16(00)/32x31(01)
-   option:bit7,6  ƒ}ƒXƒNƒpƒ^[ƒ“‚ ‚è‚Ìƒ‚ƒmƒNƒ(00),ƒ}ƒXƒNƒpƒ^[ƒ“‚ ‚è‚ÌƒJƒ‰[(10)
-   option:bit9,8  ƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“ƒXƒgƒA(00),ƒJ[ƒ\ƒ‹•\¦(01),ƒJ[ƒ\ƒ‹Á‹(10),ƒJ[ƒ\ƒ‹ˆÚ“®(11)
-     01,11‚Å‚ÍAƒJ[ƒ\ƒ‹À•W‚ğw’è‚·‚éB‚±‚ÌƒRƒ}ƒ“ƒh‚Å‚ÍAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Íˆê‚Â‚µ‚©§Œä‚Å‚«‚È‚¢B
-     ƒfƒtƒHƒ‹ƒg‚Å‚ÍAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Æ‘¼‚ÌƒOƒ‰ƒtƒBƒbƒNƒRƒ}ƒ“ƒh‚Æ‚ÌŠÖŒW‚ğ‰ğÁ‚µ‚½‚è‚à‚µ‚È‚¢B */
+   option:bit7,6  ãƒã‚¹ã‚¯ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚ã‚Šã®ãƒ¢ãƒã‚¯ãƒ­(00),ãƒã‚¹ã‚¯ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚ã‚Šã®ã‚«ãƒ©ãƒ¼(10)
+   option:bit9,8  ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚¹ãƒˆã‚¢(00),ã‚«ãƒ¼ã‚½ãƒ«è¡¨ç¤º(01),ã‚«ãƒ¼ã‚½ãƒ«æ¶ˆå»(10),ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•(11)
+     01,11ã§ã¯ã€ã‚«ãƒ¼ã‚½ãƒ«åº§æ¨™ã‚’æŒ‡å®šã™ã‚‹ã€‚ã“ã®ã‚³ãƒãƒ³ãƒ‰ã§ã¯ã€ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã¯ä¸€ã¤ã—ã‹åˆ¶å¾¡ã§ããªã„ã€‚
+     ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã¨ä»–ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚³ãƒãƒ³ãƒ‰ã¨ã®é–¢ä¿‚ã‚’è§£æ¶ˆã—ãŸã‚Šã‚‚ã—ãªã„ã€‚ */
 {
 	int *cmd == FS:EBX;
 	GAPI_WORK *work == ES:0x0000;
 
-	cmd[4] = 0xffffffff; /* ƒRƒ}ƒ“ƒhI—¹ */
+	cmd[4] = 0xffffffff; /* ã‚³ãƒãƒ³ãƒ‰çµ‚äº† */
 	EAX = cmd[8];
 	CLI();
 	TEST(AH, 0x03);
@@ -1241,24 +1241,24 @@ void GAPI_mouse()
 	}
 	TEST(AH, 0x02);
 	if (!= 0) {
-		/* ƒJ[ƒ\ƒ‹‚ğÁ‚· */
+		/* ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ¶ˆã™ */
 		if (work->mouseflag != 0) {
 			GAPI_removemouse(); /* remove mouse (mouseflag = 0) */
 			EAX = cmd[8];
 		}
 		TEST(AH, 0x01);
 		if (== 0)
-			work->mx1 = 0x80000000; /* ”ñ•\¦ƒ‚[ƒh */
+			work->mx1 = 0x80000000; /* éè¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰ */
 	}
 	TEST(AH, 0x01);
 	if (!= 0) {
-		/* ƒJ[ƒ\ƒ‹‚ğ•`‚­ */
+		/* ã‚«ãƒ¼ã‚½ãƒ«ã‚’æã */
 		ECX = cmd[12];
 		EDX = cmd[16];
 		work->mx = ECX;
 		work->my = EDX;
 		if (work->lockcount == 0) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1‚ğİ’è */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1ã‚’è¨­å®š */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		} else {
 			work->mouselock = 0x80000000;
@@ -1279,11 +1279,11 @@ void GAPI_error()
 
 void GAPI_putbox()
 {
-	/* 256FƒuƒƒbƒN“]‘— */
+	/* 256è‰²ãƒ–ãƒ­ãƒƒã‚¯è»¢é€ */
 	/* cmd, opt, x0, y0, xsize, ysize, yskip, ofs, sel */
-	/* opt‚Ìbit0-3‚Íƒ‚[ƒh : 1, 2, 4 */
+	/* optã®bit0-3ã¯ãƒ¢ãƒ¼ãƒ‰ : 1, 2, 4 */
 
-	/* ƒAƒ‰ƒCƒ“‚É‚Í‚Ü‚¾‚Ù‚Æ‚ñ‚Ç”z—¶‚µ‚Ä‚¢‚È‚¢ */
+	/* ã‚¢ãƒ©ã‚¤ãƒ³ã«ã¯ã¾ã ã»ã¨ã‚“ã©é…æ…®ã—ã¦ã„ãªã„ */
 
 	GAPI_WORK *work == ES:0x0000;
 	int *cmd == FS:EBX;
@@ -1315,7 +1315,7 @@ void GAPI_putbox()
 			do {
 				EAX = *p;
 				(offset) p++;
-				EAX &= 0x0f; /* ƒoƒO‰ñ”ğ‚Ì‚½‚ß */
+				EAX &= 0x0f; /* ãƒã‚°å›é¿ã®ãŸã‚ */
 				asmout("MOV EAX,[CS:colortable16+EAX*4]");
 				*q = AX;
 				(offset) q += 2;
@@ -1332,7 +1332,7 @@ void GAPI_putbox()
 	}
 	if (AL == 0x22) {
 mode22:
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[16bit, RRRRRGGG_GGGBBBBB */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼16bit, RRRRRGGG_GGGBBBBB */
 		do {
 			ECX = cmd[16]; /* xsize */
 			ECX -= 16;
@@ -1381,7 +1381,7 @@ mode22:
 	if (AL == 0x02)
 		goto mode22;
 	if (AL == 0x24) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[32bit(24bit) */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼32bit(24bit) */
 		do {
 			ECX = cmd[16]; /* xsize */
 			PUSH(EBP);
@@ -1415,8 +1415,8 @@ mode22:
 		asmout("JMP next_command");
 	}
 	if (AL == 0x04) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[32bit(24bit) */
-		/* ƒ^ƒCƒŠƒ“ƒO‚ ‚è */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼32bit(24bit) */
+		/* ã‚¿ã‚¤ãƒªãƒ³ã‚°ã‚ã‚Š */
 		ECX = cmd[12];
 		ECX *= 2;
 		ECX &= 0x02;
@@ -1435,7 +1435,7 @@ mode22:
 				ECX |= [SS:ESP + 16];
 				asmout("MOV BH,[CS:.table+ECX]"); /* { 0, 3, 7, 1 }[ECX] */
 
-				/* AX : ƒJƒ‰[”Ô† */
+				/* AX : ã‚«ãƒ©ãƒ¼ç•ªå· */
 				ECX = EBP; /* red */
 				EAX = EBP;
 				ECX >>= 17;
@@ -1487,7 +1487,7 @@ mode22:
 			(offset) q += EBP;
 			(char) [SS:ESP] ^= 0x02;
 			EDX--;
-		} while (!= 0); /* 45síŒ¸ */
+		} while (!= 0); /* 45è¡Œå‰Šæ¸› */
 		POP(EAX);
 		(offset) cmd += 36;
 		POP(EBP);
@@ -1522,12 +1522,12 @@ putbox1:
 
 void GAPI_linesub_pset()
 /*
-	ESI : ‰Šúx
-	EDI : ‰Šúy
-	EDX : ‘•ª’lx
-	EBX : ‘•ª’ly
-	EBP : ƒ‹[ƒv‰ñ”
-	EAX : ƒJƒ‰[
+	ESI : åˆæœŸx
+	EDI : åˆæœŸy
+	EDX : å¢—åˆ†å€¤x
+	EBX : å¢—åˆ†å€¤y
+	EBP : ãƒ«ãƒ¼ãƒ—å›æ•°
+	EAX : ã‚«ãƒ©ãƒ¼
 */
 {
 	GAPI_WORK *work == ES:0x0000;
@@ -1639,7 +1639,7 @@ line_xmd_yp1:
 	do {
 		(char) [DS:EDI] = AL;
 		ESI += EDX;
-		ADC(EDI, TWVSW - 1); /* CF == 1‚È‚ç+TWVSW, CF == 0‚È‚ç+TWVSW - 1 */
+		ADC(EDI, TWVSW - 1); /* CF == 1ãªã‚‰+TWVSW, CF == 0ãªã‚‰+TWVSW - 1 */
 		ECX--;
 	} while (!= 0);
 	return;
@@ -1679,7 +1679,7 @@ line_xmd_ym1:
 	do {
 		(char) [DS:EDI] = AL;
 		ESI += EDX;
-		ADC(EDI, 0 - TWVSW - 1); /* CF == 1‚È‚ç-TWVSW, CF == 0‚È‚ç-TWVSW - 1 */
+		ADC(EDI, 0 - TWVSW - 1); /* CF == 1ãªã‚‰-TWVSW, CF == 0ãªã‚‰-TWVSW - 1 */
 		ECX--;
 	} while (!= 0);
 	return;
@@ -1693,7 +1693,7 @@ line_xp1_ypd:
 	EBX <<= 16;
 	do {
 		EDI += EBX;
-		SBB(EDX, EDX); /* CF == 0‚È‚çEDX = 0, CF == 1‚È‚çEDX = -1 */
+		SBB(EDX, EDX); /* CF == 0ãªã‚‰EDX = 0, CF == 1ãªã‚‰EDX = -1 */
 		(char) [DS:ESI] = AL;
 		EDX &= work->linebytes;
 	//	ESI++;
@@ -1712,7 +1712,7 @@ line_xp1_ymd:
 	do {
 		EDX = 0;
 		EDI += EBX;
-		ADC(EDX, 0xffffffff); /* CF == 0‚È‚çEDX = -1, CF == 1‚È‚çEDX = 0 */
+		ADC(EDX, 0xffffffff); /* CF == 0ãªã‚‰EDX = -1, CF == 1ãªã‚‰EDX = 0 */
 		(char) [DS:ESI] = AL;
 		EDX &= work->linebytes;
 		NEG(EDX);
@@ -1731,7 +1731,7 @@ line_xm1_ypd:
 	EBX <<= 16;
 	do {
 		EDI += EBX;
-		SBB(EDX, EDX); /* CF == 0‚È‚çEDX = 0, CF == 1‚È‚çEDX = -1 */
+		SBB(EDX, EDX); /* CF == 0ãªã‚‰EDX = 0, CF == 1ãªã‚‰EDX = -1 */
 		(char) [DS:ESI] = AL;
 		EDX &= work->linebytes;
 	//	ESI--;
@@ -1750,7 +1750,7 @@ line_xm1_ymd:
 	do {
 		EDX = 0;
 		EDI += EBX;
-		ADC(EDX, 0xffffffff); /* CF == 0‚È‚çEDX = -1, CF == 1‚È‚çEDX = 0 */
+		ADC(EDX, 0xffffffff); /* CF == 0ãªã‚‰EDX = -1, CF == 1ãªã‚‰EDX = 0 */
 		(char) [DS:ESI] = AL;
 		EDX &= work->linebytes;
 		NEG(EDX);
@@ -1794,12 +1794,12 @@ line_xm1_ym1:
 
 void GAPI_linesub_xor()
 /*
-	ESI : ‰Šúx
-	EDI : ‰Šúy
-	EDX : ‘•ª’lx
-	EBX : ‘•ª’ly
-	EBP : ƒ‹[ƒv‰ñ”
-	EAX : ƒJƒ‰[
+	ESI : åˆæœŸx
+	EDI : åˆæœŸy
+	EDX : å¢—åˆ†å€¤x
+	EBX : å¢—åˆ†å€¤y
+	EBP : ãƒ«ãƒ¼ãƒ—å›æ•°
+	EAX : ã‚«ãƒ©ãƒ¼
 */
 {
 	GAPI_WORK *work == ES:0x0000;
@@ -1821,12 +1821,12 @@ void GAPI_linesub_xor()
 
 void GAPI_linesub_or()
 /*
-	ESI : ‰Šúx
-	EDI : ‰Šúy
-	EDX : ‘•ª’lx
-	EBX : ‘•ª’ly
-	EBP : ƒ‹[ƒv‰ñ”
-	EAX : ƒJƒ‰[
+	ESI : åˆæœŸx
+	EDI : åˆæœŸy
+	EDX : å¢—åˆ†å€¤x
+	EBX : å¢—åˆ†å€¤y
+	EBP : ãƒ«ãƒ¼ãƒ—å›æ•°
+	EAX : ã‚«ãƒ©ãƒ¼
 */
 {
 	GAPI_WORK *work == ES:0x0000;
@@ -1848,12 +1848,12 @@ void GAPI_linesub_or()
 
 void GAPI_linesub_and()
 /*
-	ESI : ‰Šúx
-	EDI : ‰Šúy
-	EDX : ‘•ª’lx
-	EBX : ‘•ª’ly
-	EBP : ƒ‹[ƒv‰ñ”
-	EAX : ƒJƒ‰[
+	ESI : åˆæœŸx
+	EDI : åˆæœŸy
+	EDX : å¢—åˆ†å€¤x
+	EBX : å¢—åˆ†å€¤y
+	EBP : ãƒ«ãƒ¼ãƒ—å›æ•°
+	EAX : ã‚«ãƒ©ãƒ¼
 */
 {
 	GAPI_WORK *work == ES:0x0000;
@@ -1875,13 +1875,13 @@ void GAPI_linesub_and()
 
 void GAPI_lineardots()
 {
-	/* Î‚ßü‚ğˆø‚­‚½‚ß‚È‚Ç‚Ég‚¤(“™ŠÔŠu‚Å“_‚ğ‘Å‚Â‚±‚Æ‚à‚Å‚«‚é) */
+	/* æ–œã‚ç·šã‚’å¼•ããŸã‚ãªã©ã«ä½¿ã†(ç­‰é–“éš”ã§ç‚¹ã‚’æ‰“ã¤ã“ã¨ã‚‚ã§ãã‚‹) */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx‚Æsy‚Í—˜—p‚µ‚Ä‚¢‚È‚¢ */
+	/* sxã¨syã¯åˆ©ç”¨ã—ã¦ã„ãªã„ */
 
-	/* ƒf[ƒ^[‚ÌŒ`® */
+	/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã®å½¢å¼ */
 	/* x0, y0, dx, dy, dots, color */
-	/* x0, y0, dx, dy‚ÍŒÅ’è­”“_ */
+	/* x0, y0, dx, dyã¯å›ºå®šå°‘æ•°ç‚¹ */
 
 	int *cmd == FS:EBX;
 	int *dat == GS:EAX;
@@ -2018,11 +2018,11 @@ void GAPI_lineardots()
 
 void GAPI_points()
 {
-	/* “_‚ğ‘Å‚Â */
+	/* ç‚¹ã‚’æ‰“ã¤ */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx‚Æsy‚Í—˜—p‚µ‚Ä‚¢‚È‚¢ */
+	/* sxã¨syã¯åˆ©ç”¨ã—ã¦ã„ãªã„ */
 
-	/* ƒf[ƒ^[‚ÌŒ`® */
+	/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã®å½¢å¼ */
 	/* x0, y0, color */
 
 	GAPI_WORK *work == ES:0x0000;
@@ -2148,12 +2148,12 @@ boxfill:
 		asmout("MOV EAX,[CS:colortable16+EAX*4]");
 		EDI -= EDX;
 		EBP++;
-		/* EDI : x•ûŒü‚ÌƒTƒCƒY(ƒhƒbƒg”) */
-		/* EBP : y•ûŒü‚ÌƒTƒCƒY(ƒhƒbƒg”) */
-		/* ESI : VRAMã‚ÌƒAƒhƒŒƒX */
-		/* EAX : ƒJƒ‰[ */
-		/* ­‚µH•v‚µ‚½•`‰æƒ‹[ƒ`ƒ“ */
-		/* ‰¡‚É‘‚­‚¾‚¯ */
+		/* EDI : xæ–¹å‘ã®ã‚µã‚¤ã‚º(ãƒ‰ãƒƒãƒˆæ•°) */
+		/* EBP : yæ–¹å‘ã®ã‚µã‚¤ã‚º(ãƒ‰ãƒƒãƒˆæ•°) */
+		/* ESI : VRAMä¸Šã®ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+		/* EAX : ã‚«ãƒ©ãƒ¼ */
+		/* å°‘ã—å·¥å¤«ã—ãŸæç”»ãƒ«ãƒ¼ãƒãƒ³ */
+		/* æ¨ªã«æ›¸ãã ã‘ */
 		PUSH((offset) cmd);
 		if (CL == 0) {
 			TEST(ESI, 0x02);
@@ -2420,9 +2420,9 @@ line_fin:
 	CL &= 0xc0;
 	EDI -= EDX;
 	asmout("MOV EAX,[CS:colortable16+EAX*4]");
-	/* EDI : x•ûŒü‚ÌƒTƒCƒY(ƒoƒCƒg”) */
-	/* EBP : y•ûŒü‚ÌƒTƒCƒY(ƒhƒbƒg” - 1) */
-	/* ESI : VRAMã‚ÌƒAƒhƒŒƒX */
+	/* EDI : xæ–¹å‘ã®ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆæ•°) */
+	/* EBP : yæ–¹å‘ã®ã‚µã‚¤ã‚º(ãƒ‰ãƒƒãƒˆæ•° - 1) */
+	/* ESI : VRAMä¸Šã®ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 	EBP--;
 	EDX = cmd[20];
 	IMUL(EDX, work->linebytes);
@@ -2430,7 +2430,7 @@ line_fin:
 	EDX += 0xe0000000;
 	EDX += cmd[ 8];
 	if (CL == 0) { /* pset */
-		/* ‘S‚­H•v‚Ì‚È‚¢•`‰æƒ‹[ƒ`ƒ“ */
+		/* å…¨ãå·¥å¤«ã®ãªã„æç”»ãƒ«ãƒ¼ãƒãƒ³ */
 		ECX = ESI;
 		do {
 			[DS:ESI] = AX;
@@ -2456,7 +2456,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 	if (CL == 0xc0) { /* xor */
-		/* ‘S‚­H•v‚Ì‚È‚¢•`‰æƒ‹[ƒ`ƒ“ */
+		/* å…¨ãå·¥å¤«ã®ãªã„æç”»ãƒ«ãƒ¼ãƒãƒ³ */
 		ECX = ESI;
 		do {
 			[DS:ESI] ^= AX;
@@ -2482,7 +2482,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 	if (CL == 0x40) { /* and */
-		/* ‘S‚­H•v‚Ì‚È‚¢•`‰æƒ‹[ƒ`ƒ“ */
+		/* å…¨ãå·¥å¤«ã®ãªã„æç”»ãƒ«ãƒ¼ãƒãƒ³ */
 		ECX = ESI;
 		do {
 			[DS:ESI] &= AX;
@@ -2508,7 +2508,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 //	if (CL == 0x80) { /* or */
-		/* ‘S‚­H•v‚Ì‚È‚¢•`‰æƒ‹[ƒ`ƒ“ */
+		/* å…¨ãå·¥å¤«ã®ãªã„æç”»ãƒ«ãƒ¼ãƒãƒ³ */
 		ECX = ESI;
 		do {
 			[DS:ESI] |= AX;

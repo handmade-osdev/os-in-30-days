@@ -146,7 +146,7 @@ mark_dfs_back_edges ()
       e = stack[sp - 1];
       src = e->src;
       dest = e->dest;
-      e->flags &= ~EDGE_DFS_BACK;
+      e->flags &= ‾EDGE_DFS_BACK;
 
       /* Check if the edge destination has been visited yet.  */
       if (dest != EXIT_BLOCK_PTR && ! TEST_BIT (visited, dest->index))
@@ -388,7 +388,7 @@ find_unreachable_blocks ()
   /* Clear all the reachability flags.  */
 
   for (i = 0; i < n; ++i)
-    BASIC_BLOCK (i)->flags &= ~BB_REACHABLE;
+    BASIC_BLOCK (i)->flags &= ‾BB_REACHABLE;
 
   /* Add our starting points to the worklist.  Almost always there will
      be only one.  It isn't inconceivable that we might one day directly

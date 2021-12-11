@@ -3,8 +3,8 @@
 
 	usage : >gas2nask [-a] [-e] input-file output-file
 
-	-a:.textのbalign2を削除
-	-e:execcmd系のインライン展開
+	-a:.text縺ｮbalign2繧貞炎髯､
+	-e:execcmd邉ｻ縺ｮ繧､繝ｳ繝ｩ繧､繝ｳ螻暮幕
 */
 
 #include "../drv_w32/windows.h"
@@ -57,7 +57,7 @@ void mainCRTStartup(void)
 	struct stack_alloc work_image;
 	int j;
 
-	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & ~0x0f);
+	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & 窶ｾ0x0f);
 
 	for (j = 0; j < 8; j++)
 		flags.opt[j] = 0;
@@ -87,7 +87,7 @@ void mainCRTStartup(void)
 					while ('0' <= *p0 && *p0 <= '9')
 						p0++;
 					flags.opt[j] = p0 - param_p[j];
-					p0--; /* 次のループのため */
+					p0--; /* 谺｡縺ｮ繝ｫ繝ｼ繝励�ｮ縺溘ａ */
 				}
 				if (*p0 == 'b') {
 					j = FLAG_b;
@@ -156,6 +156,6 @@ void msgout0(int len, UCHAR *s)
 }
 
 #include "../drv_w32/msgout_c.c"
-#include "../drv_w32/wfile_b.c"	/* write_tがつかうから */
+#include "../drv_w32/wfile_b.c"	/* write_t縺後▽縺九≧縺九ｉ */
 #include "../funcs/gostrlen.c"
 #include "../funcs/m_gasnas.c"

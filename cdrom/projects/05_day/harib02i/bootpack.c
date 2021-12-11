@@ -66,7 +66,7 @@ void HariMain(void)
 	init_gdtidt();
 	init_palette();
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
-	mx = (binfo->scrnx - 16) / 2; /* ‰æ–Ê’†‰›‚É‚È‚é‚æ‚¤‚ÉÀ•WŒvZ */
+	mx = (binfo->scrnx - 16) / 2; /* ç”»é¢ä¸­å¤®ã«ãªã‚‹ã‚ˆã†ã«åº§æ¨™è¨ˆç®— */
 	my = (binfo->scrny - 28 - 16) / 2;
 	init_mouse_cursor8(mcursor, COL8_008484);
 	putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16);
@@ -81,34 +81,34 @@ void HariMain(void)
 void init_palette(void)
 {
 	static unsigned char table_rgb[16 * 3] = {
-		0x00, 0x00, 0x00,	/*  0:• */
-		0xff, 0x00, 0x00,	/*  1:–¾‚é‚¢Ô */
-		0x00, 0xff, 0x00,	/*  2:–¾‚é‚¢—Î */
-		0xff, 0xff, 0x00,	/*  3:–¾‚é‚¢‰©F */
-		0x00, 0x00, 0xff,	/*  4:–¾‚é‚¢Â */
-		0xff, 0x00, 0xff,	/*  5:–¾‚é‚¢‡ */
-		0x00, 0xff, 0xff,	/*  6:–¾‚é‚¢…F */
-		0xff, 0xff, 0xff,	/*  7:”’ */
-		0xc6, 0xc6, 0xc6,	/*  8:–¾‚é‚¢ŠDF */
-		0x84, 0x00, 0x00,	/*  9:ˆÃ‚¢Ô */
-		0x00, 0x84, 0x00,	/* 10:ˆÃ‚¢—Î */
-		0x84, 0x84, 0x00,	/* 11:ˆÃ‚¢‰©F */
-		0x00, 0x00, 0x84,	/* 12:ˆÃ‚¢Â */
-		0x84, 0x00, 0x84,	/* 13:ˆÃ‚¢‡ */
-		0x00, 0x84, 0x84,	/* 14:ˆÃ‚¢…F */
-		0x84, 0x84, 0x84	/* 15:ˆÃ‚¢ŠDF */
+		0x00, 0x00, 0x00,	/*  0:é»’ */
+		0xff, 0x00, 0x00,	/*  1:æ˜ã‚‹ã„èµ¤ */
+		0x00, 0xff, 0x00,	/*  2:æ˜ã‚‹ã„ç·‘ */
+		0xff, 0xff, 0x00,	/*  3:æ˜ã‚‹ã„é»„è‰² */
+		0x00, 0x00, 0xff,	/*  4:æ˜ã‚‹ã„é’ */
+		0xff, 0x00, 0xff,	/*  5:æ˜ã‚‹ã„ç´« */
+		0x00, 0xff, 0xff,	/*  6:æ˜ã‚‹ã„æ°´è‰² */
+		0xff, 0xff, 0xff,	/*  7:ç™½ */
+		0xc6, 0xc6, 0xc6,	/*  8:æ˜ã‚‹ã„ç°è‰² */
+		0x84, 0x00, 0x00,	/*  9:æš—ã„èµ¤ */
+		0x00, 0x84, 0x00,	/* 10:æš—ã„ç·‘ */
+		0x84, 0x84, 0x00,	/* 11:æš—ã„é»„è‰² */
+		0x00, 0x00, 0x84,	/* 12:æš—ã„é’ */
+		0x84, 0x00, 0x84,	/* 13:æš—ã„ç´« */
+		0x00, 0x84, 0x84,	/* 14:æš—ã„æ°´è‰² */
+		0x84, 0x84, 0x84	/* 15:æš—ã„ç°è‰² */
 	};
 	set_palette(0, 15, table_rgb);
 	return;
 
-	/* static char –½—ß‚ÍAƒf[ƒ^‚É‚µ‚©g‚¦‚È‚¢‚¯‚ÇDB–½—ß‘Š“– */
+	/* static char å‘½ä»¤ã¯ã€ãƒ‡ãƒ¼ã‚¿ã«ã—ã‹ä½¿ãˆãªã„ã‘ã©DBå‘½ä»¤ç›¸å½“ */
 }
 
 void set_palette(int start, int end, unsigned char *rgb)
 {
 	int i, eflags;
-	eflags = io_load_eflags();	/* Š„‚è‚İ‹–‰Âƒtƒ‰ƒO‚Ì’l‚ğ‹L˜^‚·‚é */
-	io_cli(); 					/* ‹–‰Âƒtƒ‰ƒO‚ğ0‚É‚µ‚ÄŠ„‚è‚İ‹Ö~‚É‚·‚é */
+	eflags = io_load_eflags();	/* å‰²ã‚Šè¾¼ã¿è¨±å¯ãƒ•ãƒ©ã‚°ã®å€¤ã‚’è¨˜éŒ²ã™ã‚‹ */
+	io_cli(); 					/* è¨±å¯ãƒ•ãƒ©ã‚°ã‚’0ã«ã—ã¦å‰²ã‚Šè¾¼ã¿ç¦æ­¢ã«ã™ã‚‹ */
 	io_out8(0x03c8, start);
 	for (i = start; i <= end; i++) {
 		io_out8(0x03c9, rgb[0] / 4);
@@ -116,7 +116,7 @@ void set_palette(int start, int end, unsigned char *rgb)
 		io_out8(0x03c9, rgb[2] / 4);
 		rgb += 3;
 	}
-	io_store_eflags(eflags);	/* Š„‚è‚İ‹–‰Âƒtƒ‰ƒO‚ğŒ³‚É–ß‚· */
+	io_store_eflags(eflags);	/* å‰²ã‚Šè¾¼ã¿è¨±å¯ãƒ•ãƒ©ã‚°ã‚’å…ƒã«æˆ»ã™ */
 	return;
 }
 
@@ -181,7 +181,7 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s
 }
 
 void init_mouse_cursor8(char *mouse, char bc)
-/* ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ€”õi16x16j */
+/* ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’æº–å‚™ï¼ˆ16x16ï¼‰ */
 {
 	static char cursor[16][16] = {
 		"**************..",
@@ -237,7 +237,7 @@ void init_gdtidt(void)
 	struct GATE_DESCRIPTOR    *idt = (struct GATE_DESCRIPTOR    *) 0x0026f800;
 	int i;
 
-	/* GDT‚Ì‰Šú‰» */
+	/* GDTã®åˆæœŸåŒ– */
 	for (i = 0; i < 8192; i++) {
 		set_segmdesc(gdt + i, 0, 0, 0);
 	}
@@ -245,7 +245,7 @@ void init_gdtidt(void)
 	set_segmdesc(gdt + 2, 0x0007ffff, 0x00280000, 0x409a);
 	load_gdtr(0xffff, 0x00270000);
 
-	/* IDT‚Ì‰Šú‰» */
+	/* IDTã®åˆæœŸåŒ– */
 	for (i = 0; i < 256; i++) {
 		set_gatedesc(idt + i, 0, 0, 0);
 	}

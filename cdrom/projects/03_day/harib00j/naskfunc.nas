@@ -1,20 +1,20 @@
 ; naskfunc
 ; TAB=4
 
-[FORMAT "WCOFF"]				; �I�u�W�F�N�g�t�@�C������郂�[�h	
-[BITS 32]						; 32�r�b�g���[�h�p�̋@�B�����点��
+[FORMAT "WCOFF"]				; オブジェクトファイルを作るモード	
+[BITS 32]						; 32ビットモード用の機械語を作らせる
 
 
-; �I�u�W�F�N�g�t�@�C���̂��߂̏��
+; オブジェクトファイルのための情報
 
-[FILE "naskfunc.nas"]			; �\�[�X�t�@�C�������
+[FILE "naskfunc.nas"]			; ソースファイル名情報
 
-		GLOBAL	_io_hlt			; ���̃v���O�����Ɋ܂܂��֐���
+		GLOBAL	_io_hlt			; このプログラムに含まれる関数名
 
 
-; �ȉ��͎��ۂ̊֐�
+; 以下は実際の関数
 
-[SECTION .text]		; �I�u�W�F�N�g�t�@�C���ł͂���������Ă���v���O����������
+[SECTION .text]		; オブジェクトファイルではこれを書いてからプログラムを書く
 
 _io_hlt:	; void io_hlt(void);
 		HLT

@@ -1,9 +1,9 @@
-/* "VGADRV0.ASK" for TOWNS ver.1.9 copyright(C) 2003 I.Tak., �썇�G�� */
+/* "VGADRV0.ASK" for TOWNS ver.1.9 copyright(C) 2003 I.Tak., 川合秀実 */
 
 #if (defined(VMODE) || defined(CLGD543X))
-	#undef TWVSW			/* 1024�łȂ��ƃC���^�[���[�X�ł��Ȃ� */
-	#define TWVSW	1024	/* �C���^�[���[�X���Ȃ��Ȃ���Ȃ��� */
-							/* CLGD�ɂ�1024�̃p�����[�^��������ĂȂ� */
+	#undef TWVSW			/* 1024でないとインターレースできない */
+	#define TWVSW	1024	/* インターレースしないなら問題ないが */
+							/* CLGDには1024のパラメータしか作ってない */
 #endif
 
 /* TWVSW is... TOWNS Vertial Screen Width! */
@@ -45,19 +45,19 @@ struct GAPI_WORK {
 	int mouse_pattern[2560 /* 0x0a00 */]; /* +0x0180 */
 	WORK_SUB worksub;
 	void [1136];
-	/* �ȏ�4KB */
+	/* 以上4KB */
 };
 
 void far GAPI_entry()
-/* �K���AEFLAGS.IF == 1�ŌĂԂ��� */
+/* 必ず、EFLAGS.IF == 1で呼ぶこと */
 {
 	goto syscmd;
 //	ORG(0x0008);
 //	ORG(0x0010);
 	asmout("RESB 0x10-$");
 	asmout("DD OFFSET #syscmd, 0, 0, 0");
-	DD(4096); /* ���������ɕK�v�ȃ��[�N�G���A�T�C�Y */
-	DD(0); /* �ő働�[�J���X�^�b�N����� */
+	DD(4096); /* 初期化時に必要なワークエリアサイズ */
+	DD(0); /* 最大ローカルスタック消費量 */
 //	ORG(0x0040);
 	asmout("RESB 0x40-$");
 syscmd:
@@ -196,12 +196,12 @@ font_attr_table:
 	DB(6 /*  64bytes/font (8x 8 4bit color half height) */);
 }
 
-/* �}�E�X�ɂ͔�\���J�E���g�Ƃ����̂�����
-   ���ꂪ0����non-0�ɂȂ����Ƃ���Anon-0����0�ɂȂ����Ƃ��ɁA�`��E�Ҕ����s�Ȃ� */
+/* マウスには非表示カウントというのがある
+   これが0からnon-0になったときや、non-0から0になったときに、描画・待避を行なう */
 
 void near GAPI_fontwrite()
 {
-	/* 8x16�̃t�H���g��`��(�w�i�F�t��) */
+	/* 8x16のフォントを描画(背景色付き) */
 
 	int *cmd == FS:EBX;
 
@@ -219,7 +219,7 @@ void near GAPI_fontwrite()
 	ESI = cmd[12]; /* y */
 	TEST(AL, 0x03);
 	if (!= 0)
-		goto error; /* 4�̔{���ȊO�͂܂��T�|�[�g���ĂȂ� */
+		goto error; /* 4の倍数以外はまだサポートしてない */
 
 	IMUL_TWVSW(ESI);
 	ESI += EAX;
@@ -263,8 +263,8 @@ void near GAPI_fontwrite()
 	PUSH(EDX); // 0000
 
 //	ES = [FS:EBX + 28];
-	/* fontsize�`�F�b�N�͂��Ȃ��Ȃ����B���̕��������B
-	   �`�F�b�N���K�v�Ȃ�A��ʃ��[�`���ł��B */
+	/* fontsizeチェックはしなくなった。その方が速い。
+	   チェックが必要なら、上位ルーチンでやる。 */
 
 	int *string == FS:EBP;
 	ECX = cmd[32]; // length
@@ -421,7 +421,7 @@ opt2:
 	ESI = cmd[12]; /* y */
 	TEST(AL, 0x03);
 	if (!= 0)
-		goto error; /* 4�̔{���ȊO�͂܂��T�|�[�g���ĂȂ� */
+		goto error; /* 4の倍数以外はまだサポートしてない */
 
 	IMUL_TWVSW(ESI);
 	ESI += EAX;
@@ -510,14 +510,14 @@ opt3:
 opt_high:
 /*
 	0x0101, opt, x, y, col, bcol[20], dummy[24], dummy[28], len, str...
-	opt�ɂ���āAx, y��ofs:sel�ɂȂ�
-	opt8-10 : 0, 1, 2, 4(3) (0�ȊO��RAM�`��, dmy[24]�����C���o�C�g)
-	opt11 : ext�t���O, str��far-ptr�ɂ���(�ł����l��������)
-	opt12 : col�������t���O��
-	opt13 : bcol�������t���O
+	optによって、x, yがofs:selになる
+	opt8-10 : 0, 1, 2, 4(3) (0以外はRAM描画, dmy[24]がラインバイト)
+	opt11 : extフラグ, strをfar-ptrにする(でも価値無しだな)
+	opt12 : col無効化フラグに
+	opt13 : bcol無効化フラグ
 	opt14-15 : pset, and, or, xor
-	�Ƃ肠�����Aopt:0x0100�݂̂̃T�|�[�g��ǉ����悤�B
-	opt�Ŋ֐��̃A�h���X�����܂�A��������[�v���ƂɌĂԁBjmp�ł��悢�B
+	とりあえず、opt:0x0100のみのサポートを追加しよう。
+	optで関数のアドレスが決まり、それをループごとに呼ぶ。jmpでもよい。
 */
 	if (EAX != 0x0100)
 		goto error;
@@ -624,19 +624,19 @@ boxfill:
 		EDI -= EDX;
 		EDX = (unsigned short) AX;
 		EAX <<= 16;
-		/* EDI : x�����̃T�C�Y(�o�C�g��) */
-		/* EBP : y�����̃T�C�Y(�h�b�g�� - 1) */
-		/* ESI : VRAM��̃A�h���X */
+		/* EDI : x方向のサイズ(バイト数) */
+		/* EBP : y方向のサイズ(ドット数 - 1) */
+		/* ESI : VRAM上のアドレス */
 		EBP++;
 		EAX |= EDX;
-		/* �����H�v�����`�惋�[�`�� */
-		/* �c�ɕ`���Ă��� */
+		/* 少し工夫した描画ルーチン */
+		/* 縦に描いていく */
 		PUSH((offset) cmd);
 		if (CL == 0) {
 			if ((unsigned) EBP >= 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						ECX = EBP;
 						EBX = ESI;
@@ -704,7 +704,7 @@ boxfill:
 				}
 				EDI += 4;
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						ECX = EBP;
 						EBX = ESI;
@@ -742,7 +742,7 @@ boxfill:
 		//	if ((unsigned) EBP < 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						ECX = EBP;
 						EBX = ESI;
@@ -805,7 +805,7 @@ boxfill:
 			if ((unsigned) EBP >= 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -883,7 +883,7 @@ boxfill:
 				}
 				EDI += 4;
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -926,7 +926,7 @@ boxfill:
 		//	if ((unsigned) EBP < 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						ECX = EBP;
 						EBX = ESI;
@@ -993,7 +993,7 @@ boxfill:
 	//		if ((unsigned) EBP >= 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -1071,7 +1071,7 @@ boxfill:
 				}
 				EDI += 4;
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -1116,7 +1116,7 @@ boxfill:
 	//		if (EBP >= 8) {
 				TEST(ESI, 0x03);
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -1194,7 +1194,7 @@ boxfill:
 				}
 				EDI += 4;
 				if (!= 0) {
-					/* �蔲�� */
+					/* 手抜き */
 					do {
 						PUSH(EBP);
 						EBX = ESI;
@@ -1257,16 +1257,16 @@ line_fin:
 	AL = cmd[24]; // color
 	CL &= 0xc0;
 	EDI -= EDX;
-	/* EDI : x�����̃T�C�Y(�o�C�g��) */
-	/* EBP : y�����̃T�C�Y(�h�b�g�� - 1) */
-	/* ESI : VRAM��̃A�h���X */
+	/* EDI : x方向のサイズ(バイト数) */
+	/* EBP : y方向のサイズ(ドット数 - 1) */
+	/* ESI : VRAM上のアドレス */
 	EBP--;
 	EDX = cmd[20];
 	IMUL_TWVSW(EDX);
 	EDX += cmd[ 8];
 	EDX += 0xe0000000;
 	if (CL == 0) { /* pset */
-		/* �S���H�v�̂Ȃ��`�惋�[�`�� */
+		/* 全く工夫のない描画ルーチン */
 		ECX = ESI;
 		do {
 			[DS:ESI] = AL;
@@ -1290,7 +1290,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 	if (CL == 0xc0) { /* xor */
-		/* �S���H�v�̂Ȃ��`�惋�[�`�� */
+		/* 全く工夫のない描画ルーチン */
 		ECX = ESI;
 		do {
 			[DS:ESI] ^= AL;
@@ -1314,7 +1314,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 	if (CL == 0x40) { /* and */
-		/* �S���H�v�̂Ȃ��`�惋�[�`�� */
+		/* 全く工夫のない描画ルーチン */
 		ECX = ESI;
 		do {
 			[DS:ESI] &= AL;
@@ -1338,7 +1338,7 @@ line_fin:
 		asmout("JMP next_command");
 	}
 //	if (CL == 0x80) { /* or */
-		/* �S���H�v�̂Ȃ��`�惋�[�`�� */
+		/* 全く工夫のない描画ルーチン */
 		ECX = ESI;
 		do {
 			[DS:ESI] |= AL;
@@ -1372,10 +1372,10 @@ error:
 
 void near GAPI_putbox()
 {
-	/* 256�F�u���b�N�]�� */
+	/* 256色ブロック転送 */
 	/* cmd, opt, x0, y0, xsize, ysize, yskip, ofs, sel */
 
-	/* �A���C���ɂ͂܂��z�����Ă��Ȃ� */
+	/* アラインにはまだ配慮していない */
 
 	int *cmd == FS:EBX;
 	unsigned char *p == ES:EDI, *q == DS:ESI;
@@ -1444,8 +1444,8 @@ void near GAPI_putbox()
 		asmout("JMP next_command");
 	}
 	if (AL == 0x22) {
-		/* �_�C���N�g�J���[16bit, RRRRRGGG_GGGBBBBB */
-		/* �^�C�����O���� */
+		/* ダイレクトカラー16bit, RRRRRGGG_GGGBBBBB */
+		/* タイリング無し */
 		do {
 			ECX = cmd[16]; /* xsize */
 			PUSH(EDX);
@@ -1480,8 +1480,8 @@ void near GAPI_putbox()
 		asmout("JMP next_command");
 	}
 	if (AL == 0x24) {
-		/* �_�C���N�g�J���[32bit(24bit) */
-		/* �^�C�����O���� */
+		/* ダイレクトカラー32bit(24bit) */
+		/* タイリング無し */
 		do {
 			ECX = cmd[16]; /* xsize */
 			PUSH(EDX);
@@ -1516,8 +1516,8 @@ void near GAPI_putbox()
 		asmout("JMP next_command");
 	}
 	if (AL == 0x02) {
-		/* �_�C���N�g�J���[16bit, RRRRRGGG_GGGBBBBB */
-		/* �^�C�����O���� */
+		/* ダイレクトカラー16bit, RRRRRGGG_GGGBBBBB */
+		/* タイリングあり */
 		ECX = cmd[12];
 		ECX *= 2;
 		ECX &= 0x02;
@@ -1536,7 +1536,7 @@ void near GAPI_putbox()
 				ECX |= [SS:ESP + 16];
 				asmout("MOV BH,[CS:.table+ECX]"); /* { 0, 3, 7, 1 }[ECX] */
 
-				/* AL : �J���[�ԍ� */
+				/* AL : カラー番号 */
 				ECX = EBP; /* red */
 				EAX = EBP;
 				ECX >>= 12;
@@ -1597,8 +1597,8 @@ void near GAPI_putbox()
 		asmout("JMP next_command");
 	}
 	if (AL == 0x04) {
-		/* �_�C���N�g�J���[32bit(24bit) */
-		/* �^�C�����O���� */
+		/* ダイレクトカラー32bit(24bit) */
+		/* タイリングあり */
 		ECX = cmd[12];
 		ECX *= 2;
 		ECX &= 0x02;
@@ -1617,7 +1617,7 @@ void near GAPI_putbox()
 				ECX |= [SS:ESP + 16];
 				asmout("MOV BH,[CS:.table+ECX]"); /* { 0, 3, 7, 1 }[ECX] */
 
-				/* AL : �J���[�ԍ� */
+				/* AL : カラー番号 */
 				ECX = EBP; /* red */
 				EAX = EBP;
 				ECX >>= 20;
@@ -1704,12 +1704,12 @@ putbox1:
 
 void near GAPI_linesub_pset()
 /*
-	ESI : ����x
-	EDI : ����y
-	EDX : �����lx
-	EBX : �����ly
-	EBP : ���[�v��
-	EAX : �J���[
+	ESI : 初期x
+	EDI : 初期y
+	EDX : 増分値x
+	EBX : 増分値y
+	EBP : ループ回数
+	EAX : カラー
 */
 {
 	PUSH(EBP);
@@ -1815,7 +1815,7 @@ line_xmd_yp1:
 	do {
 		(char) [DS:EDI] = AL;
 		ESI += EDX;
-		ADC(EDI, TWVSW - 1); /* CF == 1�Ȃ�+TWVSW, CF == 0�Ȃ�+TWVSW - 1 */
+		ADC(EDI, TWVSW - 1); /* CF == 1なら+TWVSW, CF == 0なら+TWVSW - 1 */
 		ECX--;
 	} while (!= 0);
 	return;
@@ -1853,7 +1853,7 @@ line_xmd_ym1:
 	do {
 		(char) [DS:EDI] = AL;
 		ESI += EDX;
-		ADC(EDI, 0 - TWVSW - 1); /* CF == 1�Ȃ�-TWVSW, CF == 0�Ȃ�-TWVSW - 1 */
+		ADC(EDI, 0 - TWVSW - 1); /* CF == 1なら-TWVSW, CF == 0なら-TWVSW - 1 */
 		ECX--;
 	} while (!= 0);
 	return;
@@ -1867,7 +1867,7 @@ line_xp1_ypd:
 	EBX <<= 16;
 	do {
 		EDI += EBX;
-		SBB(EDX, EDX); /* CF == 0�Ȃ�EDX = 0, CF == 1�Ȃ�EDX = -1 */
+		SBB(EDX, EDX); /* CF == 0ならEDX = 0, CF == 1ならEDX = -1 */
 		(char) [DS:ESI] = AL;
 		EDX &= TWVSW;
 	//	ESI++;
@@ -1886,7 +1886,7 @@ line_xp1_ymd:
 	do {
 		EDX = 0;
 		EDI += EBX;
-		ADC(EDX, 0xffffffff); /* CF == 0�Ȃ�EDX = -1, CF == 1�Ȃ�EDX = 0 */
+		ADC(EDX, 0xffffffff); /* CF == 0ならEDX = -1, CF == 1ならEDX = 0 */
 		(char) [DS:ESI] = AL;
 		EDX &= 0 - TWVSW;
 	//	ESI++;
@@ -1904,7 +1904,7 @@ line_xm1_ypd:
 	EBX <<= 16;
 	do {
 		EDI += EBX;
-		SBB(EDX, EDX); /* CF == 0�Ȃ�EDX = 0, CF == 1�Ȃ�EDX = -1 */
+		SBB(EDX, EDX); /* CF == 0ならEDX = 0, CF == 1ならEDX = -1 */
 		(char) [DS:ESI] = AL;
 		EDX &= TWVSW;
 	//	ESI--;
@@ -1923,7 +1923,7 @@ line_xm1_ymd:
 	do {
 		EDX = 0;
 		EDI += EBX;
-		ADC(EDX, 0xffffffff); /* CF == 0�Ȃ�EDX = -1, CF == 1�Ȃ�EDX = 0 */
+		ADC(EDX, 0xffffffff); /* CF == 0ならEDX = -1, CF == 1ならEDX = 0 */
 		(char) [DS:ESI] = AL;
 		EDX &= 0 - TWVSW;
 	//	ESI--;
@@ -1961,12 +1961,12 @@ line_xm1_ym1:
 
 void near GAPI_linesub_xor()
 /*
-	ESI : ����x
-	EDI : ����y
-	EDX : �����lx
-	EBX : �����ly
-	EBP : ���[�v��
-	EAX : �J���[
+	ESI : 初期x
+	EDI : 初期y
+	EDX : 増分値x
+	EBX : 増分値y
+	EBP : ループ回数
+	EAX : カラー
 */
 {
 	PUSH(EDX);
@@ -1987,12 +1987,12 @@ void near GAPI_linesub_xor()
 
 void near GAPI_linesub_or()
 /*
-	ESI : ����x
-	EDI : ����y
-	EDX : �����lx
-	EBX : �����ly
-	EBP : ���[�v��
-	EAX : �J���[
+	ESI : 初期x
+	EDI : 初期y
+	EDX : 増分値x
+	EBX : 増分値y
+	EBP : ループ回数
+	EAX : カラー
 */
 {
 	PUSH(EDX);
@@ -2013,12 +2013,12 @@ void near GAPI_linesub_or()
 
 void near GAPI_linesub_and()
 /*
-	ESI : ����x
-	EDI : ����y
-	EDX : �����lx
-	EBX : �����ly
-	EBP : ���[�v��
-	EAX : �J���[
+	ESI : 初期x
+	EDI : 初期y
+	EDX : 増分値x
+	EBX : 増分値y
+	EBP : ループ回数
+	EAX : カラー
 */
 {
 	PUSH(EDX);
@@ -2039,13 +2039,13 @@ void near GAPI_linesub_and()
 
 void near GAPI_lineardots()
 {
-	/* �΂ߐ����������߂ȂǂɎg��(���Ԋu�œ_��ł��Ƃ��ł���) */
+	/* 斜め線を引くためなどに使う(等間隔で点を打つこともできる) */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx��sy�͗��p���Ă��Ȃ� */
+	/* sxとsyは利用していない */
 
-	/* �f�[�^�[�̌`�� */
+	/* データーの形式 */
 	/* x0, y0, dx, dy, dots, color */
-	/* x0, y0, dx, dy�͌Œ菭���_ */
+	/* x0, y0, dx, dyは固定少数点 */
 
 	int *cmd == FS:EBX;
 	int *dat == ES:EAX;
@@ -2178,11 +2178,11 @@ void near GAPI_lineardots()
 
 void near GAPI_points()
 {
-	/* �_��ł� */
+	/* 点を打つ */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx��sy�͗��p���Ă��Ȃ� */
+	/* sxとsyは利用していない */
 
-	/* �f�[�^�[�̌`�� */
+	/* データーの形式 */
 	/* x0, y0, color */
 
 	int *cmd == FS:EBX;
@@ -2277,17 +2277,17 @@ void near GAPI_clippingmouse();
 void near init_mousecursor();
 
 void near GAPI_mouse()
-/* option:bit0  ���ڎw��(0)/�Ԑڎw��(1)
+/* option:bit0  直接指定(0)/間接指定(1)
    option:bit5,4  16x16(00)/32x31(01)
-   option:bit7,6  �}�X�N�p�^�[������̃��m�N��(00),�}�X�N�p�^�[������̃J���[(10)
-   option:bit9,8  �J�[�\���p�^�[���X�g�A(00),�J�[�\���\��(01),�J�[�\������(10),�J�[�\���ړ�(11)
-     01,11�ł́A�J�[�\�����W���w�肷��B���̃R�}���h�ł́A�}�E�X�J�[�\���͈��������ł��Ȃ��B
-     �f�t�H���g�ł́A�}�E�X�J�[�\���Ƒ��̃O���t�B�b�N�R�}���h�Ƃ̊֌W����������������Ȃ��B */
+   option:bit7,6  マスクパターンありのモノクロ(00),マスクパターンありのカラー(10)
+   option:bit9,8  カーソルパターンストア(00),カーソル表示(01),カーソル消去(10),カーソル移動(11)
+     01,11では、カーソル座標を指定する。このコマンドでは、マウスカーソルは一つしか制御できない。
+     デフォルトでは、マウスカーソルと他のグラフィックコマンドとの関係を解消したりもしない。 */
 {
 	int *cmd == FS:EBX;
 	GAPI_WORK *work == ES:0x0000;
 
-	cmd[4] = 0xffffffff; /* �R�}���h�I�� */
+	cmd[4] = 0xffffffff; /* コマンド終了 */
 	EAX = cmd[8];
 	CLI();
 	TEST(AH, 0x03);
@@ -2304,24 +2304,24 @@ void near GAPI_mouse()
 	}
 	TEST(AH, 0x02);
 	if (!= 0) {
-		/* �J�[�\�������� */
+		/* カーソルを消す */
 		if (work->mouseflag != 0) {
 			GAPI_removemouse(); /* remove mouse (mouseflag = 0) */
 			EAX = cmd[8];
 		}
 		TEST(AH, 0x01);
 		if (== 0)
-			work->mx1 = 0x80000000; /* ��\�����[�h */
+			work->mx1 = 0x80000000; /* 非表示モード */
 	}
 	TEST(AH, 0x01);
 	if (!= 0) {
-		/* �J�[�\����`�� */
+		/* カーソルを描く */
 		ECX = cmd[12];
 		EDX = cmd[16];
 		work->mx = ECX;
 		work->my = EDX;
 		if (work->lockcount == 0) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1��ݒ� */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1を設定 */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		} else {
 			work->mouselock = 0x80000000;
@@ -2352,13 +2352,13 @@ void near init_mousecursor()
 
 	ECX = 16;
 	do {
-		/* 1loop������A1line */
+		/* 1loop当たり、1line */
 		DL = cursor0[ 0];
 		DL |= cursor0[32];
 		EDX >>= 4;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
 		DL = cursor0[32];
-		EAX =~ EAX;
+		EAX =‾ EAX;
 		EDX >>= 4;
 		cursor_buf[  0] = EAX;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
@@ -2369,7 +2369,7 @@ void near init_mousecursor()
 		EDX &= 0x0f;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
 		DL = cursor0[32];
-		EAX =~ EAX;
+		EAX =‾ EAX;
 		EDX &= 0x0f;
 		cursor_buf[128] = EAX;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
@@ -2380,7 +2380,7 @@ void near init_mousecursor()
 		EDX >>= 4;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
 		DL = cursor0[33];
-		EAX =~ EAX;
+		EAX =‾ EAX;
 		EDX >>= 4;
 		cursor_buf[256] = EAX;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
@@ -2391,7 +2391,7 @@ void near init_mousecursor()
 		EDX &= 0x0f;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
 		DL = cursor0[33];
-		EAX =~ EAX;
+		EAX =‾ EAX;
 		EDX &= 0x0f;
 		cursor_buf[384] = EAX;
 		asmout("MOV EAX,DWORD PTR CS:[#table+EDX*4]");
@@ -2404,7 +2404,7 @@ void near init_mousecursor()
 		ECX--;
 	} while (!= 0);
 
-	/* ���炵�p�^�[���̗p�� */
+	/* ずらしパターンの用意 */
 	int *base == DS:ESI, *shift == DS:EDI;
 	LEA((offset) base,  work->mouse_pattern[  0]);
 	LEA((offset) shift, work->mouse_pattern[640]);
@@ -2460,7 +2460,7 @@ void near GAPI_init()
 	int all_sel == 1 * 8;
 	int *cmd == FS:EBX;
 
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 12;
 
 	GAPI_WORK *work == DS:0x0000, *workES == ES:0x0000;
@@ -2476,8 +2476,8 @@ void near GAPI_init()
 //	POP(GS);
 
 	ECX = 0;
-	workES->mx1 = 0x80000000; /* ��\�� */
-//	workES->backup_addr = 0xa0000 + 800 * 600 / 8; /* ��ʊO */
+	workES->mx1 = 0x80000000; /* 非表示 */
+//	workES->backup_addr = 0xa0000 + 800 * 600 / 8; /* 画面外 */
 //	workES->taskcount = /* 0 */ ECX;
 	workES->lockcount = /* 0 */ ECX;
 	workES->mouselock = /* 0 */ ECX;
@@ -2502,7 +2502,7 @@ void near GAPI_init()
 
 #if 0
 #if (!defined(TMENU))
-	/* �f�t�H���g�}�E�X�J�[�\���p�^�[��(16x16, mono) */
+	/* デフォルトマウスカーソルパターン(16x16, mono) */
 	ALIGN(4);
 mouse_cursor:
 	asmout("DB 11000000B,00000000B");
@@ -2539,8 +2539,8 @@ mouse_cursor:
 	asmout("DB 00000011B,00000000B");
 	asmout("DB 00000000B,00000000B");
 #else
-	/* �I���W�i���}�E�X�J�[�\���p�^�[��(16x16, mono) by I.Tak. */
-	/* TOWNS �̓����ɓ����Ă���̂Ɏ����Ă��܂����t���X�N���b�`�ł��B*/
+	/* オリジナルマウスカーソルパターン(16x16, mono) by I.Tak. */
+	/* TOWNS の内臓に入ってるものに似せていますがフルスクラッチです。*/
 	ALIGN(4);
 mouse_cursor:
 	asmout("DB 10000000B,00000000B");
@@ -2590,7 +2590,7 @@ void near GAPI_resetdevice()
 	if (cmd[8] == 0x0020)
 		goto GAPI_VGA640;
 
-	/* �p���b�g������ */
+	/* パレット初期化 */
 	unsigned char *pt == CS:ESI;
 	asmout("MOV ESI,OFFSET #palette_table");
 	CLI();
@@ -2613,7 +2613,7 @@ void near GAPI_resetdevice()
 		(offset) pt += 3;
 	} while ((unsigned) CL < 16);
 
-	CL = 192; /* 64�F�p�p���b�g�ݒ� */
+	CL = 192; /* 64色用パレット設定 */
 	do {
 		EAX = ECX;
 		OUT(DX, AL);
@@ -2638,12 +2638,12 @@ void near GAPI_resetdevice()
 		CL++;
 	} while (!= 0);
 
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
 palette_table: /* Red, Green, Blue */
-	/* 0:��, 7:�Â��D�F, 8:���邢�D�F, 6:�o�b�N�̐F, 15:�� */
+	/* 0:黒, 7:暗い灰色, 8:明るい灰色, 6:バックの色, 15:白 */
 
 	asmout("DB 000H, 000H, 000H,   084H, 000H, 000H,   000H, 084H, 000H,   084H, 084H, 000H");
 	asmout("DB 000H, 000H, 084H,   084H, 000H, 084H,   000H, 084H, 084H,   084H, 084H, 084H");
@@ -2655,7 +2655,7 @@ palette_table: /* Red, Green, Blue */
 void near GAPI_setmode()
 // 001c, 0020, priority, mode(00, 12, 92, 6a, ea, 0102, 8102)
 {
-      0004 : �f�o�C�X���Z�b�g�i�n�[�h�E�F�A�R�l�N�g�j
+      0004 : デバイスリセット（ハードウェアコネクト）
 
 
 }
@@ -2672,7 +2672,7 @@ void near GAPI_error()
 }
 
 void near GAPI_VGA640()
-/* �n�[�h�E�F�A�ʓ��ʃR�}���h(0x001c, pri, 0x0020, mode) */
+/* ハードウェア別特別コマンド(0x001c, pri, 0x0020, mode) */
 {
 	GAPI_WORK *work == ES:0x0000;
 	GAPI_WORK *work_DS == DS:0x0000;
@@ -2686,7 +2686,7 @@ void near GAPI_VGA640()
 	wsub->scr_y0 = EAX;
 	EAX--;
 
-	cmd[ 4] = /* 0xffffffff*/ EAX; /* �I�� */
+	cmd[ 4] = /* 0xffffffff*/ EAX; /* 終了 */
 	EAX = cmd[12];
 	(offset) cmd += 16;
 
@@ -2695,13 +2695,13 @@ void near GAPI_VGA640()
 	#if (defined(TWSCRL1))
 		ECX = 640;
 	#else
-		ECX = 640 - 7; /* �X�N���[������̓s���̂��� */
+		ECX = 640 - 7; /* スクロール判定の都合のため */
 	#endif
-	EDX = 480 - 15 /* �O������mouse�̑傫���̕��������Ă��� */;
-		/* �}�E�X��y�����̃N���b�s���O���ł���悤�ɂȂ�����A���̑[�u�͕s�v */
+	EDX = 480 - 15 /* 前もってmouseの大きさの分を引いてある */;
+		/* マウスのy方向のクリッピングができるようになったら、この措置は不要 */
 	asmout("MOV ESI,OFFSET #param640");
 	#if (defined(CLGD543X))
-		if (AH != 0) {		/* �A�N�Z�����[�h */
+		if (AH != 0) {		/* アクセラモード */
 			DX = 0x440;
 			AL = 0x11;
 			OUT(DX, AL);
@@ -2710,7 +2710,7 @@ void near GAPI_VGA640()
 			ECX--;
 			EAX = 0;
 			OUT(DX, AX);
-			wsub->scr_width = ECX;	/* -1 �ŃX�N���[���}�� */
+			wsub->scr_width = ECX;	/* -1 でスクロール抑制 */
 			asmout("jmp next_command");
 		}
 	#endif
@@ -2719,7 +2719,7 @@ void near GAPI_VGA640()
 	//	asmout("ADD ESI,#param768 - #param640");
 		DB(0x83, 0xc6);
 		asmout("DB #param768 - #param640");
-		ECX -= 640 - 768;	/* 128�𑫂��̂�3�o�C�g����(�Ȃ�قǁA���܂�!) */
+		ECX -= 640 - 768;	/* 128を足すのは3バイト無駄(なるほど、うまい!) */
 		EDX += 512 - 480;
 	}
 	#if (defined(VMODE))
@@ -2754,7 +2754,7 @@ cl4in:
 			goto cl4;
 	} while (CL < 0x20);
 
-	/* �v���C�I���e�B�[���W�X�^ */
+	/* プライオリティーレジスタ */
 //	EDX = 0x0448;
 	DL = 0x48;
 	AL = 0x00;
@@ -2769,7 +2769,7 @@ cl4in:
 	AL = 0x18; /* 0x18 */
 	OUT(DX, AL);
 
-	/* CRT�o�̓R���g���[�����W�X�^ */
+	/* CRT出力コントロールレジスタ */
 	EDX = 0xfda0;
 	AL = 0x0c; /* 0x08 */
 	OUT(DX, AL);
@@ -2808,8 +2808,8 @@ param640V:
 
 void near GAPI_accesslock()
 /* opt bit0  0:Lock 1:Unlock
-       bit1  Lock���̃I�v�V����   0:near�|�C���^���� 1:�Ȃ�
-             Unlock���̃I�v�V���� 0:�͈͎w��Ȃ� 1:����
+       bit1  Lock時のオプション   0:nearポインタあり 1:なし
+             Unlock時のオプション 0:範囲指定なし 1:あり
        bit8-31  Unlock-opt */
 {
 	int *cmd == FS:EBX;
@@ -2832,7 +2832,7 @@ lock_bitset:
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
 	EBP = cmd[28]; // ofs
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 32;
 	CLI();
 	work->lockcount++;
@@ -2857,7 +2857,7 @@ lock_bitnoset:
 	ECX = cmd[16]; // y0
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 28;
 	CLI();
 	work->lockcount++;
@@ -2884,26 +2884,26 @@ unlock_optbit:
 		if (!= 0) {
 			work->mouselock--;
 			if (== 0) {
-				/* �}�E�X���ړ������鎞�ɁAmouselock��0x80000000�ɂ����̂ŁA
-				   �}�E�X����\�����Ɉړ�����ƁA����͐������Ȃ��Ȃ�B */
+				/* マウスを移動させる時に、mouselockが0x80000000にされるので、
+				   マウスが非表示中に移動すると、これは成立しなくなる。 */
 				GAPI_putmouse(); /* put mouse (mouseflag = 1) */
-				/* mx1���`�F�b�N���Ȃ��Ă����̂��H */
+				/* mx1をチェックしなくていいのか？ */
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; /* �I�� */
+		cmd[4] = 0xffffffff; /* 終了 */
 		(offset) cmd += 12;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1�����̒l�̎��́A��\�����Ӗ����� */) {
+	if (work->mx1 != 0x80000000 /* mx1がこの値の時は、非表示を意味する */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1��ݒ� */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1を設定 */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
@@ -2921,9 +2921,9 @@ unlock_area:
 					if ((signed) EDI /* y1 */ > work->my0) {
 						work->mouselock--;
 						if (== 0) {
-							/* �}�E�X���ړ������鎞�ɁAmouselock��0�ɂ����̂ŁA
-							   �}�E�X���ꎞ�������Ɉړ�����ƁA����͐������Ȃ��Ȃ�B
-							   �}�E�X����\�����͍ŏ���mx1�̔�r���������Ȃ� */
+							/* マウスを移動させる時に、mouselockが0にされるので、
+							   マウスが一時消去中に移動すると、これは成立しなくなる。
+							   マウスが非表示中は最初のmx1の比較が成立しない */
 							GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 						}
 					}
@@ -2931,28 +2931,28 @@ unlock_area:
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; /* �I�� */
+		cmd[4] = 0xffffffff; /* 終了 */
 		(offset) cmd += 28;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1�����̒l�̎��́A��\�����Ӗ����� */) {
+	if (work->mx1 != 0x80000000 /* mx1がこの値の時は、非表示を意味する */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); /* mx0, my0, mx1, my1��ݒ� */
+			GAPI_clippingmouse(); /* mx0, my0, mx1, my1を設定 */
 			GAPI_putmouse(); /* put mouse (mouseflag = 1) */
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; /* �I�� */
+	cmd[4] = 0xffffffff; /* 終了 */
 	(offset) cmd += 28;
 	asmout("JMP next_command");
 }
 
 void near GAPI_mouse_drawsub16()
-/* DS:ESI����y������64�o�C�g���AES:EDX�֓]���B */
-/* ������ES:ESI��`�� */
-/* �������A�ǂ����VRAM���̃A�h���X�B */
-/* EAX, ECX�̂ݔj��B */
+/* DS:ESIからy方向に64バイトを、ES:EDXへ転送。 */
+/* 同時にES:ESIを描画 */
+/* ただし、どちらもVRAM内のアドレス。 */
+/* EAX, ECXのみ破壊。 */
 {
 	int *b == ES:EDX, *p == DS:ESI, *q == ES:EDI;
 	EAX = p[TWVSW *  0]; ECX = p[TWVSW *  1]; b[ 0] = EAX; b[ 4] = ECX;
@@ -2997,18 +2997,18 @@ void near GAPI_mouse_erasesub16()
 }
 
 void near GAPI_putmouse()
-/* �j�󃌃W�X�^�FEAX, ECX, EDX, ESI, EDI */
+/* 破壊レジスタ：EAX, ECX, EDX, ESI, EDI */
 {
 	GAPI_WORK *work == ES:0x0000;
 	int *b /* backup */ == ES:EDX, *p /* cursor */ == DS:ESI, *q /* pattern */ == ES:EDI;
 	unsigned char maskflag == BL;
 
 	PUSH(EBX);
-	maskflag = work->maskflag; /* 1��bit�͏����Ȃ� */
+	maskflag = work->maskflag; /* 1のbitは書かない */
 	work->mouseflag = 1;
 	(offset) p = work->cursor_addr;
 	LEA((offset) b, work->backup_buf[0]);
-	(offset) q = work->pattern_addr; /* AND�p�^�[����XOR�p�^�[���̃Z�b�g */
+	(offset) q = work->pattern_addr; /* ANDパターンとXORパターンのセット */
 	TEST(maskflag, 0x01);
 	if (== 0)
 		GAPI_mouse_drawsub16();
@@ -3042,13 +3042,13 @@ void near GAPI_putmouse()
 }
 
 void near GAPI_removemouse()
-/* �j�󃌃W�X�^�FEAX, ECX, EDX, ESI, EDI */
+/* 破壊レジスタ：EAX, ECX, EDX, ESI, EDI */
 {
 	GAPI_WORK *work == ES:0x0000;
 	int *b /* backup */ == ES:EDI, *p /* cursor */ == DS:ESI;
 	unsigned char maskflag == DL;
 
-	maskflag = work->maskflag; /* 1��bit�͏����Ȃ� */
+	maskflag = work->maskflag; /* 1のbitは書かない */
 	work->mouseflag = 0;
 	(offset) p = work->cursor_addr;
 	LEA((offset) b, work->backup_buf[0]);
@@ -3080,12 +3080,12 @@ void near GAPI_removemouse()
 }
 
 void near GAPI_clippingmouse()
-/* VRAM��15���C���ȏ�̗]�T�����聕�p�^�[���̏㕔�������邱�Ƃ����肦�Ȃ� */
-/* (EAX, EBP) : ���ɕ����t������ */
-/* EBX�ȊO��j�� */
+/* VRAMに15ライン以上の余裕を仮定＆パターンの上部が欠けることもありえない */
+/* (EAX, EBP) : 共に符号付き整数 */
+/* EBX以外を破壊 */
 {
 	GAPI_WORK *work == ES:0x0000;
-	char *p == DS:EDI /* �J�[�\���A�h���X */, *q == ES:EAX;
+	char *p == DS:EDI /* カーソルアドレス */, *q == ES:EAX;
 	char maskflag == CL;
 	signed int x == ESI, y == EBP, mouseline == EDX;
 
@@ -3094,7 +3094,7 @@ void near GAPI_clippingmouse()
 	x = work->mx;
 	y = work->my;
 	(offset) q = x;
-	x &= /* ~0x03 */ 0xfffffffc;
+	x &= /* ‾0x03 */ 0xfffffffc;
 	work->my0 = y;
 	y += 16;
 	work->mx0 = x;
@@ -3137,7 +3137,7 @@ void near GAPI_clippingmouse()
 		}
 	}
 	PUSH(x);
-	x &= /* ~0x03 */ 0xfffffffc;
+	x &= /* ‾0x03 */ 0xfffffffc;
 	x += 0xe0000000;
 //	/* (false) */ if (y < 0) {
 //			work->my0 = 0;
@@ -3163,8 +3163,8 @@ skip_imul:
 	work->pattern_addr = (offset) q;
 	work->cursor_addr = (offset) p;
 
-	/* �����X�N���[�����[�`�� by I.Tak. 2001.11.25 */
-	/* (��)�썇������Ɉꕔ�������Ă��� */
+	/* 自動スクロールルーチン by I.Tak. 2001.11.25 */
+	/* (註)川合が勝手に一部改正している */
 
 	/* by I.Tak. since 2001.10.07(Sun) */
 	/* 2001.11.01(Thu) v0.2   For the first time works well in ASKA. */

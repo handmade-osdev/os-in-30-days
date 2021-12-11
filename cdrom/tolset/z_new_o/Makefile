@@ -17,6 +17,6 @@ BIMOPT2    =
 
 include ../z_tools/com_mak.txt
 
-# OBJS‚ğ‘‚«Š·‚¦‚é‚Æ•ªŠ„ƒRƒ“ƒpƒCƒ‹‘Î‰
+# OBJSã‚’æ›¸ãæ›ãˆã‚‹ã¨åˆ†å‰²ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¯¾å¿œ
 
-# tolset08‘Î‰Makefile
+# tolset08å¯¾å¿œMakefile

@@ -121,7 +121,7 @@ fnmatch (pattern, string, flags)
 	    c1 = FOLD (c1);
 	    for (--p; *n != '\0'; ++n)
 	      if ((c == '[' || FOLD ((unsigned char)*n) == c1) &&
-		  fnmatch (p, n, flags & ~FNM_PERIOD) == 0)
+		  fnmatch (p, n, flags & ‾FNM_PERIOD) == 0)
 		return 0;
 	    return FNM_NOMATCH;
 	  }

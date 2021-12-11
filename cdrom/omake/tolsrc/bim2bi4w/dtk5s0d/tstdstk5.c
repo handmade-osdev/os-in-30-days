@@ -1,18 +1,18 @@
-/* dtkŒn‚ÌƒTƒ“ƒvƒ‹ */
+/* dtkç³»ã®ã‚µãƒ³ãƒ—ãƒ« */
 
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef unsigned char UCHAR;
 
-int tek_checkformat(int siz, UCHAR *p); /* “WŠJŒã‚ÌƒTƒCƒY‚ğ•Ô‚· */
-	/* -1:”ñosacmp */
-	/* -2:osacmp‚¾‚ª‘Î‰‚Å‚«‚È‚¢ */
-int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ¬Œ÷‚µ‚½‚ç0 */
-	/* ³‚Ì’l‚ÍƒtƒH[ƒ}ƒbƒg‚ÌˆÙíE–¢‘Î‰A•‰‚Ì’l‚Íƒƒ‚ƒŠ•s‘« */
+int tek_checkformat(int siz, UCHAR *p); /* å±•é–‹å¾Œã®ã‚µã‚¤ã‚ºã‚’è¿”ã™ */
+	/* -1:éosacmp */
+	/* -2:osacmpã ãŒå¯¾å¿œã§ããªã„ */
+int tek_decode(int siz, UCHAR *p, UCHAR *q); /* æˆåŠŸã—ãŸã‚‰0 */
+	/* æ­£ã®å€¤ã¯ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ç•°å¸¸ãƒ»æœªå¯¾å¿œã€è² ã®å€¤ã¯ãƒ¡ãƒ¢ãƒªä¸è¶³ */
 
 int main(int argc, UCHAR **argv)
-/* o—Íƒtƒ@ƒCƒ‹‚ğnul‚É‚·‚é‚ÆA“WŠJ‘¬“x‘ª’èƒ‚[ƒh‚É‚È‚éi‚¢‚í‚ä‚éƒeƒXƒgj */
+/* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’nulã«ã™ã‚‹ã¨ã€å±•é–‹é€Ÿåº¦æ¸¬å®šãƒ¢ãƒ¼ãƒ‰ã«ãªã‚‹ï¼ˆã„ã‚ã‚†ã‚‹ãƒ†ã‚¹ãƒˆï¼‰ */
 {
 	FILE *fp;
 	int tsiz, dsiz, st;
@@ -48,7 +48,7 @@ int main(int argc, UCHAR **argv)
 		return 1;
 	}
 	if (dsiz == -1) {
-		/* –³ˆ³kƒtƒ@ƒCƒ‹ */
+		/* ç„¡åœ§ç¸®ãƒ•ã‚¡ã‚¤ãƒ« */
 		dsiz = tsiz;
 		dbuf = tbuf;
 		tbuf = NULL;

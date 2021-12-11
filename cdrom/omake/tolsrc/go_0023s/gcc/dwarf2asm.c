@@ -74,7 +74,7 @@ dw2_asm_output_data VPARAMS ((int size, unsigned HOST_WIDE_INT value,
   VA_FIXEDARG (ap, const char *, comment);
 
   if (size * 8 < HOST_BITS_PER_WIDE_INT)
-    value &= ~(~(unsigned HOST_WIDE_INT) 0 << (size * 8));
+    value &= ‾(‾(unsigned HOST_WIDE_INT) 0 << (size * 8));
 
   dw2_assemble_integer (size, GEN_INT (value));
 
@@ -862,7 +862,7 @@ dw2_asm_output_encoded_addr_rtx VPARAMS ((int encoding,
 	     share these constants across the entire unit of translation,
 	     or better, across the entire application (or DSO).  */
 	  addr = dw2_force_const_mem (addr);
-	  encoding &= ~DW_EH_PE_indirect;
+	  encoding &= ‾DW_EH_PE_indirect;
 	  goto restart;
 	}
 

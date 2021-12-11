@@ -69,7 +69,7 @@ const char _hex_value[_hex_array_size] =
   _hex_bad, _hex_bad, _hex_bad, _hex_bad,   /* p   q   r   s   */
   _hex_bad, _hex_bad, _hex_bad, _hex_bad,   /* t   u   v   w   */
   _hex_bad, _hex_bad, _hex_bad, _hex_bad,   /* x   y   z   {   */
-  _hex_bad, _hex_bad, _hex_bad, _hex_bad,   /* |   }   ~   DEL */
+  _hex_bad, _hex_bad, _hex_bad, _hex_bad,   /* |   }   ‾   DEL */
 
   /* The high half of unsigned char, all values are _hex_bad.  */
   _hex_bad, _hex_bad, _hex_bad, _hex_bad,

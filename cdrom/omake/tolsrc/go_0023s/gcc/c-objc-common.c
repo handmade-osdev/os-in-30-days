@@ -362,7 +362,7 @@ c_objc_common_finish_file ()
 
     if (stream)
       {
-	dump_node (getdecls (), flags & ~TDF_SLIM, stream);
+	dump_node (getdecls (), flags & ‾TDF_SLIM, stream);
 	dump_end (TDI_all, stream);
       }
   }

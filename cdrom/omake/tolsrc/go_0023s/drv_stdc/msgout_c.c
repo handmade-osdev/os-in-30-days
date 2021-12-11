@@ -1,6 +1,6 @@
 /* for stdc */
-/* ������ڐA����̂��ʓ|�ȏꍇ�́A"others.c"+"msgout.c"�ɒu��������΂悢 */
-/* �������̂ق����R���p�N�g���Ƃ������� */
+/* これを移植するのが面倒な場合は、"others.c"+"msgout.c"に置き換えればよい */
+/* こっちのほうがコンパクトだというだけ */
 
 void msgout(UCHAR *s)
 {

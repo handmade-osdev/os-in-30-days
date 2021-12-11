@@ -65,7 +65,7 @@ insn_print_units (insn)
   else
     {
       fprintf (sched_dump, "[");
-      for (i = 0, unit = ~unit; unit; i++, unit >>= 1)
+      for (i = 0, unit = ‾unit; unit; i++, unit >>= 1)
 	if (unit & 1)
 	  {
 	    fprintf (sched_dump, "%s", function_units[i].name);
@@ -107,7 +107,7 @@ init_target_units ()
       unit = insn_unit (insn);
 
       if (unit < 0)
-	target_units |= ~unit;
+	target_units |= ‾unit;
       else
 	target_units |= (1 << unit);
     }

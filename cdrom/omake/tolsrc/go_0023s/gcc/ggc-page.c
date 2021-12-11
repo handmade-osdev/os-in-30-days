@@ -397,7 +397,7 @@ ggc_allocated_p (p)
   base = &G.lookup[0];
 #else
   page_table table = G.lookup;
-  size_t high_bits = (size_t) p & ~ (size_t) 0xffffffff;
+  size_t high_bits = (size_t) p & ‾ (size_t) 0xffffffff;
   while (1)
     {
       if (table == NULL)
@@ -430,7 +430,7 @@ lookup_page_table_entry(p)
   base = &G.lookup[0];
 #else
   page_table table = G.lookup;
-  size_t high_bits = (size_t) p & ~ (size_t) 0xffffffff;
+  size_t high_bits = (size_t) p & ‾ (size_t) 0xffffffff;
   while (table->high_bits != high_bits)
     table = table->next;
   base = &table->table[0];
@@ -457,7 +457,7 @@ set_page_table_entry(p, entry)
   base = &G.lookup[0];
 #else
   page_table table;
-  size_t high_bits = (size_t) p & ~ (size_t) 0xffffffff;
+  size_t high_bits = (size_t) p & ‾ (size_t) 0xffffffff;
   for (table = G.lookup; table; table = table->next)
     if (table->high_bits == high_bits)
       goto found;
@@ -557,7 +557,7 @@ clear_page_group_in_use (group, page)
      page_group *group;
      char *page;
 {
-  group->in_use &= ~(1 << page_group_index (group->allocation, page));
+  group->in_use &= ‾(1 << page_group_index (group->allocation, page));
 }
 #endif
 
@@ -914,7 +914,7 @@ ggc_alloc (size)
       if ((entry->in_use_p[word] >> bit) & 1)
 	{
 	  word = bit = 0;
-	  while (~entry->in_use_p[word] == 0)
+	  while (‾entry->in_use_p[word] == 0)
 	    ++word;
 	  while ((entry->in_use_p[word] >> bit) & 1)
 	    ++bit;

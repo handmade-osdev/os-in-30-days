@@ -1,10 +1,10 @@
 ; naskfunc
 ; TAB=4
 
-[FORMAT "WCOFF"]				; �I�u�W�F�N�g�t�@�C������郂�[�h	
-[INSTRSET "i486p"]				; 486�̖��߂܂Ŏg�������Ƃ����L�q
-[BITS 32]						; 32�r�b�g���[�h�p�̋@�B�����点��
-[FILE "naskfunc.nas"]			; �\�[�X�t�@�C�������
+[FORMAT "WCOFF"]				; オブジェクトファイルを作るモード	
+[INSTRSET "i486p"]				; 486の命令まで使いたいという記述
+[BITS 32]						; 32ビットモード用の機械語を作らせる
+[FILE "naskfunc.nas"]			; ソースファイル名情報
 
 		GLOBAL	_io_hlt, _io_cli, _io_sti, _io_stihlt
 		GLOBAL	_io_in8,  _io_in16,  _io_in32
@@ -77,14 +77,14 @@ _io_out32:	; void io_out32(int port, int data);
 		RET
 
 _io_load_eflags:	; int io_load_eflags(void);
-		PUSHFD		; PUSH EFLAGS �Ƃ����Ӗ�
+		PUSHFD		; PUSH EFLAGS という意味
 		POP		EAX
 		RET
 
 _io_store_eflags:	; void io_store_eflags(int eflags);
 		MOV		EAX,[ESP+4]
 		PUSH	EAX
-		POPFD		; POP EFLAGS �Ƃ����Ӗ�
+		POPFD		; POP EFLAGS という意味
 		RET
 
 _load_gdtr:		; void load_gdtr(int limit, int addr);
@@ -119,10 +119,10 @@ _asm_inthandler20:
 		MOV		AX,SS
 		CMP		AX,1*8
 		JNE		.from_app
-;	OS�������Ă���Ƃ��Ɋ��荞�܂ꂽ�̂łقڍ��܂łǂ���
+;	OSが動いているときに割り込まれたのでほぼ今までどおり
 		MOV		EAX,ESP
-		PUSH	SS				; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		PUSH	EAX				; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		PUSH	SS				; 割り込まれたときのSSを保存
+		PUSH	EAX				; 割り込まれたときのESPを保存
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
@@ -133,21 +133,21 @@ _asm_inthandler20:
 		POP		ES
 		IRETD
 .from_app:
-;	�A�v���������Ă���Ƃ��Ɋ��荞�܂ꂽ
+;	アプリが動いているときに割り込まれた
 		MOV		EAX,1*8
-		MOV		DS,AX			; �Ƃ肠����DS����OS�p�ɂ���
-		MOV		ECX,[0xfe4]		; OS��ESP
+		MOV		DS,AX			; とりあえずDSだけOS用にする
+		MOV		ECX,[0xfe4]		; OSのESP
 		ADD		ECX,-8
-		MOV		[ECX+4],SS		; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		MOV		[ECX  ],ESP		; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		MOV		[ECX+4],SS		; 割り込まれたときのSSを保存
+		MOV		[ECX  ],ESP		; 割り込まれたときのESPを保存
 		MOV		SS,AX
 		MOV		ES,AX
 		MOV		ESP,ECX
 		CALL	_inthandler20
 		POP		ECX
 		POP		EAX
-		MOV		SS,AX			; SS���A�v���p�ɖ߂�
-		MOV		ESP,ECX			; ESP���A�v���p�ɖ߂�
+		MOV		SS,AX			; SSをアプリ用に戻す
+		MOV		ESP,ECX			; ESPもアプリ用に戻す
 		POPAD
 		POP		DS
 		POP		ES
@@ -160,10 +160,10 @@ _asm_inthandler21:
 		MOV		AX,SS
 		CMP		AX,1*8
 		JNE		.from_app
-;	OS�������Ă���Ƃ��Ɋ��荞�܂ꂽ�̂łقڍ��܂łǂ���
+;	OSが動いているときに割り込まれたのでほぼ今までどおり
 		MOV		EAX,ESP
-		PUSH	SS				; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		PUSH	EAX				; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		PUSH	SS				; 割り込まれたときのSSを保存
+		PUSH	EAX				; 割り込まれたときのESPを保存
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
@@ -174,21 +174,21 @@ _asm_inthandler21:
 		POP		ES
 		IRETD
 .from_app:
-;	�A�v���������Ă���Ƃ��Ɋ��荞�܂ꂽ
+;	アプリが動いているときに割り込まれた
 		MOV		EAX,1*8
-		MOV		DS,AX			; �Ƃ肠����DS����OS�p�ɂ���
-		MOV		ECX,[0xfe4]		; OS��ESP
+		MOV		DS,AX			; とりあえずDSだけOS用にする
+		MOV		ECX,[0xfe4]		; OSのESP
 		ADD		ECX,-8
-		MOV		[ECX+4],SS		; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		MOV		[ECX  ],ESP		; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		MOV		[ECX+4],SS		; 割り込まれたときのSSを保存
+		MOV		[ECX  ],ESP		; 割り込まれたときのESPを保存
 		MOV		SS,AX
 		MOV		ES,AX
 		MOV		ESP,ECX
 		CALL	_inthandler21
 		POP		ECX
 		POP		EAX
-		MOV		SS,AX			; SS���A�v���p�ɖ߂�
-		MOV		ESP,ECX			; ESP���A�v���p�ɖ߂�
+		MOV		SS,AX			; SSをアプリ用に戻す
+		MOV		ESP,ECX			; ESPもアプリ用に戻す
 		POPAD
 		POP		DS
 		POP		ES
@@ -201,10 +201,10 @@ _asm_inthandler27:
 		MOV		AX,SS
 		CMP		AX,1*8
 		JNE		.from_app
-;	OS�������Ă���Ƃ��Ɋ��荞�܂ꂽ�̂łقڍ��܂łǂ���
+;	OSが動いているときに割り込まれたのでほぼ今までどおり
 		MOV		EAX,ESP
-		PUSH	SS				; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		PUSH	EAX				; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		PUSH	SS				; 割り込まれたときのSSを保存
+		PUSH	EAX				; 割り込まれたときのESPを保存
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
@@ -215,21 +215,21 @@ _asm_inthandler27:
 		POP		ES
 		IRETD
 .from_app:
-;	�A�v���������Ă���Ƃ��Ɋ��荞�܂ꂽ
+;	アプリが動いているときに割り込まれた
 		MOV		EAX,1*8
-		MOV		DS,AX			; �Ƃ肠����DS����OS�p�ɂ���
-		MOV		ECX,[0xfe4]		; OS��ESP
+		MOV		DS,AX			; とりあえずDSだけOS用にする
+		MOV		ECX,[0xfe4]		; OSのESP
 		ADD		ECX,-8
-		MOV		[ECX+4],SS		; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		MOV		[ECX  ],ESP		; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		MOV		[ECX+4],SS		; 割り込まれたときのSSを保存
+		MOV		[ECX  ],ESP		; 割り込まれたときのESPを保存
 		MOV		SS,AX
 		MOV		ES,AX
 		MOV		ESP,ECX
 		CALL	_inthandler27
 		POP		ECX
 		POP		EAX
-		MOV		SS,AX			; SS���A�v���p�ɖ߂�
-		MOV		ESP,ECX			; ESP���A�v���p�ɖ߂�
+		MOV		SS,AX			; SSをアプリ用に戻す
+		MOV		ESP,ECX			; ESPもアプリ用に戻す
 		POPAD
 		POP		DS
 		POP		ES
@@ -242,10 +242,10 @@ _asm_inthandler2c:
 		MOV		AX,SS
 		CMP		AX,1*8
 		JNE		.from_app
-;	OS�������Ă���Ƃ��Ɋ��荞�܂ꂽ�̂łقڍ��܂łǂ���
+;	OSが動いているときに割り込まれたのでほぼ今までどおり
 		MOV		EAX,ESP
-		PUSH	SS				; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		PUSH	EAX				; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		PUSH	SS				; 割り込まれたときのSSを保存
+		PUSH	EAX				; 割り込まれたときのESPを保存
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
@@ -256,28 +256,28 @@ _asm_inthandler2c:
 		POP		ES
 		IRETD
 .from_app:
-;	�A�v���������Ă���Ƃ��Ɋ��荞�܂ꂽ
+;	アプリが動いているときに割り込まれた
 		MOV		EAX,1*8
-		MOV		DS,AX			; �Ƃ肠����DS����OS�p�ɂ���
-		MOV		ECX,[0xfe4]		; OS��ESP
+		MOV		DS,AX			; とりあえずDSだけOS用にする
+		MOV		ECX,[0xfe4]		; OSのESP
 		ADD		ECX,-8
-		MOV		[ECX+4],SS		; ���荞�܂ꂽ�Ƃ���SS��ۑ�
-		MOV		[ECX  ],ESP		; ���荞�܂ꂽ�Ƃ���ESP��ۑ�
+		MOV		[ECX+4],SS		; 割り込まれたときのSSを保存
+		MOV		[ECX  ],ESP		; 割り込まれたときのESPを保存
 		MOV		SS,AX
 		MOV		ES,AX
 		MOV		ESP,ECX
 		CALL	_inthandler2c
 		POP		ECX
 		POP		EAX
-		MOV		SS,AX			; SS���A�v���p�ɖ߂�
-		MOV		ESP,ECX			; ESP���A�v���p�ɖ߂�
+		MOV		SS,AX			; SSをアプリ用に戻す
+		MOV		ESP,ECX			; ESPもアプリ用に戻す
 		POPAD
 		POP		DS
 		POP		ES
 		IRETD
 
 _memtest_sub:	; unsigned int memtest_sub(unsigned int start, unsigned int end)
-		PUSH	EDI						; �iEBX, ESI, EDI ���g�������̂Łj
+		PUSH	EDI						; （EBX, ESI, EDI も使いたいので）
 		PUSH	ESI
 		PUSH	EBX
 		MOV		ESI,0xaa55aa55			; pat0 = 0xaa55aa55;
@@ -318,81 +318,81 @@ _farcall:		; void farcall(int eip, int cs);
 		RET
 
 _asm_hrb_api:
-		; �s���̂������Ƃɍŏ����犄�荞�݋֎~�ɂȂ��Ă���
+		; 都合のいいことに最初から割り込み禁止になっている
 		PUSH	DS
 		PUSH	ES
-		PUSHAD		; �ۑ��̂��߂�PUSH
+		PUSHAD		; 保存のためのPUSH
 		MOV		EAX,1*8
-		MOV		DS,AX			; �Ƃ肠����DS����OS�p�ɂ���
-		MOV		ECX,[0xfe4]		; OS��ESP
+		MOV		DS,AX			; とりあえずDSだけOS用にする
+		MOV		ECX,[0xfe4]		; OSのESP
 		ADD		ECX,-40
-		MOV		[ECX+32],ESP	; �A�v����ESP��ۑ�
-		MOV		[ECX+36],SS		; �A�v����SS��ۑ�
+		MOV		[ECX+32],ESP	; アプリのESPを保存
+		MOV		[ECX+36],SS		; アプリのSSを保存
 
-; PUSHAD�����l���V�X�e���̃X�^�b�N�ɃR�s�[����
+; PUSHADした値をシステムのスタックにコピーする
 		MOV		EDX,[ESP   ]
 		MOV		EBX,[ESP+ 4]
-		MOV		[ECX   ],EDX	; hrb_api�ɓn�����߃R�s�[
-		MOV		[ECX+ 4],EBX	; hrb_api�ɓn�����߃R�s�[
+		MOV		[ECX   ],EDX	; hrb_apiに渡すためコピー
+		MOV		[ECX+ 4],EBX	; hrb_apiに渡すためコピー
 		MOV		EDX,[ESP+ 8]
 		MOV		EBX,[ESP+12]
-		MOV		[ECX+ 8],EDX	; hrb_api�ɓn�����߃R�s�[
-		MOV		[ECX+12],EBX	; hrb_api�ɓn�����߃R�s�[
+		MOV		[ECX+ 8],EDX	; hrb_apiに渡すためコピー
+		MOV		[ECX+12],EBX	; hrb_apiに渡すためコピー
 		MOV		EDX,[ESP+16]
 		MOV		EBX,[ESP+20]
-		MOV		[ECX+16],EDX	; hrb_api�ɓn�����߃R�s�[
-		MOV		[ECX+20],EBX	; hrb_api�ɓn�����߃R�s�[
+		MOV		[ECX+16],EDX	; hrb_apiに渡すためコピー
+		MOV		[ECX+20],EBX	; hrb_apiに渡すためコピー
 		MOV		EDX,[ESP+24]
 		MOV		EBX,[ESP+28]
-		MOV		[ECX+24],EDX	; hrb_api�ɓn�����߃R�s�[
-		MOV		[ECX+28],EBX	; hrb_api�ɓn�����߃R�s�[
+		MOV		[ECX+24],EDX	; hrb_apiに渡すためコピー
+		MOV		[ECX+28],EBX	; hrb_apiに渡すためコピー
 
-		MOV		ES,AX			; �c��̃Z�O�����g���W�X�^��OS�p�ɂ���
+		MOV		ES,AX			; 残りのセグメントレジスタもOS用にする
 		MOV		SS,AX
 		MOV		ESP,ECX
-		STI			; ����Ɗ��荞�݋���
+		STI			; やっと割り込み許可
 
 		CALL	_hrb_api
 
-		MOV		ECX,[ESP+32]	; �A�v����ESP���v���o��
-		MOV		EAX,[ESP+36]	; �A�v����SS���v���o��
+		MOV		ECX,[ESP+32]	; アプリのESPを思い出す
+		MOV		EAX,[ESP+36]	; アプリのSSを思い出す
 		CLI
 		MOV		SS,AX
 		MOV		ESP,ECX
 		POPAD
 		POP		ES
 		POP		DS
-		IRETD		; ���̖��߂�������STI���Ă����
+		IRETD		; この命令が自動でSTIしてくれる
 
 _start_app:		; void start_app(int eip, int cs, int esp, int ds);
-		PUSHAD		; 32�r�b�g���W�X�^��S���ۑ����Ă���
-		MOV		EAX,[ESP+36]	; �A�v���p��EIP
-		MOV		ECX,[ESP+40]	; �A�v���p��CS
-		MOV		EDX,[ESP+44]	; �A�v���p��ESP
-		MOV		EBX,[ESP+48]	; �A�v���p��DS/SS
-		MOV		[0xfe4],ESP		; OS�p��ESP
-		CLI			; �؂�ւ����Ɋ��荞�݂��N���Ăق����Ȃ��̂ŋ֎~
+		PUSHAD		; 32ビットレジスタを全部保存しておく
+		MOV		EAX,[ESP+36]	; アプリ用のEIP
+		MOV		ECX,[ESP+40]	; アプリ用のCS
+		MOV		EDX,[ESP+44]	; アプリ用のESP
+		MOV		EBX,[ESP+48]	; アプリ用のDS/SS
+		MOV		[0xfe4],ESP		; OS用のESP
+		CLI			; 切り替え中に割り込みが起きてほしくないので禁止
 		MOV		ES,BX
 		MOV		SS,BX
 		MOV		DS,BX
 		MOV		FS,BX
 		MOV		GS,BX
 		MOV		ESP,EDX
-		STI			; �؂�ւ������Ȃ̂Ŋ��荞�݉\�ɖ߂�
-		PUSH	ECX				; far-CALL�̂��߂�PUSH�ics�j
-		PUSH	EAX				; far-CALL�̂��߂�PUSH�ieip�j
-		CALL	FAR [ESP]		; �A�v�����Ăяo��
+		STI			; 切り替え完了なので割り込み可能に戻す
+		PUSH	ECX				; far-CALLのためにPUSH（cs）
+		PUSH	EAX				; far-CALLのためにPUSH（eip）
+		CALL	FAR [ESP]		; アプリを呼び出す
 
-;	�A�v�����I������Ƃ����ɋA���Ă���
+;	アプリが終了するとここに帰ってくる
 
-		MOV		EAX,1*8			; OS�p��DS/SS
-		CLI			; �܂��؂�ւ���̂Ŋ��荞�݋֎~
+		MOV		EAX,1*8			; OS用のDS/SS
+		CLI			; また切り替えるので割り込み禁止
 		MOV		ES,AX
 		MOV		SS,AX
 		MOV		DS,AX
 		MOV		FS,AX
 		MOV		GS,AX
 		MOV		ESP,[0xfe4]
-		STI			; �؂�ւ������Ȃ̂Ŋ��荞�݉\�ɖ߂�
-		POPAD	; �ۑ����Ă��������W�X�^����
+		STI			; 切り替え完了なので割り込み可能に戻す
+		POPAD	; 保存しておいたレジスタを回復
 		RET

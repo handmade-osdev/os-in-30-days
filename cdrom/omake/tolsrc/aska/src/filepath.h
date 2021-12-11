@@ -1,5 +1,5 @@
 /*
-	ƒtƒ@ƒCƒ‹ƒpƒXŠÇ—ƒNƒ‰ƒX@`filepath.h`		Ver.[2000/02/11]
+	ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ç®¡ç†ã‚¯ãƒ©ã‚¹ã€€ã€œfilepath.hã€œ		Ver.[2000/02/11]
 */
 #ifndef	__FILEPATH_H
 #define	__FILEPATH_H

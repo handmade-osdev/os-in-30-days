@@ -76,7 +76,7 @@ struct file_name_map_list;
   OP(CPP_MIN,		"<?")	/* extension */	\
   OP(CPP_MAX,		">?")			\
 \
-  OP(CPP_COMPL,		"~")			\
+  OP(CPP_COMPL,		"‾")			\
   OP(CPP_AND_AND,	"&&")	/* logical */	\
   OP(CPP_OR_OR,		"||")			\
   OP(CPP_QUERY,		"?")			\

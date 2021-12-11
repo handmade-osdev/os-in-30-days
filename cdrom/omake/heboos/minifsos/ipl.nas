@@ -1,20 +1,20 @@
-; NASK�ō�����ւ�OS��pIPL(AT�݊��@�p)
+; NASKで作ったへぼOS専用IPL(AT互換機用)
 ; TAB = 4
-; copyright(C) 2003 �썇�G��, KL-01
-; OS��512�o�C�g�����ł���Ɖ���
-; OS�̓V�����_0�A�w�b�h0�A�Z�N�^2��������Ă���Ƒz��
+; copyright(C) 2003 川合秀実, KL-01
+; OSは512バイト未満であると仮定
+; OSはシリンダ0、ヘッド0、セクタ2から入っていると想定
 
 ;	prompt>nask ipl.nas ipl.bin ipl.lst
-; �ŃA�Z���u���ł��܂��Bnask��tolset05�ȍ~�Ɋ܂܂�Ă��܂��B
-; tolset05�� http://www.imasy.orr/~kawai/osask/developers.html �ɂ���܂��B
+; でアセンブルできます。naskはtolset05以降に含まれています。
+; tolset05は http://www.imasy.orr/‾kawai/osask/developers.html にあります。
 
-; �f�B�X�N�C���[�W�����ɂ͂������܂��B
+; ディスクイメージを作るにはこうします。
 ;	prompt>copy /B ipl.bin+os.com fdimage.bin
 
-; ������f�B�X�N�ɏ������ނɂ͂������܂��B
-; �܂��t�H�[�}�b�g�ς݂̃f�B�X�N��A:�ɓ����B
+; これをディスクに書き込むにはこうします。
+; まずフォーマット済みのディスクをA:に入れる。
 ;	prompt>imgtol w a: fdimage.bin
-; imgtol��tolset05�ȍ~�Ɋ܂܂�Ă��܂��B
+; imgtolもtolset05以降に含まれています。
 
 
 [FORMAT "BIN"]
@@ -28,29 +28,29 @@
 			NOP
 			DB		'hogehoge'
 
-; FAT�Ȃ񂩗p�ӂ��Ă����Ȃ������ɁABPB�������FAT12���Ƃ������Ƃɂ��Ă���
-; ������Ȃ����ƁA�f�B�X�N���t�H�[�}�b�g���Ȃ���imgtol�œǂݏ����ł��Ȃ��Ȃ�̂�
-; ���傤���Ȃ��̂œ���Ă���
+; FATなんか用意してもいないくせに、BPBを作ってFAT12だということにしておく
+; これをなくすと、ディスクをフォーマットしないとimgtolで読み書きできなくなるので
+; しょうがないので入れておく
 
-			DW		512 ; �Z�N�^��(�o�C�g�P��)
-			DB		1	; �N���X�^��(�Z�N�^�P��)
-			DW		1	; �u�[�g�Z�N�^��(�Z�N�^�P��)
-			DB		2	; FAT�̐�
+			DW		512 ; セクタ長(バイト単位)
+			DB		1	; クラスタ長(セクタ単位)
+			DW		1	; ブートセクタ長(セクタ単位)
+			DB		2	; FATの数
 			DW		0x00e0	; root directory entries.
-			DW		2880	; ���Z�N�^��
+			DW		2880	; 総セクタ数
 			DB		0xf0	; media descriptor byte.
-			DW		9		; 1��FAT�̒���(�Z�N�^�P��)
-			DW		18		; 1�g���b�N�Ɏ��e����Ă���Z�N�^��
-			DW		2		; �w�b�h��
-			DD		0		; �s���Z�N�^��
-			DD		2880	; ���Z�N�^��
+			DW		9		; 1つのFATの長さ(セクタ単位)
+			DW		18		; 1トラックに収容されているセクタ数
+			DW		2		; ヘッド数
+			DD		0		; 不可視セクタ数
+			DD		2880	; 総セクタ数
 			DB		0, 0	; /* unknown */
 			DB		0x29
 			DD		0xffffffff
 			DB		"hogehoge   "
 			DB		"FAT12   "
 
-; ���̃f�B�X�N��DOS��Win�ł͓ǂݏ����ł��܂���̂ŁA��낵��
+; このディスクはDOSやWinでは読み書きできませんので、よろしく
 
 START:
 			MOV		AX,0x0201
@@ -62,7 +62,7 @@ START:
 			INT		0x13
 			JC		ERR
 
-; .COM�t�@�C���̂Ȃ̂ŁADOS�݊��̃��W�X�^��Ԃɂ��Ă��
+; .COMファイルのなので、DOS互換のレジスタ状態にしてやる
 
 			MOV		AX,0x0800
 			MOV		SS,AX
@@ -71,9 +71,9 @@ START:
 			MOV		ES,AX
 			JMP		0x0800:0x0100
 ERR:
-			INT		0x18	; ROM-BASIC�ցi�΁j
+			INT		0x18	; ROM-BASICへ（笑）
 
-			RESB	0x7dfe-$	; 0x7dfe�܂�0x00�Ŗ��߂�
+			RESB	0x7dfe-$	; 0x7dfeまで0x00で埋める
 
 			DB		0x55,0xaa
 			

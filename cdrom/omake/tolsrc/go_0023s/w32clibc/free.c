@@ -1,6 +1,6 @@
 #include "windows.h"
 
-/* �R���p�N�g�ł͂��邪�A�x�� */
+/* コンパクトではあるが、遅い */
 
 void free(void *p)
 {

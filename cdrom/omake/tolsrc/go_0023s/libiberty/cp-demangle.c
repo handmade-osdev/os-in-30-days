@@ -1515,7 +1515,7 @@ demangle_identifier (dm, length, identifier)
                   ::= ng        # - (unary)     
                   ::= ad        # & (unary)     
                   ::= de        # * (unary)     
-                  ::= co        # ~             
+                  ::= co        # ‾             
                   ::= pl        # +             
                   ::= mi        # -             
                   ::= ml        # *             
@@ -1585,7 +1585,7 @@ demangle_operator_name (dm, short_name, num_args, type_arg)
     { "an", "&"        , 2 },
     { "cl", "()"       , 0 },
     { "cm", ","        , 2 },
-    { "co", "~"        , 1 },
+    { "co", "‾"        , 1 },
     { "dV", "/="       , 2 },
     { "da", " delete[]", 1 },
     { "de", "*"        , 1 },
@@ -2099,7 +2099,7 @@ demangle_ctor_dtor_name (dm)
       flavor = next_char (dm);
       if (flavor < '0' || flavor > '2')
 	return "Unrecognized destructor.";
-      RETURN_IF_ERROR (result_add_char (dm, '~'));
+      RETURN_IF_ERROR (result_add_char (dm, '‾'));
       RETURN_IF_ERROR (result_add_string (dm, dm->last_source_name));
       switch (flavor)
 	{

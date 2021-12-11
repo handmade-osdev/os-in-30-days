@@ -25,7 +25,7 @@ Boston, MA 02111-1307, USA.  */
 
 /* Yield nonzero if adding two numbers with A's and B's signs can yield a
    number with SUM's sign, where A, B, and SUM are all C integers.  */
-#define possible_sum_sign(a, b, sum) ((((a) ^ (b)) | ~ ((a) ^ (sum))) < 0)
+#define possible_sum_sign(a, b, sum) ((((a) ^ (b)) | ‾ ((a) ^ (sum))) < 0)
 
 static void integer_overflow PARAMS ((cpp_reader *));
 static HOST_WIDEST_INT left_shift PARAMS ((cpp_reader *, HOST_WIDEST_INT,
@@ -663,7 +663,7 @@ _cpp_parse_expr (pfile)
 	      goto syntax_error;
 
 	    case CPP_NOT:	 UNARY(!);	break;
-	    case CPP_COMPL:	 UNARY(~);	break;
+	    case CPP_COMPL:	 UNARY(‾);	break;
 	    case CPP_LESS:  	 COMPARE(<);	break;
 	    case CPP_GREATER:	 COMPARE(>);	break;
 	    case CPP_LESS_EQ:	 COMPARE(<=);	break;
@@ -847,7 +847,7 @@ _cpp_parse_expr (pfile)
 	}
       
       top->flags = flags;
-      top->prio = prio & ~EXTRACT_PRIO(RIGHT_ASSOC);
+      top->prio = prio & ‾EXTRACT_PRIO(RIGHT_ASSOC);
       top->op = op.op;
     }
 

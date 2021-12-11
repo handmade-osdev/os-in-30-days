@@ -16,7 +16,7 @@ int main(int argc, UCHAR **argv)
 	FILE *fp;
 	static UCHAR sign[4] = "Hari";
 
-	/* ƒpƒ‰ƒ[ƒ^‚Ìæ“¾ */
+	/* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾— */
 	if (argc < 4) {
 		puts("usage>bim2hrb appname.bim appname.hrb heap-size [mmarea-size]");
 		return 1;
@@ -26,7 +26,7 @@ int main(int argc, UCHAR **argv)
 	if (argc >= 5)
 		mmarea = getnum(argv[4]);
 
-	/* ƒtƒ@ƒCƒ‹“Ç‚İ‚İ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ */
 	fp = fopen(argv[1], "rb");
 	if (fp == NULL) {
 err_bim:
@@ -38,25 +38,25 @@ err_bim:
 	if (fsiz >= MAXSIZ || fsiz < 0)
 		goto err_bim;
 
-	/* ƒwƒbƒ_Šm”F */
-	if (get32(&fbuf[4]) != 0x24) {	/* ƒtƒ@ƒCƒ‹’†‚Ì.textƒXƒ^[ƒgƒAƒhƒŒƒX */
+	/* ãƒ˜ãƒƒãƒ€ç¢ºèª */
+	if (get32(&fbuf[4]) != 0x24) {	/* ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®.textã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ */
 err_form:
 		puts("bim file format error");
 		return 1;
 	}
-	if (get32(&fbuf[8]) != 0x24)	/* ƒƒ‚ƒŠƒ[ƒh‚Ì.textƒXƒ^[ƒgƒAƒhƒŒƒX */
+	if (get32(&fbuf[8]) != 0x24)	/* ãƒ¡ãƒ¢ãƒªãƒ­ãƒ¼ãƒ‰æ™‚ã®.textã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ */
 		goto err_form;
-	dsize  = get32(&fbuf[12]);	/* .dataƒZƒNƒVƒ‡ƒ“ƒTƒCƒY */
-	dofs   = get32(&fbuf[16]);	/* ƒtƒ@ƒCƒ‹‚Ì‚Ç‚±‚É.dataƒZƒNƒVƒ‡ƒ“‚ª‚ ‚é‚© */
-	stksiz = get32(&fbuf[20]);	/* ƒXƒ^ƒbƒNƒTƒCƒY */
-	entry  = get32(&fbuf[24]);	/* ƒGƒ“ƒgƒŠƒ|ƒCƒ“ƒg */
-	bsssiz = get32(&fbuf[28]);	/* bssƒTƒCƒY */
+	dsize  = get32(&fbuf[12]);	/* .dataã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‚µã‚¤ã‚º */
+	dofs   = get32(&fbuf[16]);	/* ãƒ•ã‚¡ã‚¤ãƒ«ã®ã©ã“ã«.dataã‚»ã‚¯ã‚·ãƒ§ãƒ³ãŒã‚ã‚‹ã‹ */
+	stksiz = get32(&fbuf[20]);	/* ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚º */
+	entry  = get32(&fbuf[24]);	/* ã‚¨ãƒ³ãƒˆãƒªãƒã‚¤ãƒ³ãƒˆ */
+	bsssiz = get32(&fbuf[28]);	/* bssã‚µã‚¤ã‚º */
 
-	/* ƒwƒbƒ_¶¬ */
+	/* ãƒ˜ãƒƒãƒ€ç”Ÿæˆ */
 	heap_adr = stksiz + dsize + bsssiz;
-	heap_adr = (heap_adr + 0xf) & 0xfffffff0; /* 16ƒoƒCƒg’PˆÊ‚ÉØ‚èã‚° */
+	heap_adr = (heap_adr + 0xf) & 0xfffffff0; /* 16ãƒã‚¤ãƒˆå˜ä½ã«åˆ‡ã‚Šä¸Šã’ */
 	wrksiz = heap_adr + heap_siz;
-	wrksiz = (wrksiz + 0xfff) & 0xfffff000; /* 4KB’PˆÊ‚ÉØ‚èã‚° */
+	wrksiz = (wrksiz + 0xfff) & 0xfffff000; /* 4KBå˜ä½ã«åˆ‡ã‚Šä¸Šã’ */
 	put32(&fbuf[ 0], wrksiz);
 	for (i = 0; i < 4; i++)
 		fbuf[4 + i] = sign[i];
@@ -68,7 +68,7 @@ err_form:
 	put32(&fbuf[28], entry - 0x20);
 	put32(&fbuf[32], heap_adr);
 
-	/* ƒtƒ@ƒCƒ‹‘‚«‚İ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿ */
 	fp = fopen(argv[2], "wb");
 	if (fp == NULL) {
 err_hrb:
@@ -153,28 +153,28 @@ void put32(UCHAR *p, int i)
 
 memo
 
-[ .bimƒtƒ@ƒCƒ‹‚Ì\‘¢ ]
+[ .bimãƒ•ã‚¡ã‚¤ãƒ«ã®æ§‹é€  ]
 
-+ 0 : .textƒTƒCƒY
-+ 4 : ƒtƒ@ƒCƒ‹’†‚Ì.textƒXƒ^[ƒgƒAƒhƒŒƒXi0x24j
-+ 8 : ƒƒ‚ƒŠƒ[ƒh‚Ì.textƒXƒ^[ƒgƒAƒhƒŒƒXi0x24j
-+12 : .dataƒTƒCƒY
-+16 : ƒtƒ@ƒCƒ‹’†‚Ì.dataƒXƒ^[ƒgƒAƒhƒŒƒX
-+20 : ƒƒ‚ƒŠƒ[ƒh‚Ì.dataƒXƒ^[ƒgƒAƒhƒŒƒX
-+24 : ƒGƒ“ƒgƒŠƒ|ƒCƒ“ƒg
-+28 : bss—Ìˆæ‚ÌƒoƒCƒg”
-+36 : ƒR[ƒh
++ 0 : .textã‚µã‚¤ã‚º
++ 4 : ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®.textã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ï¼ˆ0x24ï¼‰
++ 8 : ãƒ¡ãƒ¢ãƒªãƒ­ãƒ¼ãƒ‰æ™‚ã®.textã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ï¼ˆ0x24ï¼‰
++12 : .dataã‚µã‚¤ã‚º
++16 : ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®.dataã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹
++20 : ãƒ¡ãƒ¢ãƒªãƒ­ãƒ¼ãƒ‰æ™‚ã®.dataã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹
++24 : ã‚¨ãƒ³ãƒˆãƒªãƒã‚¤ãƒ³ãƒˆ
++28 : bssé ˜åŸŸã®ãƒã‚¤ãƒˆæ•°
++36 : ã‚³ãƒ¼ãƒ‰
 
-[ .hrbƒtƒ@ƒCƒ‹‚Ì\‘¢ ]
+[ .hrbãƒ•ã‚¡ã‚¤ãƒ«ã®æ§‹é€  ]
 
-+ 0 : stack+.data+heap ‚Ì‘å‚«‚³i4KB‚Ì”{”j
-+ 4 : ƒVƒOƒlƒ`ƒƒ "Hari"
-+ 8 : mmarea ‚Ì‘å‚«‚³i4KB‚Ì”{”j
-+12 : ƒXƒ^ƒbƒN‰Šú’l•.data“]‘—æ
-+16 : .data‚ÌƒTƒCƒY
-+20 : .data‚Ì‰Šú’l—ñ‚ªƒtƒ@ƒCƒ‹‚Ì‚Ç‚±‚É‚ ‚é‚©
++ 0 : stack+.data+heap ã®å¤§ãã•ï¼ˆ4KBã®å€æ•°ï¼‰
++ 4 : ã‚·ã‚°ãƒãƒãƒ£ "Hari"
++ 8 : mmarea ã®å¤§ãã•ï¼ˆ4KBã®å€æ•°ï¼‰
++12 : ã‚¹ã‚¿ãƒƒã‚¯åˆæœŸå€¤ï¼†.dataè»¢é€å…ˆ
++16 : .dataã®ã‚µã‚¤ã‚º
++20 : .dataã®åˆæœŸå€¤åˆ—ãŒãƒ•ã‚¡ã‚¤ãƒ«ã®ã©ã“ã«ã‚ã‚‹ã‹
 +24 : 0xe9000000
-+28 : ƒGƒ“ƒgƒŠƒAƒhƒŒƒX-0x20
-+32 : heap—Ìˆæimalloc—ÌˆæjŠJnƒAƒhƒŒƒX
++28 : ã‚¨ãƒ³ãƒˆãƒªã‚¢ãƒ‰ãƒ¬ã‚¹-0x20
++32 : heapé ˜åŸŸï¼ˆmallocé ˜åŸŸï¼‰é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹
 
 */

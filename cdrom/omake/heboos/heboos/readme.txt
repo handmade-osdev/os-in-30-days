@@ -1,42 +1,42 @@
-OS-Wiki�p�̃T���v�� "heboOS" �̐���
+OS-Wiki用のサンプル "heboOS" の説明
 
-���쌠�F
-    ���p�t�H���g�ɂ��ẮA���l����ɒ��쌠������܂��B
-    ���̂ق��̒��쌠�͐썇�G���ɂ���܂��B
-    ���C�Z���X�͂ǂ����KL-01�ł��̂ŁA���ρA�]�p�͎��R�ł��B
+著作権：
+    半角フォントについては、聖人さんに著作権があります。
+    そのほかの著作権は川合秀実にあります。
+    ライセンスはどちらもKL-01ですので、改変、転用は自由です。
 
-�ǂ��OS�Ȃ̂��H�F
-    �O���minifsos�͂�����ƃO���t�B�b�N���o�邾���ŁA����Ȃ̂�OS����Ȃ���A
-  ��������ǂ��������OS�ɂȂ�̂�����ς蕪����Ȃ���A������OS�͓����A��
-  �����l�������炩�킢�����Ȃ̂ŁA�Ƃ肠�����A�Ǝ��̃A�v���P�[�V������������
-  �����܂����B�����OS��2.58KB�ł��B�E�E�E�Ƃ����Ă��A���̂�����1.5KB�̓t�H��
-  �g�f�[�^�ł����B
-    ����y�Ɏ��������l�́A�Ƃ肠�����K���ȃf�B�X�N��.hoa�t�@�C�����R�s�[����A�h
-  ���C�u�ɓ���āAWindows���os.com�����s�����Ă݂Ă��������B�I�����@�̓E�B���h
-  �E�����΂����ł��B�����t���X�N���[���ɂȂ��Ă��܂�����A�Q�Ă���Alt+Enter
-  �������Ă��������B
-    �����R�}���h��cls��dir�ŁA�����hello�Ɠ��͂����hello.hoa�����s����܂��B
-  hoa�́AHebo Os Application�̗��̂���ł��B�܂�graphic.hoa�̂ق��́A���s���
-  �����L�[�������ƁA�v�����v�g�ɖ߂�܂��B
+どんなOSなのか？：
+    前回のminifsosはちょっとグラフィックが出るだけで、あんなのはOSじゃないよ、
+  ここからどうやったらOSになるのかやっぱり分かんないよ、きっとOSは難しいよ、と
+  いう人がいたらかわいそうなので、とりあえず、独自のアプリケーションが走るやつ
+  を作りました。今回はOSは2.58KBです。・・・といっても、このうちの1.5KBはフォン
+  トデータですが。
+    お手軽に試したい人は、とりあえず適当なディスクに.hoaファイルをコピーしてAド
+  ライブに入れて、Windows上でos.comを実行させてみてください。終了方法はウィンド
+  ウを閉じればいいです。もしフルスクリーンになってしまったら、慌てずにAlt+Enter
+  を押してください。
+    内蔵コマンドはclsとdirで、さらにhelloと入力すればhello.hoaが実行されます。
+  hoaは、Hebo Os Applicationの略のつもりです。またgraphic.hoaのほうは、実行後に
+  何かキーを押すと、プロンプトに戻ります。
 
-�C���X�g�[���F
-    �{�i�I�ɂ���OS���y���݂����l�́AA�h���C�u�ɏ������ς݂̃f�B�X�N�����āA
+インストール：
+    本格的にこのOSを楽しみたい人は、Aドライブに初期化済みのディスクを入れて、
       prompt>imgtol w a: fdimage.bin
       prompt>copy *.hoa a:
-  �Ƃ��ƃf�B�X�N���ł��܂��B
+  とやるとディスクができます。
 
-�̂�т茤�����Ă��������F
-    �ǂ����R�[�h��1.08KB�����Ȃ��̂ł�����A�׋��������l�͓K���Ƀ\�[�X��ǂ��
-  �݂Ă��������BOS�̃R�[�h������IPL�̋L�q�ɂ́AASKA���g���܂����BASKA�Ȃ񂩓ǂ�
-  �����Ȃ���ANASK�̂ق���������A�Ƃ����ЂƂ́Amakeos.bat��makeipl.bat�����s��
-  ��os.nas��ipl.nas�𓾂Ă��������B�������ASKA���Ȃ��ƃo�b�`�t�@�C���͓����܂�
-  ��B�\�[�X�̓���ASKA�Ȃǂ̃c�[���Q�̃_�E�����[�hURL�������Ă����܂����̂ŎQ��
-  ���Ă��������B
-    ����OS�̃A�v���P�[�V�����Ƃ��āA�C���x�[�_�[�Q�[�������͍���̂ł����iBI
-  OS�ŃL�[���͂��āAVRAM�ɃA�N�Z�X���ăL�����N�^�[��`���E�E�E�Ƃ�������낤��
-  �v���Ό��\���낢���ꂻ���j�A�߂�ǂ������Ȃ����̂ł�߂܂����B��肽���l��
-  �����R�ɁB�܂��d�g�݂����������āA�����̗��z��OS�̍��n�߂̎Q�l�ɂ��Ă�����
-  ���B�܂�������x�[�X�Ƀp���[�A�b�v���Ă������ł����B
-    �����Y��܂������A�蔲���������̂ŃA�v���P�[�V�����͍ő�512�o�C�g�܂łł��B
-  ������C���x�[�_�[�Q�[���͂�����Ƃ炢��������܂���B������FAT�����ǂ��
-  ���ɂ���΁A64KB���炢�܂ł̓T�|�[�g�ł���Ǝv���܂��B
+のんびり研究してください：
+    どうせコードは1.08KBしかないのですから、勉強したい人は適当にソースを読んで
+  みてください。OSのコード部分とIPLの記述には、ASKAを使いました。ASKAなんか読み
+  たくないよ、NASKのほうがいいよ、というひとは、makeos.batやmakeipl.batを実行し
+  てos.nasやipl.nasを得てください。もちろんASKAがないとバッチファイルは動きませ
+  ん。ソースの頭にASKAなどのツール群のダウンロードURLを書いておきましたので参照
+  してください。
+    このOSのアプリケーションとして、インベーダーゲームも実は作れるのですが（BI
+  OSでキー入力して、VRAMにアクセスしてキャラクターを描く・・・というかやろうと
+  思えば結構いろいろ作れそう）、めんどくさくなったのでやめました。やりたい人は
+  ご自由に。まあ仕組みだけ理解して、自分の理想のOSの作り始めの参考にしてくださ
+  い。まあこれをベースにパワーアップしてもいいですが。
+    いい忘れましたが、手抜きをしたのでアプリケーションは最大512バイトまでです。
+  だからインベーダーゲームはちょっとつらいかもしれません。ちゃんとFATをたどるよ
+  うにすれば、64KBくらいまではサポートできると思います。

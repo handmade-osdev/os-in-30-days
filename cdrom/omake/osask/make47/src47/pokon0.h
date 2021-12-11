@@ -43,7 +43,7 @@ enum {
 	FMODE4,
 	FMODE5,
 	FMODE6,
-	STATUS_LOAD_BOOT_SECTOR_CODE_COMPLETE,/* 'S'‚Æ'Enter'‚Æ'F'‚Æ'R'‚µ‚©“ü—Í‚Å‚«‚È‚¢ */
+	STATUS_LOAD_BOOT_SECTOR_CODE_COMPLETE,/* 'S'ã¨'Enter'ã¨'F'ã¨'R'ã—ã‹å…¥åŠ›ã§ããªã„ */
 	STATUS_WRITE_KERNEL_COMPLETE,
 	STATUS_FORMAT_COMPLETE,
 	STATUS_BOOTING
@@ -61,23 +61,23 @@ enum {
 /* main signals */
 #define NO_SIGNAL                               0x0000 /* no signal */
 #define SIGNAL_REWIND                           0x0004 /* rewind */
-#define SIGNAL_BOOT_COMPLETE                    99 /* bootŠ®—¹ */
+#define SIGNAL_BOOT_COMPLETE                    99 /* bootå®Œäº† */
 #define SIGNAL_TERMINATED_TASK                  0x0080 /* terminated task */
-#define SIGNAL_REQUEST_DIALOG                   0x0084 /* ƒ_ƒCƒAƒƒO—v‹ƒVƒOƒiƒ‹ */
+#define SIGNAL_REQUEST_DIALOG                   0x0084 /* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°è¦æ±‚ã‚·ã‚°ãƒŠãƒ« */
 #define SIGNAL_REQUEST_DIALOG2                  0x0088
-#define	SIGNAL_FREE_FILES						0x008c /* ƒtƒ@ƒCƒ‹ŠJ•ú—v‹(‚¦‚¹ƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€—p) */
+#define	SIGNAL_FREE_FILES						0x008c /* ãƒ•ã‚¡ã‚¤ãƒ«é–‹æ”¾è¦æ±‚(ãˆã›ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ ç”¨) */
 #define SIGNAL_RESIZE_FILE						0x008d /* cmd, addr, new-size, task, sig, slot */
-#define	SIGNAL_NEED_WB							0x0090 /* ƒtƒ@ƒCƒ‹ƒLƒƒƒbƒVƒ…‚Íƒ‰ƒCƒgƒoƒbƒN‚ª•K—v */
+#define	SIGNAL_NEED_WB							0x0090 /* ãƒ•ã‚¡ã‚¤ãƒ«ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¯ãƒ©ã‚¤ãƒˆãƒãƒƒã‚¯ãŒå¿…è¦ */
 #define	SIGNAL_NO_WB_CACHE						0x0094 /* to clear need_wb */
-#define	SIGNAL_CHECK_WB_CACHE_NEXT				0x0098 /* JOB_CHECK_WB_CACHE‚Ìì‹Æ—pƒVƒOƒiƒ‹ */
+#define	SIGNAL_CHECK_WB_CACHE_NEXT				0x0098 /* JOB_CHECK_WB_CACHEã®ä½œæ¥­ç”¨ã‚·ã‚°ãƒŠãƒ« */
 #define	SIGNAL_REFRESH_FLIST					0x009c
-#define	SIGNAL_REFRESH_FLIST0					0x009d /* ƒtƒ@ƒCƒ‹ƒŠƒXƒg‚Í•ÏX‚µ‚È‚¢ */
-#define SIGNAL_RELOAD_FAT_COMPLETE              0x00a0 /* FATÄ“Ç‚İ‚İŠ®—¹(Insert) */
-#define	SIGNAL_JSUB								0x00a4 /* ”Ä—pƒVƒOƒiƒ‹ */
-#define SIGNAL_FORMAT_COMPLETE                  0x00b8 /* ƒtƒH[ƒ}ƒbƒgŠ®—¹ */
-#define SIGNAL_WRITE_KERNEL_COMPLETE            0x00bc /* .EXE‘‚«‚İŠ®—¹ */
-#define	SIGNAL_RESIZE_SUB0						0x00bd /* size == 0 ‚©‚ç‚ÌƒŠƒTƒCƒY */
-#define SIGNAL_VBELIST							0x00be /* VESAî•ñƒAƒhƒŒƒX’Ê’m(AT‚Ì‚İ, winman0‚©‚ç) */
+#define	SIGNAL_REFRESH_FLIST0					0x009d /* ãƒ•ã‚¡ã‚¤ãƒ«ãƒªã‚¹ãƒˆã¯å¤‰æ›´ã—ãªã„ */
+#define SIGNAL_RELOAD_FAT_COMPLETE              0x00a0 /* FATå†èª­ã¿è¾¼ã¿å®Œäº†(Insert) */
+#define	SIGNAL_JSUB								0x00a4 /* æ±ç”¨ã‚·ã‚°ãƒŠãƒ« */
+#define SIGNAL_FORMAT_COMPLETE                  0x00b8 /* ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå®Œäº† */
+#define SIGNAL_WRITE_KERNEL_COMPLETE            0x00bc /* .EXEæ›¸ãè¾¼ã¿å®Œäº† */
+#define	SIGNAL_RESIZE_SUB0						0x00bd /* size == 0 ã‹ã‚‰ã®ãƒªã‚µã‚¤ã‚º */
+#define SIGNAL_VBELIST							0x00be /* VESAæƒ…å ±ã‚¢ãƒ‰ãƒ¬ã‚¹é€šçŸ¥(ATã®ã¿, winman0ã‹ã‚‰) */
 
 /* action signals */
 enum {
@@ -96,7 +96,7 @@ enum {
 	SIGNAL_DELETE_FILE,
 	SIGNAL_RESIZE,
 	SIGNAL_CHANGE_SORT_MODE, /* 21 */
-	SIGNAL_DISK_CHANGE0, /* 10ŒÂ•K—v(22-31) */
+	SIGNAL_DISK_CHANGE0, /* 10å€‹å¿…è¦(22-31) */
 	SIGNAL_LETTER_START = '!', /* 33 */
 	SIGNAL_LETTER_END = 'Z',	/* 5a */
 	SIGNAL_PAGE_UP = 0x60,
@@ -177,11 +177,11 @@ struct FILELIST {
 struct FILEBUF {
 	int dirslot, linkcount, size, paddr, virtualmodule;
 	struct STR_ARCBUF *arcbuf;
-	char readonly, pipe /* resize‚Ì‹““®‚ğŒˆ‚ß‚é */;
+	char readonly, pipe /* resizeæ™‚ã®æŒ™å‹•ã‚’æ±ºã‚ã‚‹ */;
 };
 
 struct STR_BANK { /* 84bytes */
-	int tss; /* ‚±‚±‚ª0‚¾‚Æ–¢g—pbank, •‰‚Ì’l‚¾‚Æ—\–ñbank */
+	int tss; /* ã“ã“ãŒ0ã ã¨æœªä½¿ç”¨bank, è² ã®å€¤ã ã¨äºˆç´„bank */
 	struct FILEBUF *fbuf;
 	struct STR_ARCBUF *arcbuf;
 	char name[12];
@@ -193,7 +193,7 @@ struct STR_BANK { /* 84bytes */
 #define FILESELWINFLAG_DRAWENABLED	1
 #define FILESELWINFLAG_GRABBED		2
 #define FILESELWINFLAG_SBARDIRTY	4
-struct FILESELWIN { /* 1‚Â‚ ‚½‚èA5.6KB•K—v */
+struct FILESELWIN { /* 1ã¤ã‚ãŸã‚Šã€5.6KBå¿…è¦ */
 	int ext, cur, winslot, sigbase, listsize;
 	int task, mdlslot, num, siglen, sig[16];
 	int shndly0, shndly1, grabbedy;
@@ -215,16 +215,16 @@ struct FILESELWIN { /* 1‚Â‚ ‚½‚èA5.6KB•K—v */
 		int data[8 * 16 * 8 / 4];
 	} selector; /* 1088B */
 
-//	subtitle_str[0] == '\0' : ƒEƒBƒ“ƒhƒEƒNƒ[ƒYŠ®—¹
-//	task == 0 :	–¢g—pƒ}[ƒN(subtitle_str[0]‚Æ“¯‚¶‚¶‚á‚È‚¢‚Ì‚©H)
-//	lp == NULL : closeˆ—’†
-//	mdlslot == -1 : ƒ^ƒXƒNI—¹‚É‚æ‚Á‚ÄƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½
-//	mdlslot == -2 : closeˆ—’†
+//	subtitle_str[0] == '\0' : ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºå®Œäº†
+//	task == 0 :	æœªä½¿ç”¨ãƒãƒ¼ã‚¯(subtitle_str[0]ã¨åŒã˜ã˜ã‚ƒãªã„ã®ã‹ï¼Ÿ)
+//	lp == NULL : closeå‡¦ç†ä¸­
+//	mdlslot == -1 : ã‚¿ã‚¹ã‚¯çµ‚äº†ã«ã‚ˆã£ã¦ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚ŒãŸ
+//	mdlslot == -2 : closeå‡¦ç†ä¸­
 
 	/*
-		close window‚ğÀ{‚·‚é‚ÆAlp = NULL‚É‚È‚éB
-		closed‚ğó‚¯æ‚é‚ÆAlp = list‚É‚È‚éB
-		ƒ[ƒh‚ªI‚í‚Á‚½‚çAmdlslot‚ª-2‚É‚È‚éB
+		close windowã‚’å®Ÿæ–½ã™ã‚‹ã¨ã€lp = NULLã«ãªã‚‹ã€‚
+		closedã‚’å—ã‘å–ã‚‹ã¨ã€lp = listã«ãªã‚‹ã€‚
+		ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ãŸã‚‰ã€mdlslotãŒ-2ã«ãªã‚‹ã€‚
 	*/
 
 };
@@ -295,7 +295,7 @@ struct STR_VIEWER {
 struct STR_PROCESS_TASK {
 	struct STR_BANK *bank;
 	struct VIRTUAL_MODULE_REFERENCE *vmr_lst[6];
-	char flags; /* bit0:1‚È‚ç‚±‚Ìƒ^ƒXƒN‚ª€‚Ê‚Æ‚«ƒvƒƒZƒX‚ğŠª‚«“Y‚¦‚É‚·‚é */
+	char flags; /* bit0:1ãªã‚‰ã“ã®ã‚¿ã‚¹ã‚¯ãŒæ­»ã¬ã¨ããƒ—ãƒ­ã‚»ã‚¹ã‚’å·»ãæ·»ãˆã«ã™ã‚‹ */
 };
 
 struct STR_PROCESS {

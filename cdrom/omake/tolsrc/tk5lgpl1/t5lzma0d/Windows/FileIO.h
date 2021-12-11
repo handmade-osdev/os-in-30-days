@@ -34,7 +34,7 @@ protected:
 public:
   CFileBase():
     _fileIsOpen(false){};
-  virtual ~CFileBase();
+  virtual ‾CFileBase();
 
   virtual bool Close();
 

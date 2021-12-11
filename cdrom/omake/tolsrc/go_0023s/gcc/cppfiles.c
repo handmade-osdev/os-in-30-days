@@ -758,7 +758,7 @@ _cpp_compare_file_date (pfile, header)
 /*  return inc->st.st_mtime > pfile->buffer->inc->st.st_mtime; */
 }
 #endif 
-/* Žg‚¢•û‚ª•ª‚©‚ç‚È‚¢‚ÌƒGƒ‰[‚ðo‚³‚¹‚ÄŒ¤‹† */
+/* ä½¿ã„æ–¹ãŒåˆ†ã‹ã‚‰ãªã„ã®ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã•ã›ã¦ç ”ç©¶ */
 
 /* Push an input buffer and load it up with the contents of FNAME.  If
    FNAME is "", read standard input.  Return true if a buffer was

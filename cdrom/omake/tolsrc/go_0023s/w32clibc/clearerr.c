@@ -2,6 +2,6 @@
 
 void clearerr(FILE *stream)
 {
-	stream->flags &= ~0x08;
+	stream->flags &= ‾0x08;
 	return;
 }

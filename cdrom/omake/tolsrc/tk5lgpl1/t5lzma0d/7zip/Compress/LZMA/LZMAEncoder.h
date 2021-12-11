@@ -104,7 +104,7 @@ class CLiteralEncoder
   UInt32 _posMask;
 public:
   CLiteralEncoder(): _coders(0) {}
-  ~CLiteralEncoder()  { Free(); }
+  ‾CLiteralEncoder()  { Free(); }
   void Free()
   { 
     delete []_coders;
@@ -366,7 +366,7 @@ private:
     CEncoder *_coder;
   public:
     CCoderReleaser(CEncoder *coder): _coder(coder) {}
-    ~CCoderReleaser()
+    ‾CCoderReleaser()
     {
       _coder->ReleaseStreams();
     }

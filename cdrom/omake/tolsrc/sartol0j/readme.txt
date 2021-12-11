@@ -1,170 +1,170 @@
-[�ڎ�]
+[目次]
 
-1.dsar��
-2.esart5��
-3.���̂ق���
+1.dsar編
+2.esart5編
+3.そのほか編
 
-[1.dsar��]
+[1.dsar編]
 
-  dsar��sar�t�@�C���̓W�J���ȒP�ɂ��邽�߂̃o�b�`�t�@�C���ł��B�u�ł��[�v
-���u�ǂ��[�v�Ƃł��Ă�ł��������B
+  dsarはsarファイルの展開を簡単にするためのバッチファイルです。「でさー」
+か「どさー」とでも呼んでください。
 
-  dsar��sartol���Ăяo���o�b�`�t�@�C���ŁA������������́u����₱��sar�v
-�̃o�b�`�t�@�C���łƂł������ׂ����̂ł��B���������傹��̓o�b�`�t�@�C��
-�Ȃ̂ŁA�u����₱��sar�v�ɂ͑����̓_�ŗ���Ă��܂��B�Ƃ������ƂŁA��{�I
-�ɂ́u����₱��sar�v�̂ق������������߂��܂��B�u����₱��sar�v���Ȃ�����
-���܂����Ƃ���ACUI���D���ł��܂�Ȃ��Ƃ����l�����Adsar���g���Ă��������B
-�u����₱��sar�v��GUI�Őݒ�ł���̂ł����ƕ֗��ł��B
+  dsarはsartolを呼び出すバッチファイルで、あっきぃさんの「えんやこらsar」
+のバッチファイル版とでもいうべきものです。しかししょせんはバッチファイル
+なので、「えんやこらsar」には多くの点で劣っています。ということで、基本的
+には「えんやこらsar」のほうを強くお勧めします。「えんやこらsar」をなくして
+しまったときや、CUIが好きでたまらないという人だけ、dsarを使ってください。
+「えんやこらsar」はGUIで設定できるのでずっと便利です。
 
         http://koya.marokun.net/osask/download.html
 
 ---
 
-  �f�t�H���g�ł́Asartol.exe�Ƀp�X���ʂ��Ă��āA���AWindows2000���
-���p���A�W�J��̓f�X�N�g�b�v��ɍ�����t�H���_�A����ɓW�J�I����́A
-���̃t�H���_��explorer�Ŏ����I�ɊJ���A�Ƃ����ݒ���e�ɂȂ��Ă��܂��B
+  デフォルトでは、sartol.exeにパスが通っていて、かつ、Windows2000上で
+利用し、展開先はデスクトップ上に作ったフォルダ、さらに展開終了後は、
+そのフォルダをexplorerで自動的に開く、という設定内容になっています。
 
-  Win95/98�Ŏg���ꍇ��sartol.exe�̒u���ꏊ���Ⴄ�Ƃ��́A�o�b�`�t�@�C��
-�̍ŏ���set�̂Ƃ����K���ɏ��������Ă��������B
+  Win95/98で使う場合やsartol.exeの置き場所が違うときは、バッチファイル
+の最初のsetのところを適当に書き換えてください。
 
-  dsar_bpath�̖�����/������ƁA�A�[�J�C�u�Ɠ������O�̃f�B���N�g����
-�����������܂��B/���Ȃ���΁A�f�B���N�g������炸�ɁA�w�肳�ꂽ�f�B���N
-�g���ɁA�����ɃA�[�J�C�u�̒��g��W�J���܂��Bdsar_bpath�� ..@arcpath
-�������� ..@arcpath/ �Ƃ���ƁA ..@arcpath �̕�����sar�t�@�C���̂���
-�p�X���u���������ď�������܂��B
+  dsar_bpathの末尾に/があると、アーカイブと同じ名前のディレクトリを
+自動生成します。/がなければ、ディレクトリを作らずに、指定されたディレク
+トリに、じかにアーカイブの中身を展開します。dsar_bpathを ..@arcpath
+もしくは ..@arcpath/ とすると、 ..@arcpath の部分にsarファイルのある
+パスが置き換えられて処理されます。
 
-  dsar_bpath�̋L�q�ɂ́A���͑��݂��Ă��Ȃ��f�B���N�g���������܂܂�Ă�
-�Ă����܂��܂���B�����Ɛݒ�ǂ���̃p�X�ɂȂ�悤�ɁAsartol���ő���
-�Ȃ��f�B���N�g���������������܂��B
+  dsar_bpathの記述には、今は存在していないディレクトリが複数含まれてい
+てもかまいません。ちゃんと設定どおりのパスになるように、sartol側で足り
+ないディレクトリを自動生成します。
 
-  dsar_autorun��=�̌��ɉ��������Ȃ��ƁA�f�B���N�g���̎����I�[�v����
-���Ȃ��Ȃ�܂��Bdsar_autorun�͂�����explorer���w�肷�邽�߂ɗp�ӂ����
-���܂����A�W�J�����f�B���N�g�������̂܂ܕʂ̃A�[�J�C�o�ɓn���Ƃ����ł�
-��ł��傤�B����ɂ��Asar��zip�ϊ��Ƃ��A�����������Ƃ��ł���񂶂��
-�����Ǝv���Ă��܂��B
+  dsar_autorunは=の後ろに何も書かないと、ディレクトリの自動オープンを
+しなくなります。dsar_autorunはおもにexplorerを指定するために用意されて
+いますが、展開したディレクトリをそのまま別のアーカイバに渡すとかもでき
+るでしょう。これにより、sar→zip変換とか、そういうこともできるんじゃな
+いかと思っています。
 
 ---
 
-  �g������
+  使い方は
 
 prompt>dsar osat46i.sar
 
-�ȂǂƂ��܂��B
+などとします。
 
-  �������́A�G�N�X�v���[����osat46i.sar������ŁAdsar.bat�̏�ɗ��Ƃ�
-�Ă������ł��B
+  もしくは、エクスプローラでosat46i.sarをつかんで、dsar.batの上に落とし
+てもいいです。
 
-  �������́A�����Ȃ�osat46i.sar���_�u���N���b�N���āu�t�@�C�����J��
-�A�v���P�[�V�����̑I���v�E�B���h�E���o�����āA�u���̑��v�{�^����������
-dsar.bat��I�сA�u�����̃t�@�C�����J���Ƃ��́A�������̃A�v���P�[
-�V�������g���v�Ƀ`�F�b�N�������܂܂�OK���������@������܂��B����Ȃ�
-�Ȍ�̓_�u���N���b�N�����łǂ�ǂ�W�J�ł��܂��BLHASA�C���ł��B
+  もしくは、いきなりosat46i.sarをダブルクリックして「ファイルを開く
+アプリケーションの選択」ウィンドウを出させて、「その他」ボタンを押して
+dsar.batを選び、「これらのファイルを開くときは、いつもこのアプリケー
+ションを使う」にチェックをつけたままでOKを押す方法もあります。これなら
+以後はダブルクリックだけでどんどん展開できます。LHASA気分です。
 
-  �ȏ��3�̂�����ł��A�����̃t�@�C���̎w�肪�\�ł��B
+  以上の3つのいずれでも、複数のファイルの指定が可能です。
 
-[2.esart5��]
+[2.esart5編]
 
-  esart5��sar�̃A�[�J�C�u�쐬�I�v�V�����������Ėʓ|�Ȃ̂ŁA�Ƃ肠����
-��y�ɃA�[�J�C�u������悤�ɂ����o�b�`�t�@�C���ł��B������tek5���k��
-�����܂��B
+  esart5はsarのアーカイブ作成オプションが長くて面倒なので、とりあえず
+手軽にアーカイブを作れるようにしたバッチファイルです。自動でtek5圧縮も
+かけます。
 
-�E�ȒP�Ȏg����
+・簡単な使い方
 
-prompt>esart5 �K���ȃf�B���N�g����
+prompt>esart5 適当なディレクトリ名
 
-�ȂǂƂ��܂��B
+などとします。
 
-  �������́A�G�N�X�v���[���œK���ȃf�B���N�g��������ŁAesart5.bat��
-��ɗ��Ƃ��Ă������ł��B
+  もしくは、エクスプローラで適当なディレクトリをつかんで、esart5.batの
+上に落としてもいいです。
 
-  ����ŁA�f�B���N�g���̓��e�Ɠ������̂�sar�t�@�C���ƂȂ��Đ��������
-���B�ǂ��ɐ��������̂��Ƃ����ƁA�Ƃ肠�������̃f�B���N�g���Ɠ����ꏊ
-�ɂł��܂��B�������A�f�B���N�g���̒��Ƀf�B���N�g��������΁A������S
-��sar�ɂ��܂����܂�܂��B
+  これで、ディレクトリの内容と同じものがsarファイルとなって生成されま
+す。どこに生成されるのかというと、とりあえずそのディレクトリと同じ場所
+にできます。もちろん、ディレクトリの中にディレクトリがあれば、それも全
+部sarにしまいこまれます。
 
-  �ǂ���ɂ��Ă��A�����̃f�B���N�g������x�Ɏw�肵�Ă͂����܂���B
+  どちらについても、複数のディレクトリを一度に指定してはいけません。
 
-�E������Ƃ������x�Ȏg����
+・ちょっとだけ高度な使い方
 
-prompt>esart5 �K���ȃf�B���N�g���� **
-����������ƁA���ʃf�B���N�g���̃t�@�C���̓A�[�J�C�u���Ȃ��ł��܂��B
+prompt>esart5 適当なディレクトリ名 **
+→こうすると、下位ディレクトリのファイルはアーカイブしなくできます。
 
-prompt>esart5 �K���ȃf�B���N�g���� *.txt
-����������ƁA�S�Ẵf�B���N�g���̒�����g���q��.txt�̂��̂������A�[�J
-  �C�u�Ώۂɂ��܂��B
+prompt>esart5 適当なディレクトリ名 *.txt
+→こうすると、全てのディレクトリの中から拡張子が.txtのものだけをアーカ
+  イブ対象にします。
 
-prompt>esart5 �K���ȃf�B���N�g���� **.txt
-����������ƁA�w�肵���f�B���N�g���̒�����g���q��.txt�̂��̂������A�[
-  �J�C�u�Ώۂɂ��܂��B���ʃf�B���N�g���̒��͑{���܂���B
+prompt>esart5 適当なディレクトリ名 **.txt
+→こうすると、指定したディレクトリの中から拡張子が.txtのものだけをアー
+  カイブ対象にします。下位ディレクトリの中は捜しません。
 
-prompt>esart5 �K���ȃf�B���N�g���� abc*
-����������ƁA�A�[�J�C�u�Ώۃp�X��abc�Ŏn�܂���̂�����sar�ɓ���܂��B
+prompt>esart5 適当なディレクトリ名 abc*
+→こうすると、アーカイブ対象パスがabcで始まるものだけをsarに入れます。
 
-prompt>esart5 �K���ȃf�B���N�g���� *.txt *.doc
-����������ƁA.txt��.doc���A�[�J�C�u�Ώۂł��B
+prompt>esart5 適当なディレクトリ名 *.txt *.doc
+→こうすると、.txtと.docがアーカイブ対象です。
 
-prompt>esart5 �K���ȃf�B���N�g���� sartol.c sartol.exe
-����������ƁAsartol.c��sartol.exe�������A�[�J�C�u�Ώۂł��B
+prompt>esart5 適当なディレクトリ名 sartol.c sartol.exe
+→こうすると、sartol.cとsartol.exeだけがアーカイブ対象です。
 
-prompt>esart5 �K���ȃf�B���N�g���� src/*
-����������ƁAsrc�f�B���N�g���̒������A�[�J�C�u���܂��B
+prompt>esart5 適当なディレクトリ名 src/*
+→こうすると、srcディレクトリの中だけアーカイブします。
 
-  �Ȃ��Aesart5�Ȃǂ��g�킸��sartol��wce�𒼐ڗ��p����΁A�����ƕ��G��
-�w����\�ł��B
+  なお、esart5などを使わずにsartolやwceを直接利用すれば、もっと複雑な
+指定も可能です。
 
-[3.���̂ق���]
+[3.そのほか編]
 
-  wce.exe�́A���C���h�J�[�h�W�J�x���A�v���ł��B�Ƃ肠����Windows�p�ŁA
-Linux�Ȃǂŗ��p����ɂ�setnames()�������啝�ɂ�����K�v������ł���
-���B�Ƃ������ALinux�ł̓V�F�������C���h�J�[�h�W�J�����Ă���Ă���̂�
-����ȏ��׍H�A�v���͕s�v�ł�����܂��B
+  wce.exeは、ワイルドカード展開支援アプリです。とりあえずWindows用で、
+Linuxなどで利用するにはsetnames()あたりを大幅にいじる必要があるでしょ
+う。というか、Linuxではシェルがワイルドカード展開をしてくれているので
+こんな小細工アプリは不要でもあります。
 
-  �蔲���ō���Ă��邽�߂ɁA��������̃T�u�f�B���N�g�������f�B���N�g
-���Ŏ��s����ƁA���̊K�w���Q�Ƃ���悤�ȃ��C���h�J�[�h���g���Ă��Ȃ���
-���A���I�Ɏ��s���x�������܂��B
+  手抜きで作っているために、たくさんのサブディレクトリをもつディレクト
+リで実行すると、下の階層を参照するようなワイルドカードを使っていなくて
+も、劇的に実行速度が落ちます。
 
-  �Ƃ������ƂŁA���̕ӂɒ��ӂ��Ė��Ȃ������ȃf�B���N�g���ŁA�Ƃ肠��
-���A
+  ということで、その辺に注意して問題なさそうなディレクトリで、とりあえ
+ず、
 
 prompt>wce echo *
 
-�ȂǂƂ���Ă݂Ă��������B���C���h�J�[�h�Ƀ}�b�`�����t�@�C������echo��
-���͂��ł��B
+などといれてみてください。ワイルドカードにマッチしたファイル名がechoさ
+れるはずです。
 
-  �������Ă���R�}���h���C�����m�F�������Ƃ��́A
+  生成しているコマンドラインを確認したいときは、
 
 prompt>wce echo * #p=1
 
-�Ƃ����ӂ��ɁA�����Ɂu#p=1�v��t���Ă��������Bsystem()���Ă΂���puts()
-����悤�ɂȂ�܂��B
+というふうに、末尾に「#p=1」を付けてください。system()を呼ばすにputs()
+するようになります。
 
-prompt>wce echo #b=�K���ȃf�B���N�g���� *.txt
+prompt>wce echo #b=適当なディレクトリ名 *.txt
 
-�Ƃ���ƁA�J�����g�f�B���N�g���ł͂Ȃ��w�肵���f�B���N�g�����ɑ΂��āA
-���C���h�J�[�h��K�p���܂��B
+とすると、カレントディレクトリではなく指定したディレクトリ内に対して、
+ワイルドカードを適用します。
 
 prompt>wce echo ( *.txt *.doc )
 
-�Ɗ��ʂ�����Ɓi���ʂ̑O��ɂ̓X�y�[�X���K�v�j�A���ʂ����Ȃ��ꍇ��
-�t�@�C�����̃\�[�g�����C���h�J�[�h�P�ʂɂȂ��Ă����Ƃ��낪�A���ʓ��S��
-�Ń\�[�g����悤�ɂȂ�܂��B
+と括弧をつけると（括弧の前後にはスペースが必要）、括弧をつけない場合は
+ファイル名のソートがワイルドカード単位になっていたところが、括弧内全体
+でソートするようになります。
 
 prompt>wce echo ( *.txt #!=readme.txt )
 
-���̂悤�Ɂu#!=�t�@�C�����v�Ƃ���ƁA���̃t�@�C�����͏o�͂���܂���B
-���ʂ��Ȃ���*.txt�̒i�K�ŏo�͂���Ă��܂����߁A���ʂ͕K�v�ł��B
+このように「#!=ファイル名」とすると、そのファイル名は出力されません。
+括弧がないと*.txtの段階で出力されてしまうため、括弧は必要です。
 
-  �Ȃ������x���Ⴂ�̂ŁA?�͑S���g���܂���B
+  なお完成度が低いので、?は全く使えません。
 
-  wce�ł̓��C���h�J�[�h���܂܂Ȃ�������͂��̂܂܏o�͂���܂��B���ʂ�
-����ꍇ�͂�������o�b�t�@�����O���āA�\�[�g���Ă���o�͂ł��B
+  wceではワイルドカードを含まない文字列はそのまま出力されます。括弧が
+ある場合はいったんバッファリングして、ソートしてから出力です。
 
-��>wce echo abc def 0123
-��>wce echo ( abc def 0123 )
+例>wce echo abc def 0123
+例>wce echo ( abc def 0123 )
 
-  wce�̓A���t�@�x�b�g�̑啶������������ʂ��܂��Bmemo.txt��*.TXT�ł�
-�q�b�g���܂���B���ꂪ����Ƃ��� ( *.txt *.TXT ) �Ƃł����Ă��������B
+  wceはアルファベットの大文字小文字を区別します。memo.txtは*.TXTでは
+ヒットしません。それが困るときは ( *.txt *.TXT ) とでもしてください。
 
-[��������]
+[さいごに]
 
-  dsar��sartol��wce�̒��쌠�͐썇�G���ɂ���A���C�Z���X��KL-01�ł��B
+  dsarやsartolやwceの著作権は川合秀実にあり、ライセンスはKL-01です。

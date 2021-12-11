@@ -87,7 +87,7 @@ const unsigned short _sch_istable[256] =
   P, XL, XL, XL,  XL, XL, XL,  L,   /* `   a   b   c    d   e   f   g   */
   L,  L,  L,  L,   L,  L,  L,  L,   /* h   i   j   k    l   m   n   o   */
   L,  L,  L,  L,   L,  L,  L,  L,   /* p   q   r   s    t   u   v   w   */
-  L,  L,  L,  P,   P,  P,  P,  C,   /* x   y   z   {    |   }   ~   DEL */
+  L,  L,  L,  P,   P,  P,  P,  C,   /* x   y   z   {    |   }   ‾   DEL */
 
   /* high half of unsigned char is locale-specific, so all tests are
      false in "C" locale */

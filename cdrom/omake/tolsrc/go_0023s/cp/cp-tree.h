@@ -1395,8 +1395,8 @@ struct lang_type
 /* Clear the Nth mark bit.  */
 #define CLEAR_CLASSTYPE_MARKED_N(NODE, N)			\
   (CLASS_TYPE_P (NODE)						\
-   ? (void) (TYPE_LANG_SPECIFIC (NODE)->marks &= ~(1 << (N)))	\
-   : (void) (TYPE_ALIAS_SET (NODE) &= ~(1 << (N))))
+   ? (void) (TYPE_LANG_SPECIFIC (NODE)->marks &= ‾(1 << (N)))	\
+   : (void) (TYPE_ALIAS_SET (NODE) &= ‾(1 << (N))))
 
 /* Get the value of the mark bits.  */
 #define CLASSTYPE_MARKED(NODE) CLASSTYPE_MARKED_N (NODE, 0)
@@ -3340,7 +3340,7 @@ enum overload_flags { NO_SPECIAL = 0, DTOR_FLAG, OP_FLAG, TYPENAME_FLAG };
 
 /* Some macros for char-based bitfields.  */
 #define B_SET(A,X) ((A)[(X)>>3] |=  (1 << ((X)&7)))
-#define B_CLR(A,X) ((A)[(X)>>3] &= ~(1 << ((X)&7)))
+#define B_CLR(A,X) ((A)[(X)>>3] &= ‾(1 << ((X)&7)))
 #define B_TST(A,X) ((A)[(X)>>3] &   (1 << ((X)&7)))
 
 /* These are uses as bits in flags passed to build_method_call

@@ -1,4 +1,4 @@
-/* ƒ}ƒ‹ƒ`ƒ^ƒXƒNŠÖŒW */
+/* ãƒžãƒ«ãƒã‚¿ã‚¹ã‚¯é–¢ä¿‚ */
 
 #include "bootpack.h"
 
@@ -17,7 +17,7 @@ struct TASK *task_init(struct MEMMAN *memman)
 		set_segmdesc(gdt + TASK_GDT0 + i, 103, (int) &taskctl->tasks0[i].tss, AR_TSS32);
 	}
 	task = task_alloc();
-	task->flags = 2; /* “®ì’†ƒ}[ƒN */
+	task->flags = 2; /* å‹•ä½œä¸­ãƒžãƒ¼ã‚¯ */
 	taskctl->running = 1;
 	taskctl->now = 0;
 	taskctl->tasks[0] = task;
@@ -34,9 +34,9 @@ struct TASK *task_alloc(void)
 	for (i = 0; i < MAX_TASKS; i++) {
 		if (taskctl->tasks0[i].flags == 0) {
 			task = &taskctl->tasks0[i];
-			task->flags = 1; /* Žg—p’†ƒ}[ƒN */
+			task->flags = 1; /* ä½¿ç”¨ä¸­ãƒžãƒ¼ã‚¯ */
 			task->tss.eflags = 0x00000202; /* IF = 1; */
-			task->tss.eax = 0; /* ‚Æ‚è‚ ‚¦‚¸0‚É‚µ‚Ä‚¨‚­‚±‚Æ‚É‚·‚é */
+			task->tss.eax = 0; /* ã¨ã‚Šã‚ãˆãš0ã«ã—ã¦ãŠãã“ã¨ã«ã™ã‚‹ */
 			task->tss.ecx = 0;
 			task->tss.edx = 0;
 			task->tss.ebx = 0;
@@ -52,12 +52,12 @@ struct TASK *task_alloc(void)
 			return task;
 		}
 	}
-	return 0; /* ‚à‚¤‘S•”Žg—p’† */
+	return 0; /* ã‚‚ã†å…¨éƒ¨ä½¿ç”¨ä¸­ */
 }
 
 void task_run(struct TASK *task)
 {
-	task->flags = 2; /* “®ì’†ƒ}[ƒN */
+	task->flags = 2; /* å‹•ä½œä¸­ãƒžãƒ¼ã‚¯ */
 	taskctl->tasks[taskctl->running] = task;
 	taskctl->running++;
 	return;

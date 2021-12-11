@@ -1,16 +1,16 @@
 typedef unsigned char UCHAR;
 
-int tek_checkformat(int siz, UCHAR *p); /* “WŠJŒã‚ÌƒTƒCƒY‚ğ•Ô‚· */
-	/* -1:”ñosacmp */
-	/* -2:osacmp‚¾‚ª‘Î‰‚Å‚«‚È‚¢ */
+int tek_checkformat(int siz, UCHAR *p); /* å±•é–‹å¾Œã®ã‚µã‚¤ã‚ºã‚’è¿”ã™ */
+	/* -1:éosacmp */
+	/* -2:osacmpã ãŒå¯¾å¿œã§ããªã„ */
 
-int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ¬Œ÷‚µ‚½‚ç0 */
-	/* ³‚Ì’l‚ÍƒtƒH[ƒ}ƒbƒg‚ÌˆÙíE–¢‘Î‰A•‰‚Ì’l‚Íƒƒ‚ƒŠ•s‘« */
-	/* ƒƒ‚ƒŠ•s‘«‚Í•â•ƒoƒbƒtƒ@—˜—pˆÈŠO‚Í”­¶‚µ‚È‚¢ */
+int tek_decode(int siz, UCHAR *p, UCHAR *q); /* æˆåŠŸã—ãŸã‚‰0 */
+	/* æ­£ã®å€¤ã¯ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ç•°å¸¸ãƒ»æœªå¯¾å¿œã€è² ã®å€¤ã¯ãƒ¡ãƒ¢ãƒªä¸è¶³ */
+	/* ãƒ¡ãƒ¢ãƒªä¸è¶³ã¯è£œåŠ©ãƒãƒƒãƒ•ã‚¡åˆ©ç”¨æ™‚ä»¥å¤–ã¯ç™ºç”Ÿã—ãªã„ */
 
 static unsigned int tek_getnum_s7s(UCHAR **pp);
 int tek_lzrestore_stk1(int srcsiz, UCHAR *src, int outsiz, UCHAR *outbuf);
-	/* osaskgo‚ª0.18[sec] */
+	/* osaskgoãŒ0.18[sec] */
 
 int tek_checkformat(int siz, UCHAR *p)
 {
@@ -39,17 +39,17 @@ int tek_decode(int siz, UCHAR *p, UCHAR *q)
 		if (dsiz > bsiz || (hed & 0x21) != 0x01)
 			return 1;
 		if (hed & 0x40)
-			tek_getnum_s7s(&p); /* ƒIƒvƒVƒ‡ƒ“î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ“Ç‚İ”ò‚Î‚· */
+			tek_getnum_s7s(&p); /* ã‚ªãƒ—ã‚·ãƒ§ãƒ³æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’èª­ã¿é£›ã°ã™ */
 		if (tek_getnum_s7s(&p) != 0)
-			return 1; /* •â•ƒoƒbƒtƒ@g—p */
+			return 1; /* è£œåŠ©ãƒãƒƒãƒ•ã‚¡ä½¿ç”¨ */
 		return tek_lzrestore_stk1(p1 - p, p, dsiz, q);
 	}
 	return 0;
 }
 
 static unsigned int tek_getnum_s7s(UCHAR **pp)
-/* ‚±‚ê‚Í•K‚¸big-endian */
-/* ‰º‘Ê‚ª‚È‚¢‚Ì‚Å’†g‚ğ‚¢‚¶‚è‚â‚·‚¢ */
+/* ã“ã‚Œã¯å¿…ãšbig-endian */
+/* ä¸‹é§„ãŒãªã„ã®ã§ä¸­èº«ã‚’ã„ã˜ã‚Šã‚„ã™ã„ */
 {
 	unsigned int s = 0;
 	UCHAR *p = *pp;
@@ -82,13 +82,13 @@ int tek_lzrestore_stk1(int srcsiz, UCHAR *src, int outsiz, UCHAR *q)
 					ds = ds << 7 | *s7ptr++;
 				} while ((ds & 1) == 0);
 			}
-			ds = ~(ds >> 1);
+			ds = â€¾(ds >> 1);
 			if ((cp >>= 4) == 0) {
 				do {
 					cp = cp << 7 | *s7ptr++;
 				} while ((cp & 1) == 0);
 				cp >>= 1;
-			} /* 0‚ª‚±‚È‚¢‚±‚Æ‚ğ‚ ‚Ä‚É‚·‚é */
+			} /* 0ãŒã“ãªã„ã“ã¨ã‚’ã‚ã¦ã«ã™ã‚‹ */
 			cp++;
 			if (q + ds < q0)
 				goto err;

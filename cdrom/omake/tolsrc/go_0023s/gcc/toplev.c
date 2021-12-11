@@ -4367,7 +4367,7 @@ set_target_switch (name)
     if (!strcmp (target_switches[j].name, name))
       {
 	if (target_switches[j].value < 0)
-	  target_flags &= ~-target_switches[j].value;
+	  target_flags &= ‾-target_switches[j].value;
 	else
 	  target_flags |= target_switches[j].value;
 	valid_target_option = 1;

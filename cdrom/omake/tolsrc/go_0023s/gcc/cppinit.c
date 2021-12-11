@@ -150,7 +150,7 @@ __extension__ const U_CHAR _cpp_trigraph_map[UCHAR_MAX + 1] = {
 TRIGRAPH_MAP
   s('=', '#')	s(')', ']')	s('!', '|')
   s('(', '[')	s('\'', '^')	s('>', '}')
-  s('/', '\\')	s('<', '{')	s('-', '~')
+  s('/', '\\')	s('<', '{')	s('-', '‾')
 END
 
 #undef s

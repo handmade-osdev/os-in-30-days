@@ -1000,7 +1000,7 @@ force_nonfallthru_and_redirect (e, target)
   else
     jump_block = e->src;
 
-  e->flags &= ~EDGE_FALLTHRU;
+  e->flags &= ‾EDGE_FALLTHRU;
   if (target == EXIT_BLOCK_PTR)
     {
       if (HAVE_return)
@@ -1385,7 +1385,7 @@ commit_one_edge_insertion (e)
 	  || (e->flags & EDGE_FALLTHRU) == 0)
 	abort ();
 
-      e->flags &= ~EDGE_FALLTHRU;
+      e->flags &= ‾EDGE_FALLTHRU;
       emit_barrier_after (last);
 
       if (before)
@@ -1966,7 +1966,7 @@ purge_dead_edges (bb)
 	  /* Avoid abnormal flags to leak from computed jumps turned
 	     into simplejumps.  */
  
-	  e->flags &= ~EDGE_ABNORMAL;
+	  e->flags &= ‾EDGE_ABNORMAL;
 
 	  /* See if this edge is one we should keep.  */
 	  if ((e->flags & EDGE_FALLTHRU) && any_condjump_p (insn))

@@ -1349,7 +1349,7 @@ lex_string (str, len, wide)
 	  if (width < HOST_BITS_PER_INT)
 	    mask = ((unsigned int) 1 << width) - 1;
 	  else
-	    mask = ~0;
+	    mask = ‾0;
 	  c = cpp_parse_escape (parse_in, &p, limit,
 				mask, flag_traditional);
 	}

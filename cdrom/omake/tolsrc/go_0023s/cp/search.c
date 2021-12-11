@@ -330,7 +330,7 @@ lookup_base (t, base, access, kind_ptr)
   t = complete_type (TYPE_MAIN_VARIANT (t));
   base = complete_type (TYPE_MAIN_VARIANT (base));
   
-  bk = lookup_base_r (TYPE_BINFO (t), base, access & ~ba_quiet,
+  bk = lookup_base_r (TYPE_BINFO (t), base, access & ‾ba_quiet,
 		      0, 0, 0, &binfo);
 
   switch (bk)

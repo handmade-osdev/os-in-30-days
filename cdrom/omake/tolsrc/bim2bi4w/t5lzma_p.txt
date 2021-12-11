@@ -7,20 +7,20 @@
 			if (pos == 3 && _K_erd != 0)
             	_K_isRepExt[_state.Index].Encode(&_rangeEncoder, 0); /* !!! */
 
-			/* ˆÈ‰ºKL-01‚ðŽå’£ */
+			/* ä»¥ä¸‹KL-01ã‚’ä¸»å¼µ */
 			symbol -= kNumMidSymbols;
 			_choice2.Encode(rangeEncoder, 1);
 			if (symbol < (1 << kNumHighBits) - 8)
 				_highCoder.Encode(rangeEncoder, symbol);
 			else {
 				int l0, l1;
-				symbol -= (1 << kNumHighBits) - 8 - 1; /* 1ˆÈã */
-				/* ‚±‚Ìsymbol‚ð•\Œ»‚·‚é‚Ì‚É‰½ƒrƒbƒg•K—v‚¾‚ë‚¤‚©H */
+				symbol -= (1 << kNumHighBits) - 8 - 1; /* 1ä»¥ä¸Š */
+				/* ã“ã®symbolã‚’è¡¨ç¾ã™ã‚‹ã®ã«ä½•ãƒ“ãƒƒãƒˆå¿…è¦ã ã‚ã†ã‹ï¼Ÿ */
 				for (l0 = 1; symbol >= (1 << l0); l0++);
-				/* “š‚¦Fl0ƒrƒbƒg(l0=1-255) */
-				/* ‚±‚Ìl0‚ð•\Œ»‚·‚é‚Ì‚É‰½ƒrƒbƒg•K—v‚¾‚ë‚¤‚© */
+				/* ç­”ãˆï¼šl0ãƒ“ãƒƒãƒˆ(l0=1-255) */
+				/* ã“ã®l0ã‚’è¡¨ç¾ã™ã‚‹ã®ã«ä½•ãƒ“ãƒƒãƒˆå¿…è¦ã ã‚ã†ã‹ */
 				for (l1 = 0; l0 >= (2 << l1); l1++);
-				/* “š‚¦F(l1 + 1)ƒrƒbƒg(l1=0-7) */
+				/* ç­”ãˆï¼š(l1 + 1)ãƒ“ãƒƒãƒˆ(l1=0-7) */
 				_highCoder.Encode(rangeEncoder, (1 << kNumHighBits) - 8 + l1);
 				if (l1 > 0)
 					rangeEncoder->EncodeDirectBits(l0, l1);
@@ -59,7 +59,7 @@ int LzmaLenDecode(CProb *p, CRangeDecoder *rd, int posState)
 	i = RangeDecoderBitTreeDecode(p + LenHigh, kLenNumHighBits, rd) - (kLenNumHighSymbols - 8);
 	if (i > 0) {
 		i = (1 << i | RangeDecoderDecodeDirectBits(rd, i)) - 1;
-		/* ‚±‚±‚Åi == 254‚Ì‚Æ‚«‚Í‚³‚ç‚ÉŠg’£ */
+		/* ã“ã“ã§i == 254ã®ã¨ãã¯ã•ã‚‰ã«æ‹¡å¼µ */
 		i = (1 << i | RangeDecoderDecodeDirectBits(rd, i)) - 1;
 	}
 	return i + (kLenNumLowSymbols + kLenNumMidSymbols + kLenNumHighSymbols - 8);

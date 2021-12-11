@@ -181,13 +181,13 @@ _nl_explode_name (name, language, modifier, territory, codeset,
   if (syntax == xpg)
     {
       if (*territory != NULL && (*territory)[0] == '\0')
-	mask &= ~TERRITORY;
+	mask &= ‾TERRITORY;
 
       if (*codeset != NULL && (*codeset)[0] == '\0')
-	mask &= ~XPG_CODESET;
+	mask &= ‾XPG_CODESET;
 
       if (*modifier != NULL && (*modifier)[0] == '\0')
-	mask &= ~XPG_MODIFIER;
+	mask &= ‾XPG_MODIFIER;
     }
 
   return mask;

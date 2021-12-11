@@ -1,8 +1,8 @@
 /*	"timerdrv.aska"
-	OSASK/NEC98�p�̃^�C�}�[���[�`��(type-A ver.1.1)
-	Copyright(C) 2002 �썇�G��(�썇��)		*/
+	OSASK/NEC98用のタイマールーチン(type-A ver.1.1)
+	Copyright(C) 2002 川合秀実(川合堂)		*/
 
-//	�Â��`�b�v�Z�b�g�ɂ͑Ή����Ă��Ȃ��B�Ȃ��Ȃ�A�A���A�N�Z�X�̍ۂɃE�F�C�g�������Ă��Ȃ�����B
+//	古いチップセットには対応していない。なぜなら、連続アクセスの際にウェイトが入っていないから。
 
 #include "osaskinc.ask"
 
@@ -20,27 +20,27 @@ struct SS0_struct {
 };
 
 struct TimerNode {
-	int signalbuf[32]; // �^�C�}�[�V�O�i���́A���ʂ���������
+	int signalbuf[32]; // タイマーシグナルは、普通よりも小さい
 	int call_vector[8];
 	int time[12], interval;
 	// int near *back, near *next;
 	int back, next;
-	// ����ł��傤��64bytes.
+	// これでちょうど64bytes.
 };
 
 struct TimerWork {
-	int jmpvec; // �g���Ă��Ȃ��itimer type-B�̂Ȃ���j
-	int longcounter; // �c��҂����ԁi����̊��荞�݂�҂̂��j
-	int predict_PIT1_count /* �^�C���A�E�g�����Ƃ��̒l */; // �g���Ă��Ȃ�
+	int jmpvec; // 使っていない（timer type-Bのなごり）
+	int longcounter; // 残り待ち時間（何回の割り込みを待つのか）
+	int predict_PIT1_count /* タイムアウトしたときの値 */; // 使っていない
 	char status, [3];
 
 	// origin(0x0010)
 
-	// �ȉ��S�Ďg���Ă��Ȃ�
-	unsigned int PIT1_count0 /* �ݒ�l */;
-	unsigned int PIT1_delta_100000000, PIT1_delta_10000, PIT1_delta_fffeffff /* ���ꂼ��A�ǂꂾ�����邩��\�������� */;
+	// 以下全て使っていない
+	unsigned int PIT1_count0 /* 設定値 */;
+	unsigned int PIT1_delta_100000000, PIT1_delta_10000, PIT1_delta_fffeffff /* それぞれ、どれだけ減るかを表したもの */;
 	signed int PIT1_delta_max, PIT1_delta_min /* PIT1_count0 / 2, - PIT1_count0 / 2 */;
-	int limit /* ��s���s���E�l */;
+	int limit /* 先行実行限界値 */;
 
 	void [20];
 	void [192];
@@ -51,7 +51,7 @@ struct TimerWork {
 };
 
 void far TimerSysCmd()
-// FS:EBX����R�}���h
+// FS:EBXからコマンド
 {
 	PUSH(DS);
 	ESP -= 24;
@@ -61,7 +61,7 @@ void far TimerSysCmd()
 	EAX += 8;
 	[SS:ESP +  8] = EDX;
 	DS = AX;
-	EAX = [FS:EBX]; // 4�̔{��
+	EAX = [FS:EBX]; // 4の倍数
 	[SS:ESP + 12] = EBP;
 	[SS:ESP + 16] = ESI;
 	[SS:ESP + 20] = EDI;
@@ -81,36 +81,36 @@ void far TimerInt()
 	EAX += 8;
 	DS = AX;
 
-	// ��O�Ȃ��A���荞�݂͂����ɏI��
-	AL = 0x60 /* IRQ-00���I�� */;
+	// 例外なく、割り込みはすぐに終了
+	AL = 0x60 /* IRQ-00を終了 */;
 	OUT(PIC_mastar_OCW2, AL);
 
-	// ���ݎ����̎Z�o���@ : head.time - �c��J�E���g
+	// 現在時刻の算出方法 : head.time - 残りカウント
 
-	// �c��J�E���g�̎Z�o���@ : (longcounter - 1) * 0x10000 + PIT0�̃J�E���g
-	// (�傫�Ȑ���0�̂Ƃ��́AIRQ0�����Ă��邩�ǂ����ɂ���āAlongcounter�����������Ă��K�v�����邩������Ȃ�)
-	// 0��IRQ�����Ă��Ȃ�������E�E�E����Ȃ��Ƃ͂��肦�Ȃ��B��΂ɗ��Ă���B���Alongcount�͌��炵�Ă͂����Ȃ��B
+	// 残りカウントの算出方法 : (longcounter - 1) * 0x10000 + PIT0のカウント
+	// (大きな数や0のときは、IRQ0が来ているかどうかによって、longcounterを小さく見てやる必要があるかもしれない)
+	// 0でIRQが来ていなかったら・・・そんなことはありえない。絶対に来ている。が、longcountは減らしてはいけない。
 
-	// �������A�␳���K�v�B�E�E�E�␳�Ƃ������A���̎����ɑΉ�����PIT1�̃J�E���g���Z�o���Ă����B
+	// ただし、補正が必要。・・・補正というか、この時刻に対応するPIT1のカウントを算出しておく。
 
 
 
-	// ����ɍ������ł���B�E�E�Eshort_wait�ł��A�킴��longcounter��1�ɂ��Ă����B
-	// ���荞�݂��L�����Z�����郋�[�`���́Astatus������B0�Ȃ�long,1�Ȃ�short�B
-	// 2�Ȃ犄�荞�ݏ������B
+	// さらに高速化できる。・・・short_waitでも、わざとlongcounterを1にしておく。
+	// 割り込みをキャンセルするルーチンは、statusを見る。0ならlong,1ならshort。
+	// 2なら割り込み処理中。
 }
 
-/*	��{��32bit�o�[�W�����B�܂���2^32�J�E���g�Ɉ�x�A�����␳���荞�݂��N���邩��
-	���͂Ȃ��B���Ȃ݂ɁA���̊��荞�݂͂P���ԂɂP�x�ł���B�����Ƃ������ƁA
-	�����␳���荞�݂Ƃ́A�������Ȃ����荞�݂̂��Ƃł���B�E�E�E����A�Ⴄ�A
-	�����␳���荞�݂�2^(32+16)�J�E���g�Ɉ�x�ł���B����́A�V�N�Ɉ�x�B
+/*	基本は32bitバージョン。まさに2^32カウントに一度、時刻補正割り込みが起きるから
+	問題はない。ちなみに、この割り込みは１時間に１度である。もっというっと、
+	時刻補正割り込みとは、何もしない割り込みのことである。・・・いや、違う、
+	時刻補正割り込みは2^(32+16)カウントに一度である。これは、７年に一度。
 
-	�^�C���A�E�g����ƁA�����Ɍ��ݎ������X�V����A�C���^�[�o�������߂����B
-	���̏�ԂɂȂ�ƁA���ʃ��[�`���ɓ���i���荞�݁A�񊄂荞�݁j�B
+	タイムアウトすると、すぐに現在時刻が更新され、インターバルも調節される。
+	この状態になると、共通ルーチンに入る（割り込み、非割り込み）。
 */
 
-/*	���̃o�[�W�����ł́A���荞�݂��֎~�����܂܎��X�Ə������Ă������A
-	�����łȂ��o�[�W��������邱�Ƃ��\���낤�B�������A�ǂ��炪�D�܂������͕�����Ȃ��B
+/*	このバージョンでは、割り込みを禁止したまま次々と処理していくが、
+	そうでないバージョンを作ることも可能だろう。しかし、どちらが好ましいかは分からない。
 */
 
 void near TimerRegister();
@@ -129,24 +129,24 @@ void near TimerLongcount()
 }
 
 void near TimerCountout()
-//	�����ɗ�����ACLI���Ԃ����Ȃ蒷���Ȃ�̂ŁAIRQ-00��mask����
-//	���荞�ݏI��������Ă��܂�����������������Ȃ��B
-//	�������A�m�[�h���q���ς��Ă���Ƃ��ɑ��̊��荞�݂��������A
-//	�������^�C�}�[��ݒ肵�悤�Ƃ����ƍ���B
+//	ここに来たら、CLI期間がかなり長くなるので、IRQ-00をmaskして
+//	割り込み終了をやってしまう方がいいかもしれない。
+//	しかし、ノードを繋ぎ変えているときに他の割り込みが発生し、
+//	そいつがタイマーを設定しようとされると困る。
 
-//	���̂��߂ɁA�ڑ��ҋ@�Q���`�F�[���Ōq���ł������H
-//	�`�F�[������Ȃ���32�G���g�����炢�̃X�^�b�N������΂������낤�B
-//	���̈Ă͌��\���������B
+//	そのために、接続待機群をチェーンで繋いでおくか？
+//	チェーンじゃなくて32エントリくらいのスタックがあればいいだろう。
+//	この案は結構いいかも。
 
-//	�L�[�{�[�h���V�O�i�����o���͂߂ɂȂ�Ƃ킩������A�������������������낤�B
+//	キーボードもシグナルを出すはめになるとわかったら、そうした方がいいだろう。
 
-//	����A����ς���Ȃ��Ă����C���ȁH�E�E�E���[��A�Y�܂����B
+//	いや、やっぱりやらなくても平気かな？・・・うーん、悩ましい。
 
-//	�ŏI�āFmask�͂��Ȃ��B���Ȃ��Ă����悤�ɁA�Ō�̈ꔭ��mode0�ł��悤�ɂȂ��Ă���B
-//	TimerNode��t���ւ���Ƃ���IF = 0�ɂȂ��Ă��邪�A���ꂪ�ς߂�IF = 1�ɂȂ�B
+//	最終案：maskはしない。しなくていいように、最後の一発はmode0でやるようになっている。
+//	TimerNodeを付け替えるときはIF = 0になっているが、それが済めばIF = 1になる。
 
-//	���荞�݂̃L�����Z�����ł��Ȃ����߁A�t�ɑ҂�����1�ł����Ɋm���Ɋ��荞�܂���B
-//	���̂��߂ɁA�^�C���A�E�g�`�F�b�N���[�`���́A�C�����C���őg�ݍ���
+//	割り込みのキャンセルができないため、逆に待ち時間1ですぐに確実に割り込ませる。
+//	このために、タイムアウトチェックルーチンは、インラインで組み込む
 {
 	TimerWork *work == DS:0x0000;
 	SS0_struct *ss0 == /* SS:(- sizeof (SS0_struct)) */ SS:0xffffffc0;
@@ -161,10 +161,10 @@ void near TimerCountout()
 	PUSHAD();
 
 
-//	�^�C���A�E�g�Q�̑��݂��`�F�b�N�B
-//	work->head.interval�����Ȃ�AEBX��������
-//	���̂��ƂŁA���̃m�[�h��؂藣���A�t���C���O�^�C���A�E�g���[�`����
-//	work->head.interval�܂ł��^�C���A�E�g���Ă��܂�����A������t���C���O�^�C���A�E�g�̖����ɉ�����
+//	タイムアウト群の存在をチェック。
+//	work->head.intervalが正なら、EBXを加える
+//	そのあとで、そのノードを切り離し、フライングタイムアウトルーチンへ
+//	work->head.intervalまでもタイムアウトしてしまったら、これもフライングタイムアウトの末尾に加える
 
 	TimerNode *tnode == DS:ESI, *tnext == DS:EDI, *tback == DS:EBX;
 
@@ -173,7 +173,7 @@ check_timeout:
 	EBX = 0;
 	for (;;) {
 		/* (false) */ if ((signed) EAX < 0) {
-			// ���荞�ݗ\�莞�� - ���ݎ��� = �c�莞��
+			// 割り込み予定時刻 - 現在時刻 = 残り時間
 			(offset) tnode = work->head.next;
 			EAX = tnode->time[0];
 			ECX = tnode->time[4];
@@ -197,7 +197,7 @@ check_timeout:
 	//	work->head.interval = EAX;
 		if ((signed) EAX > 0)
 			break;
-		// �^�C���A�E�g
+		// タイムアウト
 		(offset) tnode = work->head.next;
 		(offset) tback = work->timeout.back;
 		(offset) tnext = tnode->next;
@@ -210,9 +210,9 @@ check_timeout:
 		EBX = EAX;
 		EAX = tnode->interval;
 		EBX =- EBX;
-	//	�؂藣���āA�^�C���A�E�g�`�F�[���ɐڑ�
-	//	�����āA���ɂȂ���EAX�����ɁAEBX = - EAX;�Ƃ��A
-	//	EAX�ɐV����work->head.interval�����[�h���āA���[�v�ɓ˓�����B
+	//	切り離して、タイムアウトチェーンに接続
+	//	そして、負になったEAXを元に、EBX = - EAX;とし、
+	//	EAXに新しいwork->head.intervalをロードして、ループに突入する。
 	}
 
 	(offset) tnode = work->timeout.next;
@@ -223,12 +223,12 @@ check_timeout:
 
 	if ((signed) EAX < 0)
 		goto invalid_inverval;
-		// ���̎��A0x80000000�ȏ�̑҂����Ԃ����邱�Ƃ����肵�Ă����E�E�Elong32��max_wait
-		// max_wait���璼�ڂ�32bit-interval���[�h�Ɉڍs���邱�Ƃ͂Ȃ��B���Ȃ炸�Along32���o�R����
-		// �������邱�ƂŁA�R�[�h���R���p�N�g�ɂł���
+		// この時、0x80000000以上の待ち時間があることを仮定していい・・・long32かmax_wait
+		// max_waitから直接に32bit-intervalモードに移行することはない。かならず、long32を経由する
+		// こうすることで、コードをコンパクトにできる
 short_wait:
 
-//	EAX�����҂B
+//	EAXだけ待つ。
 
 	work->longcounter = EAX;
 	ECX = 0;
@@ -250,9 +250,9 @@ short_wait:
 	IRETD();
 
 check_nesting:
-	work->status = 0 /* �ʏ튄�荞�ݑҋ@��(���ݎ����͖���) */;
+	work->status = 0 /* 通常割り込み待機中(現在時刻は無効) */;
 
-	ss0->cli_count--; // ���荞�݃��[�`���̊�{
+	ss0->cli_count--; // 割り込みルーチンの基本
 	if (== 0) goto call_clicall;
 	POPAD();
 	POP(EAX);
@@ -276,51 +276,51 @@ call_ring0call:
 	/* (ss0->ring0call)() */ jmp_system_count0();
 //	IRETD();
 
-exec3: // �t���C���O�^�C���A�E�g�p�����n�_
+exec3: // フライングタイムアウト用合流地点
 
 	if (work->status == 0) {
-		work->status = 1 /* �^�C���A�E�g������(���ݎ����͗L��) */;
+		work->status = 1 /* タイムアウト処理中(現在時刻は有効) */;
 
-		ss0->ring0_count++; // ���荞�݃��[�`���̊�{
-		ss0->cli_count++; // (�������������ǂ����́Awork->status != 0���ǂ����ł킩��)
+		ss0->ring0_count++; // 割り込みルーチンの基本
+		ss0->cli_count++; // (これをやったかどうかは、work->status != 0かどうかでわかる)
 	}
-	// ���荞�݉\���Ԓ��́A�^�C�}�[�`�F�[�����q���ς��Ă悢�B
-	// ���荞�݃V�O�i���́A�`�F�[����؂��Ă���A���荞�݂������āA
-	// ���̌�ɃR�[�������B
+	// 割り込み可能期間中は、タイマーチェーンを繋ぎ変えてよい。
+	// 割り込みシグナルは、チェーンを切ってから、割り込みを許可して、
+	// その後にコールされる。
 
-	// �^�C���A�E�g�`�F�[���������o���B
+	// タイムアウトチェーンから一つ取り出す。
 //	(offset) tnode = work->timeout.next;
 	(offset) tnext = tnode->next;
-	/* (char) tnode->back = 1 */ asmout("MOV BYTE PTR DS:[ESI+#TN_back],1"); // ���̃m�[�h�͎������Z�b�g����Ă���A�^�C���A�E�g����(�؂藣���ꂽ)
+	/* (char) tnode->back = 1 */ asmout("MOV BYTE PTR DS:[ESI+#TN_back],1"); // このノードは時刻がセットされており、タイムアウトした(切り離された)
 	work->timeout.next = (offset) tnext;
 	/* tnext->back = (offset) &(work->timeout) */ asmout("MOV DWORD PTR DS:[EDI+#TN_back],#work_timeout");
-//	STI(); // 2000/05/24 ���荞�ݏ������͈�т���CLI���Ă������ƂɂȂ����B
+//	STI(); // 2000/05/24 割り込み処理中は一貫してCLIしておくことになった。
 	asmout("CALL FAR DWORD DS:[ESI+#TN_call_vector]");
 //	CLI();
-	if (CF == 1 /* �A�������ݗv�� */) {
-		// CF��1�ɂ���Ȃ�AESI���󂵂Ă͂����Ȃ�
+	if (CF == 1 /* 連続割込み要求 */) {
+		// CFを1にするなら、ESIを壊してはいけない
 
-		// �m�[�h���X�V���āA�o�^�E�E�E�o�^���[�`���́A
-		// head�̎��̃m�[�h�Ɍq�����Ƃ����������ǂ����̓`�F�b�N�ł���悤�ɂ��邪
-		// �����TimerExecute���Ă񂾂�͂��Ȃ�
+		// ノードを更新して、登録・・・登録ルーチンは、
+		// headの次のノードに繋ぐことがあったかどうかはチェックできるようにするが
+		// 勝手にTimerExecuteを呼んだりはしない
 		EAX += tnode->time[0];
 		ADC(ECX, tnode->time[4]);
 		tnode->time[0] = EAX;
 		ADC(EDX, tnode->time[8]);
 		tnode->time[4] = ECX;
 		tnode->time[8] = EDX;
-		TimerRegister(); // ESI, EDX:ECX:EAX �Ɏ����B���ꂪ�Ă΂��Ƃ��A���ݎ����͗L���B
+		TimerRegister(); // ESI, EDX:ECX:EAX に時刻。これが呼ばれるとき、現在時刻は有効。
 	}
 
-//	�^�C���A�E�g�Q�̑��݂��`�F�b�N�B
-//	work->head.interval�����Ȃ�AESI��������
-//	���̂��ƂŁA���̃m�[�h��؂藣���A�t���C���O�^�C���A�E�g���[�`����
-//	work->head.interval�܂ł��^�C���A�E�g���Ă��܂�����A������t���C���O�^�C���A�E�g�̖����ɉ�����
+//	タイムアウト群の存在をチェック。
+//	work->head.intervalが正なら、ESIを加える
+//	そのあとで、そのノードを切り離し、フライングタイムアウトルーチンへ
+//	work->head.intervalまでもタイムアウトしてしまったら、これもフライングタイムアウトの末尾に加える
 
 	goto check_timeout;
 
 invalid_inverval:
-	// ���̎��A0x80000000�ȏ�̑҂����Ԃ����邱�Ƃ����肵�Ă����E�E�Elong32��max_wait
+	// この時、0x80000000以上の待ち時間があることを仮定していい・・・long32かmax_wait
 	(offset) tnode = work->head.next;
 	EAX = tnode->time[0];
 	ECX = tnode->time[4];
@@ -362,7 +362,7 @@ void near GetTimeAndFixZero();
 void near GetNowTime();
 
 void near TimerRegister0()
-// EDX:ECX:EAX�̃��[�h�����
+// EDX:ECX:EAXのロードをやる
 {
 	TimerNode *tnode == DS:ESI;
 	EAX = tnode->time[0];
@@ -371,8 +371,8 @@ void near TimerRegister0()
 }
 
 void near TimerRegister()
-// ESI, EDX:ECX:EAX �Ɏ����B���ꂪ�Ă΂��Ƃ��A���ݎ����͗L���B
-// ���荞�݂��֎~���Ă������ƁB
+// ESI, EDX:ECX:EAX に時刻。これが呼ばれるとき、現在時刻は有効。
+// 割り込みを禁止しておくこと。
 {
 	asmout("#work_timeout EQU 384");
 	asmout("#TN_next EQU 60");
@@ -383,8 +383,8 @@ void near TimerRegister()
 	EAX -= work->head.time[0];
 	SBB(ECX, work->head.time[4]);
 	SBB(EDX, work->head.time[8]);
-	/* (false) */ if ((unsigned) < 0 /* ���Ƀ^�C���A�E�g? */) {
-		// ���m�ɂ́A0�ł��^�C���A�E�g�Ȃ̂����AEDX�����ł͕�����Ȃ��̂ŁA�����Ă����B
+	/* (false) */ if ((unsigned) < 0 /* 既にタイムアウト? */) {
+		// 正確には、0でもタイムアウトなのだが、EDXだけでは分からないので、放っておく。
 		/* (false) */ if (work->status == 0) {
 			EBX = ESI;
 			GetTimeAndFixZero();
@@ -397,10 +397,10 @@ void near TimerRegister()
 			/* ECX -= work->head.time[4] + CF */ SBB(ECX, work->head.time[4]);
 		//	work->status = 0;
 			/* EDX -= work->head.time[8] + CF */ SBB(EDX, work->head.time[8]);
-			if ((unsigned) >= 0 /* �^�C���A�E�g���ĂȂ� */)
+			if ((unsigned) >= 0 /* タイムアウトしてない */)
 				goto entry2;
 		}
-		// �^�C���A�E�g�ɒ��ړo�^
+		// タイムアウトに直接登録
 		(offset) tback = work->timeout.back;
 		work->timeout.back = (offset) tnode;
 		/* tnode->next = (offset) &(work->timeout) */ asmout("MOV DWORD PTR DS:[ESI+#TN_next],#work_timeout");
@@ -409,31 +409,31 @@ void near TimerRegister()
 		return;
 	}
 entry2:
-	// �����ɗ���Ƃ��AEDX�̏�Ԃɂ����ZF���Z�b�g����Ă���B�������AEDX�͕��ł͂Ȃ��B
+	// ここに来るとき、EDXの状態によってZFがセットされている。しかも、EDXは負ではない。
 	ECX |= EDX;
 	if (!= 0)
 		goto comp_time;
 	if ((signed) EAX < 0)
 		goto comp_time;
 
-	// �c�莞�Ԃ�31bit�ȉ��B
+	// 残り時間は31bit以下。
 
-	// CF == 0�ł������A�ǂ�ǂ�����B
-	// CF == 1�ɂȂ�����Ainvalid_interval�̂������A�P�Ɏ��Ԃ�����Ȃ��Ȃ������̂ǂ��炩�ł���B
-	// �ǂ����ɂ��Ă��A���̑O�ɑ}�����ׂ��Ȃ̂͊m���B
+	// CF == 0である限り、どんどん引く。
+	// CF == 1になったら、invalid_intervalのせいか、単に時間が足りなくなったかのどちらかである。
+	// どっちにしても、その前に挿入すべきなのは確実。
 
-	ECX = work->head.interval; // ����͕��ɂȂ肤��̂ŁA���ʏ����B
+	ECX = work->head.interval; // これは負になりうるので、特別処理。
 	/* (offset) tback = &work->head */ LEA((offset) tback, (int) work->head);
 	EAX -= ECX;
 	(offset) tnext = work->head.next;
 	/* if (OF == 1) goto comp_time; */ asmout("JO #comp_time");
-	if ((signed) < 0) // unsigned�Ŕ�r����Ή���if�͏ȗ��ł��邪�AECX���L���ȕ��̒l�ł���ꍇ����舵���Ȃ�
+	if ((signed) < 0) // unsignedで比較すれば下のifは省略できるが、ECXが有効な負の値である場合を取り扱えない
 		goto insert;
 	if ((signed) ECX < 0xa0000000)
 		goto insert;
 
 	do {
-		(offset) tback = (offset) tnext; // ���̕��͎��s���x���������Ȃ�(AGI)�B
+		(offset) tback = (offset) tnext; // この文は実行速度を減少しない(AGI)。
 		EAX -= tnext->interval;
 		(offset) tnext = tnext->next;
 	} while ((unsigned) >= 0);
@@ -454,8 +454,8 @@ insert:
 	if ((signed) < 0)
 		goto invalid_interval;
 
-	// �����ɂ��邱�Ƃ������Ƃ́A�}���O��tback��interval��31bit�Ŏ��܂��Ă������Ƃ��Ӗ�����B
-	// ������A�}�����tnode��interval��31bit�Ŏ��܂�B
+	// ここにくるこということは、挿入前のtbackのintervalが31bitで収まっていたことを意味する。
+	// だから、挿入後のtnodeのintervalも31bitで収まる。
 	EAX -= tnode->time[0];
 	tnode->interval = EAX;
 	return;
@@ -479,8 +479,8 @@ skip2:
 	return;
 
 comp_time:
-	// �҂����Ԃ́A���ݎ������猩�āA32bit�ȏ�B
-	// �ʂ�32bit�ȉ��ł��������A�x���B
+	// 待ち時間は、現在時刻から見て、32bit以上。
+	// 別に32bit以下でもいいが、遅い。
 	/* (offset) tnext = &work->head */ LEA((offset) tnext, (int) work->head);
 	EAX = tnode->time[0];
 	do {
@@ -488,14 +488,14 @@ comp_time:
 		CMP(EAX, tnext->time[0]);
 		EDX = tnode->time[8];
 		/* ECX -= tnext->time[4] + CF */ SBB(ECX, tnext->time[4]);
-		(offset) tback = (offset) tnext; // �����A���̕��͎��s���x�ɉe�����Ȃ�(�t���O�X�g�[��)�B
+		(offset) tback = (offset) tnext; // 多分、この文は実行速度に影響しない(フラグストール)。
 		/* EDX -= tnext->time[8] + CF */ SBB(EDX, tnext->time[8]);
 		(offset) tnext = tnext->next;
 	} while ((unsigned) >= 0);
-	// �������EDX�������Ă��Ȃ����ƂɂȂ邪�A���ɂȂ������ǂ������m�肽���̂ŁA����ł悢�B
+	// ↑これはEDXしか見ていないことになるが、負になったかどうかが知りたいので、これでよい。
 
-//	tnode < tback < tnext �������I(2000/05/25)
-//	������A��߂�ׂ�
+//	tnode < tback < tnext だった！(2000/05/25)
+//	だから、一つ戻るべき
 	(offset) tnext = (offset) tback;
 	(offset) tback = tback->back;
 
@@ -532,15 +532,15 @@ comp_time:
 }
 
 void near GetNowTime()
-// work->status == 0�̂Ƃ��ȊO�͌ĂԂ�
-// CLI���Ă�������
-// ���ݎ������擾��������Ƃ����āA���荞�݂��L�����Z�����Ȃ���΂����Ȃ��Ȃ�Ă��Ƃ͂Ȃ��B
-// EDX:ECX:EAX�Ɍ��ݎ�����Ԃ�
-// EDI:ESI�Ɏc��J�E���g(�K����)
+// work->status == 0のとき以外は呼ぶな
+// CLIしておくこと
+// 現在時刻を取得したからといって、割り込みをキャンセルしなければいけないなんてことはない。
+// EDX:ECX:EAXに現在時刻を返す
+// EDI:ESIに残りカウント(必ず正)
 {
-	// �c��J�E���g�̎Z�o���@ : (longcounter - 1) * 0x10000 + PIT0�̃J�E���g
-	// (�傫�Ȑ���0�̂Ƃ��́AIRQ0�����Ă��邩�ǂ����ɂ���āAlongcounter�����������Ă��K�v�����邩������Ȃ�)
-	// 0��IRQ�����Ă��Ȃ�������E�E�E����Ȃ��Ƃ͂��肦�Ȃ��B��΂ɗ��Ă���B���Alongcount�͌��炵�Ă͂����Ȃ��B
+	// 残りカウントの算出方法 : (longcounter - 1) * 0x10000 + PIT0のカウント
+	// (大きな数や0のときは、IRQ0が来ているかどうかによって、longcounterを小さく見てやる必要があるかもしれない)
+	// 0でIRQが来ていなかったら・・・そんなことはありえない。絶対に来ている。が、longcountは減らしてはいけない。
 
 	TimerWork *work == DS:0x0000;
 
@@ -556,14 +556,14 @@ void near GetNowTime()
 }
 
 void near GetTimeAndFixZero()
-// work->status == 0�̂Ƃ��ȊO�͌ĂԂ�
-// EDI:ESI�Ɏc��J�E���g
-// CLI���Ă�������
-// �I�[�o�[�����ɑΉ��ł���悤�ɂ��ׂ�
-// work->longcounter��1�ŁA�������J�E���g�A�E�g���Ă�����A���ʂ̕��@�Ō��ݎ������o��
+// work->status == 0のとき以外は呼ぶな
+// EDI:ESIに残りカウント
+// CLIしておくこと
+// オーバーランに対応できるようにすべき
+// work->longcounterが1で、しかもカウントアウトしていたら、普通の方法で現在時刻を出す
 {
-	// �c��J�E���g��head.interval�ɔ��f�����B
-	// ��������ƁAstatus��2�ɂȂ�B
+	// 残りカウントはhead.intervalに反映される。
+	// これをやると、statusは2になる。
 
 	TimerWork *work == DS:0x0000;
 
@@ -596,16 +596,16 @@ interval_over:
 }
 
 void near CancelTimer()
-// DS:ESI�̃^�C�}�[���L�����Z��
-// CLI���Ă�������
+// DS:ESIのタイマーをキャンセル
+// CLIしておくこと
 {
 	asmout("#TN_back EQU 56");
 
 	TimerNode *tnode == DS:ESI, *tnext == DS:EDI, *tback == DS:EBX;
-	// head�Ɍq�����Ă��āA���Astatus == 0�Ȃ�AGetNowTime() + FixZero()���Ă���؂藣��
+	// headに繋がっていて、かつ、status == 0なら、GetNowTime() + FixZero()してから切り離す
 	asmout("TEST BYTE PTR DS:[ESI+#TN_back],0FH");
 	if (== 0) {
-	//	if ((offset) tnode == work->head.next) { // ����Ȃ̂���Ă��A�c�莞�Ԃ������邾��������A�����������荞�܂Ȃ��B
+	//	if ((offset) tnode == work->head.next) { // こんなのやっても、残り時間が増えるだけだから、いちいち割り込まない。
 	//		if (work->status == 0) {
 	//			GetTimeAndFixZero();
 	//		}
@@ -616,7 +616,7 @@ void near CancelTimer()
 		interval = tnode->interval;
 		tback->next = (offset) tnext;
 		tnext->back = (offset) tback;
-		asmout("MOV BYTE PTR DS:[ESI+#TN_back],02H"); // �L�����Z�����ꂽ
+		asmout("MOV BYTE PTR DS:[ESI+#TN_back],02H"); // キャンセルされた
 		interval2 = tback->interval;
 		if ((signed) interval < 0)
 			goto interval_over;
@@ -635,7 +635,7 @@ interval_over:
 }
 
 void far TimerSC_EOC()
-// �I���R�}���h
+// 終了コマンド
 {
 	EAX = [SS:ESP +  0];
 	ECX = [SS:ESP +  4];
@@ -673,8 +673,8 @@ void near TimerSC_GetNode()
 	asmout("MOV DWORD PTR DS:[EDX+#TN_back],#work_last");
 	POPFD();
 //	STI();
-	[FS:EBX + 4] = ECX; // �������ݑ��l
-	asmout("MOV BYTE PTR DS:[ECX+#TN_back],03H"); // ��������Z�b�g����Ă��Ȃ�
+	[FS:EBX + 4] = ECX; // 書き込み即値
+	asmout("MOV BYTE PTR DS:[ECX+#TN_back],03H"); // 時刻すらセットされていない
 	EBX += 8;
 	asmout("JMP DWORD PTR DS:[TimerSC_JmpTbl+EAX]");
 }
@@ -703,8 +703,8 @@ void near TimerSC_FreeNode()
 }
 
 void near TimerSC_SetNowTime()
-// ���ݎ�����m��
-// ���荞�ݒ��Ɏ��s������n���B�E�E�E�ł������A���荞�ݒ��ł����C
+// 現在時刻を知る
+// 割り込み中に実行したら馬鹿。・・・でも多分、割り込み中でも平気
 {
 	TimerWork *work == DS:0x0000;
 
@@ -774,8 +774,8 @@ void near TimerSC_CancelTimer()
 }
 
 void near TimerSC_SetNowTimeNode()
-// ���ݎ�����m��
-// ���荞�ݒ��Ɏ��s������n���B�E�E�E�ł������A���荞�ݒ��ł����C
+// 現在時刻を知る
+// 割り込み中に実行したら馬鹿。・・・でも多分、割り込み中でも平気
 {
 	TimerWork *work == DS:0x0000;
 	TimerNode *tnode == DS:ESI;
@@ -905,21 +905,21 @@ void near TimerInit();
 
 void near TimerSC_Special()
 {
-	EAX = (int) [FS:EBX + 4]; // sub-cmd(4�̔{��)
+	EAX = (int) [FS:EBX + 4]; // sub-cmd(4の倍数)
 	if (EAX == 0) {
-		// ������
+		// 初期化
 		EBX += 16;
 		PUSH(EBX);
 		TimerInit();
 		POP(EBX);
 	} else if (EAX == 4) {
-		// �m�[�h�\���Ǝ��ԒP�ʂ̒�
-		// +08 : ���b�Z�[�W�G���A��
-		// +0c : far vector�G���A�I�t�Z�b�g(6�o�C�g)
-		// +10 : �^�C���t�B�[���h(12�o�C�g)
+		// ノード構成と時間単位の提供
+		// +08 : メッセージエリア長
+		// +0c : far vectorエリアオフセット(6バイト)
+		// +10 : タイムフィールド(12バイト)
 		// +14 : reserve
-		// +18 : ���荞�ݎ���[sec]��2^64�{(8�o�C�g)
-		// +20 : ���荞�ݎ��g��[Hz]��2^32�{(8�o�C�g)
+		// +18 : 割り込み周期[sec]の2^64倍(8バイト)
+		// +20 : 割り込み周波数[Hz]の2^32倍(8バイト)
 		(int) [FS:EBX + 0x08] = 32;
 		(int) [FS:EBX + 0x0c] = 32;
 		(int) [FS:EBX + 0x10] = 40;
@@ -930,8 +930,8 @@ void near TimerSC_Special()
 		(int) [FS:EBX + 0x24] = 1000;
 		EBX += 40;
 	} else if (EAX == 8) {
-		// Int�n���h�����
-		// +08 : �G���g��
+		// Intハンドラ情報
+		// +08 : エントリ
 		// +0c : reserve
 		// +10 : reserve
 		// +14 : reserve
@@ -954,7 +954,7 @@ void near TimerSC_Special()
 }
 
 void near TimerInit()
-//	�ėp���W�X�^�͂��ׂĔj��
+//	汎用レジスタはすべて破壊
 {
 	TimerWork *work == DS:0x0000;
 	unsigned short PIT_CMD == 0x0077, PIT0_COUNT == 0x0071;
@@ -1002,13 +1002,13 @@ void near TimerInit()
 	/* work->last.back = &(work->head) */ asmout("MOV DWORD PTR DS:[#work_last+#TN_back],#work_head");
 //	/* work->last.next = &(work->head) */ asmout("MOV DWORD PTR DS:[#work_last+#TN_next],#work_head");
 	// work->last.call_vector[0] = (offset) ???;
-	// work->last.call_vector[4] = (segment) ???; // ���璛�N���call�����
+	// work->last.call_vector[4] = (segment) ???; // 約一千兆年後にcallされる
 
 	asmout("MOV EAX,#work_timeout");
 	work->timeout.back = EAX;
 	work->timeout.next = EAX;
 
-// ECX��ۑ�����
+// ECXを保存しろ
 
 	TimerNode *tnode == DS:ESI, *tback == DS:EBX, *tnext == DS:EDI;
 
@@ -1053,9 +1053,9 @@ void near TimerInit()
 
 //	CLI();
 
-	// IRQ-00�̃}�X�N���������āA���荞�݂��N��������B
+	// IRQ-00のマスクを解除して、割り込みを起こさせる。
 	IN(AL, PIC_master_IMR);
-	AL &= 0xfe; // IRQ-00����
+	AL &= 0xfe; // IRQ-00許可
 	OUT(PIC_master_OCW1, AL);
 
 	IN(AL, 0x0042);
@@ -1063,22 +1063,22 @@ void near TimerInit()
 	AL = 0x34 /* PIT0, Low/High, mode2, binary */;
 	OUT(PIT_CMD, AL);
 	if (!= 0) {
-		/* 8MHz�n */
-		AL = 0xcd; // �ݒ�l(1997)
+		/* 8MHz系 */
+		AL = 0xcd; // 設定値(1997)
 		OUT(PIT0_COUNT, AL);
 		AL = 0x07;
 		OUT(PIT0_COUNT, AL);
 		POPFD();
 		return;
 	}
-	/* 5MHz�n */
-	AL = 0x9a; // �ݒ�l(2458)
+	/* 5MHz系 */
+	AL = 0x9a; // 設定値(2458)
 	OUT(PIT0_COUNT, AL);
 	AL = 0x09;
 	OUT(PIT0_COUNT, AL);
 	POPFD();
 	return;
 
-// �����̃V�X�e���R�[�����g���āA���ق�TAPI��A�v���̂��߂Ƀm�[�h���Ƃ��Ă��B
-// �����������Ƃ�Init�����̂ŁA�����ł͂��Ȃ��B
+// 自分のシステムコールを使って、あほなTAPIやアプリのためにノードをとってやる。
+// そういうことはInitがやるので、ここではやらない。
 }

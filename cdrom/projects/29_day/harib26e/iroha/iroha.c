@@ -3,7 +3,7 @@
 void HariMain(void)
 {
 	static char s[9] = { 0xb2, 0xdb, 0xca, 0xc6, 0xce, 0xcd, 0xc4, 0x0a, 0x00 };
-		/* ”¼Šp‚ÌƒCƒƒnƒjƒzƒwƒg‚Ì•¶šƒR[ƒh+‰üs+0 */
+		/* åŠè§’ã®ã‚¤ãƒ­ãƒãƒ‹ãƒ›ãƒ˜ãƒˆã®æ–‡å­—ã‚³ãƒ¼ãƒ‰+æ”¹è¡Œ+0 */
 	api_putstr0(s);
 	api_end();
 }

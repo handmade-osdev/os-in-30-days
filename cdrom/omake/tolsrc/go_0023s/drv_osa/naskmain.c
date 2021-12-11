@@ -13,12 +13,12 @@ extern int GOL_abortcode;
 extern jmp_buf setjmp_env;
 
 struct STR_NASKMAIN {
-	UCHAR *cmdlin; /* '\0'‚ÅI‚í‚é */
-	UCHAR *outname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *listname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *dest0, *dest1; /* o—Íƒtƒ@ƒCƒ‹(dest0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *list0, *list1; /* o—Íƒtƒ@ƒCƒ‹(list0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *err0, *err1; /* ƒRƒ“ƒ\[ƒ‹ƒƒbƒZ[ƒW(err0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
+	UCHAR *cmdlin; /* '\0'ã§çµ‚ã‚ã‚‹ */
+	UCHAR *outname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *listname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *dest0, *dest1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(dest0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *list0, *list1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(list0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *err0, *err1; /* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(err0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
 	UCHAR *work0, *work1;
 	int errcode;
 };
@@ -41,19 +41,19 @@ int naskmain(struct STR_NASKMAIN *params)
 	UCHAR **argv, *tmp0;
 	UCHAR **argv1, **p;
 	GO_stdout.p0 = GO_stdout.p = params->err0;
-	GO_stdout.p1 = GO_stdout.p0; /* stdout‚Í‚È‚¢ */
-	GO_stdout.dummy = ~0;
+	GO_stdout.p1 = GO_stdout.p0; /* stdoutã¯ãªã„ */
+	GO_stdout.dummy = â€¾0;
 	GO_stderr.p0 = GO_stderr.p = params->err0;
 	GO_stderr.p1 = params->err1;
-	GO_stderr.dummy = ~0;
+	GO_stderr.dummy = â€¾0;
 
-	/* ‘½dÀs‘j~ (static‚ğÄ‰Šú‰»‚·‚ê‚Î‚Å‚«‚é‚ª) */
+	/* å¤šé‡å®Ÿè¡Œé˜»æ­¢ (staticã‚’å†åˆæœŸåŒ–ã™ã‚Œã°ã§ãã‚‹ãŒ) */
 //	if (execflag)
 //		return 7;
 //	execflag = 1;
 
-	nask_LABELBUFSIZ = 64 * 1024; /* ƒ‰ƒxƒ‹•¶š—ñ‚Ì‡Œv */
-	nask_L_LABEL0 = 1024; /* extern‚Í1000ŒÂ‚Ù‚Ç */
+	nask_LABELBUFSIZ = 64 * 1024; /* ãƒ©ãƒ™ãƒ«æ–‡å­—åˆ—ã®åˆè¨ˆ */
+	nask_L_LABEL0 = 1024; /* externã¯1000å€‹ã»ã© */
 	nask_maxlabels = 4 * 1024; /* 88*4k */
 
 	if (setjmp(setjmp_env)) {
@@ -69,7 +69,7 @@ int naskmain(struct STR_NASKMAIN *params)
 	argv = ConvCmdLine1(&argc, params->cmdlin);
 	params->errcode = main0(argc, argv, tmp0, params);
 skip:
-	/* ƒoƒbƒtƒ@‚ğo—Í */
+	/* ãƒãƒƒãƒ•ã‚¡ã‚’å‡ºåŠ› */
 	GOL_sysabort(0);
 }
 

@@ -7,12 +7,12 @@ IMGTOL   = $(TOOLPATH)imgtol.com
 COPY     = copy
 DEL      = del
 
-# ƒfƒtƒHƒ‹ƒg“®ì
+# ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‹•ä½œ
 
 default :
 	$(MAKE) haribote.img
 
-# ƒtƒ@ƒCƒ‹¶¬‹K‘¥
+# ãƒ•ã‚¡ã‚¤ãƒ«ç”Ÿæˆè¦å‰‡
 
 haribote.img : haribote/ipl10.bin haribote/haribote.sys Makefile \
 		a/a.hrb hello3/hello3.hrb hello4/hello4.hrb hello5/hello5.hrb \
@@ -43,7 +43,7 @@ haribote.img : haribote/ipl10.bin haribote/haribote.sys Makefile \
 		copy from:color2/color2.hrb to:@: \
 		imgout:haribote.img
 
-# ƒRƒ}ƒ“ƒh
+# ã‚³ãƒãƒ³ãƒ‰
 
 run :
 	$(MAKE) haribote.img
@@ -89,7 +89,7 @@ run_os :
 	$(MAKE) run
 
 clean :
-# ‰½‚à‚µ‚È‚¢
+# ä½•ã‚‚ã—ãªã„
 
 src_only :
 	$(MAKE) clean

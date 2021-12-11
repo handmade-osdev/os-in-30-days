@@ -1,4 +1,4 @@
-/* "decode0":ƒL[ƒR[ƒhEƒfƒR[ƒ_[ for NEC98 ver.1.0 */
+/* "decode0":ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãƒ»ãƒ‡ã‚³ãƒ¼ãƒ€ãƒ¼ for NEC98 ver.1.0 */
 
 segment CODE(USE32, PARA);
 default(code == CODE);
@@ -31,15 +31,15 @@ nextcmd:
 	if (EAX == 0)
 		goto cmd0000;
 	if (EAX == 0x010c)
-		goto cmd010c; /* decodeƒ‹[ƒ‹’è‹` */
+		goto cmd010c; /* decodeãƒ«ãƒ¼ãƒ«å®šç¾© */
 	if (EAX == 0x0104)
 		goto cmd0104; // Keydecode_setlock
 	if (EAX == 0x0110)
-		goto cmd0110; /* decodeƒ‹[ƒ‹‰Šú‰» */
+		goto cmd0110; /* decodeãƒ«ãƒ¼ãƒ«åˆæœŸåŒ– */
 	if (EAX == 0x0108)
-		goto cmd0108; // Keydecode_Main‚Ö‚ÌƒxƒNƒ^’Ê’m
+		goto cmd0108; // Keydecode_Mainã¸ã®ãƒ™ã‚¯ã‚¿é€šçŸ¥
 	if (EAX == 0x0100)
-		goto cmd0100; // ‰Šú‰»
+		goto cmd0100; // åˆæœŸåŒ–
 	INT(0x03);
 
 cmd0000:
@@ -49,7 +49,7 @@ cmd0000:
 	return;
 
 cmd0100:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	PUSH((offset) cmd);
 	Keydecode_Init();
 	POP((offset) cmd);
@@ -70,59 +70,59 @@ cmd0104:
 	goto nextcmd;
 
 cmd0108:
-	// Keydecode_Main‚Ö‚ÌƒxƒNƒ^’Ê’m
+	// Keydecode_Mainã¸ã®ãƒ™ã‚¯ã‚¿é€šçŸ¥
 	asmout("MOV DWORD PTR FS:[EBX+4],OFFSET Keydecode_Main");
 	(short) cmd[8] = CS;
 	(offset) cmd += 12;
 	goto nextcmd;
 
 cmd010c:
-	/* decodeƒ‹[ƒ‹’è‹`(CLI‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à) */
-	/* cmd, opt(len), rawƒR[ƒh, shift-lock-bitmap(mask, equal), subcmd,... */
-	/* subcmd‚Ìˆê—— */
+	/* decodeãƒ«ãƒ¼ãƒ«å®šç¾©(CLIã—ãŸã»ã†ãŒã„ã„ã‹ã‚‚) */
+	/* cmd, opt(len), rawã‚³ãƒ¼ãƒ‰, shift-lock-bitmap(mask, equal), subcmd,... */
+	/* subcmdã®ä¸€è¦§ */
 	/*	01 : sendsignal(mode-1), call vector, cmd(01), len(max:1KB), signal,...
 		02 : sendsignal(mode-2), 
 		03 : sendsignal(mode-3),
 		04 : or shift-lock-bitmap, 0(dw), bitmap, cmd(04), 0(byte)
 		05 : and shift-lock-bitmap,
 		06 : xor shift-lock-bitmap,
-	//	07 : control LED, hardware-param, bitmap(and‚µ‚Äƒmƒ“ƒ[ƒ‚È‚çon), cmd(07), hardware-param
+	//	07 : control LED, hardware-param, bitmap(andã—ã¦ãƒŽãƒ³ã‚¼ãƒ­ãªã‚‰on), cmd(07), hardware-param
 	*/
-	/* shift-lock-bitmap‚ÌŠ„•t—á */
-	/*	bit0 : scroll...Ž©“®”½‰f
-		bit1 : numlock...Ž©“®”½‰f
-		bit2 : caps...Ž©“®”½‰f
-		bit3 : reserve...Ž©“®”½‰f
+	/* shift-lock-bitmapã®å‰²ä»˜ä¾‹ */
+	/*	bit0 : scroll...è‡ªå‹•åæ˜ 
+		bit1 : numlock...è‡ªå‹•åæ˜ 
+		bit2 : caps...è‡ªå‹•åæ˜ 
+		bit3 : reserve...è‡ªå‹•åæ˜ 
 		bit4 : shift
 		bit5 : ctrl
 		bit6 : alt
 		bit7 : reserve
-		bit14, 15‚ÍAmake/break/remake/overbreak
+		bit14, 15ã¯ã€make/break/remake/overbreak
 	*/
 
 	/*
-		”Žš‚Ì"1":
-			no-shift & no-ctrl & no-alt‚ÅƒL[‚ð‰Ÿ‚µ‚½Žž
-			numlock & no-shift & no-ctrl & no-alt‚Åƒeƒ“ƒL[‚ð‰Ÿ‚µ‚½Žž
-		‰pŒê•¶Žš"A":
-			capslock & no-shift & no-ctrl & no-alt‚ÅƒL[‚ð‰Ÿ‚µ‚½Žž
-			no-capslock & shift & no-ctrl & no-alt‚ÅƒL[‚ð‰Ÿ‚µ‚½Žž
-		‰pŒê•¶Žš"a":
-			no-capslock & no-shift & no-ctrl & no-alt‚ÅƒL[‚ð‰Ÿ‚µ‚½Žž
-			capslock & shift & no-ctrl & no-alt‚ÅƒL[‚ð‰Ÿ‚µ‚½Žž
+		æ•°å­—ã®"1":
+			no-shift & no-ctrl & no-altã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
+			numlock & no-shift & no-ctrl & no-altã§ãƒ†ãƒ³ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
+		è‹±èªžæ–‡å­—"A":
+			capslock & no-shift & no-ctrl & no-altã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
+			no-capslock & shift & no-ctrl & no-altã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
+		è‹±èªžæ–‡å­—"a":
+			no-capslock & no-shift & no-ctrl & no-altã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
+			capslock & shift & no-ctrl & no-altã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸæ™‚
 
-		‚Æ‚¢‚¤‚í‚¯‚ÅAA‚Æa‚ð“o˜^‚·‚é‚Æ“s‡4ƒpƒ^[ƒ“‚ð“o˜^‚·‚é•K—v‚ª‚ ‚é
-		ƒL[‚Ì•¡ŽG‚È‘Î‰ž‚ÍAwinman0‚Åˆ—‚³‚¹‚éB
+		ã¨ã„ã†ã‚ã‘ã§ã€Aã¨aã‚’ç™»éŒ²ã™ã‚‹ã¨éƒ½åˆ4ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç™»éŒ²ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+		ã‚­ãƒ¼ã®è¤‡é›‘ãªå¯¾å¿œã¯ã€winman0ã§å‡¦ç†ã•ã›ã‚‹ã€‚
 
 
 	*/
 
 
 
-	/* ƒ[ƒNƒGƒŠƒA‚©‚ç“K“–‚ÉØ‚èŽæ‚Á‚Ä“]‘—‚µ‚ÄAƒ|ƒCƒ“ƒ^‚ðŒq‚¢‚Å‚¨‚í‚èB */
+	/* ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã‹ã‚‰é©å½“ã«åˆ‡ã‚Šå–ã£ã¦è»¢é€ã—ã¦ã€ãƒã‚¤ãƒ³ã‚¿ã‚’ç¹‹ã„ã§ãŠã‚ã‚Šã€‚ */
 	ESI = work->last;
 	ECX = cmd[ 4]; /* len */
-	EDX = cmd[ 8]; /* rawƒR[ƒh */
+	EDX = cmd[ 8]; /* rawã‚³ãƒ¼ãƒ‰ */
 	EAX = cmd[12]; /* shiftmap */
 	(offset) cmd += 16;
 	[DS:ESI] = EAX;
@@ -151,7 +151,7 @@ cmd010c:
 	goto nextcmd;
 
 cmd0110:
-	/* decodeƒ‹[ƒ‹‰Šú‰» */
+	/* decodeãƒ«ãƒ¼ãƒ«åˆæœŸåŒ– */
 	work->last = 1036;
 	(offset) cmd += 8;
 	LEA(ESI, work->declist[0]);
@@ -166,7 +166,7 @@ cmd0110:
 }
 
 void far Keydecode_Main()
-/* CLI‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à */
+/* CLIã—ãŸã»ã†ãŒã„ã„ã‹ã‚‚ */
 {
 	unsigned int keyint_sel   ==  8 * 8, keydata_sel   ==  9 * 8;
 	WORK *work == DS:0;
@@ -186,8 +186,8 @@ void far Keydecode_Main()
 	(unsigned int) ECX >>= 10;
 	EAX &= 0x00ffffff;
 	ECX &= 0xc000;
-	/* mode-1ƒoƒbƒtƒ@‚ðŒŸõ‚·‚é */
-	/* ƒR[ƒh‚ª‘¶Ý‚µ‚½‚çAshiftmap‚Å‚Í‚È‚­Aƒoƒbƒtƒ@“à‚ÌƒVƒtƒgƒR[ƒh‚ðƒ[ƒfƒBƒ“ƒO */
+	/* mode-1ãƒãƒƒãƒ•ã‚¡ã‚’æ¤œç´¢ã™ã‚‹ */
+	/* ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãŸã‚‰ã€shiftmapã§ã¯ãªãã€ãƒãƒƒãƒ•ã‚¡å†…ã®ã‚·ãƒ•ãƒˆã‚³ãƒ¼ãƒ‰ã‚’ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚° */
 //	if (EAX == work->mode1buf[ 0])
 //		CX |= work->mode1buf[ 4];
 //	else if (EAX == work->mode1buf[ 8])
@@ -199,12 +199,12 @@ void far Keydecode_Main()
 //	else
 		CX |= work->shiftmap;
 
-	/* break‚¾‚Á‚½‚çAmode1buf, mode2buf‚©‚ç–•Á‚·‚é */
+	/* breakã ã£ãŸã‚‰ã€mode1buf, mode2bufã‹ã‚‰æŠ¹æ¶ˆã™ã‚‹ */
 
 	EDI = work->declist[EAX * 4];
 	if (EDI != 0) {
 		do {
-			/* ‚±‚Ìƒ‹[ƒv“à‚ÅCX‚Í•Û‘¶‚·‚é‚±‚Æ */
+			/* ã“ã®ãƒ«ãƒ¼ãƒ—å†…ã§CXã¯ä¿å­˜ã™ã‚‹ã“ã¨ */
 			EAX = ECX;
 			AX &= [DS:EDI + 0];
 			CMP(AX, [DS:EDI + 2]);
@@ -239,9 +239,9 @@ void far Keydecode_Main()
 			//		if (!= 0)
 			//			Keydecode_led();
 
-					/* mode-2ƒoƒbƒtƒ@‚ðŒŸõ‚·‚é */
-					/* ƒR[ƒh‚ª‘¶Ý‚µA‚©‚ÂAshiftó‘Ô‚Ì•Ï‰»‚É‚æ‚èmakeó‘Ô‚É‚Ó‚³‚í‚µ‚­‚È‚­‚È‚Á‚½‚çA
-						ƒuƒŒƒCƒN‚µ‚Ä‚©‚çA‚ ‚ç‚½‚Émake‚·‚é */
+					/* mode-2ãƒãƒƒãƒ•ã‚¡ã‚’æ¤œç´¢ã™ã‚‹ */
+					/* ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã€ã‹ã¤ã€shiftçŠ¶æ…‹ã®å¤‰åŒ–ã«ã‚ˆã‚ŠmakeçŠ¶æ…‹ã«ãµã•ã‚ã—ããªããªã£ãŸã‚‰ã€
+						ãƒ–ãƒ¬ã‚¤ã‚¯ã—ã¦ã‹ã‚‰ã€ã‚ã‚‰ãŸã«makeã™ã‚‹ */
 
 					goto next;
 				}
@@ -260,7 +260,7 @@ void far Keydecode_Main()
 					goto next;
 				}
 				if (AL == 0x38) {
-				//	/* DMA’âŽ~ */
+				//	/* DMAåœæ­¢ */
 					CLI();
 				//	AL = 0x0f;
 				//	OUT(0x00af, AL);
@@ -299,7 +299,7 @@ void near Keydecode_Init()
 
 #if 0
 void far filter0()
-// F1`F6‚µ‚©’Ê‚³‚È‚¢ƒtƒBƒ‹ƒ^[
+// F1ã€œF6ã—ã‹é€šã•ãªã„ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼
 {
 	unsigned int keyint_sel   ==  8 * 8, keydata_sel   ==  9 * 8;
 
@@ -332,9 +332,9 @@ void far filter0()
 	//	asmout("fcall 8*8, KeyResetCPU");
 		for (;;)
 			HLT();
-	/*	// double-fault‚ÅƒŠƒZƒbƒg‚ð‚©‚¯‚é
+	/*	// double-faultã§ãƒªã‚»ãƒƒãƒˆã‚’ã‹ã‘ã‚‹
 		CLI();
-		// GDT‚ÆIDT‚ÌƒŠƒ~ƒbƒg‚ð0‚É‚·‚éB
+		// GDTã¨IDTã®ãƒªãƒŸãƒƒãƒˆã‚’0ã«ã™ã‚‹ã€‚
 		EAX = 0;
 		PUSH(EAX);
 		PUSH(EAX);
@@ -391,9 +391,9 @@ void far filter1()
 		for (;;)
 			HLT();
 
-	/*	// double-fault‚ÅƒŠƒZƒbƒg‚ð‚©‚¯‚é
+	/*	// double-faultã§ãƒªã‚»ãƒƒãƒˆã‚’ã‹ã‘ã‚‹
 		CLI();
-		// GDT‚ÆIDT‚ÌƒŠƒ~ƒbƒg‚ð0‚É‚·‚éB
+		// GDTã¨IDTã®ãƒªãƒŸãƒƒãƒˆã‚’0ã«ã™ã‚‹ã€‚
 		EAX = 0;
 		PUSH(EAX);
 		PUSH(EAX);

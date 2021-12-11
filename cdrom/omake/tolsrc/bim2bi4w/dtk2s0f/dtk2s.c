@@ -1,11 +1,11 @@
 typedef unsigned char UCHAR;
 
-int tek_checkformat(int siz, UCHAR *p); /* ìWäJå„ÇÃÉTÉCÉYÇï‘Ç∑ */
-	/* -1:îÒosacmp */
-	/* -2:osacmpÇæÇ™ëŒâûÇ≈Ç´Ç»Ç¢ */
+int tek_checkformat(int siz, UCHAR *p); /* Â±ïÈñãÂæå„ÅÆ„Çµ„Ç§„Ç∫„ÇíËøî„Åô */
+	/* -1:Èùûosacmp */
+	/* -2:osacmp„Å†„ÅåÂØæÂøú„Åß„Åç„Å™„ÅÑ */
 
-int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ê¨å˜ÇµÇΩÇÁ0 */
-	/* ê≥ÇÃílÇÕÉtÉHÅ[É}ÉbÉgÇÃàŸèÌÅEñ¢ëŒâûÅAïâÇÃílÇÕÉÅÉÇÉäïsë´ */
+int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ÊàêÂäü„Åó„Åü„Çâ0 */
+	/* Ê≠£„ÅÆÂÄ§„ÅØ„Éï„Ç©„Éº„Éû„ÉÉ„Éà„ÅÆÁï∞Â∏∏„ÉªÊú™ÂØæÂøú„ÄÅË≤†„ÅÆÂÄ§„ÅØ„É°„É¢„É™‰∏çË∂≥ */
 
 static unsigned int tek_getnum_s7s(UCHAR **pp);
 static unsigned int tek_getnum_s7(UCHAR **pp);
@@ -38,15 +38,15 @@ int tek_decode(int siz, UCHAR *p, UCHAR *q)
 		if (dsiz > bsiz || (hed & 0x21) != 0x01)
 			return 1;
 		if (hed & 0x40)
-			tek_getnum_s7s(&p); /* ÉIÉvÉVÉáÉìèÓïÒÇ÷ÇÃÉ|ÉCÉìÉ^Çì«Ç›îÚÇŒÇ∑ */
+			tek_getnum_s7s(&p); /* „Ç™„Éó„Ç∑„Éß„É≥ÊÉÖÂ†±„Å∏„ÅÆ„Éù„Ç§„É≥„Çø„ÇíË™≠„ÅøÈ£õ„Å∞„Åô */
 		st = tek_lzrestore_stk2(p1 - p, p, dsiz, q);
 	}
 	return st;
 }
 
 static unsigned int tek_getnum_s7s(UCHAR **pp)
-/* Ç±ÇÍÇÕïKÇ∏big-endian */
-/* â∫ë Ç™Ç»Ç¢ÇÃÇ≈íÜêgÇÇ¢Ç∂ÇËÇ‚Ç∑Ç¢ */
+/* „Åì„Çå„ÅØÂøÖ„Åöbig-endian */
+/* ‰∏ãÈßÑ„Åå„Å™„ÅÑ„ÅÆ„Åß‰∏≠Ë∫´„Çí„ÅÑ„Åò„Çä„ÇÑ„Åô„ÅÑ */
 {
 	unsigned int s = 0;
 	UCHAR *p = *pp;
@@ -59,7 +59,7 @@ static unsigned int tek_getnum_s7s(UCHAR **pp)
 }
 
 static unsigned int tek_getnum_s7(UCHAR **pp)
-/* Ç±ÇÍÇÕïKÇ∏big-endian */
+/* „Åì„Çå„ÅØÂøÖ„Åöbig-endian */
 {
 	unsigned int s = 0, b = 0, a = 1;
 	UCHAR *p = *pp;
@@ -86,7 +86,7 @@ int tek_lzrestore_stk2(int srcsiz, UCHAR *src, int outsiz, UCHAR *q)
 		if (tek_getnum_s7s(&s7ptr))
 			return 1;
 		do {
-			/* byÉtÉFÅ[ÉY */
+			/* by„Éï„Çß„Éº„Ç∫ */
 			j = 0;
 			do {
 				j++;
@@ -108,7 +108,7 @@ int tek_lzrestore_stk2(int srcsiz, UCHAR *src, int outsiz, UCHAR *q)
 			if (q >= q1)
 				break;
 
-			/* lzÉtÉFÅ[ÉY */
+			/* lz„Éï„Çß„Éº„Ç∫ */
 			j = 0;
 			do {
 				j++;
@@ -131,7 +131,7 @@ int tek_lzrestore_stk2(int srcsiz, UCHAR *src, int outsiz, UCHAR *q)
 				if ((i & 1) == 0)
 					i |= (tek_getnum_s7(&s7ptr) + 1) << 4;
 				i >>= 1;
-				ds = ~(i - 6);
+				ds = ‚Äæ(i - 6);
 				if (i < 4)
 					ds = repdis[i];
 				if (i == 4)

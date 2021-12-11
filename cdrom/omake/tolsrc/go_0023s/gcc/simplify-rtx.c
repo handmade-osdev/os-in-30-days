@@ -439,10 +439,10 @@ simplify_unary_operation (code, mode, op, op_mode)
 #else
       if (hv < 0)
 	{
-	  d = (double) (~ hv);
+	  d = (double) (‾ hv);
 	  d *= ((double) ((HOST_WIDE_INT) 1 << (HOST_BITS_PER_WIDE_INT / 2))
 		* (double) ((HOST_WIDE_INT) 1 << (HOST_BITS_PER_WIDE_INT / 2)));
-	  d += (double) (unsigned HOST_WIDE_INT) (~ lv);
+	  d += (double) (unsigned HOST_WIDE_INT) (‾ lv);
 	  d = (- d - 1.0);
 	}
       else
@@ -503,7 +503,7 @@ simplify_unary_operation (code, mode, op, op_mode)
       switch (code)
 	{
 	case NOT:
-	  val = ~ arg0;
+	  val = ‾ arg0;
 	  break;
 
 	case NEG:
@@ -540,7 +540,7 @@ simplify_unary_operation (code, mode, op, op_mode)
 	      val = arg0;
 	    }
 	  else if (GET_MODE_BITSIZE (op_mode) < HOST_BITS_PER_WIDE_INT)
-	    val = arg0 & ~((HOST_WIDE_INT) (-1) << GET_MODE_BITSIZE (op_mode));
+	    val = arg0 & ‾((HOST_WIDE_INT) (-1) << GET_MODE_BITSIZE (op_mode));
 	  else
 	    return 0;
 	  break;
@@ -560,7 +560,7 @@ simplify_unary_operation (code, mode, op, op_mode)
 	  else if (GET_MODE_BITSIZE (op_mode) < HOST_BITS_PER_WIDE_INT)
 	    {
 	      val
-		= arg0 & ~((HOST_WIDE_INT) (-1) << GET_MODE_BITSIZE (op_mode));
+		= arg0 & ‾((HOST_WIDE_INT) (-1) << GET_MODE_BITSIZE (op_mode));
 	      if (val
 		  & ((HOST_WIDE_INT) 1 << (GET_MODE_BITSIZE (op_mode) - 1)))
 		val -= (HOST_WIDE_INT) 1 << GET_MODE_BITSIZE (op_mode);
@@ -603,8 +603,8 @@ simplify_unary_operation (code, mode, op, op_mode)
       switch (code)
 	{
 	case NOT:
-	  lv = ~ l1;
-	  hv = ~ h1;
+	  lv = ‾ l1;
+	  hv = ‾ h1;
 	  break;
 
 	case NEG:
@@ -1064,7 +1064,7 @@ simplify_binary_operation (code, mode, op0, op1)
 	  else if (GET_CODE (op1) == NEG)
 	    return simplify_gen_binary (MINUS, mode, op0, XEXP (op1, 0));
 
-	  /* (~a) + 1 -> -a */
+	  /* (‾a) + 1 -> -a */
 	  if (INTEGRAL_MODE_P (mode)
 	      && GET_CODE (op0) == NOT
 	      && trueop1 == const1_rtx)
@@ -1208,7 +1208,7 @@ simplify_binary_operation (code, mode, op0, op1)
 	  if (trueop0 == CONST0_RTX (mode))
 	    return gen_rtx_NEG (mode, op1);
 
-	  /* (-1 - a) is ~a.  */
+	  /* (-1 - a) is ‾a.  */
 	  if (trueop0 == constm1_rtx)
 	    return gen_rtx_NOT (mode, op1);
 
@@ -1296,7 +1296,7 @@ simplify_binary_operation (code, mode, op0, op1)
 					op0,
 					neg_const_int (mode, op1));
 
-	  /* (x - (x & y)) -> (x & ~y) */
+	  /* (x - (x & y)) -> (x & ‾y) */
 	  if (GET_CODE (op1) == AND)
 	    {
 	     if (rtx_equal_p (op0, XEXP (op1, 0)))
@@ -1368,7 +1368,7 @@ simplify_binary_operation (code, mode, op0, op1)
 	    return op1;
 	  if (rtx_equal_p (trueop0, trueop1) && ! side_effects_p (op0))
 	    return op0;
-	  /* A | (~A) -> -1 */
+	  /* A | (‾A) -> -1 */
 	  if (((GET_CODE (op0) == NOT && rtx_equal_p (XEXP (op0, 0), op1))
 	       || (GET_CODE (op1) == NOT && rtx_equal_p (XEXP (op1, 0), op0)))
 	      && ! side_effects_p (op0)
@@ -1398,7 +1398,7 @@ simplify_binary_operation (code, mode, op0, op1)
 	  if (trueop0 == trueop1 && ! side_effects_p (op0)
 	      && GET_MODE_CLASS (mode) != MODE_CC)
 	    return op0;
-	  /* A & (~A) -> 0 */
+	  /* A & (‾A) -> 0 */
 	  if (((GET_CODE (op0) == NOT && rtx_equal_p (XEXP (op0, 0), op1))
 	       || (GET_CODE (op1) == NOT && rtx_equal_p (XEXP (op1, 0), op0)))
 	      && ! side_effects_p (op0)
@@ -1479,7 +1479,7 @@ simplify_binary_operation (code, mode, op0, op1)
 
 	case ROTATERT:
 	case ROTATE:
-	  /* Rotating ~0 always results in ~0.  */
+	  /* Rotating ‾0 always results in ‾0.  */
 	  if (GET_CODE (trueop0) == CONST_INT && width <= HOST_BITS_PER_WIDE_INT
 	      && (unsigned HOST_WIDE_INT) INTVAL (trueop0) == GET_MODE_MASK (mode)
 	      && ! side_effects_p (op1))
@@ -1823,7 +1823,7 @@ simplify_plus_minus (code, mode, op0, op1, force)
 	      break;
 
 	    case NOT:
-	      /* ~a -> (-a - 1) */
+	      /* ‾a -> (-a - 1) */
 	      if (n_ops != 7)
 		{
 		  ops[n_ops].op = constm1_rtx;
@@ -1898,7 +1898,7 @@ simplify_plus_minus (code, mode, op0, op1, force)
 			  && GET_CODE (XEXP (tem, 0)) == ncode
 			  && XEXP (XEXP (tem, 0), 0) == lhs
 			  && XEXP (XEXP (tem, 0), 1) == rhs)
-		    /* Don't allow -x + -1 -> ~x simplifications in the
+		    /* Don't allow -x + -1 -> ‾x simplifications in the
 		       first pass.  This allows us the chance to combine
 		       the -1 with other constants.  */
 		    && ! (first
@@ -2349,7 +2349,7 @@ simplify_ternary_operation (code, mode, op0_mode, op0, op1, op2)
 	      /* If desired, propagate sign bit.  */
 	      if (code == SIGN_EXTRACT
 		  && (val & ((HOST_WIDE_INT) 1 << (INTVAL (op1) - 1))))
-		val |= ~ (((HOST_WIDE_INT) 1 << INTVAL (op1)) - 1);
+		val |= ‾ (((HOST_WIDE_INT) 1 << INTVAL (op1)) - 1);
 	    }
 
 	  /* Clear the bits that don't belong in our mode,

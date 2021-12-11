@@ -46,17 +46,17 @@ int main(int argc, UCHAR **argv)
 	struct bss_alloc *bss0 = (struct bss_alloc *) malloc(sizeof (struct bss_alloc));
 	GO_stdout.p0 = GO_stdout.p = bss0->_stdout;
 	GO_stdout.p1 = GO_stdout.p0 + SIZ_STDOUT;
-	GO_stdout.dummy = ~0;
+	GO_stdout.dummy = â€¾0;
 	GO_stderr.p0 = GO_stderr.p = bss0->_stderr;
-	GO_stderr.p1 = GO_stderr.p0 + (SIZ_STDERR - 128); /* ‚í‚´‚Æ­‚µ¬‚³‚­‚µ‚Ä‚¨‚­ */
-	GO_stderr.dummy = ~0;
+	GO_stderr.p1 = GO_stderr.p0 + (SIZ_STDERR - 128); /* ã‚ã–ã¨å°‘ã—å°ã•ãã—ã¦ãŠã */
+	GO_stderr.dummy = â€¾0;
 //	GOL_memmaninit(&GOL_sysman, SIZ_SYSWRK, bss0->syswrk);
 	GOL_memmaninit(&GOL_memman, SIZ_WORK, GOL_work0 = bss0->work);
 
 	GOL_retcode = main1(argc, argv, bss0->work1);
-	/* ƒoƒbƒtƒ@‚ğo—Í */
+	/* ãƒãƒƒãƒ•ã‚¡ã‚’å‡ºåŠ› */
 	GOL_sysabort(0);
-	return 0; /* ƒ_ƒ~[ */
+	return 0; /* ãƒ€ãƒŸãƒ¼ */
 }
 
 #include "../drv_stdc/others.c"

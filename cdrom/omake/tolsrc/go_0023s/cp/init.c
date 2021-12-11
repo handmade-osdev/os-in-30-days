@@ -1174,7 +1174,7 @@ build_aggr_init (exp, init, flags)
 	     public:
 	       double re, im;
 	       COMPLEX(double r = 0.0, double i = 0.0) {re = r; im = i;};
-	       ~COMPLEX() {};
+	       ‾COMPLEX() {};
 	     };
 
 	     int main(int argc, char **argv) {
@@ -1505,7 +1505,7 @@ build_member_call (type, name, parmlist)
 
   if (dtor)
     {
-      error ("cannot call destructor `%T::~%T' without object", type,
+      error ("cannot call destructor `%T::‾%T' without object", type,
 		method_name);
       return error_mark_node;
     }
@@ -1649,7 +1649,7 @@ build_offset_ref (type, name)
   if (TREE_CODE (name) == BIT_NOT_EXPR)
     {
       if (! check_dtor_name (type, name))
-	error ("qualified type `%T' does not match destructor name `~%T'",
+	error ("qualified type `%T' does not match destructor name `‾%T'",
 		  type, TREE_OPERAND (name, 0));
       name = dtor_identifier;
     }

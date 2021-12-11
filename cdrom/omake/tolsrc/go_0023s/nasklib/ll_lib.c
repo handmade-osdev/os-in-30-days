@@ -11,54 +11,54 @@ UCHAR *LL_skipcode(UCHAR *p)
 retry:
 	c = *p++;
 	if (0x30 <= c && c <= 0x37) {
-		p += c - 0x30; /* 0`7ƒoƒCƒgo—Í */
+		p += c - 0x30; /* 0ã€œ7ãƒã‚¤ãƒˆå‡ºåŠ› */
 		goto fin;
 	}
 	if (0x78 <= c && c <= 0x7f)
-		goto fin; /* virtual-byte“WŠJ */
+		goto fin; /* virtual-byteå±•é–‹ */
 	if (0x70 <= c && c <= 0x77)
-		goto retry; /* virtual-byte’è‹` */
+		goto retry; /* virtual-byteå®šç¾© */
 	if (0xe0 <= c && c <= 0xef)
-		goto fin; /* ƒpƒ‰ƒ[ƒ^‚È‚µ1ƒoƒCƒgƒŠƒ}[ƒN */
+		goto fin; /* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãªã—1ãƒã‚¤ãƒˆãƒªãƒžãƒ¼ã‚¯ */
 	if (0xf0 <= c && c <= 0xf7) {
-		p += c - (0xf0 - 1); /* ƒpƒ‰ƒ[ƒ^•t‚«ƒŠƒ}[ƒN(1`8) */
+		p += c - (0xf0 - 1); /* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä»˜ããƒªãƒžãƒ¼ã‚¯(1ã€œ8) */
 		goto fin;
 	}
 	if (c == 0x0e) {
-		p = LL_skip_expr(p); /* ƒvƒƒOƒ‰ƒ€ƒJƒEƒ“ƒ^ƒ‰ƒxƒ‹’è‹` */
+		p = LL_skip_expr(p); /* ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãƒ©ãƒ™ãƒ«å®šç¾© */
 		goto fin;
 	}
 	if (c == 0x2d) {
-		p = LL_skip_expr(p); /* equƒ‰ƒxƒ‹’è‹` */
+		p = LL_skip_expr(p); /* equãƒ©ãƒ™ãƒ«å®šç¾© */
 		p = LL_skip_expr(p);
 		goto fin;
 	}
-	if (0x0c <= c && c <= 0x0d) { /* equƒ‰ƒxƒ‹“WŠJ */
+	if (0x0c <= c && c <= 0x0d) { /* equãƒ©ãƒ™ãƒ«å±•é–‹ */
 		p += 4;
 		goto fin;
 	}
 	if (c == 0x0f) {
-		p += p[1] - (0x08 - 3); /* GLOBAL—p•ÏŠ· */
+		p += p[1] - (0x08 - 3); /* GLOBALç”¨å¤‰æ› */
 		goto fin;
 		/* 0x0f 3 0x08 xx */
 	}
-	if (c == 0x2c) { /* externƒ‰ƒxƒ‹’è‹` */
+	if (c == 0x2c) { /* externãƒ©ãƒ™ãƒ«å®šç¾© */
 		p = LL_skip_expr(p);
 		goto fin;
 	}
-	if (0x2e <= c && c <= 0x2f) { /* ƒŠƒƒP[ƒVƒ‡ƒ“î•ñ */
+	if (0x2e <= c && c <= 0x2f) { /* ãƒªãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ± */
 		p += 3;
 		goto fin;
 	}
 	if (0x38 <= c && c <= 0x3f) {
-		p = LL_skip_expr(p + 1); /* 1`8ƒoƒCƒg‚ðo—Í */
+		p = LL_skip_expr(p + 1); /* 1ã€œ8ãƒã‚¤ãƒˆã‚’å‡ºåŠ› */
 		goto fin;
 	}
 	if (c == 0x58) {
 		p = LL_skip_expr(p); /* ORG */
 		goto fin;
 	}
-	if (c == 0x5a) { /* ORGˆ—Œã */
+	if (c == 0x5a) { /* ORGå‡¦ç†å¾Œ */
 		p += 4;
 		goto fin;
 	}
@@ -114,7 +114,7 @@ UCHAR *LL_skip_expr(UCHAR *expr)
 	UCHAR c;
 	c = *expr++;
 	if (c <= 6) {
-		/* ’è” */
+		/* å®šæ•° */
 		c >>= 1;
 		expr += c + 1;
 		goto fin;
@@ -122,7 +122,7 @@ UCHAR *LL_skip_expr(UCHAR *expr)
 	if (c == 0x07)
 		goto fin;
 	if (c <= 0x0b) {
-		/* ƒ‰ƒxƒ‹ˆø—p */
+		/* ãƒ©ãƒ™ãƒ«å¼•ç”¨ */
 		expr += c - 7; /* c - 8 + 1 */
 		goto fin;
 	}
@@ -133,9 +133,9 @@ UCHAR *LL_skip_expr(UCHAR *expr)
 	if (c < 0x20) {
 		expr = LL_skip_expr(expr);
 		if (c <= 0x12)
-			goto fin; /* ’P€‰‰ŽZŽq */
+			goto fin; /* å˜é …æ¼”ç®—å­ */
 		expr = LL_skip_expr(expr);
-		goto fin; /* “ñ€‰‰ŽZŽq */
+		goto fin; /* äºŒé …æ¼”ç®—å­ */
 	}
 
 	#if (DEBUG)
@@ -174,7 +174,7 @@ UCHAR *LL_skip_mc30(UCHAR *s, UCHAR *bytes, char flag)
 	}
 	if (c < 0x3c) {
 		c -= 0x37;
-		s = LL_skip_expr(s + 1 /* ƒŒƒ“ƒW‚ð“Ç‚Ý”ò‚Î‚· */);
+		s = LL_skip_expr(s + 1 /* ãƒ¬ãƒ³ã‚¸ã‚’èª­ã¿é£›ã°ã™ */);
 		goto fin;
 	}
 	#if (DEBUG)

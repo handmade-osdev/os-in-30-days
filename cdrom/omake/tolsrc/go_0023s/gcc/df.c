@@ -525,7 +525,7 @@ df_bitmaps_free (df, flags)
 	  bb_info->lr_out = NULL;
 	}
     }
-  df->flags &= ~(flags & (DF_RD | DF_RU | DF_LR));
+  df->flags &= ‾(flags & (DF_RD | DF_RU | DF_LR));
 }
 
 

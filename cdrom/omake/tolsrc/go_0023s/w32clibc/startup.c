@@ -12,7 +12,7 @@ static UCHAR **ConvCmdLine0(int *pargc)
 	q = q0 = malloc(strlen((char *) p) + 1);
 	do {
 		if (*p == 0x22) {
-			p++; /* 0x22��ǂݔ�΂� */
+			p++; /* 0x22を読み飛ばす */
 			do {
 				*q++ = *p++;
 				if (p[-1] == 0x22 && *p <= ' ') {

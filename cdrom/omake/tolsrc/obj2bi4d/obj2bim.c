@@ -7,17 +7,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* FILEBUF‚ÍA1ƒtƒ@ƒCƒ‹‚ ‚½‚è‚Ì§ŒÀƒTƒCƒY */
-/* OBJBUFSIZ‚ÍA‘Sƒtƒ@ƒCƒ‹‡Œv‚Ì§ŒÀƒTƒCƒY */
+/* FILEBUFã¯ã€1ãƒ•ã‚¡ã‚¤ãƒ«ã‚ãŸã‚Šã®åˆ¶é™ã‚µã‚¤ã‚º */
+/* OBJBUFSIZã¯ã€å…¨ãƒ•ã‚¡ã‚¤ãƒ«åˆè¨ˆã®åˆ¶é™ã‚µã‚¤ã‚º */
 
 #define	FILEBUFSIZ		(8 * 1024 * 1024)	/*  8MB */
 #define	OBJBUFSIZ		(16 * 1024 * 1024)	/* 16MB */
 #define	LABELSTRSIZ		(256 * 1024)
 #define	OBJFILESTRSIZ	(64 * 1024)
 #define	LINKSTRSIZ		(LABELSTRSIZ * 8)
-#define	MAXSECTION		64	/* 1‚Â‚Ì.objƒtƒ@ƒCƒ‹‚ ‚½‚è‚ÌÅ‘åƒZƒNƒVƒ‡ƒ“” */
+#define	MAXSECTION		64	/* 1ã¤ã®.objãƒ•ã‚¡ã‚¤ãƒ«ã‚ãŸã‚Šã®æœ€å¤§ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ•° */
 
-#define NO_WARN			1	/* ŒxÁ‚µ—p‚Ì–³‘ÊƒR[ƒh‚Ì—LŒø‰» */
+#define NO_WARN			1	/* è­¦å‘Šæ¶ˆã—ç”¨ã®ç„¡é§„ã‚³ãƒ¼ãƒ‰ã®æœ‰åŠ¹åŒ– */
 
 typedef unsigned char UCHAR;
 
@@ -33,14 +33,14 @@ int get32l(const UCHAR *p)
 
 struct LABELSTR {
 	UCHAR type, sec, flags, align;
-	/* type  0xff:–¢g—p */
+	/* type  0xff:æœªä½¿ç”¨ */
 	/* type  0x01:global/local label */
 	/* type  0x02:constant */
 	/* flags bit0 : used */
 	/* flags bit1 : linked */
 	unsigned int name[128 / 4 - 4];
-	struct OBJFILESTR *name_obj; /* ƒ[ƒJƒ‹.obj‚Ö‚Ìƒ|ƒCƒ“ƒ^Bpublic‚È‚çNULL */
-	struct OBJFILESTR *def_obj; /* Š‘®ƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹ */
+	struct OBJFILESTR *name_obj; /* ãƒ­ãƒ¼ã‚«ãƒ«.objã¸ã®ãƒã‚¤ãƒ³ã‚¿ã€‚publicãªã‚‰NULL */
+	struct OBJFILESTR *def_obj; /* æ‰€å±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ« */
 	unsigned int offset;
 };
 
@@ -82,7 +82,7 @@ static unsigned char *objbuf0;
 
 static int alignconv(int align)
 {
-	/* ƒAƒ‰ƒCƒ“‚ª2‚Ì‚×‚«‚É‚È‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÍA–Ê“|‚È‚Ì‚ÅŠm”F‚µ‚Ä‚¢‚È‚¢ */
+	/* ã‚¢ãƒ©ã‚¤ãƒ³ãŒ2ã®ã¹ãã«ãªã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã¯ã€é¢å€’ãªã®ã§ç¢ºèªã—ã¦ã„ãªã„ */
 	int i; 
 	if ((i = align) >= 1) {
 		align = 1;
@@ -99,7 +99,7 @@ int main(int argc, UCHAR **argv)
 	UCHAR *s, *ps, *t, redef = 1, werr = 1;
 	struct LABELSTR *labelbuf[16];
 	int filesize, i, j, labelbufptr = 0, warns = 0;
-	int section_param[12]; /* Å‰‚Ì4‚Â‚ªƒR[ƒhAŸ‚Ì4‚Â‚Íƒf[ƒ^[ */
+	int section_param[12]; /* æœ€åˆã®4ã¤ãŒã‚³ãƒ¼ãƒ‰ã€æ¬¡ã®4ã¤ã¯ãƒ‡ãƒ¼ã‚¿ãƒ¼ */
 	struct LABELSTR *label;
 	struct OBJFILESTR *obj;
 	struct LINKSTR *ls;
@@ -118,11 +118,11 @@ int main(int argc, UCHAR **argv)
 		return 1;
 	}
 
-	/* ƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹‰ÁH(ƒAƒ‰ƒCƒ“w’è) */
+	/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åŠ å·¥(ã‚¢ãƒ©ã‚¤ãƒ³æŒ‡å®š) */
 
 	if (strcmp(argv[1], "-fixobj") == 0) {
-		/* ˆê“x‚É•¡”‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚È‚¢‚±‚Æ */
-		/* •¡”ƒtƒ@ƒCƒ‹‚Ì‰ÁH‚É‚Í‘Î‰‚µ‚Ä‚¢‚È‚¢ */
+		/* ä¸€åº¦ã«è¤‡æ•°ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãªã„ã“ã¨ */
+		/* è¤‡æ•°ãƒ•ã‚¡ã‚¤ãƒ«ã®åŠ å·¥ã«ã¯å¯¾å¿œã—ã¦ã„ãªã„ */
 		int text_align = -1, data_align = -1, bss_align = -1;
 		filebuf = (unsigned char *) malloc(FILEBUFSIZ);
 		filename = NULL;
@@ -179,7 +179,7 @@ int main(int argc, UCHAR **argv)
 		return 0;
 	}
 
-	/* ”Ä—pƒŠƒ“ƒJ[ */
+	/* æ±ç”¨ãƒªãƒ³ã‚«ãƒ¼ */
 
 	s = (unsigned char *) malloc(1024);
 
@@ -310,13 +310,13 @@ err_rule_format1:
 			continue;
 		}
 		if (strncmp(t, "wredef:", 7) == 0) {
-			/* wredef:0	redefine‚ÌŒx‚ğ‰B‚·ƒ‚[ƒh‚É‚È‚é */
+			/* wredef:0	redefineã®è­¦å‘Šã‚’éš ã™ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚‹ */
 			t += 7;
 			redef = getnum(&t);
 			continue;
 		}
 		if (strncmp(t, "werr:", 5) == 0) {
-			/* werr:0	Œx‚ÍƒGƒ‰[ˆµ‚¢‚µ‚È‚¢ */
+			/* werr:0	è­¦å‘Šã¯ã‚¨ãƒ©ãƒ¼æ‰±ã„ã—ãªã„ */
 			t += 5;
 			werr = getnum(&t);
 			continue;
@@ -358,9 +358,9 @@ err_rule_format1:
 			return 4;
 		}
 
-		/* ƒtƒ@ƒCƒ‹‚ğ‚Ç‚ñ‚Ç‚ñ“Ç‚İ‚ñ‚ÅA‰ğß‚µ‚ÄAƒoƒbƒtƒ@‚Ö—­‚ß‚Ş */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã©ã‚“ã©ã‚“èª­ã¿è¾¼ã‚“ã§ã€è§£é‡ˆã—ã¦ã€ãƒãƒƒãƒ•ã‚¡ã¸æºœã‚è¾¼ã‚€ */
 		for (;;) {
-			p = skipspace(p + 1); /* ':'‚©';'‚ğ“Ç‚İ”ò‚Î‚· */
+			p = skipspace(p + 1); /* ':'ã‹';'ã‚’èª­ã¿é£›ã°ã™ */
 			if (*p == '\0' || (strncmp(p, "label", 5) == 0 && (p[5] == ':' || p[5] <= ' ')))
 				break;
 			ps = s;
@@ -443,11 +443,11 @@ err_rule_label:
 		}
 	}
 
-	/* •K—v‚È.objƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚·‚é */
+	/* å¿…è¦ãª.objãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã™ã‚‹ */
 	label = label0;
 	for (;;) {
 		if (label->type == 0xff)
-			break; /* ‘I‘ğŠ®—¹ */
+			break; /* é¸æŠå®Œäº† */
 		if ((label->flags & 0x03) != 0x01 /* used && not linked */) {
 			label++;
 			continue;
@@ -477,17 +477,17 @@ err_rule_label:
 	if (objstr0 == NULL)
 		return 99;
 
-	/* ƒfƒtƒHƒ‹ƒg’l‚Ì“K—p */
+	/* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®é©ç”¨ */
 	for (i = 0; i < 12; i++) {
 		if (section_param[i] == -4) {	/* stack_end */
 			section_param[i] = 64 * 1024;
 		}
 	}
 
-	/* .obj‚ÌŠeƒZƒNƒVƒ‡ƒ“‚Ì˜_—ƒAƒhƒŒƒX‚ğŠm’è‚µAƒCƒ[ƒW‚ğ\’z */
+	/* .objã®å„ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®è«–ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç¢ºå®šã—ã€ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’æ§‹ç¯‰ */
 	section_param[0 /* align */ + 8 /* bss */] = section_param[0 /* align */ + 4 /* data */];
 	if (section_param[1 /* logic */ + 0 /* code */] != -3 /* data_end */) {
-		/* ƒR[ƒh‚ªæ */
+		/* ã‚³ãƒ¼ãƒ‰ãŒå…ˆ */
 		warns += link0(0 /* code */, &section_param[0 /* code */], filebuf);
 		if (section_param[1 /* logic */ + 4 /* data */] == -2 /* code_end */)
 			section_param[1 /* logic */ + 4 /* data */] = section_param[3 /* logic+size */ + 0 /* code */];
@@ -496,7 +496,7 @@ err_rule_label:
 		p = filebuf + FILEBUFSIZ / 2 + section_param[3 /* logic+size */ + 4 /* data */] - section_param[1 /* logic */ + 4 /* data */];
 		warns += link0(2 /* bss */, &section_param[8 /* bss */], p);
 	} else {
-		/* ƒf[ƒ^[‚ªæ */
+		/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ãŒå…ˆ */
 		warns += link0(1 /* data */, &section_param[4 /* data */], filebuf + FILEBUFSIZ / 2);
 		section_param[1 /* logic */ + 8 /* bss */] = section_param[3 /* logic+size */ + 4 /* data */];
 		p = filebuf + FILEBUFSIZ / 2 + section_param[3 /* logic+size */ + 4 /* data */] - section_param[1 /* logic */ + 4 /* data */];
@@ -506,7 +506,7 @@ err_rule_label:
 		warns += link0(0 /* code */, &section_param[0 /* code */], filebuf);
 	}
 
-	/* ƒ‰ƒxƒ‹‚Ì’l‚ğŠm’è */
+	/* ãƒ©ãƒ™ãƒ«ã®å€¤ã‚’ç¢ºå®š */
 	for (label = label0; label->type != 0xff; label++) {
 		if ((label->flags & 0x03 /* used | linked */) == 0)
 			continue;
@@ -518,7 +518,7 @@ err_rule_label:
 		label->offset += obj->section[label->sec - 1].addr;
 	}
 
-	/* mapfile‚Ö‚Ìo—Í */
+	/* mapfileã¸ã®å‡ºåŠ› */
 	if (mapname) {
 		if ((fp = fopen(mapname, "w")) == NULL) {
 			fprintf(stderr, "Warning : can't open mapfile\n");
@@ -531,7 +531,7 @@ err_rule_label:
 			i = section_param[3 /* logic+size */ + 8 /* bss  */] - section_param[1 /* logic */ + 8 /* bss  */];
 			fprintf(fp, "bss  size : %6d(0x%05X)\n\n", i, i);
 
-			/* ˆÈ‰º‚Í‚¿‚á‚ñ‚Æ‚µ‚½ƒ\[ƒg‚ğ‘‚­‚Ì‚ª–Ê“|‚È‚Ì‚Åè”²‚«‚ğ‚µ‚Ä‚¢‚é */
+			/* ä»¥ä¸‹ã¯ã¡ã‚ƒã‚“ã¨ã—ãŸã‚½ãƒ¼ãƒˆã‚’æ›¸ãã®ãŒé¢å€’ãªã®ã§æ‰‹æŠœãã‚’ã—ã¦ã„ã‚‹ */
 			for (i = 0; i < 3; i++) {
 				unsigned int value = 0, min;
 				for (;;) {
@@ -607,13 +607,13 @@ err_rule_label:
 		}
 	}
 
-	/* ƒtƒ@ƒCƒ‹‚Éo—Í */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã«å‡ºåŠ› */
 	filesize = 0;
 	p = objbuf0;
 	for (i = 0; i < OBJBUFSIZ; i++)
 		p[i] = '\0';
 	if (section_param[2 /* file */ + 0 /* code */] != -3 /* data_end */) {
-		/* ƒR[ƒh‚ªæ */
+		/* ã‚³ãƒ¼ãƒ‰ãŒå…ˆ */
 		p = objbuf0 + section_param[2 /* file */ + 0 /* code */];
 		t = filebuf;
 		for (i = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; i > 0; i--)
@@ -637,7 +637,7 @@ err_rule_label:
 		if (filesize < i)
 			filesize = i;
 	} else {
-		/* ƒf[ƒ^[‚ªæ */
+		/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ãŒå…ˆ */
 		p = objbuf0 + section_param[2 /* file */ + 4 /* data */];
 		t = filebuf + FILEBUFSIZ / 2;
 		for (i = section_param[3 + 8 /* bss */] - section_param[1 + 4 /* data */]; i > 0; i--)
@@ -662,12 +662,12 @@ err_rule_label:
 			filesize = i;
 	}
 	p = objbuf0;
-	*((int *) p)        = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; /* ƒR[ƒhƒTƒCƒY */
-	*((int *) (p +  4)) = section_param[2 + 0 /* code */]; /* ƒtƒ@ƒCƒ‹’†‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p +  8)) = section_param[1 + 0 /* code */]; /* ƒŠƒ“ƒN‰ğŒˆ‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p + 12)) = section_param[3 + 8 /* bss  */] - section_param[1 + 4 /* data */]; /* ƒf[ƒ^[ƒTƒCƒY */
-	*((int *) (p + 16)) = section_param[2 + 4 /* data */]; /* ƒtƒ@ƒCƒ‹’†‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p + 20)) = section_param[1 + 4 /* data */]; /* ƒŠƒ“ƒN‰ğŒˆ‚ÌŠJnƒAƒhƒŒƒX */
+	*((int *) p)        = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; /* ã‚³ãƒ¼ãƒ‰ã‚µã‚¤ã‚º */
+	*((int *) (p +  4)) = section_param[2 + 0 /* code */]; /* ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p +  8)) = section_param[1 + 0 /* code */]; /* ãƒªãƒ³ã‚¯è§£æ±ºæ™‚ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p + 12)) = section_param[3 + 8 /* bss  */] - section_param[1 + 4 /* data */]; /* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚µã‚¤ã‚º */
+	*((int *) (p + 16)) = section_param[2 + 4 /* data */]; /* ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p + 20)) = section_param[1 + 4 /* data */]; /* ãƒªãƒ³ã‚¯è§£æ±ºæ™‚ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 	t = p + 24;
 	for (i = 0; i < labelbufptr; i++, t += 4)
 		*((int *) t) = labelbuf[i]->offset;
@@ -784,7 +784,7 @@ int loadobj(unsigned char *p, UCHAR redef)
 		next_linkstr = malloc(LINKSTRSIZ * sizeof (struct LINKSTR));
 	}
 
-	/* ƒwƒbƒ_ƒ`ƒFƒbƒN */
+	/* ãƒ˜ãƒƒãƒ€ãƒã‚§ãƒƒã‚¯ */
 	if ((p[0x00] ^ 0x4c) | (p[0x01] ^ 0x01)) {
 		fprintf(stderr, "Internal error : loadobj(1) %16.16s\n", &p[-0x3c]);
 		return 1;
@@ -794,12 +794,12 @@ int loadobj(unsigned char *p, UCHAR redef)
 
 	for (i = 0; i < MAXSECTION; i++) {
 		objstr->section[i].size = 0;
-		objstr->section[i].sectype = 3; /* ƒuƒ‰ƒ“ƒN */
+		objstr->section[i].sectype = 3; /* ãƒ–ãƒ©ãƒ³ã‚¯ */
 		objstr->section[i].flags = 0;
 	}
 	objstr->flags = 0x00;
 	if ((p[0x02] | p[0x03] << 8) > MAXSECTION) {
-		/* section”‚ª‘½‚·‚¬‚é */
+		/* sectionæ•°ãŒå¤šã™ãã‚‹ */
 		fprintf(stderr, "Internal error : loadobj(2)\n");
 		return 1;
 	}
@@ -828,7 +828,7 @@ int loadobj(unsigned char *p, UCHAR redef)
 			unsigned char *s, *t;
 			struct LINKSTR *ls;
 
-			/* next_objbuf‚Ö“]‘— */
+			/* next_objbufã¸è»¢é€ */
 			objstr->section[i].ptr = next_objbuf;
 			objstr->section[i].links = q[0x20] | q[0x21] << 8;
 			objstr->section[i].sh_paddr = get32l(&q[0x08]);
@@ -839,7 +839,7 @@ int loadobj(unsigned char *p, UCHAR redef)
 				*s++ = *t++;
 			next_objbuf = s;
 
-			/* next_linkstr‚Ö“]‘— */
+			/* next_linkstrã¸è»¢é€ */
 		//	ls = next_linkstr;
 			t = p + get32l(&q[0x18]);
 			for (k = objstr->section[i].links; k > 0; k--, t += 0x0a) {
@@ -863,9 +863,9 @@ int loadobj(unsigned char *p, UCHAR redef)
 				}
 			}
 			next_linkstr = ls;
-			/* ƒ^[ƒ~ƒl[ƒ^[‚Í‚ ‚é‚©‚ÈH */
+			/* ã‚¿ãƒ¼ãƒŸãƒãƒ¼ã‚¿ãƒ¼ã¯ã‚ã‚‹ã‹ãªï¼Ÿ */
 		//	printf("0x%04X 0x%04X 0x%02X\n", get32l(&t[0x00]), get32l(&t[0x04]), t[0x08] | t[0x09] << 8);
-			/* ‚È‚©‚Á‚½EEE */
+			/* ãªã‹ã£ãŸãƒ»ãƒ»ãƒ» */
 		}
 	}
 
@@ -873,7 +873,7 @@ int loadobj(unsigned char *p, UCHAR redef)
 		sec0 = 0; k = 0;
 	#endif
 
-	/* ƒVƒ“ƒ{ƒ‹’è‹` */
+	/* ã‚·ãƒ³ãƒœãƒ«å®šç¾© */
 	q = p + get32l(&p[0x08]);
 	for (i = get32l(&p[0x0c]); i > 0; i -= j, q += j * 0x12) {
 		j = q[0x11] /* numaux */ + 1;
@@ -932,7 +932,7 @@ int loadobj(unsigned char *p, UCHAR redef)
 			break;
 
 		case 0x67: /* file name */
-			break; /* –³‹‚µ‚ÄÌ‚Ä‚é */
+			break; /* ç„¡è¦–ã—ã¦æ¨ã¦ã‚‹ */
 
 		default:
 			fprintf(stderr, "unknown storage class : %02X\n", q[0x10]);
@@ -1057,7 +1057,7 @@ struct LABELSTR *symbolconv(unsigned char *p, unsigned char *s, struct OBJFILEST
 	return symbolconv0(n, obj);
 }
 
-/* ‰¡’…”Å */
+/* æ¨ªç€ç‰ˆ */
 #if 0
 
 struct LABELSTR *symbolconv0(unsigned char *s, struct OBJFILESTR *obj)
@@ -1118,10 +1118,10 @@ struct LABELSTR *symbolconv(unsigned char *p, unsigned char *s, struct OBJFILEST
 }
 
 #endif
-/* ‰¡’…”ÅI‚í‚è */
+/* æ¨ªç€ç‰ˆçµ‚ã‚ã‚Š */
 
 int link0(const int sectype, int *secparam, unsigned char *image)
-/* .obj‚ÌŠeƒZƒNƒVƒ‡ƒ“‚Ì˜_—ƒAƒhƒŒƒX‚ğŠm’è‚³‚¹‚é */
+/* .objã®å„ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®è«–ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç¢ºå®šã•ã›ã‚‹ */
 {
 	struct OBJFILESTR *obj;
 	int addr = secparam[1 /* logic */], i, j, warns = 0;
@@ -1162,11 +1162,11 @@ int link0(const int sectype, int *secparam, unsigned char *image)
 			addr += obj->section[j].size;
 		}
 	}
-	secparam[3 /* logic+size */] = addr; /* size‚Æ‚¢‚¤‚æ‚èAÅIƒAƒhƒŒƒX */
+	secparam[3 /* logic+size */] = addr; /* sizeã¨ã„ã†ã‚ˆã‚Šã€æœ€çµ‚ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 	return warns;
 }
 
-/* autodecompŠÖŒW */
+/* autodecompé–¢ä¿‚ */
 
 static const UCHAR *getbc_ptr;
 static UCHAR getbc_count, getbc_byte;
@@ -1188,7 +1188,7 @@ int getbc(int bits)
 }
 
 int getbc0(int bits, int ret)
-/* ‰Šú’l•t‚« */
+/* åˆæœŸå€¤ä»˜ã */
 {
 	do {
 		if (getbc_count == 8)
@@ -1230,7 +1230,7 @@ void decode_l2d3(int k, const UCHAR *src, UCHAR *dest)
 					j = getbc(16);
 					len = j;
 					if (j <= 127)
-						len = getbc0(j, 1); /* Å‰‚Ìbit‚Í1‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚é‚©‚ç */
+						len = getbc0(j, 1); /* æœ€åˆã®bitã¯1ã«æ±ºã¾ã£ã¦ã„ã‚‹ã‹ã‚‰ */
 				}
 			}
 		}
@@ -1337,7 +1337,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 	getbc_count = 8;
 	getbc_ptr = src;
 
-	/* ƒwƒbƒ_“Ç‚İ‚İ */
+	/* ãƒ˜ãƒƒãƒ€èª­ã¿è¾¼ã¿ */
 	dis_s = getnum_s8();
 	l_ofs = getbc(2);
 	method = getbc(1); /* l1a/l1b */
@@ -1345,7 +1345,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 	z1 = getbc(2);
 
 	for (i = 0; i < k; ) {
-		/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+		/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z0);
 	//	if (j < 0)
 	//		break;
@@ -1359,7 +1359,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 		if (i >= k)
 			break;
 
-		/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+		/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z1);
 	//	if (j < 0)
 	//		break;
@@ -1396,4 +1396,4 @@ void autodecomp_tek0(int bsiz, UCHAR *b, int csiz)
 	}
 }
 
-/* 2006.11.07	bayside‚³‚ñ‚ÌƒAƒhƒoƒCƒX‚É‚æ‚èAMAXSECTION‚ğ16‚©‚ç64‚É‘‰Á */
+/* 2006.11.07	baysideã•ã‚“ã®ã‚¢ãƒ‰ãƒã‚¤ã‚¹ã«ã‚ˆã‚Šã€MAXSECTIONã‚’16ã‹ã‚‰64ã«å¢—åŠ  */

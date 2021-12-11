@@ -7,27 +7,27 @@
 #include "../include/string.h"
 #include "../include/setjmp.h"
 
-/* OBJBUFSIZ‚ÍA‘Sƒtƒ@ƒCƒ‹‡Œv‚Ì§ŒÀƒTƒCƒY */
+/* OBJBUFSIZã¯ã€å…¨ãƒ•ã‚¡ã‚¤ãƒ«åˆè¨ˆã®åˆ¶é™ã‚µã‚¤ã‚º */
 
-#define FILEBUFSIZ		(4 * 1024)	/* rulefile‚ÌÅ‘åƒTƒCƒY */
+#define FILEBUFSIZ		(4 * 1024)	/* rulefileã®æœ€å¤§ã‚µã‚¤ã‚º */
 #define	OBJBUFSIZ		(512 * 1024)	/* 512KB */
-#define	LABELSTRSIZ		 		(8000)	/* ‘ƒ‰ƒxƒ‹” (8000*140Bytes) */
-#define	OBJFILESTRSIZ			(512)	/* Å‘åƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹”(512*260bytes)
+#define	LABELSTRSIZ		 		(8000)	/* ç·ãƒ©ãƒ™ãƒ«æ•° (8000*140Bytes) */
+#define	OBJFILESTRSIZ			(512)	/* æœ€å¤§ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«æ•°(512*260bytes)
 // #define LINKSTRSIZ		(LABELSTRSIZ * 1)	/* 8000*12Bytes */
-#define	MAXSECTION				  8	/* 1‚Â‚Ì.objƒtƒ@ƒCƒ‹‚ ‚½‚è‚ÌÅ‘åƒZƒNƒVƒ‡ƒ“” */
+#define	MAXSECTION				  8	/* 1ã¤ã®.objãƒ•ã‚¡ã‚¤ãƒ«ã‚ãŸã‚Šã®æœ€å¤§ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ•° */
 
-/* LINKSTRSIZ‚ª‚È‚º‚©Œø‚©‚È‚¢Bcpp0‚ÍƒoƒO‚à‚¿‚©H */
+/* LINKSTRSIZãŒãªãœã‹åŠ¹ã‹ãªã„ã€‚cpp0ã¯ãƒã‚°ã‚‚ã¡ã‹ï¼Ÿ */
 #define LINKSTRSIZ		LABELSTRSIZ
 
-/* Œv1833.5KBH */
+/* è¨ˆ1833.5KBï¼Ÿ */
 
 struct STR_OBJ2BIM {
-	UCHAR *cmdlin; /* '\0'‚ÅI‚í‚é */
-	UCHAR *outname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *mapname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *dest0, *dest1; /* o—Íƒtƒ@ƒCƒ‹(dest0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *map0, *map1; /* o—Íƒtƒ@ƒCƒ‹(map0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *err0, *err1; /* ƒRƒ“ƒ\[ƒ‹ƒƒbƒZ[ƒW(err0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
+	UCHAR *cmdlin; /* '\0'ã§çµ‚ã‚ã‚‹ */
+	UCHAR *outname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *mapname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *dest0, *dest1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(dest0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *map0, *map1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(map0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *err0, *err1; /* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(err0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
 	UCHAR *work0, *work1;
 	int errcode;
 };
@@ -51,13 +51,13 @@ int obj2bim_main(struct STR_OBJ2BIM *params)
 	UCHAR **argv, *tmp0;
 	UCHAR **argv1, **p;
 	GO_stdout.p0 = GO_stdout.p = params->map0;
-	GO_stdout.p1 = params->map1; /* stdout‚Ímap */
-	GO_stdout.dummy = ~0;
+	GO_stdout.p1 = params->map1; /* stdoutã¯map */
+	GO_stdout.dummy = â€¾0;
 	GO_stderr.p0 = GO_stderr.p = params->err0;
 	GO_stderr.p1 = params->err1;
-	GO_stderr.dummy = ~0;
+	GO_stderr.dummy = â€¾0;
 
-	/* ‘½dÀs‘j~ (static‚ğÄ‰Šú‰»‚·‚ê‚Î‚Å‚«‚é‚ª) */
+	/* å¤šé‡å®Ÿè¡Œé˜»æ­¢ (staticã‚’å†åˆæœŸåŒ–ã™ã‚Œã°ã§ãã‚‹ãŒ) */
 //	if (execflag)
 //		return 7;
 //	execflag = 1;
@@ -77,7 +77,7 @@ int obj2bim_main(struct STR_OBJ2BIM *params)
 	params->map0 = GO_stdout.p;
 
 skip:
-	/* ƒoƒbƒtƒ@‚ğo—Í */
+	/* ãƒãƒƒãƒ•ã‚¡ã‚’å‡ºåŠ› */
 	GOL_sysabort(0);
 }
 
@@ -94,14 +94,14 @@ const int get32l(unsigned char *p)
 
 struct LABELSTR {
 	unsigned char type, sec, flags, align;
-	/* type  0xff:–¢g—p */
+	/* type  0xff:æœªä½¿ç”¨ */
 	/* type  0x01:global/local label */
 	/* type  0x02:constant */
 	/* flags bit0 : used */
 	/* flags bit1 : linked */
 	unsigned int name[128 / 4 - 4];
-	struct OBJFILESTR *name_obj; /* ƒ[ƒJƒ‹.obj‚Ö‚Ìƒ|ƒCƒ“ƒ^Bpublic‚È‚çNULL */
-	struct OBJFILESTR *def_obj; /* Š‘®ƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹ */
+	struct OBJFILESTR *name_obj; /* ãƒ­ãƒ¼ã‚«ãƒ«.objã¸ã®ãƒã‚¤ãƒ³ã‚¿ã€‚publicãªã‚‰NULL */
+	struct OBJFILESTR *def_obj; /* æ‰€å±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ« */
 	unsigned int offset;
 };
 
@@ -144,7 +144,7 @@ void osaunmap();
 
 static const int alignconv(int align)
 {
-	/* ƒAƒ‰ƒCƒ“‚ª2‚Ì‚×‚«‚É‚È‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÍA–Ê“|‚È‚Ì‚ÅŠm”F‚µ‚Ä‚¢‚È‚¢ */
+	/* ã‚¢ãƒ©ã‚¤ãƒ³ãŒ2ã®ã¹ãã«ãªã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã¯ã€é¢å€’ãªã®ã§ç¢ºèªã—ã¦ã„ãªã„ */
 	int i; 
 	if ((i = align) >= 1) {
 		align = 1;
@@ -161,7 +161,7 @@ static int main0(const int argc, const char **argv, struct STR_OBJ2BIM *params)
 	unsigned char *s, *ps, *t, *image[2];
 	struct LABELSTR *labelbuf[16];
 	int filesize, i, j, labelbufptr = 0;
-	int section_param[12]; /* Å‰‚Ì4‚Â‚ªƒR[ƒhAŸ‚Ì4‚Â‚Íƒf[ƒ^[ */
+	int section_param[12]; /* æœ€åˆã®4ã¤ãŒã‚³ãƒ¼ãƒ‰ã€æ¬¡ã®4ã¤ã¯ãƒ‡ãƒ¼ã‚¿ãƒ¼ */
 	struct LABELSTR *label;
 	struct OBJFILESTR *obj;
 	struct LINKSTR *ls;
@@ -177,11 +177,11 @@ static int main0(const int argc, const char **argv, struct STR_OBJ2BIM *params)
 
 #if 0
 
-	/* ƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹‰ÁH(ƒAƒ‰ƒCƒ“w’è) */
+	/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åŠ å·¥(ã‚¢ãƒ©ã‚¤ãƒ³æŒ‡å®š) */
 
 	if (strcmp(argv[1], "-fixobj") == 0) {
-		/* ˆê“x‚É•¡”‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚È‚¢‚±‚Æ */
-		/* •¡”ƒtƒ@ƒCƒ‹‚Ì‰ÁH‚É‚Í‘Î‰‚µ‚Ä‚¢‚È‚¢ */
+		/* ä¸€åº¦ã«è¤‡æ•°ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãªã„ã“ã¨ */
+		/* è¤‡æ•°ãƒ•ã‚¡ã‚¤ãƒ«ã®åŠ å·¥ã«ã¯å¯¾å¿œã—ã¦ã„ãªã„ */
 		int text_align = -1, data_align = -1, bss_align = -1;
 		filebuf = (unsigned char *) malloc(FILEBUFSIZ);
 		filename = NULL;
@@ -240,7 +240,7 @@ static int main0(const int argc, const char **argv, struct STR_OBJ2BIM *params)
 
 #endif
 
-	/* ”Ä—pƒŠƒ“ƒJ[ */
+	/* æ±ç”¨ãƒªãƒ³ã‚«ãƒ¼ */
 
 	s = (unsigned char *) malloc(1024);
 
@@ -410,9 +410,9 @@ err_rule_illsec:
 			return 4;
 		}
 
-		/* ƒtƒ@ƒCƒ‹‚ğ‚Ç‚ñ‚Ç‚ñ“Ç‚İ‚ñ‚ÅA‰ğß‚µ‚ÄAƒoƒbƒtƒ@‚Ö—­‚ß‚Ş */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã©ã‚“ã©ã‚“èª­ã¿è¾¼ã‚“ã§ã€è§£é‡ˆã—ã¦ã€ãƒãƒƒãƒ•ã‚¡ã¸æºœã‚è¾¼ã‚€ */
 		for (;;) {
-			p = skipspace(p + 1); /* ':'‚©';'‚ğ“Ç‚İ”ò‚Î‚· */
+			p = skipspace(p + 1); /* ':'ã‹';'ã‚’èª­ã¿é£›ã°ã™ */
 			if (*p == '\0' || (strncmp(p, "label", 5) == 0 && (p[5] == ':' || p[5] <= ' ')))
 				break;
 			ps = s;
@@ -487,11 +487,11 @@ err_rule_label:
 		}
 	}
 
-	/* •K—v‚È.objƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚·‚é */
+	/* å¿…è¦ãª.objãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã™ã‚‹ */
 	label = label0;
 	for (;;) {
 		if (label->type == 0xff)
-			break; /* ‘I‘ğŠ®—¹ */
+			break; /* é¸æŠå®Œäº† */
 		if ((label->flags & 0x03) != 0x01 /* used && not linked */) {
 			label++;
 			continue;
@@ -527,10 +527,10 @@ err_rule_label:
 	image[0] = params->dest0;
 	image[1] = params->dest0 + (params->dest1 - params->dest0) / 2;
 
-	/* .obj‚ÌŠeƒZƒNƒVƒ‡ƒ“‚Ì˜_—ƒAƒhƒŒƒX‚ğŠm’è‚µAƒCƒ[ƒW‚ğ\’z */
+	/* .objã®å„ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®è«–ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç¢ºå®šã—ã€ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’æ§‹ç¯‰ */
 	section_param[0 /* align */ + 8 /* bss */] = section_param[0 /* align */ + 4 /* data */];
 	if (section_param[1 /* logic */ + 0 /* code */] != -3 /* data_end */) {
-		/* ƒR[ƒh‚ªæ */
+		/* ã‚³ãƒ¼ãƒ‰ãŒå…ˆ */
 		link0(0 /* code */, &section_param[0 /* code */], image[0]);
 		if (section_param[1 /* logic */ + 4 /* data */] == -2 /* code_end */)
 			section_param[1 /* logic */ + 4 /* data */] = section_param[3 /* logic+size */ + 0 /* code */];
@@ -539,7 +539,7 @@ err_rule_label:
 		p = image[1] + section_param[3 /* logic+size */ + 4 /* data */] - section_param[1 /* logic */ + 4 /* data */];
 		link0(2 /* bss */, &section_param[8 /* bss */], p);
 	} else {
-		/* ƒf[ƒ^[‚ªæ */
+		/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ãŒå…ˆ */
 		link0(1 /* data */, &section_param[4 /* data */], image[1]);
 		section_param[1 /* logic */ + 8 /* bss */] = section_param[3 /* logic+size */ + 4 /* data */];
 		p = image[1] + section_param[3 /* logic+size */ + 4 /* data */] - section_param[1 /* logic */ + 4 /* data */];
@@ -549,7 +549,7 @@ err_rule_label:
 		link0(0 /* code */, &section_param[0 /* code */], image[0]);
 	}
 
-	/* ƒ‰ƒxƒ‹‚Ì’l‚ğŠm’è */
+	/* ãƒ©ãƒ™ãƒ«ã®å€¤ã‚’ç¢ºå®š */
 	for (label = label0; label->type != 0xff; label++) {
 		if ((label->flags & 0x03 /* used | linked */) == 0)
 			continue;
@@ -561,8 +561,8 @@ err_rule_label:
 		label->offset += obj->section[label->sec - 1].addr;
 	}
 
-	/* mapfile‚Ö‚Ìo—Í */
-	/* map‚Ístdout‚Ö */
+	/* mapfileã¸ã®å‡ºåŠ› */
+	/* mapã¯stdoutã¸ */
 	if (params->mapname) {
 		if ((fp = /* fopen(mapname, "w") */ stdout) == NULL)
 			fprintf(stderr, "Warning : can't open mapfile\n");
@@ -574,7 +574,7 @@ err_rule_label:
 			i = section_param[3 /* logic+size */ + 8 /* bss  */] - section_param[1 /* logic */ + 8 /* bss  */];
 			fprintf(fp, "bss  size : %6d(0x%05X)\n\n", i, i);
 
-			/* ˆÈ‰º‚Í‚¿‚á‚ñ‚Æ‚µ‚½ƒ\[ƒg‚ğ‘‚­‚Ì‚ª–Ê“|‚È‚Ì‚Åè”²‚«‚ğ‚µ‚Ä‚¢‚é */
+			/* ä»¥ä¸‹ã¯ã¡ã‚ƒã‚“ã¨ã—ãŸã‚½ãƒ¼ãƒˆã‚’æ›¸ãã®ãŒé¢å€’ãªã®ã§æ‰‹æŠœãã‚’ã—ã¦ã„ã‚‹ */
 			for (i = 0; i < 3; i++) {
 				unsigned int value = 0, min;
 				for (;;) {
@@ -615,8 +615,8 @@ err_rule_label:
 	}
 
 	/* linking */
-	/* Œ³ƒo[ƒWƒ‡ƒ“Fobjbuf‚©‚çfilebuf‚É“]‘— */
-	/* ‚±‚ê‚ğdest‚Å‚â‚é‚æ‚¤‚É•ÏX‚·‚é‚×‚« */
+	/* å…ƒãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼šobjbufã‹ã‚‰filebufã«è»¢é€ */
+	/* ã“ã‚Œã‚’destã§ã‚„ã‚‹ã‚ˆã†ã«å¤‰æ›´ã™ã‚‹ã¹ã */
 	for (obj = objstr0; obj->flags != 0xff; obj++) {
 		if ((obj->flags & 0x01 /* link */) == 0)
 			continue;
@@ -651,15 +651,15 @@ err_rule_label:
 		}
 	}
 
-	/* ƒtƒ@ƒCƒ‹‚Éo—Í */
-	/* Œ³ƒo[ƒWƒ‡ƒ“Ffilebuf¨objbuf */
-	/* dest¨objbuf‚É•ÏX(‘S•”I‚í‚Á‚½‚çAobjbuf‚©‚çdest‚ÉÄ“]‘—) */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã«å‡ºåŠ› */
+	/* å…ƒãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼šfilebufâ†’objbuf */
+	/* destâ†’objbufã«å¤‰æ›´(å…¨éƒ¨çµ‚ã‚ã£ãŸã‚‰ã€objbufã‹ã‚‰destã«å†è»¢é€) */
 	filesize = 0;
 	p = objbuf0;
 	for (i = 0; i < OBJBUFSIZ; i++)
 		p[i] = '\0';
 	if (section_param[2 /* file */ + 0 /* code */] != -3 /* data_end */) {
-		/* ƒR[ƒh‚ªæ */
+		/* ã‚³ãƒ¼ãƒ‰ãŒå…ˆ */
 		p = objbuf0 + section_param[2 /* file */ + 0 /* code */];
 		t = image[0];
 		for (i = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; i > 0; i--)
@@ -683,7 +683,7 @@ err_rule_label:
 		if (filesize < i)
 			filesize = i;
 	} else {
-		/* ƒf[ƒ^[‚ªæ */
+		/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ãŒå…ˆ */
 		p = objbuf0 + section_param[2 /* file */ + 4 /* data */];
 		t = image[1];
 		for (i = section_param[3 + 8 /* bss */] - section_param[1 + 4 /* data */]; i > 0; i--)
@@ -708,12 +708,12 @@ err_rule_label:
 			filesize = i;
 	}
 	p = objbuf0;
-	*((int *) p)        = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; /* ƒR[ƒhƒTƒCƒY */
-	*((int *) (p +  4)) = section_param[2 + 0 /* code */]; /* ƒtƒ@ƒCƒ‹’†‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p +  8)) = section_param[1 + 0 /* code */]; /* ƒŠƒ“ƒN‰ğŒˆ‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p + 12)) = section_param[3 + 8 /* bss  */] - section_param[1 + 4 /* data */]; /* ƒf[ƒ^[ƒTƒCƒY */
-	*((int *) (p + 16)) = section_param[2 + 4 /* data */]; /* ƒtƒ@ƒCƒ‹’†‚ÌŠJnƒAƒhƒŒƒX */
-	*((int *) (p + 20)) = section_param[1 + 4 /* data */]; /* ƒŠƒ“ƒN‰ğŒˆ‚ÌŠJnƒAƒhƒŒƒX */
+	*((int *) p)        = section_param[3 + 0 /* code */] - section_param[1 + 0 /* code */]; /* ã‚³ãƒ¼ãƒ‰ã‚µã‚¤ã‚º */
+	*((int *) (p +  4)) = section_param[2 + 0 /* code */]; /* ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p +  8)) = section_param[1 + 0 /* code */]; /* ãƒªãƒ³ã‚¯è§£æ±ºæ™‚ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p + 12)) = section_param[3 + 8 /* bss  */] - section_param[1 + 4 /* data */]; /* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚µã‚¤ã‚º */
+	*((int *) (p + 16)) = section_param[2 + 4 /* data */]; /* ãƒ•ã‚¡ã‚¤ãƒ«ä¸­ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	*((int *) (p + 20)) = section_param[1 + 4 /* data */]; /* ãƒªãƒ³ã‚¯è§£æ±ºæ™‚ã®é–‹å§‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 	t = p + 24;
 	for (i = 0; i < labelbufptr; i++, t += 4)
 		*((int *) t) = labelbuf[i]->offset;
@@ -827,7 +827,7 @@ static void loadobj(unsigned char *p)
 		next_linkstr = malloc(LINKSTRSIZ * sizeof (struct LINKSTR));
 	}
 
-	/* ƒwƒbƒ_ƒ`ƒFƒbƒN */
+	/* ãƒ˜ãƒƒãƒ€ãƒã‚§ãƒƒã‚¯ */
 	if (p[0x00] - 0x4c | p[0x01] - 0x01) {
 		fprintf(stderr, "Internal error : loadobj(1) %16.16s\n", &p[-0x3c]);
 		return;
@@ -837,12 +837,12 @@ static void loadobj(unsigned char *p)
 
 	for (i = 0; i < MAXSECTION; i++) {
 		objstr->section[i].size = 0;
-		objstr->section[i].sectype = 3; /* ƒuƒ‰ƒ“ƒN */
+		objstr->section[i].sectype = 3; /* ãƒ–ãƒ©ãƒ³ã‚¯ */
 		objstr->section[i].flags = 0;
 	}
 	objstr->flags = 0x00;
 	if ((p[0x02] | p[0x03] << 8) > MAXSECTION) {
-		/* section”‚ª‘½‚·‚¬‚é */
+		/* sectionæ•°ãŒå¤šã™ãã‚‹ */
 		fprintf(stderr, "Internal error : loadobj(2)\n");
 		return;
 	}
@@ -871,7 +871,7 @@ static void loadobj(unsigned char *p)
 			unsigned char *s, *t;
 			struct LINKSTR *ls;
 
-			/* next_objbuf‚Ö“]‘— */
+			/* next_objbufã¸è»¢é€ */
 			objstr->section[i].ptr = next_objbuf;
 			objstr->section[i].links = q[0x20] | q[0x21] << 8;
 			objstr->section[i].sh_paddr = get32l(&q[0x08]);
@@ -882,7 +882,7 @@ static void loadobj(unsigned char *p)
 				*s++ = *t++;
 			next_objbuf = s;
 
-			/* next_linkstr‚Ö“]‘— */
+			/* next_linkstrã¸è»¢é€ */
 		//	ls = next_linkstr;
 			t = p + get32l(&q[0x18]);
 			for (k = objstr->section[i].links; k > 0; k--, t += 0x0a) {
@@ -906,13 +906,13 @@ link_skip:
 				}
 			}
 			next_linkstr = ls;
-			/* ƒ^[ƒ~ƒl[ƒ^[‚Í‚ ‚é‚©‚ÈH */
+			/* ã‚¿ãƒ¼ãƒŸãƒãƒ¼ã‚¿ãƒ¼ã¯ã‚ã‚‹ã‹ãªï¼Ÿ */
 		//	printf("0x%04X 0x%04X 0x%02X\n", get32l(&t[0x00]), get32l(&t[0x04]), t[0x08] | t[0x09] << 8);
-			/* ‚È‚©‚Á‚½EEE */
+			/* ãªã‹ã£ãŸãƒ»ãƒ»ãƒ» */
 		}
 	}
 
-	/* ƒVƒ“ƒ{ƒ‹’è‹` */
+	/* ã‚·ãƒ³ãƒœãƒ«å®šç¾© */
 	q = p + get32l(&p[0x08]);
 	for (i = get32l(&p[0x0c]); i > 0; i -= j, q += j * 0x12) {
 		j = q[0x11] /* numaux */ + 1;
@@ -969,7 +969,7 @@ link_skip:
 			break;
 
 		case 0x67: /* file name */
-			break; /* –³‹‚µ‚ÄÌ‚Ä‚é */
+			break; /* ç„¡è¦–ã—ã¦æ¨ã¦ã‚‹ */
 
 		default:
 			fprintf(stderr, "unknown storage class : %02X\n", q[0x10]);
@@ -1095,7 +1095,7 @@ static struct LABELSTR *symbolconv(unsigned char *p, unsigned char *s, struct OB
 }
 
 static void link0(const int sectype, int *secparam, unsigned char *image)
-/* .obj‚ÌŠeƒZƒNƒVƒ‡ƒ“‚Ì˜_—ƒAƒhƒŒƒX‚ğŠm’è‚³‚¹‚é */
+/* .objã®å„ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®è«–ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç¢ºå®šã•ã›ã‚‹ */
 {
 	struct OBJFILESTR *obj;
 	int addr = secparam[1 /* logic */], i, j;
@@ -1135,5 +1135,5 @@ static void link0(const int sectype, int *secparam, unsigned char *image)
 			addr += obj->section[j].size;
 		}
 	}
-	secparam[3 /* logic+size */] = addr; /* size‚Æ‚¢‚¤‚æ‚èAÅIƒAƒhƒŒƒX */
+	secparam[3 /* logic+size */] = addr; /* sizeã¨ã„ã†ã‚ˆã‚Šã€æœ€çµ‚ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 }

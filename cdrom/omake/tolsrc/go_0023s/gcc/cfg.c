@@ -574,7 +574,7 @@ dump_edge_info (file, e, do_succ)
       for (i = 0; flags; i++)
 	if (flags & (1 << i))
 	  {
-	    flags &= ~(1 << i);
+	    flags &= ‾(1 << i);
 
 	    if (comma)
 	      fputc (',', file);

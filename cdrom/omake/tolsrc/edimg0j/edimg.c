@@ -1,19 +1,19 @@
-/* "edimg.c":ƒfƒBƒXƒNƒCƒ[ƒWƒGƒfƒBƒ^ */
-/*	copyright(C) 2004 ì‡GÀ, I.Tak. (KL-01) */
+/* "edimg.c":ãƒ‡ã‚£ã‚¹ã‚¯ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚¨ãƒ‡ã‚£ã‚¿ */
+/*	copyright(C) 2004 å·åˆç§€å®Ÿ, I.Tak. (KL-01) */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-/* x86ˆÈŠO‚Å“®‚©‚·‚±‚Æ‚Í‘S‚­l‚¦‚Ä‚¢‚È‚¢BendianˆË‘¶•”‚ª‚½‚­‚³‚ñ‚ ‚éB
-	ˆË‘¶‚ğ‚È‚­‚·‚±‚Æ‚Í‚»‚¤“ï‚µ‚­‚È‚¢‚ªAˆË‘¶‚ğ‚È‚­‚¹‚Î‚»‚Ì•ªƒTƒCƒY‚ª‘‚¦‚é‚©
-	ğŒƒRƒ“ƒpƒCƒ‹‚ª‘½”•K—v‚É‚È‚èA”ñx86ã‚Å‚±‚Ìedimg‚ª•K—v‚É‚È‚éó‹µ‚Ì
-	­‚È‚³‚ğŠ¨ˆÄ‚·‚é‚ÆAendianˆË‘¶‚ğ‚È‚­‚·‚±‚Æ‚Í‚Ş‚µ‚ë‰üˆ«‚Å‚ ‚é‚Æl‚¦‚½B */
+/* x86ä»¥å¤–ã§å‹•ã‹ã™ã“ã¨ã¯å…¨ãè€ƒãˆã¦ã„ãªã„ã€‚endianä¾å­˜éƒ¨ãŒãŸãã•ã‚“ã‚ã‚‹ã€‚
+	ä¾å­˜ã‚’ãªãã™ã“ã¨ã¯ãã†é›£ã—ããªã„ãŒã€ä¾å­˜ã‚’ãªãã›ã°ãã®åˆ†ã‚µã‚¤ã‚ºãŒå¢—ãˆã‚‹ã‹
+	æ¡ä»¶ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒå¤šæ•°å¿…è¦ã«ãªã‚Šã€éx86ä¸Šã§ã“ã®edimgãŒå¿…è¦ã«ãªã‚‹çŠ¶æ³ã®
+	å°‘ãªã•ã‚’å‹˜æ¡ˆã™ã‚‹ã¨ã€endianä¾å­˜ã‚’ãªãã™ã“ã¨ã¯ã‚€ã—ã‚æ”¹æ‚ªã§ã‚ã‚‹ã¨è€ƒãˆãŸã€‚ */
 
 #define SAR_MODE_WIN32		1
-/* Linux‚È‚Ç‚Å‚Íª‚ğƒRƒƒ“ƒgƒAƒEƒg‚·‚é */
+/* Linuxãªã©ã§ã¯â†‘ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ */
 
 //#define SAR_MODE_POSIX	1
-/* Windows‚È‚Ç‚Å‚Íª‚ğƒRƒƒ“ƒgƒAƒEƒg‚·‚é */
+/* Windowsãªã©ã§ã¯â†‘ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ */
 
 typedef unsigned char UCHAR;
 
@@ -28,7 +28,7 @@ unsigned short *fat;
 UCHAR *dir0, *BPB, *KHBIOS, *fat0, *fat1, *clu0002;
 UCHAR flag = 0;
 	/* bit0:FAT16, bit1:FAT12, bit2:SF16 */
-	/* bit4:bininƒ‚[ƒh */
+	/* bit4:bininãƒ¢ãƒ¼ãƒ‰ */
 const UCHAR *_path = "";
 static int bias = 0;
 
@@ -92,7 +92,7 @@ int main(int argc, UCHAR **argv)
 	if (imgbuf0 == NULL)
 		errend(1); /* out of memory */
 
-	/* ƒXƒNƒŠƒvƒg€”õ */
+	/* ã‚¹ã‚¯ãƒªãƒ—ãƒˆæº–å‚™ */
 	q = script0;
 	while ((p = *++argv) != NULL) {
 		if (*p != '@') {
@@ -135,7 +135,7 @@ int main(int argc, UCHAR **argv)
 	*q++ = '\0';
 	script1 = q;
 
-	/* ƒXƒNƒŠƒvƒg‰ğß */
+	/* ã‚¹ã‚¯ãƒªãƒ—ãƒˆè§£é‡ˆ */
 	p = script0;
 	for (;;) {
 		if (*p == '\0')
@@ -396,8 +396,8 @@ toolong:
 }
 
 unsigned int tek1_getnum_s7s(UCHAR **pp)
-/* ‚±‚ê‚Í•K‚¸big-endian */
-/* ‰º‘Ê‚ª‚È‚¢‚Ì‚Å’†g‚ğ‚¢‚¶‚è‚â‚·‚¢ */
+/* ã“ã‚Œã¯å¿…ãšbig-endian */
+/* ä¸‹é§„ãŒãªã„ã®ã§ä¸­èº«ã‚’ã„ã˜ã‚Šã‚„ã™ã„ */
 {
 	unsigned int s = 0;
 	UCHAR *p = *pp;
@@ -481,7 +481,7 @@ const UCHAR *cmd_ovrcopy(const char *cmd)
 		len_filebuf = autodecomp2(SIZ_FILEBUF, filebuf0, len_filebuf);
 	if (optmatch(cmd, "to") == 0)
 		errend(11); /* ovrcopy command error */
-	ovrwritefile(pathfix(cmd + (2 + 2), 1), 2, -1, 0x04); /* XV“ú‚Ì‚İXV */
+	ovrwritefile(pathfix(cmd + (2 + 2), 1), 2, -1, 0x04); /* æ›´æ–°æ—¥ã®ã¿æ›´æ–° */
 	return cmd + (*cmd + 2);
 }
 
@@ -698,7 +698,7 @@ optloop:
 		goto optloop;
 	}
 	if (optmatch(cmd, "nofrag")) {
-		/* ‚½‚Ô‚ñefat‚Ì‚ ‚Æ‚ÉÀs‚µ‚Ä‚à³‚µ‚­”»’è‚Å‚«‚é */
+		/* ãŸã¶ã‚“efatã®ã‚ã¨ã«å®Ÿè¡Œã—ã¦ã‚‚æ­£ã—ãåˆ¤å®šã§ãã‚‹ */
 		if ((flag & 0x04) == 0)
 			errend(33);
 		for (i = 2; i < limit_fat; i++) {
@@ -861,7 +861,7 @@ err:
 	do {
 		if (*p == '\0')
 			break;
-		if (*p != 0xe5 && (p[11] & 0x18) == 0) { /* ƒfƒBƒŒƒNƒgƒŠ‚Æƒ{ƒŠƒ…[ƒ€ƒ‰ƒxƒ‹‚Í”rœ */
+		if (*p != 0xe5 && (p[11] & 0x18) == 0) { /* ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ©ãƒ™ãƒ«ã¯æ’é™¤ */
 			t = &s[2];
 			for (i = 0; i < 8; i++) {
 				if (p[i] == ' ')
@@ -942,10 +942,10 @@ static struct sar_attrtime fbuf_at;
 
 void readfile(const UCHAR *path, int flags)
 /* flags :
-	0x01:ƒAƒgƒŠƒrƒ…[ƒgƒ[ƒh
-	0x02:ƒAƒgƒŠƒrƒ…[ƒgƒŠƒZƒbƒg
-	0x04:ƒ^ƒCƒ€ƒ[ƒh
-	0x08:ƒ^ƒCƒ€ƒŠƒZƒbƒg
+	0x01:ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆãƒ­ãƒ¼ãƒ‰
+	0x02:ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆãƒªã‚»ãƒƒãƒˆ
+	0x04:ã‚¿ã‚¤ãƒ ãƒ­ãƒ¼ãƒ‰
+	0x08:ã‚¿ã‚¤ãƒ ãƒªã‚»ãƒƒãƒˆ
 */
 {
 	FILE *fp;
@@ -968,7 +968,7 @@ err:
 		fputs("readfile error. : ", stderr);
 		fputs(path, stderr);
 		errend(13);
-		return; /* –{“–‚Í‚±‚Ìreturn‚Í‚¢‚ç‚È‚¢Bwarning‚ğ–Ù‚ç‚¹‚é‚½‚ß */
+		return; /* æœ¬å½“ã¯ã“ã®returnã¯ã„ã‚‰ãªã„ã€‚warningã‚’é»™ã‚‰ã›ã‚‹ãŸã‚ */
 	}
 	len_filebuf = fread(filebuf0, 1, SIZ_FILEBUF, fp);
 	if (len_filebuf >= SIZ_FILEBUF)
@@ -1125,11 +1125,11 @@ find:
 }
 
 void writefile(const UCHAR *path, int alloc0, int asiz, int flags)
-/* delete‚µ‚Ä‚©‚çwritefile‚·‚é‚ÆƒNƒ‰ƒXƒ^ˆÊ’u‚àŠm•Û‚µ’¼‚·‚±‚Æ‚É‚È‚é */
+/* deleteã—ã¦ã‹ã‚‰writefileã™ã‚‹ã¨ã‚¯ãƒ©ã‚¹ã‚¿ä½ç½®ã‚‚ç¢ºä¿ã—ç›´ã™ã“ã¨ã«ãªã‚‹ */
 /* flags :
-	0x01:ƒAƒgƒŠƒrƒ…[ƒgƒXƒgƒA
-	0x02:ƒp[ƒ~ƒbƒVƒ‡ƒ“ƒXƒgƒA
-	0x04:ƒ^ƒCƒ€ƒXƒgƒA
+	0x01:ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚¹ãƒˆã‚¢
+	0x02:ãƒ‘ãƒ¼ãƒŸãƒƒã‚·ãƒ§ãƒ³ã‚¹ãƒˆã‚¢
+	0x04:ã‚¿ã‚¤ãƒ ã‚¹ãƒˆã‚¢
 */
 {
 	FILE *fp;
@@ -1404,18 +1404,18 @@ retry:
 	KHBIOS = (UCHAR *) test_KHBIOS(bpb);
 	if (KHBIOS == NULL) {
 		if ((*(int *) &bpb[0x8] == 0x54434350) && (*(int *) &bpb[0xc] == 0x30304c4f)) {
-			/* PCCTOL00‚ğŒŸo */
+			/* PCCTOL00ã‚’æ¤œå‡º */
 			bpb += 65536;
 			goto retry;
 		}
 	}
 	if (KHBIOS != NULL) {
-		/* KHBIOSî•ñ‚ğg‚Á‚Äƒp[ƒeƒBƒVƒ‡ƒ“ŠJnˆÊ’u‚ğ’Tõ */
+		/* KHBIOSæƒ…å ±ã‚’ä½¿ã£ã¦ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³é–‹å§‹ä½ç½®ã‚’æ¢ç´¢ */
 
 	}
 	BPB = test_BPB(bpb);
 	if (BPB == NULL) {
-		/* ATŒİŠ·‹@HDDƒCƒ[ƒW‚¾‚Æ‰¼’è‚µ‚ÄA‘æˆêƒp[ƒeƒBƒVƒ‡ƒ“‚ğ’T‚· */
+		/* ATäº’æ›æ©ŸHDDã‚¤ãƒ¡ãƒ¼ã‚¸ã ã¨ä»®å®šã—ã¦ã€ç¬¬ä¸€ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’æ¢ã™ */
 		if (bpb[0x1c9] == 0x00) {
 			i = bpb[0x1c6] | bpb[0x1c7] << 8 | bpb[0x1c8] << 16;
 			if (i < SIZ_IMGBUF / 512)
@@ -1429,7 +1429,7 @@ retry:
 
 const UCHAR *test_KHBIOS(const UCHAR *p)
 {
-	return NULL; /* –¢Š®¬‚É‚æ‚éè”²‚« */
+	return NULL; /* æœªå®Œæˆã«ã‚ˆã‚‹æ‰‹æŠœã */
 }
 
 UCHAR *test_BPB(UCHAR *p)
@@ -1438,7 +1438,7 @@ UCHAR *test_BPB(UCHAR *p)
 	const UCHAR *q;
 	unsigned short *s;
 	if (p[0x0b] != 0x00)
-		goto err; /* 128ƒoƒCƒg/ƒZƒNƒ^‚Íˆµ‚¦‚È‚¢‚±‚Æ‚É‚·‚é */
+		goto err; /* 128ãƒã‚¤ãƒˆ/ã‚»ã‚¯ã‚¿ã¯æ‰±ãˆãªã„ã“ã¨ã«ã™ã‚‹ */
 	if (p[0x0c] == 0x00)
 		goto err;
 	if (p[0x0c] & (p[0x0c] - 1))
@@ -1453,10 +1453,10 @@ UCHAR *test_BPB(UCHAR *p)
 	len_dir = p[0x11] | p[0x12] << 8;
 	len_fat = p[0x16] | p[0x17] << 8;
 	if (len_dir == 0)
-		goto err; /* ‘½•ªFAT32 */
+		goto err; /* å¤šåˆ†FAT32 */
 	if (len_fat == 0)
-		goto err; /* ‘½•ªFAT32 */
-	flag &= ~0x7;
+		goto err; /* å¤šåˆ†FAT32 */
+	flag &= â€¾0x7;
 	len_sec = p[0x0c] << 8;
 	i = p[0x13] | p[0x14] << 8;
 	if (i == 0)
@@ -1480,7 +1480,7 @@ UCHAR *test_BPB(UCHAR *p)
 			if (p[0x3a] == '2')
 				flag |= 0x02; /* FAT12 */
 		}
-	} else { /* “`““I‚È—e—Ê‚É‚æ‚é”»’è */
+	} else { /* ä¼çµ±çš„ãªå®¹é‡ã«ã‚ˆã‚‹åˆ¤å®š */
 		if (i > 0xff5)
 			flag |= 0x01; /* FAT16 */
 		else
@@ -1505,7 +1505,7 @@ UCHAR *test_BPB(UCHAR *p)
 	if (len_imgbuf < (unsigned) i)
 		len_imgbuf = i;
 
-	/* FAT‚Ìƒ[ƒfƒBƒ“ƒO */
+	/* FATã®ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚° */
 	s = fat;
 	q = fat0;
 	if (flag & 1) {
@@ -1516,14 +1516,14 @@ UCHAR *test_BPB(UCHAR *p)
 		} while (len_fat != 0);
 		if (flag & 4) {
 			if (p[0x47] & 0x10) {
-				/* efat‚ğ•œŒ³ */
+				/* efatã‚’å¾©å…ƒ */
 				fat[0] ^= 0x0007;
 				for (i = 2; i < 0xfff6; i++) {
 					if (fat[i] == 0xfffe)
 						fat[i] = i + 1;
 				}
 			}
-			p[0x47] &= ~0x30;
+			p[0x47] &= â€¾0x30;
 		}
 	}
 	if (flag & 2) {
@@ -1713,7 +1713,7 @@ void set_efatflag()
 }
 #endif
 
-/* l2d3ŠÖŒW */
+/* l2d3é–¢ä¿‚ */
 
 static const UCHAR *getbc_ptr;
 static UCHAR getbc_count, getbc_byte;
@@ -1735,7 +1735,7 @@ int getbc(int bits)
 }
 
 int getbc0(int bits, int ret)
-/* ‰Šú’l•t‚« */
+/* åˆæœŸå€¤ä»˜ã */
 {
 	do {
 		if (getbc_count == 8)
@@ -1776,7 +1776,7 @@ void decode_l2d3(int k, const UCHAR *src, UCHAR *dest)
 					j = getbc(16);
 					len = j;
 					if (j <= 127)
-						len = getbc0(j, 1); /* Å‰‚Ìbit‚Í1‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚é‚©‚ç */
+						len = getbc0(j, 1); /* æœ€åˆã®bitã¯1ã«æ±ºã¾ã£ã¦ã„ã‚‹ã‹ã‚‰ */
 				}
 			}
 		}
@@ -1882,7 +1882,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 	getbc_count = 8;
 	getbc_ptr = src;
 
-	/* ƒwƒbƒ_“Ç‚İ‚İ */
+	/* ãƒ˜ãƒƒãƒ€èª­ã¿è¾¼ã¿ */
 	dis_s = getnum_s8();
 	l_ofs = getbc(2);
 	method = getbc(1); /* l1a/l1b */
@@ -1890,7 +1890,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 	z1 = getbc(2);
 
 	for (i = 0; i < k; ) {
-		/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+		/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z0);
 	//	if (j < 0)
 	//		break;
@@ -1904,7 +1904,7 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 		if (i >= k)
 			break;
 
-		/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+		/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z1);
 	//	if (j < 0)
 	//		break;
@@ -1927,9 +1927,9 @@ void decode_tek0(int k, const UCHAR *src, UCHAR *dest)
 }
 
 void sar_shifttime(struct sar_attrtime *at, int min, void *opt)
-/* ‚½‚¾‘«‚·‚¾‚¯Aˆø‚­‚¾‚¯‚Æ‚¢‚¤’Pƒ‚È‚à‚Ì */
-/* ‰ÄŠÔ‚È‚ñ‚Ä‚µ‚è‚Ü‚¹‚ñ */
-/* ‚¿‚á‚ñ‚Æ‚µ‚½‚©‚Á‚½‚ç‰ü‘¢‚µ‚Ä‚­‚¾‚³‚¢ */
+/* ãŸã è¶³ã™ã ã‘ã€å¼•ãã ã‘ã¨ã„ã†å˜ç´”ãªã‚‚ã® */
+/* å¤æ™‚é–“ãªã‚“ã¦ã—ã‚Šã¾ã›ã‚“ */
+/* ã¡ã‚ƒã‚“ã¨ã—ãŸã‹ã£ãŸã‚‰æ”¹é€ ã—ã¦ãã ã•ã„ */
 {
 	static UCHAR days[] = {
 		31, 28, 31, 30, 31, 60, 31, 31, 30, 31, 30, 31
@@ -2050,12 +2050,12 @@ void sar_shifttime(struct sar_attrtime *at, int min, void *opt)
 	#include <sys/stat.h>
 	#include <unistd.h>
 	#include <utime.h>
-	#include <time.h>		/* ANSI-C, time_t‚Æ“ú‚Ì•ÏŠ·‚Ég‚¤ */
+	#include <time.h>		/* ANSI-C, time_tã¨æ—¥æ™‚ã®å¤‰æ›ã«ä½¿ã† */
 #endif
 
 
 void getattrtime(struct sar_attrtime *s, const UCHAR *path)
-/* s->attr‚Ìbit0-3,5-6‚Í•Û‘¶‚·‚é‚±‚Æ */
+/* s->attrã®bit0-3,5-6ã¯ä¿å­˜ã™ã‚‹ã“ã¨ */
 {
 	#if (defined(SAR_MODE_WIN32))
 		int i;
@@ -2090,13 +2090,13 @@ void getattrtime(struct sar_attrtime *s, const UCHAR *path)
 		}
 		s->permission = 0700;
 	#elif (defined(SAR_MODE_POSIX))
-		/* POSIX‚É‚µ‚Ä‚İ‚éƒeƒXƒg */
+		/* POSIXã«ã—ã¦ã¿ã‚‹ãƒ†ã‚¹ãƒˆ */
 		struct stat buf;
 		s->attr &= 0x6f;
 		s->subsec = -1;
 		if (stat(path, &buf) == 0) {
 			struct tm gm;
-			s->permission = buf.st_mode & 0777; /* SUID‚Æ‚©ˆê‰Á‚· */
+			s->permission = buf.st_mode & 0777; /* SUIDã¨ã‹ä¸€å¿œæ¶ˆã™ */
 			/* ANSI-C */
 			if (gmtime_r(&buf.st_mtime, &gm)) {
 				s->subsec = 0;
@@ -2112,7 +2112,7 @@ void getattrtime(struct sar_attrtime *s, const UCHAR *path)
 	#else
 		s->attr &= 0x6f;
 		s->permission = 0700;
-		s->subsec |= -1; /* subsec == -1 : XVî•ñ‚È‚µ */
+		s->subsec |= -1; /* subsec == -1 : æ›´æ–°æ™‚åˆ»æƒ…å ±ãªã— */
 	#endif
 	return;
 }
@@ -2122,8 +2122,8 @@ void setattrtime(struct sar_attrtime *s, const UCHAR *path, const int flags)
 	#if (defined(SAR_MODE_WIN32))
 		int i;
 		i = GetFileAttributesA(path);
-		i &= ~FILE_ATTRIBUTE_READONLY & ~FILE_ATTRIBUTE_HIDDEN &
-			~FILE_ATTRIBUTE_SYSTEM & ~FILE_ATTRIBUTE_ARCHIVE & ~FILE_ATTRIBUTE_NORMAL;
+		i &= â€¾FILE_ATTRIBUTE_READONLY & â€¾FILE_ATTRIBUTE_HIDDEN &
+			â€¾FILE_ATTRIBUTE_SYSTEM & â€¾FILE_ATTRIBUTE_ARCHIVE & â€¾FILE_ATTRIBUTE_NORMAL;
 		if (s->attr & 0x080)
 			i |= FILE_ATTRIBUTE_READONLY;
 		if (s->attr & 0x100)
@@ -2151,7 +2151,7 @@ void setattrtime(struct sar_attrtime *s, const UCHAR *path, const int flags)
 					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 					NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
 				if (h != -1) {
-					SetFileTime(h, &ft, &ft, &ft); /* ‚Æ‚è‚ ‚¦‚¸‚·‚×‚Ä‚±‚Ì“ú‚É‚µ‚Ä‚İ‚é */
+					SetFileTime(h, &ft, &ft, &ft); /* ã¨ã‚Šã‚ãˆãšã™ã¹ã¦ã“ã®æ—¥æ™‚ã«ã—ã¦ã¿ã‚‹ */
 					CloseHandle(h);
 				}
 			}
@@ -2168,25 +2168,25 @@ void setattrtime(struct sar_attrtime *s, const UCHAR *path, const int flags)
 		gm.tm_mon  = s->mon - 1;
 		gm.tm_year = s->year - 1900;
 
-		/* GNUŠg’£timegm‚Ì‘ã‚í‚è */
-		tz = getenv("TZ"); /* TZ‚ğ•Û‘¶ */
-		setenv("TZ", "", 1); /* TZ‚ğÁ‹ */
+		/* GNUæ‹¡å¼µtimegmã®ä»£ã‚ã‚Š */
+		tz = getenv("TZ"); /* TZã‚’ä¿å­˜ */
+		setenv("TZ", "", 1); /* TZã‚’æ¶ˆå» */
 		tzset();
 		buf.modtime = buf.actime = mktime(&gm);
 		if (tz)
 			setenv("TZ", tz, 1);
 		else
 			unsetenv("TZ");
-		tzset();	/* TZ•œŒ³ */
+		tzset();	/* TZå¾©å…ƒ */
 
 		if (flags & 0x04) {
 			if (buf.modtime != -1)
 				utime(path, &buf);
 		}
 		if (flags & 0x02)
-			chmod(path, s->permission); /* ¸”s‚µ‚Ä‚à‹C‚É‚µ‚È‚¢ */
+			chmod(path, s->permission); /* å¤±æ•—ã—ã¦ã‚‚æ°—ã«ã—ãªã„ */
 	#else
-		/* ‰½‚à‚µ‚È‚¢ */
+		/* ä½•ã‚‚ã—ãªã„ */
 	#endif
 	return;
 }

@@ -192,8 +192,8 @@ static const struct optable
   {"bit_and",	  "&",		0},		/* old */
   {"ad",	  "&",		DMGL_ANSI},	/* ansi */
   {"aad",	  "&=",		DMGL_ANSI},	/* ansi */
-  {"bit_not",	  "~",		0},		/* old */
-  {"co",	  "~",		DMGL_ANSI},	/* ansi */
+  {"bit_not",	  "‾",		0},		/* old */
+  {"co",	  "‾",		DMGL_ANSI},	/* ansi */
   {"call",	  "()",		0},		/* old */
   {"cl",	  "()",		DMGL_ANSI},	/* ansi */
   {"alshift",	  "<<",		0},		/* old */
@@ -1492,7 +1492,7 @@ demangle_signature (work, mangled, declp)
 	  string_prepends(declp, &tname);
 	  if (work -> destructor & 1)
 	    {
-	      string_prepend (&trawname, "~");
+	      string_prepend (&trawname, "‾");
 	      string_appends (declp, &trawname);
 	      work->destructor -= 1;
 	    }
@@ -2498,7 +2498,7 @@ DESCRIPTION
 
 	If the CONSTRUCTOR or DESTRUCTOR flags are set in WORK, then
 	we are demangling a constructor or destructor.  In this case
-	we prepend "class::class" or "class::~class" to DECLP.
+	we prepend "class::class" or "class::‾class" to DECLP.
 
 	Otherwise, we prepend "class::" to the current DECLP.
 
@@ -2536,7 +2536,7 @@ demangle_class (work, mangled, declp)
 	  string_prepends (declp, &class_name);
 	  if (work -> destructor & 1)
 	    {
-	      string_prepend (declp, "~");
+	      string_prepend (declp, "‾");
               work -> destructor -= 1;
 	    }
 	  else
@@ -3212,7 +3212,7 @@ DESCRIPTION
 	constructor or destructor function, append an appropriate
 	constructor or destructor name.  I.E. for the above example,
 	the result for use as a constructor is "Outer::Inner::Inner"
-	and the result for use as a destructor is "Outer::Inner::~Inner".
+	and the result for use as a destructor is "Outer::Inner::‾Inner".
 
 BUGS
 
@@ -3379,7 +3379,7 @@ demangle_qualified (work, mangled, result, isfuncname, append)
     {
       string_append (&temp, SCOPE_STRING (work));
       if (work -> destructor & 1)
-	string_append (&temp, "~");
+	string_append (&temp, "‾");
       string_appends (&temp, &last_name);
     }
 

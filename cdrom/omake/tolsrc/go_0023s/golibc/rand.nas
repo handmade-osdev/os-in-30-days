@@ -1,4 +1,4 @@
-; rand -  K&R‚©‚ç‚Ù‚Ú”²ˆ‚µ‚½‚à‚Ì‚ð’P‚ÉASM‰»‚µ‚½
+; rand -  K&Rã‹ã‚‰ã»ã¼æŠœç²‹ã—ãŸã‚‚ã®ã‚’å˜ã«ASMåŒ–ã—ãŸ
 
 [FORMAT "WCOFF"]
 [INSTRSET "i486p"]

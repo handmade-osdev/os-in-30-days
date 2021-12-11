@@ -1932,7 +1932,7 @@ fixup_unsigned_type (type)
     = build_int_2 (precision - HOST_BITS_PER_WIDE_INT >= 0
 		   ? -1 : ((HOST_WIDE_INT) 1 << precision) - 1,
 		   precision - HOST_BITS_PER_WIDE_INT > 0
-		   ? ((unsigned HOST_WIDE_INT) ~0
+		   ? ((unsigned HOST_WIDE_INT) ‾0
 		      >> (HOST_BITS_PER_WIDE_INT
 			  - (precision - HOST_BITS_PER_WIDE_INT)))
 		   : 0);

@@ -1,10 +1,10 @@
 /* asmhead.nas */
 struct BOOTINFO { /* 0x0ff0-0x0fff */
-	char cyls; /* ƒu[ƒgƒZƒNƒ^‚Í‚Ç‚±‚Ü‚ÅƒfƒBƒXƒN‚ğ“Ç‚ñ‚¾‚Ì‚© */
-	char leds; /* ƒu[ƒg‚ÌƒL[ƒ{[ƒh‚ÌLED‚Ìó‘Ô */
-	char vmode; /* ƒrƒfƒIƒ‚[ƒh  ‰½ƒrƒbƒgƒJƒ‰[‚© */
+	char cyls; /* ãƒ–ãƒ¼ãƒˆã‚»ã‚¯ã‚¿ã¯ã©ã“ã¾ã§ãƒ‡ã‚£ã‚¹ã‚¯ã‚’èª­ã‚“ã ã®ã‹ */
+	char leds; /* ãƒ–ãƒ¼ãƒˆæ™‚ã®ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®LEDã®çŠ¶æ…‹ */
+	char vmode; /* ãƒ“ãƒ‡ã‚ªãƒ¢ãƒ¼ãƒ‰  ä½•ãƒ“ãƒƒãƒˆã‚«ãƒ©ãƒ¼ã‹ */
 	char reserve;
-	short scrnx, scrny; /* ‰æ–Ê‰ğ‘œ“x */
+	short scrnx, scrny; /* ç”»é¢è§£åƒåº¦ */
 	char *vram;
 };
 #define ADR_BOOTINFO	0x00000ff0

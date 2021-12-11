@@ -3,7 +3,7 @@
 
 	usage : >sjisconv [-e] [-s] input-file output-file
 
-	-s:ShiftJISÉÇÅ[Éh
+	-s:ShiftJIS„É¢„Éº„Éâ
 */
 
 #include "../drv_w32/windows.h"
@@ -40,7 +40,7 @@ void mainCRTStartup(void)
 	UCHAR *p0, *f, *src1, i = 0;
 	struct STR_FLAGS flags;
 
-	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & ~0x0f);
+	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & ‚Äæ0x0f);
 
 	flags.opt[FLAG_E] = flags.opt[FLAG_S] = 0;
 
@@ -86,6 +86,6 @@ void mainCRTStartup(void)
 }
 
 #include "../drv_w32/msgout_c.c"
-#include "../drv_w32/wfile_b.c" /* write_tÇÕwrite_bÇÇ¬Ç©Ç§Ç©ÇÁ */
+#include "../drv_w32/wfile_b.c" /* write_t„ÅØwrite_b„Çí„Å§„Åã„ÅÜ„Åã„Çâ */
 #include "../funcs/gostrlen.c"
 #include "../funcs/m_sjiscv.c"

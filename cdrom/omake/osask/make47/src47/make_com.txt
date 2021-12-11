@@ -1,5 +1,5 @@
-# Makefile‚ÌƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
-# ‘S‹@Ží‹¤’Ê
+# Makefileã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
+# å…¨æ©Ÿç¨®å…±é€š
 
 MAKE     = $(TOOLPATH)make.exe -r
 SJISCONV = $(TOOLPATH)sjisconv.exe -s

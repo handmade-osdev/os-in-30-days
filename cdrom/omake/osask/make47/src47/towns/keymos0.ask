@@ -1,21 +1,21 @@
-// "keymos0.ask" for TOWNS ver.0.5 copyright(C) 2004 I.Tak, H.Kawai(ì‡GÀ)
+// "keymos0.ask" for TOWNS ver.0.5 copyright(C) 2004 I.Tak, H.Kawai(å·åˆç§€å®Ÿ)
 
-// ‚±‚Ìƒo[ƒWƒ‡ƒ“‚àOTASK”Å‚Æ“¯‚¶‚­AƒL[‚ğ‰Ÿ‚µ‚È‚ª‚ç”²‚­‚ÆƒtƒF[ƒY‚ª‹¶‚¤
+// ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚‚OTASKç‰ˆã¨åŒã˜ãã€ã‚­ãƒ¼ã‚’æŠ¼ã—ãªãŒã‚‰æŠœãã¨ãƒ•ã‚§ãƒ¼ã‚ºãŒç‹‚ã†
 
 /* FM-R mouse driver added by I.Tak. 2004
  */
 #define FMRMOUSE	/* enables rmouse routine */
 
-/* ASKA‚Ì‰Y˜aÀ
+/* ASKAã®æµ¦å’Œåº§
  * char *send_buf == DS:ESI;
  * AL = send_buf[17];                   // OK
  * send_buf[17] = AL;                   // error
- * [send_buf+17] = AL;                  // OKcc‚È‚ñ‚¾‚Á‚Ä[!
- * [send_buf+ECX+17] = AL;              // OKcc‚È‚ñ‚¾‚Á‚Ä[!
- * (offset)send_buf = work->mouse_send_buf; // ƒƒ‚ƒŠƒAƒNƒZƒXcc‚È‚ñ‚¾‚Á‚Ä[!
- * (offset)send_buf = (offset)work->mouse_send_buf; // ƒ|ƒCƒ“ƒ^‚Ì‘ã“ücc‚È‚é‚Ù‚Ç
+ * [send_buf+17] = AL;                  // OKâ€¦â€¦ãªã‚“ã ã£ã¦ãƒ¼!
+ * [send_buf+ECX+17] = AL;              // OKâ€¦â€¦ãªã‚“ã ã£ã¦ãƒ¼!
+ * (offset)send_buf = work->mouse_send_buf; // ãƒ¡ãƒ¢ãƒªã‚¢ã‚¯ã‚»ã‚¹â€¦â€¦ãªã‚“ã ã£ã¦ãƒ¼!
+ * (offset)send_buf = (offset)work->mouse_send_buf; // ãƒã‚¤ãƒ³ã‚¿ã®ä»£å…¥â€¦â€¦ãªã‚‹ã»ã©
  * work->keyjmp = (offset)KeyIntDrv_Normal; // error
- * work->keyjmp = (int)KeyIntDrv_Normal; // error‚É‚È‚ç‚È‚¢‚±‚Æ‚à‚ ‚écc?
+ * work->keyjmp = (int)KeyIntDrv_Normal; // errorã«ãªã‚‰ãªã„ã“ã¨ã‚‚ã‚ã‚‹â€¦â€¦?
  */
 
 #include "osaskinc.ask"
@@ -26,7 +26,7 @@ default(code == CODE);
 struct keyboarddata {
 	int send_buf[64]; // 0x00
 	int pushflags[64]; // 0x40
-	int queue_buf[128]; // 0x80 (dw”:32...ƒuƒƒbƒN‚ÍÅ‚‚Å‚à8dw’ö“x‚É)
+	int queue_buf[128]; // 0x80 (dwæ•°:32...ãƒ–ãƒ­ãƒƒã‚¯ã¯æœ€é«˜ã§ã‚‚8dwç¨‹åº¦ã«)
 	int mouse_queue_buf[128]; // 0x100
 	int keysignal[6], [2]; // 0x180
 	/* void near * */ int keyjmp; // 0x188
@@ -85,15 +85,15 @@ nextcmd:
 //	if (EAX == 0x0118)
 //		goto cmd0118; // KeyEnableA20
 	if (EAX == 0x0100)
-		goto cmd0100; // ‰Šú‰»
+		goto cmd0100; // åˆæœŸåŒ–
 //	if (EAX == 0x010c)
 //		goto cmd010c; // KeyResetCPU
 	if (EAX == 0x0124)
-		goto cmd0124; // KeyboardIntDrv‚ÌƒxƒNƒ^’ñ‹Ÿ
+		goto cmd0124; // KeyboardIntDrvã®ãƒ™ã‚¯ã‚¿æä¾›
 //	if (EAX == 0x0128)
-//		goto cmd0128; // MouseIntDrv‚ÌƒxƒNƒ^’ñ‹Ÿ
+//		goto cmd0128; // MouseIntDrvã®ãƒ™ã‚¯ã‚¿æä¾›
 	if (EAX == 0x0018)
-		goto cmd0018; // ƒo[ƒWƒ‡ƒ“—v‹
+		goto cmd0018; // ãƒãƒ¼ã‚¸ãƒ§ãƒ³è¦æ±‚
 
 	INT(0x03);
 
@@ -104,7 +104,7 @@ cmd0000:
 	return;
 
 cmd0100:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	PUSH((offset) cmd);
 	keyboardInit();
 	POP((offset) cmd);
@@ -113,7 +113,7 @@ cmd0100:
 
 cmd0104:
 	// KeyboardReset
-	// –{“–‚ÍƒXƒe[ƒ^ƒX‚ğŒ©‚ÄAƒoƒbƒtƒ@‚ª‚ ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚µ‚½•û‚ª‚æ‚¢
+	// æœ¬å½“ã¯ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’è¦‹ã¦ã€ãƒãƒƒãƒ•ã‚¡ãŒã‚ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã—ãŸæ–¹ãŒã‚ˆã„
 	EDX = 0x0602;
 	AL = 0xa1;
 	OUT(DX, AL);
@@ -158,14 +158,14 @@ cmd010c:
 	(offset) cmd += 4;
 	goto nextcmd;
 
-// –{—ˆ‚È‚çACF‚àƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚Í‚¢‚¯‚È‚¢‚µA
-// ³íI—¹Š„‚è‚İ‚à”­s‚·‚×‚«
+// æœ¬æ¥ãªã‚‰ã€CFã‚‚ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã¯ã„ã‘ãªã„ã—ã€
+// æ­£å¸¸çµ‚äº†å‰²ã‚Šè¾¼ã¿ã‚‚ç™ºè¡Œã™ã¹ã
 
 	ALIGN(4);
 
 cmd010c_cmdline:
 
-// –{—ˆ‚ÍAÅ‰‚Éƒ^ƒCƒ€ƒAƒEƒg‚ğdŠ|‚¯‚ÄAƒoƒbƒtƒ@‚ğ“f‚©‚¹‚é‚×‚«
+// æœ¬æ¥ã¯ã€æœ€åˆã«ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’ä»•æ›ã‘ã¦ã€ãƒãƒƒãƒ•ã‚¡ã‚’åã‹ã›ã‚‹ã¹ã
 
 	DD(3);
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
@@ -230,20 +230,20 @@ cmd0118:
 	(offset) cmd += 4;
 	goto nextcmd;
 
-// –{—ˆ‚È‚çACF‚àƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚Í‚¢‚¯‚È‚¢‚µA
-// ³íI—¹Š„‚è‚İ‚à”­s‚·‚×‚«
+// æœ¬æ¥ãªã‚‰ã€CFã‚‚ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã¯ã„ã‘ãªã„ã—ã€
+// æ­£å¸¸çµ‚äº†å‰²ã‚Šè¾¼ã¿ã‚‚ç™ºè¡Œã™ã¹ã
 
 	ALIGN(4);
 
 cmd0118_cmdline:
 
-// –{—ˆ‚ÍAÅ‰‚Éƒ^ƒCƒ€ƒAƒEƒg‚ğdŠ|‚¯‚ÄAƒoƒbƒtƒ@‚ğ“f‚©‚¹‚é‚×‚«
+// æœ¬æ¥ã¯ã€æœ€åˆã«ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’ä»•æ›ã‘ã¦ã€ãƒãƒƒãƒ•ã‚¡ã‚’åã‹ã›ã‚‹ã¹ã
 
 	DD(6);
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
 	asmout("DD OFFSET KeyQueCmd_WriteCmdReg,0D1H");
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
-	asmout("DD OFFSET KeyQueCmd_SendData,0DFH"); // enable A20 (0xdd‚¾‚Ædisable)
+	asmout("DD OFFSET KeyQueCmd_SendData,0DFH"); // enable A20 (0xddã ã¨disable)
 	DD(0);
 
 // Bit 7  Keyboard data (output)    1
@@ -268,14 +268,14 @@ cmd011c:
 	(offset) cmd += 4;
 	goto nextcmd;
 
-// –{—ˆ‚È‚çACF‚àƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚Í‚¢‚¯‚È‚¢‚µA
-// ³íI—¹Š„‚è‚İ‚à”­s‚·‚×‚«
+// æœ¬æ¥ãªã‚‰ã€CFã‚‚ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã¯ã„ã‘ãªã„ã—ã€
+// æ­£å¸¸çµ‚äº†å‰²ã‚Šè¾¼ã¿ã‚‚ç™ºè¡Œã™ã¹ã
 
 	ALIGN(4);
 
 cmd011c_cmdline:
 
-// –{—ˆ‚ÍAÅ‰‚Éƒ^ƒCƒ€ƒAƒEƒg‚ğdŠ|‚¯‚ÄAƒoƒbƒtƒ@‚ğ“f‚©‚¹‚é‚×‚«
+// æœ¬æ¥ã¯ã€æœ€åˆã«ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’ä»•æ›ã‘ã¦ã€ãƒãƒƒãƒ•ã‚¡ã‚’åã‹ã›ã‚‹ã¹ã
 
 	DD(9);
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
@@ -290,9 +290,9 @@ cmd011c_cmdline:
 	DD(2 /* 7 */);
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
 //	asmout("DD OFFSET MouQueCmd_AckSendData,0FFH"); // mouse reset
-		// ª‚±‚ÌƒRƒ}ƒ“ƒh‚ªƒ^ƒCƒ€ƒAƒEƒg‚µ‚½‚çAƒ}ƒEƒX‚Í‚Â‚È‚ª‚Á‚Ä‚¢‚È‚¢
-//	asmout("DD OFFSET MouQueCmd_RecieveCheck,0AAH"); // power on reset(reset¬Œ÷ ‘æ1ƒoƒCƒg)
-//	asmout("DD OFFSET MouQueCmd_RecieveCheck,000H"); // power on reset(reset¬Œ÷ ‘æ2ƒoƒCƒg)
+		// â†‘ã“ã®ã‚³ãƒãƒ³ãƒ‰ãŒã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ãŸã‚‰ã€ãƒã‚¦ã‚¹ã¯ã¤ãªãŒã£ã¦ã„ãªã„
+//	asmout("DD OFFSET MouQueCmd_RecieveCheck,0AAH"); // power on reset(resetæˆåŠŸ ç¬¬1ãƒã‚¤ãƒˆ)
+//	asmout("DD OFFSET MouQueCmd_RecieveCheck,000H"); // power on reset(resetæˆåŠŸ ç¬¬2ãƒã‚¤ãƒˆ)
 	asmout("DD OFFSET MouQueCmd_ResetCommand");
 
 	DD(0);
@@ -310,14 +310,14 @@ cmd0120:
 	(offset) cmd += 4;
 	goto nextcmd;
 
-// –{—ˆ‚È‚çACF‚àƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚Í‚¢‚¯‚È‚¢‚µA
-// ³íI—¹Š„‚è‚İ‚à”­s‚·‚×‚«
+// æœ¬æ¥ãªã‚‰ã€CFã‚‚ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã¯ã„ã‘ãªã„ã—ã€
+// æ­£å¸¸çµ‚äº†å‰²ã‚Šè¾¼ã¿ã‚‚ç™ºè¡Œã™ã¹ã
 
 	ALIGN(4);
 
 cmd0120_cmdline:
 
-// –{—ˆ‚ÍAÅ‰‚Éƒ^ƒCƒ€ƒAƒEƒg‚ğdŠ|‚¯‚ÄAƒoƒbƒtƒ@‚ğ“f‚©‚¹‚é‚×‚«
+// æœ¬æ¥ã¯ã€æœ€åˆã«ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’ä»•æ›ã‘ã¦ã€ãƒãƒƒãƒ•ã‚¡ã‚’åã‹ã›ã‚‹ã¹ã
 
 	DD(3);
 	asmout("DD OFFSET KeyQueCmd_WaitBufEnpty");
@@ -329,7 +329,7 @@ cmd0120_cmdline:
 #endif
 
 cmd0124:
-	// KeyboardIntDrv‚ÌƒxƒNƒ^’ñ‹Ÿ
+	// KeyboardIntDrvã®ãƒ™ã‚¯ã‚¿æä¾›
 	asmout("MOV DWORD PTR FS:[EBX+4],OFFSET KeyboardIntDrv");
 	(short) cmd[8] = CS;
 	(offset) cmd += 12;
@@ -338,7 +338,7 @@ cmd0124:
 #if 0
 
 cmd0128:
-	// MouseIntDrv‚ÌƒxƒNƒ^’ñ‹Ÿ
+	// MouseIntDrvã®ãƒ™ã‚¯ã‚¿æä¾›
 	asmout("MOV DWORD PTR FS:[EBX+4],OFFSET MouseIntDrv");
 	(short) cmd[8] = CS;
 	(offset) cmd += 12;
@@ -347,8 +347,8 @@ cmd0128:
 #endif
 
 cmd0018:
-	// ƒo[ƒWƒ‡ƒ“—v‹
-	// –{—ˆ‚ÍAcmd[4]‚ª0‚Å‚ ‚é‚±‚Æ‚ğŠm”F‚µ‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢
+	// ãƒãƒ¼ã‚¸ãƒ§ãƒ³è¦æ±‚
+	// æœ¬æ¥ã¯ã€cmd[4]ãŒ0ã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèªã—ãªã‘ã‚Œã°ã„ã‘ãªã„
 	cmd[ 8] = 300; // ver.0.30
 	cmd[12] = 0;
 	cmd[16] = 0;
@@ -358,14 +358,14 @@ cmd0018:
 }
 
 void near keyboardInit()
-// –{—ˆ‚È‚ç‚±‚¢‚Â‚Í‚P‚Â‚Ìƒ^ƒXƒN‚Æ‚µ‚Ä‹N“®‚·‚éB
-// LDT‚ÉƒVƒXƒeƒ€ƒR[ƒ‹•K—v‚È‘S‚Ä‚ÌŠÂ‹«‚ğ‚¿A
-// ƒZƒbƒeƒBƒ“ƒO‚ªÏ‚ñ‚¾‚çAƒXƒŠ[ƒv‚·‚éB
-// ”Ä—pƒŒƒWƒXƒ^‚ÍA‚·‚×‚Ä”j‰ó‚³‚ê‚é
+// æœ¬æ¥ãªã‚‰ã“ã„ã¤ã¯ï¼‘ã¤ã®ã‚¿ã‚¹ã‚¯ã¨ã—ã¦èµ·å‹•ã™ã‚‹ã€‚
+// LDTã«ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å¿…è¦ãªå…¨ã¦ã®ç’°å¢ƒã‚’æŒã¡ã€
+// ã‚»ãƒƒãƒ†ã‚£ãƒ³ã‚°ãŒæ¸ˆã‚“ã ã‚‰ã€ã‚¹ãƒªãƒ¼ãƒ—ã™ã‚‹ã€‚
+// æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã€ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 {
 	unsigned int Init_sel     ==  2 * 8, TAPI_sel   == 12 * 8;
 
-	// ASKA‚ÌƒtƒHƒ[‚Ì‚½‚ß‚Ì’è”éŒ¾
+	// ASKAã®ãƒ•ã‚©ãƒ­ãƒ¼ã®ãŸã‚ã®å®šæ•°å®£è¨€
 	asmout("work_send_buf EQU 0000H");
 	asmout("work_pushflags EQU 0040H");
 	asmout("work_queue_buf EQU 0080H");
@@ -383,13 +383,13 @@ void near keyboardInit()
 	int zero == EAX, i == ECX;
 
 #if 0
-	PUSH(DS); // ‚ ‚ç‚©‚¶‚ßAmalloc‚µ‚ÄGDT‚ÉŠ„‚è“–‚Ä‚Ä‚¨‚­
+	PUSH(DS); // ã‚ã‚‰ã‹ã˜ã‚ã€mallocã—ã¦GDTã«å‰²ã‚Šå½“ã¦ã¦ãŠã
 	PUSH(EAX);
 	PUSH(ECX);
-	AX = CS; AX += 8; DS = AX; // “Á’è‚ÌDS‚ÉˆË‘¶‚µ‚È‚¢‚½‚ß‚Ìè‘±‚«
+	AX = CS; AX += 8; DS = AX; // ç‰¹å®šã®DSã«ä¾å­˜ã—ãªã„ãŸã‚ã®æ‰‹ç¶šã
 #endif
 	zero = 0;
-	i = 64 + 64 / 8; // ‚Â‚¢‚Å‚Épushflags‚à‰Šú‰»
+	i = 64 + 64 / 8; // ã¤ã„ã§ã«pushflagsã‚‚åˆæœŸåŒ–
 #if (defined(PERFECTASKA))
 	do {
 		i--;
@@ -397,7 +397,7 @@ void near keyboardInit()
 		work->send_buf[i * 8 + 4] = zero;
 	} while (!= 0);
 	work->keyjmp = KeyIntDrv_Normal;
-	work->queue_free_dw = sizeof (work->queue_buf) / 4 - 1; /* quecmd_tonormal‚Ì•ª */
+	work->queue_free_dw = sizeof (work->queue_buf) / 4 - 1; /* quecmd_tonormalã®åˆ† */
 	work->queue_write_ptr = (offset) work->queue_buf;
 	work->queue_exec_ptr  = (offset) work->queue_buf;
 #else
@@ -407,7 +407,7 @@ void near keyboardInit()
 		[work->send_buf+ ECX * 8 + 4] = zero;
 	} while (!= 0);
 	asmout("MOV DWORD PTR DS:[188h], OFFSET KeyIntDrv_Normal");
-	work->queue_free_dw = 128 / 4 - 1; /* quecmd_tonormal‚Ì•ª */
+	work->queue_free_dw = 128 / 4 - 1; /* quecmd_tonormalã®åˆ† */
 	work->queue_write_ptr = 0x80;
 	work->queue_exec_ptr  = 0x80;
 #endif
@@ -428,7 +428,7 @@ void near keyboardInit()
 	PUSH(zero); // eoc
 	PUSH(zero);
 	PUSH(zero);
-	PUSH(0x011c /* TAPI_SingnalMessageTimerƒxƒNƒ^—v‹ */);
+	PUSH(0x011c /* TAPI_SingnalMessageTimerãƒ™ã‚¯ã‚¿è¦æ±‚ */);
 	EBX = ESP;
 	DB(0x9a); DD(0); DW((short) TAPI_sel);
 	POP(EAX);
@@ -438,7 +438,7 @@ void near keyboardInit()
 	POP(FS);
 #endif
 
-#if (defined(PERFECTASKA))	/* VƒXƒ^ƒCƒ‹‚Ì’ñˆÄ */
+#if (defined(PERFECTASKA))	/* æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã®ææ¡ˆ */
   #if (defined(FMRMOUSE))
 	work->mouse_send_buf[0] = 0x00003243;
 	work->mouse_send_buf[4] = 0x7f000002;
@@ -474,19 +474,19 @@ dummy_fret:
 }
 
 /*
-	DS:ESI‚©‚ç‚Ìd—l(ƒ^ƒCƒ}[ê—pƒVƒOƒiƒ‹ˆ—ƒ‹[ƒ`ƒ“g—p)B
-	+00 : bit0-2 : ƒƒbƒZ[ƒWdw”BÅ‚7(28bytes)B
-	      bit3   : eax, ecx, edxƒ[ƒh & CF = 1‚ğ‚â‚é‚©‚â‚ç‚È‚¢‚©(1‚Å‚â‚é)B
-	      bit4-  : ƒƒbƒZ[ƒW‚Ì‘—Mæ‚Ìw’è‚Ég‚¤iƒVƒOƒiƒ‹ƒ|[ƒgjB
-	+04 -	     : ƒƒbƒZ[ƒW‚ğ‘‚­
+	DS:ESIã‹ã‚‰ã®ä»•æ§˜(ã‚¿ã‚¤ãƒãƒ¼å°‚ç”¨ã‚·ã‚°ãƒŠãƒ«å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³ä½¿ç”¨æ™‚)ã€‚
+	+00 : bit0-2 : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸dwæ•°ã€‚æœ€é«˜7(28bytes)ã€‚
+	      bit3   : eax, ecx, edxãƒ­ãƒ¼ãƒ‰ & CF = 1ã‚’ã‚„ã‚‹ã‹ã‚„ã‚‰ãªã„ã‹(1ã§ã‚„ã‚‹)ã€‚
+	      bit4-  : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®é€ä¿¡å…ˆã®æŒ‡å®šã«ä½¿ã†ï¼ˆã‚·ã‚°ãƒŠãƒ«ãƒãƒ¼ãƒˆï¼‰ã€‚
+	+04 -	     : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ›¸ã
 
-	DS:ESI‚©‚ç‚Ìd—l(”Ä—pƒVƒOƒiƒ‹ˆ—ƒ‹[ƒ`ƒ“g—p)B
-	+00 : bit0-3 : ƒƒbƒZ[ƒWdw”BÅ‚15(60bytes)B
-	      bit4-  : ƒƒbƒZ[ƒW‚Ì‘—Mæ‚Ìw’è‚Ég‚¤iƒVƒOƒiƒ‹ƒ|[ƒgjB
-	+04 -	     : ƒƒbƒZ[ƒW‚ğ‘‚­
+	DS:ESIã‹ã‚‰ã®ä»•æ§˜(æ±ç”¨ã‚·ã‚°ãƒŠãƒ«å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³ä½¿ç”¨æ™‚)ã€‚
+	+00 : bit0-3 : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸dwæ•°ã€‚æœ€é«˜15(60bytes)ã€‚
+	      bit4-  : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®é€ä¿¡å…ˆã®æŒ‡å®šã«ä½¿ã†ï¼ˆã‚·ã‚°ãƒŠãƒ«ãƒãƒ¼ãƒˆï¼‰ã€‚
+	+04 -	     : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ›¸ã
 
-	ˆê”Ê‚É‚ÍAƒƒbƒZ[ƒW–{‘Ì‚ÌÅ‰‚Ì4ƒoƒCƒg‚ÍAó‚¯æ‚Á‚½ƒ‹[ƒ`ƒ“‚ª’N‚©‚ç‚ÌƒƒbƒZ[ƒW‚Å‚ ‚é‚©‚ğ
-	¯•Ê‚·‚é‚Ì‚Ég‚í‚ê‚éB‚ä‚¦‚ÉAƒL[ƒR[ƒh’l‚È‚Ç‚ÍA+08‚É‘‚«‚Ü‚ê‚éB
+	ä¸€èˆ¬ã«ã¯ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æœ¬ä½“ã®æœ€åˆã®4ãƒã‚¤ãƒˆã¯ã€å—ã‘å–ã£ãŸãƒ«ãƒ¼ãƒãƒ³ãŒèª°ã‹ã‚‰ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã§ã‚ã‚‹ã‹ã‚’
+	è­˜åˆ¥ã™ã‚‹ã®ã«ä½¿ã‚ã‚Œã‚‹ã€‚ã‚†ãˆã«ã€ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰å€¤ãªã©ã¯ã€+08ã«æ›¸ãè¾¼ã¾ã‚Œã‚‹ã€‚
 */
 
 void far KeyboardIntDrv()
@@ -506,8 +506,8 @@ void far KeyboardIntDrv()
 	PUSH(DS);
 	PUSH(EAX);
 	PUSH(EDX);
-	MOV(EAX, CS); EAX += 8; DS = AX; // “Á’è‚ÌDS‚ÉˆË‘¶‚µ‚È‚¢‚½‚ß‚Ìè‘±‚«
-	ss0->ring0_count++; // Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{
+	MOV(EAX, CS); EAX += 8; DS = AX; // ç‰¹å®šã®DSã«ä¾å­˜ã—ãªã„ãŸã‚ã®æ‰‹ç¶šã
+	ss0->ring0_count++; // å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬
 	ss0->cli_count++;
 }
 
@@ -520,21 +520,21 @@ void near KeyboardIntDrv2()
 	EDX -= 2;
 	IN(AL, DX);
 	AH = AL;
-	AL = 0x61 /* IRQ-01‚ğI—¹ */;
+	AL = 0x61 /* IRQ-01ã‚’çµ‚äº† */;
 	OUT(0x00, AL);
 	asmout("JMP DWORD PTR DS:[0188H]"); // goto work->keyjmp;
 }
 
 
-/* ‘æˆêƒoƒCƒg‚Í0x80‚ª—§‚Á‚Ä‚¢‚éB‘¼‚Í—§‚Á‚Ä‚¢‚È‚¢B
- * ‘æ“ñƒoƒCƒg‚ª0x7e‚¾‚Æ‚»‚ê‚ÍŠg’£ƒR[ƒh‚ç‚µ‚­,
- * ‚³‚ç‚ÉŒã‘±‚ÌƒoƒCƒg‚ğ“Ç‚ñ‚ÅƒR[ƒh‚Æ‚·‚éB
+/* ç¬¬ä¸€ãƒã‚¤ãƒˆã¯0x80ãŒç«‹ã£ã¦ã„ã‚‹ã€‚ä»–ã¯ç«‹ã£ã¦ã„ãªã„ã€‚
+ * ç¬¬äºŒãƒã‚¤ãƒˆãŒ0x7eã ã¨ãã‚Œã¯æ‹¡å¼µã‚³ãƒ¼ãƒ‰ã‚‰ã—ã,
+ * ã•ã‚‰ã«å¾Œç¶šã®ãƒã‚¤ãƒˆã‚’èª­ã‚“ã§ã‚³ãƒ¼ãƒ‰ã¨ã™ã‚‹ã€‚
  */
 /*
- * buf[0]=0xE0`0xE7‚Ån‚Ü‚é‚Ì‚ÍFMRƒ}ƒEƒXB
- *  0x04‚ª—§‚Á‚Ä‚¢‚é‚Æ, ƒ{ƒ^ƒ“î•ñ‚ª•t‚­B
- *  0x02‚Ídy‚ÌMSB, 0x01‚Ídx‚ÌMSB (Œã‘±ƒoƒCƒg‚Å‚ÍMSB‚ğ—§‚Ä‚È‚¢Œˆ‚Ü‚è‚È‚Ì‚Å)B
- * buf[1]=dx, buf[2]=dyB
+ * buf[0]=0xE0ã€œ0xE7ã§å§‹ã¾ã‚‹ã®ã¯FMRãƒã‚¦ã‚¹ã€‚
+ *  0x04ãŒç«‹ã£ã¦ã„ã‚‹ã¨, ãƒœã‚¿ãƒ³æƒ…å ±ãŒä»˜ãã€‚
+ *  0x02ã¯dyã®MSB, 0x01ã¯dxã®MSB (å¾Œç¶šãƒã‚¤ãƒˆã§ã¯MSBã‚’ç«‹ã¦ãªã„æ±ºã¾ã‚Šãªã®ã§)ã€‚
+ * buf[1]=dx, buf[2]=dyã€‚
  * buf[3]=R+L*2+C*4	each bit is 1 if pushed.
  */
 void near KeyIntDrv_Normal()
@@ -542,7 +542,7 @@ void near KeyIntDrv_Normal()
 	keyboarddata *work == DS:0;
 	unsigned int keycode == EAX;
 	if (AH < 0) {
-		// ‘æˆêƒoƒCƒg
+		// ç¬¬ä¸€ãƒã‚¤ãƒˆ
 		work->firstbyte = AH;
 #if (defined(FMRMOUSE))
 		AH -= 0xe0;
@@ -551,7 +551,7 @@ void near KeyIntDrv_Normal()
 #endif
 		goto fin;
 	}
-	// ‘æ“ñƒoƒCƒg
+	// ç¬¬äºŒãƒã‚¤ãƒˆ
 	/* (false) */ if (AH == 0x7e) {
 		/* work->keyjmp = KeyIntDrv_E0byte; */ asmout("MOV DWORD PTR DS:[0188H],OFFSET KeyIntDrv_7Ebyte");
 		goto fin;
@@ -585,7 +585,7 @@ send_keycode_AL:
 		keycode |= 0x02000000;
 	}
 send_keycode:
-	/* make/break‚Ìê‡‚ÍAremake‚âoverbreak‚Ìƒ`ƒFƒbƒN‚à‚·‚é */
+	/* make/breakã®å ´åˆã¯ã€remakeã‚„overbreakã®ãƒã‚§ãƒƒã‚¯ã‚‚ã™ã‚‹ */
 	asmout("KeyIntDrv_send_keycode: EQU $");
 	PUSHAD();
 #if 0
@@ -599,7 +599,7 @@ send_keycode:
 		} else {
 			// break
 			/* BTR(*(work->pushflags), keycode2) */ asmout("BTR DWORD PTR DS:[040H],ECX");
-			CMC() /* CF =~ CF */;
+			CMC() /* CF =â€¾ CF */;
 		}
 		ADC(keycode3, 0);
 		keycode3 <<= 25; // EAX = 0 or 0x02000000
@@ -608,10 +608,10 @@ send_keycode:
 #endif
 
 	/* work->send_buf[8] */ [work + 0x08] = keycode;
-	// make/remake/break/overbreak‚Ì‚¢‚¸‚ê‚Å‚àA‘—M‚·‚é
+	// make/remake/break/overbreakã®ã„ãšã‚Œã§ã‚‚ã€é€ä¿¡ã™ã‚‹
 	ESI = /* &work->send_buf */ 0x00;
 	/* (work->keysignal)() */ asmout("CALL FAR DWORD DS:[0180H]"); 
-	// ESI‚àŠÜ‚ßA”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó‚³‚ê‚é
+	// ESIã‚‚å«ã‚ã€æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 	POPAD();
 fin:
 }
@@ -620,19 +620,19 @@ void near KeyIntDrv_Ret()
 {
 //	IN(AL, 0x64);
 //	AL &= 0x21;
-	// if (AL == 1 /* keyboard data ‚ ‚è */) goto KeyboardIntDrv2;
+	// if (AL == 1 /* keyboard data ã‚ã‚Š */) goto KeyboardIntDrv2;
 //	CMP(AL, 1);
 //	asmout("JE KeyboardIntDrv2");
-		// ‚½‚¢‚Ä‚¢‚Ìê‡AKeyIntDrv_Normal‚É–ß‚Á‚Ä‚­‚é‚¾‚ë‚¤B
-		// ‚µ‚©‚µAƒL[ƒVƒOƒiƒ‹‚ªˆø‚«‹à‚É‚È‚Á‚ÄAƒRƒ}ƒ“ƒhƒ‚[ƒh‚ÉˆÚ‚é‚©‚à‚µ‚ê‚È‚¢B
-//	AL = 0x61 /* IRQ-01‚ğI—¹ */;
+		// ãŸã„ã¦ã„ã®å ´åˆã€KeyIntDrv_Normalã«æˆ»ã£ã¦ãã‚‹ã ã‚ã†ã€‚
+		// ã—ã‹ã—ã€ã‚­ãƒ¼ã‚·ã‚°ãƒŠãƒ«ãŒå¼•ãé‡‘ã«ãªã£ã¦ã€ã‚³ãƒãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ç§»ã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã€‚
+//	AL = 0x61 /* IRQ-01ã‚’çµ‚äº† */;
 //	OUT(0x20, AL);
 	POP(EDX);
 	POP(EAX);
 
 	SS0_struct *ss0 == /* SS:(- sizeof (SS0_struct)) */ SS:0xffffffc0;
 
-	ss0->cli_count--; // Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{
+	ss0->cli_count--; // å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬
 	if (== 0) goto call_clicall;
 	POP(DS);
 	ss0->ring0_count--;
@@ -655,7 +655,7 @@ call_ring0call:
 
 
 #if (defined(FMRMOUSE))
-/* FMRƒ}ƒEƒXƒhƒ‰ƒCƒo */
+/* FMRãƒã‚¦ã‚¹ãƒ‰ãƒ©ã‚¤ãƒ */
 void near KeyIntDrv_rmouse()
 {
 	keyboarddata *work == DS:0;
@@ -663,10 +663,10 @@ void near KeyIntDrv_rmouse()
 
 	asmout("#fin EQU KeyIntDrv_Ret");
 	if (AH < 0)
-		goto fin; // ‘æˆêƒoƒCƒg
-	// ‘æ“ñƒoƒCƒgˆÈ~
-	AL = work->firstbyte;	/* AL=0xe?‚È‚ç‘æˆêƒpƒ‰ƒ[ƒ^, 0x0?‚Í‘æ“ñ, 0x2?‚Í‘æO */
-	AL += 0x20;		/* ƒJƒEƒ“ƒgƒAƒbƒv, 0xe?‚È‚çCF */
+		goto fin; // ç¬¬ä¸€ãƒã‚¤ãƒˆ
+	// ç¬¬äºŒãƒã‚¤ãƒˆä»¥é™
+	AL = work->firstbyte;	/* AL=0xe?ãªã‚‰ç¬¬ä¸€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿, 0x0?ã¯ç¬¬äºŒ, 0x2?ã¯ç¬¬ä¸‰ */
+	AL += 0x20;		/* ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—, 0xe?ãªã‚‰CF */
 	work->firstbyte = AL;
 	if (CF != 0) {
 		/* dx */
@@ -680,9 +680,9 @@ void near KeyIntDrv_rmouse()
 		RCR(AH, 1);
 		[work->mouse_send_buf+12+2] = AH;
 		TEST(AL, 1);
-		if (== 0) goto send;	/* 2byte‚ÅI‚í‚è */
+		if (== 0) goto send;	/* 2byteã§çµ‚ã‚ã‚Š */
 	} else {		
-		/* ƒ{ƒ^ƒ“ */
+		/* ãƒœã‚¿ãƒ³ */
 		AH &= 0x03;
 		AH += 0xfe;
 		ADC(AH, AH);		/* exchange bit0, bit1 */
@@ -694,11 +694,11 @@ void near KeyIntDrv_rmouse()
 	#if (defined(PERFECTASKA))
 		work->keyjmp = KeyIntDrv_Normal;
 		(work->mousesignal)();
-		// ESI‚àŠÜ‚ßA”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó‚³‚ê‚é
+		// ESIã‚‚å«ã‚ã€æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 	#else
 		work->keyjmp = (int)KeyIntDrv_Normal;
 		asmout("CALL FAR DWORD[DS:01b0h]");
-		// ESI‚àŠÜ‚ßA”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó‚³‚ê‚é
+		// ESIã‚‚å«ã‚ã€æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 	#endif
 		POPAD();
 	}
@@ -713,8 +713,8 @@ void near KeyIntDrv_7Ebyte()
 	unsigned int keycode == EAX;
 	TEST(AH, AH);
 	if ((signed) < 0)
-		goto fin; // ‘æˆêƒoƒCƒg
-	// ‘æ“ñƒoƒCƒg
+		goto fin; // ç¬¬ä¸€ãƒã‚¤ãƒˆ
+	// ç¬¬äºŒãƒã‚¤ãƒˆ
 	AL = AH;
 	/* work->keyjmp = KeyIntDrv_Normal; */ asmout("MOV DWORD PTR DS:[0188h],OFFSET KeyIntDrv_Normal");
 	AL |= 0x80;
@@ -737,48 +737,48 @@ if (AL == 0x5d /* SYSREQ */) { // !!!
 
 
 void near KeyboardQueueExecute()
-/*	ƒL[ƒ{[ƒhƒ}ƒCƒNƒƒRƒ}ƒ“ƒhƒLƒ…[ƒCƒ“ƒO
+/*	ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒã‚¤ã‚¯ãƒ­ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã‚¤ãƒ³ã‚°
 
-	‚à‚Á‚Æ‘½‹@”\‚É‚·‚éBw’èƒoƒCƒg‚ğ‘Ò‚ÂAACK/NACK“]‘—‚·‚éA’Pƒ“]‘—‚·‚éA‚ª‘I‚×‚éB
-		4ƒoƒCƒg‚ÌƒWƒƒƒ“ƒvƒxƒNƒ^‚ğƒRƒ}ƒ“ƒh‚É‚·‚éB
-		ƒpƒ‰ƒ[ƒ^[‚à4ƒoƒCƒgƒAƒ‰ƒCƒ“B
-		‚Ü‚½AƒRƒ}ƒ“ƒh‚É‚æ‚éƒRƒ}ƒ“ƒhƒLƒ…[‚Ìæ“ªˆÚ“®‚à‚â‚éB
+	ã‚‚ã£ã¨å¤šæ©Ÿèƒ½ã«ã™ã‚‹ã€‚æŒ‡å®šãƒã‚¤ãƒˆã‚’å¾…ã¤ã€ACK/NACKè»¢é€ã™ã‚‹ã€å˜ç´”è»¢é€ã™ã‚‹ã€ãŒé¸ã¹ã‚‹ã€‚
+		4ãƒã‚¤ãƒˆã®ã‚¸ãƒ£ãƒ³ãƒ—ãƒ™ã‚¯ã‚¿ã‚’ã‚³ãƒãƒ³ãƒ‰ã«ã™ã‚‹ã€‚
+		ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚‚4ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ã€‚
+		ã¾ãŸã€ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã®å…ˆé ­ç§»å‹•ã‚‚ã‚„ã‚‹ã€‚
 
-		ƒm[ƒ}ƒ‹ƒ‚[ƒh‚ÉˆÚs	00    <
-		’Pƒ“]‘—		01 xx
-		w’èƒoƒCƒgóM‘Ò‚¿	02 xx < óM‚µ‚½‚¢ƒoƒCƒg”‚ğ‘‚­
-		“Á’èƒf[ƒ^[óM‘Ò‚¿	03 xx < ...ƒGƒ‰[‚Ì‚ÍA0x00000001‚ğ•Ô‚·B
-		ACK“]‘—			04 xx < ...ƒGƒ‰[‚Ì‚ÍA0x00000002‚ğ•Ô‚·B
-		óMƒf[ƒ^[Ì‚Ä‚é	05    < ƒoƒCƒg”•s–¾‚Ìê‡
-		óMƒ|ƒCƒ“ƒ^‰Šú‰»	06
-		³íI—¹ƒVƒOƒiƒ‹”­¶	07	... ³íI—¹‚È‚Ì‚ÅA0‚ğ•Ô‚·B
+		ãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰ã«ç§»è¡Œ	00    <
+		å˜ç´”è»¢é€		01 xx
+		æŒ‡å®šãƒã‚¤ãƒˆå—ä¿¡å¾…ã¡	02 xx < å—ä¿¡ã—ãŸã„ãƒã‚¤ãƒˆæ•°ã‚’æ›¸ã
+		ç‰¹å®šãƒ‡ãƒ¼ã‚¿ãƒ¼å—ä¿¡å¾…ã¡	03 xx < ...ã‚¨ãƒ©ãƒ¼ã®æ™‚ã¯ã€0x00000001ã‚’è¿”ã™ã€‚
+		ACKè»¢é€			04 xx < ...ã‚¨ãƒ©ãƒ¼ã®æ™‚ã¯ã€0x00000002ã‚’è¿”ã™ã€‚
+		å—ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒ¼æ¨ã¦ã‚‹	05    < ãƒã‚¤ãƒˆæ•°ä¸æ˜ã®å ´åˆ
+		å—ä¿¡ãƒã‚¤ãƒ³ã‚¿åˆæœŸåŒ–	06
+		æ­£å¸¸çµ‚äº†ã‚·ã‚°ãƒŠãƒ«ç™ºç”Ÿ	07	... æ­£å¸¸çµ‚äº†ãªã®ã§ã€0ã‚’è¿”ã™ã€‚
 		
-		ƒVƒOƒiƒ‹ƒwƒbƒ_İ’è	80 (align 4) dw,wd,wd
-		ƒVƒOƒiƒ‹Šg’£İ’è	81 (align 4) dw,wd,wd
-				(Å‰‚Ì6bytes‚Íƒ|ƒCƒ“ƒ^BÅŒã‚Ìwd‚Í“]‘—dw”)
-		ƒVƒOƒiƒ‹ƒxƒNƒ^İ’è	82 (align 4) dw,wd,wd
-				(Å‰‚Ì6bytes‚Íƒ|ƒCƒ“ƒ^BÅŒã‚Ìwd‚Íƒ_ƒ~[)
-		óMƒf[ƒ^[ƒRƒs[	83 (align 4) dw,wd,wd
-				(Å‰‚Ì6bytes‚Íƒ|ƒCƒ“ƒ^BÅŒã‚Ìwd‚Í“]‘—‰Â”\dw”)
-				‚È‚¨A“]‘—‚³‚ê‚éÅ‰‚Ìdw‚ÍAƒoƒbƒtƒ@g—p—ÊB
+		ã‚·ã‚°ãƒŠãƒ«ãƒ˜ãƒƒãƒ€è¨­å®š	80 (align 4) dw,wd,wd
+		ã‚·ã‚°ãƒŠãƒ«æ‹¡å¼µè¨­å®š	81 (align 4) dw,wd,wd
+				(æœ€åˆã®6bytesã¯ãƒã‚¤ãƒ³ã‚¿ã€‚æœ€å¾Œã®wdã¯è»¢é€dwæ•°)
+		ã‚·ã‚°ãƒŠãƒ«ãƒ™ã‚¯ã‚¿è¨­å®š	82 (align 4) dw,wd,wd
+				(æœ€åˆã®6bytesã¯ãƒã‚¤ãƒ³ã‚¿ã€‚æœ€å¾Œã®wdã¯ãƒ€ãƒŸãƒ¼)
+		å—ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚³ãƒ”ãƒ¼	83 (align 4) dw,wd,wd
+				(æœ€åˆã®6bytesã¯ãƒã‚¤ãƒ³ã‚¿ã€‚æœ€å¾Œã®wdã¯è»¢é€å¯èƒ½dwæ•°)
+				ãªãŠã€è»¢é€ã•ã‚Œã‚‹æœ€åˆã®dwã¯ã€ãƒãƒƒãƒ•ã‚¡ä½¿ç”¨é‡ã€‚
 
-	‘‚«‚İ‘¦’l‚Í‚â‚ß‚éB‘‚«‚İæ‚ÍAóMƒoƒbƒtƒ@B
+	æ›¸ãè¾¼ã¿å³å€¤ã¯ã‚„ã‚ã‚‹ã€‚æ›¸ãè¾¼ã¿å…ˆã¯ã€å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã€‚
 
-	‚±‚Ì•\‚Ì’†‚Ì00`83‚ÍAFS:EBX‚É‘‚­ƒRƒ}ƒ“ƒh‚Æ‚Í–³ŠÖŒW
+	ã“ã®è¡¨ã®ä¸­ã®00ã€œ83ã¯ã€FS:EBXã«æ›¸ãã‚³ãƒãƒ³ãƒ‰ã¨ã¯ç„¡é–¢ä¿‚
 
-	‚±‚Ì‹@”\(02)‚Ì‚¨‚©‚°‚ÅA•¡”ƒoƒCƒg‚Ì‘Ò‚¿‚ª‹Lq‚Å‚«‚é
-	ˆê”Ê“I‚É‚ÍAƒGƒ‰[ƒVƒOƒiƒ‹‚ÍAãˆÊ‚ÌƒL[ƒ{[ƒhƒhƒ‰ƒCƒo[‚ÉÚ‘±‚·‚éB
-	ˆê”Ê‚ÌƒAƒvƒŠ‚Éİ’è‚·‚×‚«‚Å‚Í‚È‚¢B
+	ã“ã®æ©Ÿèƒ½(02)ã®ãŠã‹ã’ã§ã€è¤‡æ•°ãƒã‚¤ãƒˆã®å¾…ã¡ãŒè¨˜è¿°ã§ãã‚‹
+	ä¸€èˆ¬çš„ã«ã¯ã€ã‚¨ãƒ©ãƒ¼ã‚·ã‚°ãƒŠãƒ«ã¯ã€ä¸Šä½ã®ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã«æ¥ç¶šã™ã‚‹ã€‚
+	ä¸€èˆ¬ã®ã‚¢ãƒ—ãƒªã«è¨­å®šã™ã¹ãã§ã¯ãªã„ã€‚
 
-	‚Ç‚¤‚â‚Á‚ÄA–ß‚é‚©Bjmp‚É‚µ‚½‚¢‚¯‚ÇA‚»‚¤‚às‚©‚È‚¢B
-	nret‚Æ‚¢‚¤‚Ì‚à‚¢‚Ü‚¢‚¿‚¾BEEEnret‚É‚µ‚æ‚¤B
-	ƒLƒ…[‚Ì“r’†‚Å‚Í‚ÌKeyWorkJmp‚ÍA•Ï‰»‚µ‚È‚¢BEEE‚¾‚©‚çAƒ‰ƒ“ƒjƒ“ƒOƒtƒ‰ƒO‚Æ‚µ‚Äg‚¦‚éB
+	ã©ã†ã‚„ã£ã¦ã€æˆ»ã‚‹ã‹ã€‚jmpã«ã—ãŸã„ã‘ã©ã€ãã†ã‚‚è¡Œã‹ãªã„ã€‚
+	nretã¨ã„ã†ã®ã‚‚ã„ã¾ã„ã¡ã ã€‚ãƒ»ãƒ»ãƒ»nretã«ã—ã‚ˆã†ã€‚
+	ã‚­ãƒ¥ãƒ¼ã®é€”ä¸­ã§ã¯ã®KeyWorkJmpã¯ã€å¤‰åŒ–ã—ãªã„ã€‚ãƒ»ãƒ»ãƒ»ã ã‹ã‚‰ã€ãƒ©ãƒ³ãƒ‹ãƒ³ã‚°ãƒ•ãƒ©ã‚°ã¨ã—ã¦ä½¿ãˆã‚‹ã€‚
 
-	fs:ebx‚É“]‘—‚µ‚½‚¢ƒf[ƒ^[‚ğÏ‚ñ‚Å’u‚¢‚ÄAƒR[ƒ‹‚·‚é‚¾‚¯B‚ ‚Æ‚ÍÓ”C‚Á‚ÄƒLƒ…[‚É‘—‚Á‚Ä‚­‚ê‚éB
-		iŒ`®‚ÍAdw”Aƒf[ƒ^[AEEEj
-	ƒ^ƒCƒ€ƒAƒEƒg—p‚Ìƒ^ƒCƒ}[‚ª‚ ‚é‚Æ‚¢‚¢Bƒm[ƒh‚Íˆê‚Â‚Å\•ªB
+	fs:ebxã«è»¢é€ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚’ç©ã‚“ã§ç½®ã„ã¦ã€ã‚³ãƒ¼ãƒ«ã™ã‚‹ã ã‘ã€‚ã‚ã¨ã¯è²¬ä»»æŒã£ã¦ã‚­ãƒ¥ãƒ¼ã«é€ã£ã¦ãã‚Œã‚‹ã€‚
+		ï¼ˆå½¢å¼ã¯ã€dwæ•°ã€ãƒ‡ãƒ¼ã‚¿ãƒ¼ã€ãƒ»ãƒ»ãƒ»ï¼‰
+	ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç”¨ã®ã‚¿ã‚¤ãƒãƒ¼ãŒã‚ã‚‹ã¨ã„ã„ã€‚ãƒãƒ¼ãƒ‰ã¯ä¸€ã¤ã§ååˆ†ã€‚
 
-	”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó‚³‚ê‚é
+	æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 */
 {
 	keyboarddata *work == DS:0;
@@ -795,26 +795,26 @@ void near KeyboardQueueExecute()
 	(offset) commands += 4;
 	do {
 		free -= cmds_length;
-		/* (false) */ if ((unsigned) < 0) { // I—¹ƒRƒ}ƒ“ƒh‚Ì•ª‚ÍA‚ ‚ç‚©‚¶‚ßˆø‚¢‚Ä‚ ‚é‚Ì‚ÅA“™‚µ‚­‚Ä‚à‚¢‚¢
-			// ‘S‚Ä‚ğŒä”jZ‚É‚·‚é
+		/* (false) */ if ((unsigned) < 0) { // çµ‚äº†ã‚³ãƒãƒ³ãƒ‰ã®åˆ†ã¯ã€ã‚ã‚‰ã‹ã˜ã‚å¼•ã„ã¦ã‚ã‚‹ã®ã§ã€ç­‰ã—ãã¦ã‚‚ã„ã„
+			// å…¨ã¦ã‚’å¾¡ç ´ç®—ã«ã™ã‚‹
 buf_full_err:
 			(offset) wp = work->queue_write_ptr;
 			/* *wp = quecmd_tonormal */ asmout("MOV DWORD PTR DS:[ESI],OFFSET #quecmd_tonormal");
-				// ‚±‚ÌƒRƒ}ƒ“ƒh‚ğó—‚µ‚½‚çAqueue_write_ptr‚ğ‰Šú‰»‚·‚é
+				// ã“ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å—ç†ã—ãŸã‚‰ã€queue_write_ptrã‚’åˆæœŸåŒ–ã™ã‚‹
 			POPFD();
 			STC();
 			return;
 		}
 		/* EAX = (offset) wp + cmds_length * 4 */ asmout("LEA EAX,[ESI+ECX*4]");
 		/* (false) */ if ((unsigned) EAX >= /* (offset) work->queue_buf + sizeof (work->queue_buf) */ 0x100) {
-			// “™‚µ‚­‚Ä‚àƒ_ƒ‚È‚Ì‚ÍAƒwƒbƒh‚Ö–ß‚·ƒRƒ}ƒ“ƒh‚ªg‚¦‚È‚¢‚©‚ç
+			// ç­‰ã—ãã¦ã‚‚ãƒ€ãƒ¡ãªã®ã¯ã€ãƒ˜ãƒƒãƒ‰ã¸æˆ»ã™ã‚³ãƒãƒ³ãƒ‰ãŒä½¿ãˆãªã„ã‹ã‚‰
 			// free -= (work->queue_buf + sizeof (work->queue_buf) - (offset) wp) / 4;
 			// free += (- work->queue_buf - sizeof (work->queue_buf) + (offset) wp) / 4;
 			/* EAX = (offset) wp - ((offset) work->queue_buf + sizeof (work->queue)); */
 			asmout("LEA EAX,[ESI-0100H]");
 			/* *wp = (offset) quecmd_restore */ asmout("MOV DWORD PTR DS:[ESI],OFFSET #quecmd_restore");
 			EAX /= 4;
-			free += EAX; // ‚à‚µA‚±‚ê‚Åfree‚ª0‚à‚µ‚­‚Í•‰‚É‚È‚Á‚½‚çA‚â‚Í‚è‘«‚è‚È‚¢‚±‚Æ‚É‚È‚é
+			free += EAX; // ã‚‚ã—ã€ã“ã‚Œã§freeãŒ0ã‚‚ã—ãã¯è² ã«ãªã£ãŸã‚‰ã€ã‚„ã¯ã‚Šè¶³ã‚Šãªã„ã“ã¨ã«ãªã‚‹
 			if ((signed) < 0)
 				goto buf_full_err;
 			(offset) wp = /* work->queue_buf */ 0x080;
@@ -870,18 +870,18 @@ KeyQueIntDrv:
 	goto KeyIntDrv_Ret;
 
 /*
-	“ü—Íƒf[ƒ^[‘Ò‚¿‚È‚çAexec_wait_int‚ğƒZƒbƒg‚·‚é‚±‚Æ
-	ƒ^ƒCƒ}[‚È‚Ç‚ğ‘Ò‚Âê‡‚ÍA‚±‚ÌŒÀ‚è‚Å‚Í‚È‚¢B
-	ƒ^ƒCƒ€ƒAƒEƒg—pƒ^ƒCƒ}[‚ğg‚¤‚È‚çAg—pŒã‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½ó‘Ô‚É‚µ‚Ä‚¨‚­‚±‚ÆB
-	EEE‚Á‚Ä‚±‚Æ‚ÍAƒLƒƒƒ“ƒZƒ‹ƒ}ƒCƒNƒƒR[ƒh‚ğg‚¤‚Æ‚¢‚¤‚±‚ÆB
-	iƒ^ƒCƒ}[g—pƒRƒ}ƒ“ƒh‚ÍAŒ»İ‚©‚ç‚ÌŠÔ‚ğ‘‚¯‚Î‚¢‚¢j
+	å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãƒ¼å¾…ã¡ãªã‚‰ã€exec_wait_intã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã“ã¨
+	ã‚¿ã‚¤ãƒãƒ¼ãªã©ã‚’å¾…ã¤å ´åˆã¯ã€ã“ã®é™ã‚Šã§ã¯ãªã„ã€‚
+	ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’ä½¿ã†ãªã‚‰ã€ä½¿ç”¨å¾Œã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚ŒãŸçŠ¶æ…‹ã«ã—ã¦ãŠãã“ã¨ã€‚
+	ãƒ»ãƒ»ãƒ»ã£ã¦ã“ã¨ã¯ã€ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒã‚¤ã‚¯ãƒ­ã‚³ãƒ¼ãƒ‰ã‚’ä½¿ã†ã¨ã„ã†ã“ã¨ã€‚
+	ï¼ˆã‚¿ã‚¤ãƒãƒ¼ä½¿ç”¨ã‚³ãƒãƒ³ãƒ‰ã¯ã€ç¾åœ¨ã‹ã‚‰ã®æ™‚é–“ã‚’æ›¸ã‘ã°ã„ã„ï¼‰
 
 */
 
 quecmd_tonormal:
 	/* work->keyjmp = KeyIntDrv_Normal; */ asmout("MOV DWORD PTR DS:[0188h],OFFSET KeyIntDrv_Normal");
 	work->queue_write_ptr = /* (offset) work->queue_buf */ 0x80;
-	EBP = /* sizeof (work->queue_buf) */ 128 / 4 - 1 /* qurcmd_tonormal‚Ì•ª */;
+	EBP = /* sizeof (work->queue_buf) */ 128 / 4 - 1 /* qurcmd_tonormalã®åˆ† */;
 	EBX = /* (offset) work->queue_buf */ 0x80;
 	/* (near) */ return;
 
@@ -896,7 +896,7 @@ quecmd_restore:
 }
 
 void near KeyQueCmd_SendData()
-// ’Pƒ‘—M
+// å˜ç´”é€ä¿¡
 {
 	AL = [DS:EBX+4];
 	EBX += 8;
@@ -906,13 +906,13 @@ void near KeyQueCmd_SendData()
 }
 
 void near KeyQueCmd_AckSendData()
-// ACK§Œä•t‚«‘—M
+// ACKåˆ¶å¾¡ä»˜ãé€ä¿¡
 {
 	/* work->exec_wait_int = intack; */ asmout("MOV DWORD PTR DS:[019CH],OFFSET #intack");
 retry:
 	AL = [DS:EBX + 4];
 	OUT(0x60, AL);
-	return; // EBX‚ÆEBP‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä‚¨‚­iÀs’†‚Ì–½—ß‚ª‚í‚©‚ç‚È‚­‚È‚é‚©‚çj
+	return; // EBXã¨EBPã¯ãã®ã¾ã¾ã«ã—ã¦ãŠãï¼ˆå®Ÿè¡Œä¸­ã®å‘½ä»¤ãŒã‚ã‹ã‚‰ãªããªã‚‹ã‹ã‚‰ï¼‰
 
 intack:
 	if (AL == 0xfa /* ACK */) {
@@ -923,7 +923,7 @@ intack:
 	if (AL == 0xfe /* NACK */)
 		goto retry;
 
-	// ˆÈ‰º‚ÍSOLO2150‘Îô
+	// ä»¥ä¸‹ã¯SOLO2150å¯¾ç­–
 	EBX += 8;
 	EBP += 2;
 	asmout("CMP DWORD PTR DS:[EBX],OFFSET KeyQueCmd_RecieveCheck");
@@ -937,12 +937,12 @@ intack:
 
 	EBX -= 8;
 	EBP -= 2;
-	INT(0x03); // ƒGƒ‰[ƒVƒOƒiƒ‹‚ğ”­¶‚³‚¹‚é
+	INT(0x03); // ã‚¨ãƒ©ãƒ¼ã‚·ã‚°ãƒŠãƒ«ã‚’ç™ºç”Ÿã•ã›ã‚‹
 }
 
 /*
 
-KeyQueCmd_RecieveBytes	proc	near	; nƒoƒCƒgóM
+KeyQueCmd_RecieveBytes	proc	near	; nãƒã‚¤ãƒˆå—ä¿¡
 
 			mov	dword ptr ds:[KeyWorkQueIP],offset #intres
 			mov	dword ptr ds:[KeyWorkQuePtr],ebx
@@ -966,10 +966,10 @@ KeyQueCmd_RecieveBytes	endp
 */
 
 void near KeyQueCmd_RecieveCheck()
-// 1ƒoƒCƒgóM•ƒ`ƒFƒbƒN
+// 1ãƒã‚¤ãƒˆå—ä¿¡ï¼†ãƒã‚§ãƒƒã‚¯
 {
 	/* work->exec_wait_int = intres; */ asmout("MOV DWORD PTR DS:[019CH],OFFSET #intres");
-	return; // EBX‚ÆEBP‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä‚¨‚­iÀs’†‚Ì–½—ß‚ª‚í‚©‚ç‚È‚­‚È‚é‚©‚çj
+	return; // EBXã¨EBPã¯ãã®ã¾ã¾ã«ã—ã¦ãŠãï¼ˆå®Ÿè¡Œä¸­ã®å‘½ä»¤ãŒã‚ã‹ã‚‰ãªããªã‚‹ã‹ã‚‰ï¼‰
 
 intres:
 	if (AL == [DS:EBX+4]) {
@@ -977,11 +977,11 @@ intres:
 		EBP += 2;
 		/* goto [(void near *) DS:EBX] */ asmout("JMP DWORD PTR DS:[EBX]");
 	}
-	INT(0x03); // –{—ˆ‚È‚ç‚±‚±‚ÅƒGƒ‰[ƒVƒOƒiƒ‹
+	INT(0x03); // æœ¬æ¥ãªã‚‰ã“ã“ã§ã‚¨ãƒ©ãƒ¼ã‚·ã‚°ãƒŠãƒ«
 }
 
 void near KeyQueCmd_WriteCmdReg()
-// ƒL[ƒ{[ƒhƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‘—M
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸é€ä¿¡
 {
 	AL = [DS:EBX + 4];
 	EBX += 8;
@@ -1014,12 +1014,12 @@ KeyQueCmd_SetTimer	proc	near
 			mov	 fs, ax
 			mov	eax,TimerWorkSel
 			mov	 es, ax
-			mov	ebx,KeyWorkTimerCmd2	; æ“¾
-			fcall	TimerSel,TimerSysCmd	; ƒVƒXƒeƒ€ƒR[ƒ‹
+			mov	ebx,KeyWorkTimerCmd2	; æ™‚åˆ»å–å¾—
+			fcall	TimerSel,TimerSysCmd	; ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
 
-;	–{—ˆ‚ÍA‚±‚±‚ÅƒGƒ‰[ƒ`ƒFƒbƒN‚·‚×‚µ
+;	æœ¬æ¥ã¯ã€ã“ã“ã§ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã™ã¹ã—
 
-			mov	ebx,dword ptr ss:[esp][16]	; ebx•œ‹A
+			mov	ebx,dword ptr ss:[esp][16]	; ebxå¾©å¸°
 			mov	edi,dword ptr ds:[KeyWorkTimerCmd1][04]	; node
 			mov	eax,dword ptr ds:[KeyWorkTimerCmd2][04]
 			mov	edx,dword ptr ds:[KeyWorkTimerCmd2][08]
@@ -1037,9 +1037,9 @@ KeyQueCmd_SetTimer	proc	near
 			mov	dword ptr ss:[esp][16],ebx
 			mov	ebx,KeyWorkTimerCmd1
 			mov	dword ptr ds:[KeyWorkTimerCmd1],04*4	; set timer
-			fcall	TimerSel,TimerSysCmd	; ƒVƒXƒeƒ€ƒR[ƒ‹
+			fcall	TimerSel,TimerSysCmd	; ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
 
-;	–{—ˆ‚ÍA‚±‚±‚ÅƒGƒ‰[ƒ`ƒFƒbƒN‚·‚×‚µ
+;	æœ¬æ¥ã¯ã€ã“ã“ã§ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã™ã¹ã—
 
 			popad
 			pop	 fs
@@ -1056,11 +1056,11 @@ KeyQueCmd_CancelTimer	proc	near
 			mov	 ax, cs
 			add	 ax,8
 			mov	 fs, ax
-			mov	ebx,KeyWorkTimerCmd1	; Š„‚è‚İæ‚èÁ‚µ
+			mov	ebx,KeyWorkTimerCmd1	; å‰²ã‚Šè¾¼ã¿å–ã‚Šæ¶ˆã—
 			mov	dword ptr ds:[KeyWorkTimerCmd1],05*4	; cancel timer
-			fcall	TimerSel,TimerSysCmd	; ƒVƒXƒeƒ€ƒR[ƒ‹
+			fcall	TimerSel,TimerSysCmd	; ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
 
-;	–{—ˆ‚ÍA‚±‚±‚ÅƒGƒ‰[ƒ`ƒFƒbƒN‚·‚×‚µ
+;	æœ¬æ¥ã¯ã€ã“ã“ã§ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã™ã¹ã—
 
 			popad
 			add	ebx,4
@@ -1073,7 +1073,7 @@ KeyQueCmd_CancelTimer	endp
 */
 
 void near KeyQueCmd_WaitBufEnpty()
-// o—Íƒoƒbƒtƒ@‚ª‹ó‚­‚Ì‚ğ‘Ò‚Â
+// å‡ºåŠ›ãƒãƒƒãƒ•ã‚¡ãŒç©ºãã®ã‚’å¾…ã¤
 {
 	EBX += 4;
 	EBP++;
@@ -1125,26 +1125,26 @@ void near KeyQueCmd_MakeFinishSignal()
 #if 0
 
 void far MouseIntDrv()
-// ƒL[ƒ{[ƒh‚Æ‚æ‚­—‚½\¬
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã¨ã‚ˆãä¼¼ãŸæ§‹æˆ
 {
 	SS0_struct *ss0 == /* SS:(- sizeof (SS0_struct)) */ SS:0xffffffc0;
 
 	PUSH(DS);
 	PUSH(EAX);
-	MOV(EAX, CS); EAX += 8; DS = AX; // “Á’è‚ÌDS‚ÉˆË‘¶‚µ‚È‚¢‚½‚ß‚Ìè‘±‚«
-	ss0->ring0_count++; // Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{
+	MOV(EAX, CS); EAX += 8; DS = AX; // ç‰¹å®šã®DSã«ä¾å­˜ã—ãªã„ãŸã‚ã®æ‰‹ç¶šã
+	ss0->ring0_count++; // å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬
 	ss0->cli_count++;
 }
 
 void near MouseIntDrv2()
 {
-	// æ‚ÉŠ„‚è‚İ‚ğI—¹‚³‚¹‚Ä‚µ‚Ü‚¤(2001/02/18 ƒf[ƒ^[‚ğæ‚è‚±‚Ú‚·ƒGƒ‰[‚ª‚ ‚Á‚½‚½‚ß)B
-	// M†‚Ì—§‚¿ã‚ª‚è‚ªŠ„‚è‚İ‚ğ‹N‚±‚·‚©‚çAŠQ‚Í‚È‚¢‚¾‚ë‚¤B
-	AL = 0x64 /* IRQ-12‚ğI—¹ */;
+	// å…ˆã«å‰²ã‚Šè¾¼ã¿ã‚’çµ‚äº†ã•ã›ã¦ã—ã¾ã†(2001/02/18 ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚’å–ã‚Šã“ã¼ã™ã‚¨ãƒ©ãƒ¼ãŒã‚ã£ãŸãŸã‚)ã€‚
+	// ä¿¡å·ã®ç«‹ã¡ä¸ŠãŒã‚ŠãŒå‰²ã‚Šè¾¼ã¿ã‚’èµ·ã“ã™ã‹ã‚‰ã€å®³ã¯ãªã„ã ã‚ã†ã€‚
+	AL = 0x64 /* IRQ-12ã‚’çµ‚äº† */;
 	OUT(0xa0, AL);
-	// ‚±‚±‚ÅISR‚ğ“Ç‚ñ‚ÅIRQ-02‚ğI—¹‚·‚×‚«‚©”»’f‚µ‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢A‚©‚à‚µ‚ê‚È‚¢
-	// Œ»ƒo[ƒWƒ‡ƒ“‚Å‚ÍAƒXƒŒ[ƒu‚ÌŠ„‚è‚İ‚Í‚P‚Â‚µ‚©ó‚¯•t‚¯‚È‚¢
-	AL = 0x62 /* IRQ-02‚ğI—¹ */;
+	// ã“ã“ã§ISRã‚’èª­ã‚“ã§IRQ-02ã‚’çµ‚äº†ã™ã¹ãã‹åˆ¤æ–­ã—ãªã‘ã‚Œã°ã„ã‘ãªã„ã€ã‹ã‚‚ã—ã‚Œãªã„
+	// ç¾ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯ã€ã‚¹ãƒ¬ãƒ¼ãƒ–ã®å‰²ã‚Šè¾¼ã¿ã¯ï¼‘ã¤ã—ã‹å—ã‘ä»˜ã‘ãªã„
+	AL = 0x62 /* IRQ-02ã‚’çµ‚äº† */;
 	OUT(0x20, AL);
 
 	keyboarddata *work == DS:0;
@@ -1152,7 +1152,7 @@ void near MouseIntDrv2()
 	asmout("JMP DWORD PTR DS:[work_mousejmp]"); // goto work->mousejmp;
 }
 
-// 1ƒoƒCƒg‚¸‚ÂóM‚µA3ƒoƒCƒgW‚Ü‚Á‚½‚çAƒVƒOƒiƒ‹‚ğo‚·
+// 1ãƒã‚¤ãƒˆãšã¤å—ä¿¡ã—ã€3ãƒã‚¤ãƒˆé›†ã¾ã£ãŸã‚‰ã€ã‚·ã‚°ãƒŠãƒ«ã‚’å‡ºã™
 
 void near MouseIntDrv_Phase0()
 {
@@ -1160,14 +1160,14 @@ void near MouseIntDrv_Phase0()
 	AH = AL;
 	/* work->mouse_send_buf[12] */ [work + 0x1cc] = AL;
 	AL &= 0xc8;
-	/* (false) */ if (AL != 0x08) { // ‘æ1ƒoƒCƒg‚Æ‚µ‚Ä‚Ó‚³‚í‚µ‚­‚È‚¢
+	/* (false) */ if (AL != 0x08) { // ç¬¬1ãƒã‚¤ãƒˆã¨ã—ã¦ãµã•ã‚ã—ããªã„
 		if (AH == 0xaa) { // hot-plug?
-			// ƒ^ƒCƒ€ƒAƒEƒgƒ`ƒFƒbƒN‚Ì‚½‚ß‚Éƒ^ƒCƒ}[‚ğdŠ|‚¯‚é
+			// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒã‚§ãƒƒã‚¯ã®ãŸã‚ã«ã‚¿ã‚¤ãƒãƒ¼ã‚’ä»•æ›ã‘ã‚‹
 			/* work->mousejmp = (offset) MouseIntDrv_Phase3 */ asmout("MOV DWORD PTR DS:[work_mousejmp], OFFSET MouseIntDrv_Phase3");
 			/* goto MouseIntDrv_Ret */ asmout("JMP MouseIntDrv_Ret");
 		}
-		// INT(0x03); // •s–¾ƒoƒCƒgóMƒVƒOƒiƒ‹‚ğ”­¶
-		/* goto MouseIntDrv_Ret */ asmout("JMP MouseIntDrv_Ret"); // –³‹B
+		// INT(0x03); // ä¸æ˜ãƒã‚¤ãƒˆå—ä¿¡ã‚·ã‚°ãƒŠãƒ«ã‚’ç™ºç”Ÿ
+		/* goto MouseIntDrv_Ret */ asmout("JMP MouseIntDrv_Ret"); // ç„¡è¦–ã€‚
 	}
 	/* work->mousejmp = (offset) MouseIntDrv_Phase1 */ asmout("MOV DWORD PTR DS:[work_mousejmp], OFFSET MouseIntDrv_Phase1");
 }
@@ -1176,24 +1176,24 @@ void near MouseIntDrv_Ret()
 {
 //	IN(AL, 0x64);
 //	AL &= 0x21;
-	// if (AL == 0x21 /* mouse data ‚ ‚è */) goto MouseIntDrv2;
+	// if (AL == 0x21 /* mouse data ã‚ã‚Š */) goto MouseIntDrv2;
 //	CMP(AL, 0x21);
 //	asmout("JE MouseIntDrv2");
-//	AL = 0x64 /* IRQ-12‚ğI—¹ */;
+//	AL = 0x64 /* IRQ-12ã‚’çµ‚äº† */;
 //	OUT(0xa0, AL);
-	// ‚±‚±‚ÅISR‚ğ“Ç‚ñ‚ÅIRQ-01‚ğI—¹‚·‚×‚«‚©”»’f‚µ‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢A‚©‚à‚µ‚ê‚È‚¢
-	// Œ»ƒo[ƒWƒ‡ƒ“‚Å‚ÍAƒXƒŒ[ƒu‚ÌŠ„‚è‚İ‚Í‚P‚Â‚µ‚©ó‚¯•t‚¯‚È‚¢
-//	AL = 0x62 /* IRQ-01‚ğI—¹ */;
+	// ã“ã“ã§ISRã‚’èª­ã‚“ã§IRQ-01ã‚’çµ‚äº†ã™ã¹ãã‹åˆ¤æ–­ã—ãªã‘ã‚Œã°ã„ã‘ãªã„ã€ã‹ã‚‚ã—ã‚Œãªã„
+	// ç¾ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯ã€ã‚¹ãƒ¬ãƒ¼ãƒ–ã®å‰²ã‚Šè¾¼ã¿ã¯ï¼‘ã¤ã—ã‹å—ã‘ä»˜ã‘ãªã„
+//	AL = 0x62 /* IRQ-01ã‚’çµ‚äº† */;
 //	OUT(0x20, AL);
 	POP(EAX);
 
 	SS0_struct *ss0 == /* SS:(- sizeof (SS0_struct)) */ SS:0xffffffc0;
 
-	ss0->cli_count--; // Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{
-	if (== 0) goto call_clicall; // ƒL[‚Ì•û‚Ì‚â‚Â‚Æ‡—¬‚Å‚«‚é
+	ss0->cli_count--; // å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬
+	if (== 0) goto call_clicall; // ã‚­ãƒ¼ã®æ–¹ã®ã‚„ã¤ã¨åˆæµã§ãã‚‹
 	POP(DS);
 	ss0->ring0_count--;
-	if (== 0) goto call_ring0call; // ƒL[‚Ì•û‚Ì‚â‚Â‚Æ‡—¬‚Å‚«‚é
+	if (== 0) goto call_ring0call; // ã‚­ãƒ¼ã®æ–¹ã®ã‚„ã¤ã¨åˆæµã§ãã‚‹
 	IRETD();
 
 call_clicall:
@@ -1225,10 +1225,10 @@ void near MouseIntDrv_Phase2()
 	/* work->mousejmp = (offset) MouseIntDrv_Phase0 */ asmout("MOV DWORD PTR DS:[work_mousejmp], OFFSET MouseIntDrv_Phase0");
 
 	AL = (char) work->mouse_send_buf[12];
-	(char) work->mouse_send_buf[15] = 0x00; // ƒm[ƒ}ƒ‹ƒ‚[ƒh
+	(char) work->mouse_send_buf[15] = 0x00; // ãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰
 	AH = AL;
-	AL <<= 3; // ‘æ4bit : x‚Ì‘æ8bit
-	AH <<= 2; // ‘æ5bit : y‚Ì‘æ8bit
+	AL <<= 3; // ç¬¬4bit : xã®ç¬¬8bit
+	AH <<= 2; // ç¬¬5bit : yã®ç¬¬8bit
 	(signed char) AL >>= 7;
 	(signed char) AH >>= 7;
 	(char) work->mouse_send_buf[17] = AL;
@@ -1240,16 +1240,16 @@ send_mousecode:
 	PUSHAD();
 	ESI = /* work->mouse_send_buf */ 0x1c0;
 	/* (work->mousesignal)() */ asmout("CALL FAR DWORD DS:[work_mousesignal]"); 
-	// ESI‚àŠÜ‚ßA”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó‚³‚ê‚é
+	// ESIã‚‚å«ã‚ã€æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Šã•ã‚Œã‚‹
 	POPAD();
 	/* goto MouseIntDrv_Ret */ asmout("JMP MouseIntDrv_Ret");
 }
 
 void near MouseIntDrv_Phase3()
-// 0xaa‚ğóM‚µ‚½Œã‚ÌƒtƒF[ƒY
+// 0xaaã‚’å—ä¿¡ã—ãŸå¾Œã®ãƒ•ã‚§ãƒ¼ã‚º
 {
 	keyboarddata *work == DS:0;
-	(char) work->mouse_send_buf[15] = 0xa0; // Šg’£ƒ‚[ƒh’·‚³2
+	(char) work->mouse_send_buf[15] = 0xa0; // æ‹¡å¼µãƒ¢ãƒ¼ãƒ‰é•·ã•2
 	(char) work->mouse_send_buf[13] = AL;
 	/* work->mousejmp = (offset) MouseIntDrv_Phase0 */ asmout("MOV DWORD PTR DS:[work_mousejmp], OFFSET MouseIntDrv_Phase0");
 	/* goto send_mousecode */ asmout("JMP send_mousecode");
@@ -1271,26 +1271,26 @@ void near MouseQueueExecute()
 	(offset) commands += 4;
 	do {
 		free -= cmds_length;
-		/* (false) */ if ((unsigned) < 0) { // I—¹ƒRƒ}ƒ“ƒh‚Ì•ª‚ÍA‚ ‚ç‚©‚¶‚ßˆø‚¢‚Ä‚ ‚é‚Ì‚ÅA“™‚µ‚­‚Ä‚à‚¢‚¢
-			// ‘S‚Ä‚ğŒä”jZ‚É‚·‚é
+		/* (false) */ if ((unsigned) < 0) { // çµ‚äº†ã‚³ãƒãƒ³ãƒ‰ã®åˆ†ã¯ã€ã‚ã‚‰ã‹ã˜ã‚å¼•ã„ã¦ã‚ã‚‹ã®ã§ã€ç­‰ã—ãã¦ã‚‚ã„ã„
+			// å…¨ã¦ã‚’å¾¡ç ´ç®—ã«ã™ã‚‹
 buf_full_err:
 			(offset) wp = work->mouse_queue_write_ptr;
 			/* *wp = mouse_quecmd_tonormal */ asmout("MOV DWORD PTR DS:[ESI],OFFSET #mouse_quecmd_tonormal");
-				// ‚±‚ÌƒRƒ}ƒ“ƒh‚ğó—‚µ‚½‚çAmouse_queue_write_ptr‚ğ‰Šú‰»‚·‚é
+				// ã“ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å—ç†ã—ãŸã‚‰ã€mouse_queue_write_ptrã‚’åˆæœŸåŒ–ã™ã‚‹
 			POPFD();
 			STC();
 			return;
 		}
 		/* EAX = (offset) wp + cmds_length * 4 */ asmout("LEA EAX,[ESI+ECX*4]");
 		/* (false) */ if ((unsigned) EAX >= /* (offset) work->mouse_queue_buf + sizeof (work->mouse_queue_buf) */ 0x180) {
-			// “™‚µ‚­‚Ä‚àƒ_ƒ‚È‚Ì‚ÍAƒwƒbƒh‚Ö–ß‚·ƒRƒ}ƒ“ƒh‚ªg‚¦‚È‚¢‚©‚ç
+			// ç­‰ã—ãã¦ã‚‚ãƒ€ãƒ¡ãªã®ã¯ã€ãƒ˜ãƒƒãƒ‰ã¸æˆ»ã™ã‚³ãƒãƒ³ãƒ‰ãŒä½¿ãˆãªã„ã‹ã‚‰
 			// free -= (work->mouse_queue_buf + sizeof (work->mouse_queue_buf) - (offset) wp) / 4;
 			// free += (- work->mouse_queue_buf - sizeof (work->mouse_queue_buf) + (offset) wp) / 4;
 			/* EAX = (offset) wp - ((offset) work->mouse_queue_buf + sizeof (work->mouse_queue_buf)); */
 			asmout("LEA EAX,[ESI-0180H]");
 			/* *wp = (offset) mouse_quecmd_restore */ asmout("MOV DWORD PTR DS:[ESI],OFFSET #mouse_quecmd_restore");
 			EAX /= 4;
-			free += EAX; // ‚à‚µA‚±‚ê‚Åfree‚ª0‚à‚µ‚­‚Í•‰‚É‚È‚Á‚½‚çA‚â‚Í‚è‘«‚è‚È‚¢‚±‚Æ‚É‚È‚é
+			free += EAX; // ã‚‚ã—ã€ã“ã‚Œã§freeãŒ0ã‚‚ã—ãã¯è² ã«ãªã£ãŸã‚‰ã€ã‚„ã¯ã‚Šè¶³ã‚Šãªã„ã“ã¨ã«ãªã‚‹
 			if ((signed) < 0)
 				goto buf_full_err;
 			(offset) wp = /* work->mouse_queue_buf */ 0x100;
@@ -1349,7 +1349,7 @@ MouseQueIntDrv:
 mouse_quecmd_tonormal:
 	/* work->mousejmp = MouseIntDrv_Phase0; */ asmout("MOV DWORD PTR DS:[018CH],OFFSET MouseIntDrv_Phase0");
 	work->mouse_queue_write_ptr = /* (offset) work->mouse_queue_buf */ 0x100;
-	EBP = /* sizeof (work->mouse_queue_buf) */ 128 / 4 - 1 /* mouse_quecmd_tonormal‚Ì•ª */;
+	EBP = /* sizeof (work->mouse_queue_buf) */ 128 / 4 - 1 /* mouse_quecmd_tonormalã®åˆ† */;
 	EBX = /* (offset) work->mouse_queue_buf */ 0x100;
 	/* (near) */ return;
 
@@ -1364,10 +1364,10 @@ mouse_quecmd_restore:
 }
 
 void near MouQueCmd_RecieveCheck()
-// 1ƒoƒCƒgóM•ƒ`ƒFƒbƒN
+// 1ãƒã‚¤ãƒˆå—ä¿¡ï¼†ãƒã‚§ãƒƒã‚¯
 {
 	/* work->mouse_exec_wait_int = intres; */ asmout("MOV DWORD PTR DS:[work_mouse_exec_wait_int],OFFSET #intres");
-	return; // EBX‚ÆEBP‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä‚¨‚­iÀs’†‚Ì–½—ß‚ª‚í‚©‚ç‚È‚­‚È‚é‚©‚çj
+	return; // EBXã¨EBPã¯ãã®ã¾ã¾ã«ã—ã¦ãŠãï¼ˆå®Ÿè¡Œä¸­ã®å‘½ä»¤ãŒã‚ã‹ã‚‰ãªããªã‚‹ã‹ã‚‰ï¼‰
 
 intres:
 	if (AL == [DS:EBX+4]) {
@@ -1375,11 +1375,11 @@ intres:
 		EBP += 2;
 		/* goto [(void near *) DS:EBX] */ asmout("JMP DWORD PTR DS:[EBX]");
 	}
-	INT(0x03); // –{—ˆ‚È‚ç‚±‚±‚ÅƒGƒ‰[ƒVƒOƒiƒ‹
+	INT(0x03); // æœ¬æ¥ãªã‚‰ã“ã“ã§ã‚¨ãƒ©ãƒ¼ã‚·ã‚°ãƒŠãƒ«
 }
 
 void near MouQueCmd_AckSendData()
-// ACK§Œä•t‚«‘—M
+// ACKåˆ¶å¾¡ä»˜ãé€ä¿¡
 {
 	/* work->mouse_exec_wait_int = intack; */ asmout("MOV DWORD PTR DS:[work_mouse_exec_wait_int],OFFSET #intack");
 retry:
@@ -1391,7 +1391,7 @@ retry:
 	} while (!= 0);
 	AL = [DS:EBX + 4];
 	OUT(0x60, AL);
-	return; // EBX‚ÆEBP‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä‚¨‚­iÀs’†‚Ì–½—ß‚ª‚í‚©‚ç‚È‚­‚È‚é‚©‚çj
+	return; // EBXã¨EBPã¯ãã®ã¾ã¾ã«ã—ã¦ãŠãï¼ˆå®Ÿè¡Œä¸­ã®å‘½ä»¤ãŒã‚ã‹ã‚‰ãªããªã‚‹ã‹ã‚‰ï¼‰
 
 intack:
 	if (AL == 0xfa /* ACK */) {
@@ -1402,11 +1402,11 @@ intack:
 	if (AL == 0xfe /* NACK */)
 		goto retry;
 
-	return; // ‚Ç‚¿‚ç‚Å‚à‚È‚¢ƒLƒƒƒ‰ƒNƒ^[‚ª—ˆ‚½‚çA–³‹‚µ‚ÄACK‚©NACK‚ğ‘Ò‚¿‘±‚¯‚é
+	return; // ã©ã¡ã‚‰ã§ã‚‚ãªã„ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒæ¥ãŸã‚‰ã€ç„¡è¦–ã—ã¦ACKã‹NACKã‚’å¾…ã¡ç¶šã‘ã‚‹
 }
 
 void near MouQueCmd_ResetCommand()
-// ƒ}ƒEƒXƒŠƒZƒbƒg
+// ãƒã‚¦ã‚¹ãƒªã‚»ãƒƒãƒˆ
 {
 	/* work->mouse_exec_wait_int = intack; */ asmout("MOV DWORD PTR DS:[work_mouse_exec_wait_int],OFFSET #intack");
 retry:
@@ -1418,7 +1418,7 @@ retry:
 	} while (!= 0);
 	AL = 0xff;
 	OUT(0x60, AL);
-	return; // EBX‚ÆEBP‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä‚¨‚­iÀs’†‚Ì–½—ß‚ª‚í‚©‚ç‚È‚­‚È‚é‚©‚çj
+	return; // EBXã¨EBPã¯ãã®ã¾ã¾ã«ã—ã¦ãŠãï¼ˆå®Ÿè¡Œä¸­ã®å‘½ä»¤ãŒã‚ã‹ã‚‰ãªããªã‚‹ã‹ã‚‰ï¼‰
 
 intack:
 	if (AL == 0x00 /* ACK */) {
@@ -1429,7 +1429,7 @@ intack:
 	if (AL == 0xfe /* NACK */)
 		goto retry;
 
-	return; // ‚Ç‚¿‚ç‚Å‚à‚È‚¢ƒLƒƒƒ‰ƒNƒ^[‚ª—ˆ‚½‚çA–³‹‚µ‚Ä0x00(Š®—¹)‚©NACK‚ğ‘Ò‚¿‘±‚¯‚é
+	return; // ã©ã¡ã‚‰ã§ã‚‚ãªã„ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒæ¥ãŸã‚‰ã€ç„¡è¦–ã—ã¦0x00(å®Œäº†)ã‹NACKã‚’å¾…ã¡ç¶šã‘ã‚‹
 }
 
 #endif
@@ -1536,7 +1536,7 @@ KeyboardSetTypematic	proc	far	; al
 			pop	 ds
 			ret
 
-;	–{—ˆ‚È‚çAƒGƒ‰[ˆ—‚È‚Ç‚à‚·‚×‚«
+;	æœ¬æ¥ãªã‚‰ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†ãªã©ã‚‚ã™ã¹ã
 
 KeyboardSetTypematic	endp
 
@@ -1554,7 +1554,7 @@ KeyGetA20Mode		proc	far	; > al
 			add	 ax,8
 			mov	ebx,offset #cmdline1
 			mov	 ds, ax
-			mov	 byte ptr ds:[KeyGetKeyTypeWaitFlag],0	; –Ê“|‚È‚Ì‚ÅA‚±‚Ì•Ï”‚ğ‹¤—L‚µ‚Ä‚¢‚é
+			mov	 byte ptr ds:[KeyGetKeyTypeWaitFlag],0	; é¢å€’ãªã®ã§ã€ã“ã®å¤‰æ•°ã‚’å…±æœ‰ã—ã¦ã„ã‚‹
 			call	near ptr KeyboardQueueExecute
 			clr	eax
 #loop:

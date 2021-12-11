@@ -1,19 +1,19 @@
-/* dtk�n�̃T���v�� */
+/* dtk系のサンプル */
 
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef unsigned char UCHAR;
 
-int tek_checkformat(int siz, UCHAR *p); /* �W�J��̃T�C�Y��Ԃ� */
-	/* -1:��osacmp */
-	/* -2:osacmp�����Ή��ł��Ȃ� */
-int tek_decode(int siz, UCHAR *p, UCHAR *q); /* ����������0 */
-	/* ���̒l�̓t�H�[�}�b�g�ُ̈�E���Ή��A���̒l�̓������s�� */
-	/* �������s���͕⏕�o�b�t�@���p���ȊO�͔������Ȃ� */
+int tek_checkformat(int siz, UCHAR *p); /* 展開後のサイズを返す */
+	/* -1:非osacmp */
+	/* -2:osacmpだが対応できない */
+int tek_decode(int siz, UCHAR *p, UCHAR *q); /* 成功したら0 */
+	/* 正の値はフォーマットの異常・未対応、負の値はメモリ不足 */
+	/* メモリ不足は補助バッファ利用時以外は発生しない */
 
 int main(int argc, UCHAR **argv)
-/* �o�̓t�@�C����nul�ɂ���ƁA�W�J���x���胂�[�h�ɂȂ�i������e�X�g�j */
+/* 出力ファイルをnulにすると、展開速度測定モードになる（いわゆるテスト） */
 {
 	FILE *fp;
 	int tsiz, dsiz, st;
@@ -49,7 +49,7 @@ int main(int argc, UCHAR **argv)
 		return 1;
 	}
 	if (dsiz == -1) {
-		/* �����k�t�@�C�� */
+		/* 無圧縮ファイル */
 		dsiz = tsiz;
 		dbuf = tbuf;
 		tbuf = NULL;

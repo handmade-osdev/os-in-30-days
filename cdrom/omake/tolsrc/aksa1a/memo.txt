@@ -1,26 +1,26 @@
-���쌠�҂͐썇�G���B���C�Z���X��KL-01�B
+著作権者は川合秀実。ライセンスはKL-01。
 
-�g�����FDOS�v�����v�g�ŁA
+使い方：DOSプロンプトで、
 prompt>aska
-�Ƃ��ƍŒ���x�̐������o��B
+とやると最低限度の説明が出る。
 
 usage>aksa binfile ofs0 eip0 dd lines
 
-  binfile�F�o�C�i���t�@�C��  IA-32�̎��s�R�[�h���܂܂�Ă���΂ǂ�ȃt�@�C���ł��悢�B
-  ofs0�F�tASKA�������o�C�i�����t�@�C���̂ǂ��ɓ����Ă��邩�B
-  eip0�F���̃o�C�i���̊J�nEIP�̒l�B
-  dd�F0�Ȃ�16bit���[�h�Ŗ|��B1�Ȃ�32bit���[�h�Ŗ|��B
-  lines�F�|��s���B
+  binfile：バイナリファイル  IA-32の実行コードが含まれていればどんなファイルでもよい。
+  ofs0：逆ASKAしたいバイナリがファイルのどこに入っているか。
+  eip0：そのバイナリの開始EIPの値。
+  dd：0なら16bitモードで翻訳。1なら32bitモードで翻訳。
+  lines：翻訳行数。
 
-�o�͕͂W���o�͂ɍs���̂ŁA�e�L�X�g�t�@�C���ɂ�������ΓK���Ƀ��_�C���N�g����΂����ł��B
-mikan();�Ƃ����̂��ł���A�����aksa���������Ŗ|��Ɏ��s�����Ƃ����Ӗ��ł��B
+出力は標準出力に行うので、テキストファイルにしたければ適当にリダイレクトすればいいです。
+mikan();というのがでたら、それはaksaが未完成で翻訳に失敗したという意味です。
 
 ---
 
-��Fhelloc4.org�̋tASKA
+例：helloc4.orgの逆ASKA
 
-�i���Fhelloc4.org�Ƃ����̂́Ahelloc4.bin��bim2bin3�ŉ𓀂������́j
-�iprompt>bim2bin3 -restore in:helloc4.bin out:helloc4.org�j
+（註：helloc4.orgというのは、helloc4.binをbim2bin3で解凍したもの）
+（prompt>bim2bin3 -restore in:helloc4.bin out:helloc4.org）
 
 prompt>aksa helloc4.org 0 0 1 5
 file-ofs   EIP
@@ -30,7 +30,7 @@ file-ofs   EIP
 00000008 00000008 47                EDI++;
 00000009 00000009 55                PUSH(EBP);
 
-������goto 0x28���������̂ŁA0x28����|�󂳂��Ă݂�B
+ここでgoto 0x28があったので、0x28から翻訳させてみる。
 
 prompt>aksa helloc4.org 0x28 0x28 1 100
 file-ofs   EIP
@@ -135,7 +135,7 @@ file-ofs   EIP
 00000133 00000133 53                PUSH(EBX);
 00000134 00000134 8D 5C 24 08       LEA(EBX, (int) [SS:ESP + 0x08]);
 
-�܂������悤�Ȃ̂ŁA�����100�s���炢���Ă݂�B
+まだ続くようなので、さらに100行くらい見てみる。
 
 prompt>aksa helloc4.org 0x134 0x134 1 101
 file-ofs   EIP
@@ -241,7 +241,7 @@ file-ofs   EIP
 0000021C 0000021C 8B 5D 28          EBX = (int) [SS:EBP + 0x28];
 0000021F 0000021F 31 C0             EAX ^= EAX;
 
-�܂������悤�Ȃ̂ŁA�����100�s���炢���Ă݂�B
+まだ続くようなので、さらに100行くらい見てみる。
 
 G:\unbackuped\tools\aksa0a>aksa helloc4.org 0x21f 0x21f 1 101
 file-ofs   EIP
@@ -285,20 +285,20 @@ file-ofs   EIP
 0000026D 0000026D AD                LODSD();
 0000026E 0000026E 1C 10             SBB(AL, 0x10);
 
-������100�s�ɖ����Ȃ������ɑł��؂�ꂽ�̂́A�Ώۃt�@�C�����s��������ł���B
+ここで100行に満たないうちに打ち切られたのは、対象ファイルが尽きたからである。
 
-�����܂ł̉�͂ŁA�L���ȃv���O������
-0x0000-0x0007  �X�^�[�g�A�b�v1
-0x0008-0x0027  �����炭���炩�̃f�[�^
-0x0028-0x0047  �X�^�[�g�A�b�v2
-0x0048-0x0132  �����炭OsaskMain
-0x0133-0x0140  �����炭lib_execcmd0
-0x0141-0x0155  �����炭lib_execcmd1
-0x0156-0x01c4  �����炭malloc
-0x01c5-0x0216  �����炭malloc�̉�����
-0x0217-0x0258  �����炭lib_putstring_ASCII
-0x0259-        �����炭���炩�̃f�[�^
-�Ƃ������Ƃ��킩��B
+ここまでの解析で、有効なプログラムは
+0x0000-0x0007  スタートアップ1
+0x0008-0x0027  おそらく何らかのデータ
+0x0028-0x0047  スタートアップ2
+0x0048-0x0132  おそらくOsaskMain
+0x0133-0x0140  おそらくlib_execcmd0
+0x0141-0x0155  おそらくlib_execcmd1
+0x0156-0x01c4  おそらくmalloc
+0x01c5-0x0216  おそらくmallocの下請け
+0x0217-0x0258  おそらくlib_putstring_ASCII
+0x0259-        おそらく何らかのデータ
+ということがわかる。
 
-.exe����͂���ꍇ�́A��������Ƀ��[�h�����Ƃ��̃C���[�W�����c�[����ʓr�p�ӂ��āA
-���̃C���[�W��aksa�ŉ�͂���̂��������낤�B
+.exeを解析する場合は、メモリ上にロードされるときのイメージを作るツールを別途用意して、
+そのイメージをaksaで解析するのがいいだろう。

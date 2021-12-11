@@ -1723,7 +1723,7 @@ extern rtx gen_lowpart_SUBREG PARAMS ((enum machine_mode, rtx));
        && (REGNUM) <= LAST_VIRTUAL_REGISTER))
 
 /* REGNUM never really appearing in the INSN stream.  */
-#define INVALID_REGNUM			(~(unsigned int) 0)
+#define INVALID_REGNUM			(‾(unsigned int) 0)
 
 extern rtx find_next_ref		PARAMS ((rtx, rtx));
 

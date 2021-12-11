@@ -331,7 +331,7 @@ init_operators ()
   operator_name_info [(int) ROUND_MOD_EXPR].name = "(round %)";
   operator_name_info [(int) ABS_EXPR].name = "abs";
   operator_name_info [(int) FFS_EXPR].name = "ffs";
-  operator_name_info [(int) BIT_ANDTC_EXPR].name = "&~";
+  operator_name_info [(int) BIT_ANDTC_EXPR].name = "&‾";
   operator_name_info [(int) TRUTH_AND_EXPR].name = "strict &&";
   operator_name_info [(int) TRUTH_OR_EXPR].name = "strict ||";
   operator_name_info [(int) IN_EXPR].name = "in";
@@ -605,7 +605,7 @@ const short rid_to_yy[RID_MAX] =
   /* RID_XOR_EQ */	ASSIGN,
   /* RID_BITAND */	'&',
   /* RID_BITOR */	'|',
-  /* RID_COMPL */	'~',
+  /* RID_COMPL */	'‾',
 
   /* Objective C */
   /* RID_ID */			0,

@@ -4266,7 +4266,7 @@ grokdeclarator (declarator, declspecs, decl_context, initialized)
   if ((specbits & 1 << (int) RID_LONG) && ! longlong
       && TYPE_MAIN_VARIANT (type) == double_type_node)
     {
-      specbits &= ~(1 << (int) RID_LONG);
+      specbits &= ‾(1 << (int) RID_LONG);
       type = long_double_type_node;
     }
 
@@ -4317,7 +4317,7 @@ grokdeclarator (declarator, declspecs, decl_context, initialized)
       /* Discard the type modifiers if they are invalid.  */
       if (! ok)
 	{
-	  specbits &= ~((1 << (int) RID_LONG) | (1 << (int) RID_SHORT)
+	  specbits &= ‾((1 << (int) RID_LONG) | (1 << (int) RID_SHORT)
 			| (1 << (int) RID_UNSIGNED) | (1 << (int) RID_SIGNED));
 	  longlong = 0;
 	}
@@ -4327,7 +4327,7 @@ grokdeclarator (declarator, declspecs, decl_context, initialized)
       && TREE_CODE (type) != INTEGER_TYPE && TREE_CODE (type) != REAL_TYPE)
     {
       error ("complex invalid for `%s'", name);
-      specbits &= ~(1 << (int) RID_COMPLEX);
+      specbits &= ‾(1 << (int) RID_COMPLEX);
     }
 
   /* Decide whether an integer type is signed or not.
@@ -4456,7 +4456,7 @@ grokdeclarator (declarator, declspecs, decl_context, initialized)
 	  error ("function definition declared `register'");
 	if (specbits & 1 << (int) RID_TYPEDEF)
 	  error ("function definition declared `typedef'");
-	specbits &= ~((1 << (int) RID_TYPEDEF) | (1 << (int) RID_REGISTER)
+	specbits &= ‾((1 << (int) RID_TYPEDEF) | (1 << (int) RID_REGISTER)
 		      | (1 << (int) RID_AUTO));
       }
     else if (decl_context != NORMAL && nclasses > 0)
@@ -4478,7 +4478,7 @@ grokdeclarator (declarator, declspecs, decl_context, initialized)
 		error ("storage class specified for typename");
 		break;
 	      }
-	    specbits &= ~((1 << (int) RID_TYPEDEF) | (1 << (int) RID_REGISTER)
+	    specbits &= ‾((1 << (int) RID_TYPEDEF) | (1 << (int) RID_REGISTER)
 			  | (1 << (int) RID_AUTO) | (1 << (int) RID_STATIC)
 			  | (1 << (int) RID_EXTERN));
 	  }

@@ -53,7 +53,7 @@ typedef SBITMAP_ELT_TYPE *sbitmap_ptr;
 /* Reset bit number bitno in the bitmap.  */
 #define RESET_BIT(BITMAP, BITNO)				\
   ((BITMAP)->elms [(BITNO) / SBITMAP_ELT_BITS]			\
-   &= ~((SBITMAP_ELT_TYPE) 1 << (BITNO) % SBITMAP_ELT_BITS))
+   &= ‾((SBITMAP_ELT_TYPE) 1 << (BITNO) % SBITMAP_ELT_BITS))
 
 /* Loop over all elements of SBITSET, starting with MIN.  */
 #define EXECUTE_IF_SET_IN_SBITMAP(SBITMAP, MIN, N, CODE)		\
@@ -75,7 +75,7 @@ do {									\
 									\
 	    if ((word_ & _mask) != 0)					\
 	      {								\
-		word_ &= ~ _mask;					\
+		word_ &= ‾ _mask;					\
 		(N) = word_num_ * SBITMAP_ELT_BITS + bit_num_;		\
 		CODE;							\
 		if (word_ == 0)						\

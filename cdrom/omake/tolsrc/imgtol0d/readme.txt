@@ -1,16 +1,16 @@
-IMGTOL�̎g����                                     2003.12.27 �썇�G��
+IMGTOLの使い方                                     2003.12.27 川合秀実
 
-�P�D����͂Ȃɂ��H
+１．これはなにか？
 
-  IMGTOL��DOS�ėp�t�@���N�V�������g���ăf�B�X�N�C���[�W���������A�f�B�X�N�C��
-�[�W���������񂾂肷��c�[���ł��B���̑��ɂ��f�B�X�N�C���[�W��������ŕ֗��ł�
-�Ȃ����Ǝv����@�\��AOS�J���Ɏg�������ȋ@�\�������Ă��܂��B
+  IMGTOLはDOS汎用ファンクションを使ってディスクイメージを作ったり、ディスクイメ
+ージを書き込んだりするツールです。その他にもディスクイメージを扱う上で便利では
+ないかと思われる機能や、OS開発に使えそうな機能を持っています。
 
-  ���������Ƃ����Ă��ő�̓����́AOS�̔z�z���Ƀo���h�����Ă��S�����ɂȂ�Ȃ�
-���C�Z���X���K�p����Ă��邱�ƂƁA�o���h�����Ă��ז��ɂ͂Ȃ�Ȃ����̃T�C�Y�ł�
-�傤�B2.33KB�o�C�g�ł��i�΁j�B
+  しかし何といっても最大の特徴は、OSの配布時にバンドルしても全く問題にならない
+ライセンスが適用されていることと、バンドルしても邪魔にはならないそのサイズでし
+ょう。2.33KBバイトです（笑）。
 
-�Q�D�ȒP�Ȏg�����̕\
+２．簡単な使い方の表
 
     read.   >imgtol r [opt] drive: filename  size  (drv -> file)
     write.  >imgtol w [opt] drive: filename [size] (file -> drv)
@@ -23,157 +23,157 @@ IMGTOL�̎g����                                     2003.12.27 �썇�G��
       opt(sector-bytes) = -512(default), -1024
       size unit : kilobyte
 
-�R�D�f�B�X�N�C���[�W���f�B�X�N�ɏ������ޕ��@
+３．ディスクイメージをディスクに書き込む方法
 
-  PCAT�̏ꍇ�i�Ƃ�����1440KB-FD�̏ꍇ�j
+  PCATの場合（というか1440KB-FDの場合）
     prompt>imgtol w a: fdimage.bin
 
-  TOWNS��NEC98�̏ꍇ�i�Ƃ�����1232KB-FD�̏ꍇ�j
+  TOWNSやNEC98の場合（というか1232KB-FDの場合）
     prompt>imgtol w -1024 a: fdimage.bin
 
-  ���̏ꍇ���ƃt�@�C�����s����܂ŏ������݂܂��B�f�B�X�N���s���Ă�DOS����G���[
-�����Ȃ�����A�������ݖ��߂𑗂葱���܂��i�΁j�B�f�B�X�N�e�ʂ����傫�ȃt�@�C
-���������Ƃ��Ȃǂ́A
+  この場合だとファイルが尽きるまで書き込みます。ディスクが尽きてもDOSからエラー
+が来ない限り、書き込み命令を送り続けます（笑）。ディスク容量よりも大きなファイ
+ルを扱うときなどは、
 
-  PCAT�̏ꍇ�i�Ƃ�����1440KB-FD�̏ꍇ�j
+  PCATの場合（というか1440KB-FDの場合）
     prompt>imgtol w a: fdimage.bin 1440
 
-  TOWNS��NEC98�̏ꍇ�i�Ƃ�����1232KB-FD�̏ꍇ�j
+  TOWNSやNEC98の場合（というか1232KB-FDの場合）
     prompt>imgtol w -1024 a: fdimage.bin 1232
 
-�ȂǂƂ��Ă��������B������ݒ肳��A����ȏ�̓A�N�Z�X���܂���B�Ȃ��A�N�Z�X��
-�������̂��߂�36KB(-512��)�A��������16KB(-1024��)�P�ʂōs�Ȃ��Ă��܂��B�ȑO��
-�o�[�W�����ł͂��̒P�ʂł̃I�[�o�[���������肦�܂������A���̃o�[�W�����̓I�[�o
-�������܂���B
+などとしてください。上限が設定され、それ以上はアクセスしません。なおアクセスは
+高速化のために36KB(-512時)、もしくは16KB(-1024時)単位で行なっています。以前の
+バージョンではこの単位でのオーバーランがありえましたが、このバージョンはオーバ
+ランしません。
 
-  �ua:�v�Ƃ��ufdimage.bin�v�̕����͎����̎g�������󋵂ɍ��킹�ď��������Ă�����
-���BHDD�̃h���C�u�⑼�̃f�o�C�X�ɂ��ł��܂��i��1�j�B�Ȃ�31MB�ȏ�ɃA�N�Z�X����
-���Ƃ͂ł����A���̂�������ɐ���I�����Ă��܂��܂��B�����̃T�C�Y�w���32767�ȏ�
-���w�肵�Ȃ��悤�ɂ��Ă��������B
+  「a:」とか「fdimage.bin」の部分は自分の使いたい状況に合わせて書き換えてくださ
+い。HDDのドライブや他のデバイスにもできます（註1）。なお31MB以上にアクセスする
+ことはできず、そのうち勝手に正常終了してしまいます。末尾のサイズ指定も32767以上
+を指定しないようにしてください。
 
-  �Ȃ��A�r���o�߂͈�ؕ\������܂���B�C���ɑ҂��܂��傤�B�܂��u�f�B�X�N�̓��e
-�������܂��A��낵���ł����H�v�݂����Ȃ��Ƃ������܂���B���������̂�t������
-��΁A�o�b�`�t�@�C��������Ă�����echo��pause�����Ă��������B
+  なお、途中経過は一切表示されません。気長に待ちましょう。また「ディスクの内容
+が失われます、よろしいですか？」みたいなこともいいません。そういうのを付けたけ
+れば、バッチファイルを作ってそこでechoやpauseをしてください。
 
-<��1>
-  HDD��CF�֏����������Ƃ���ƁAWin95�Ȃǂł̓G���[�ɂȂ�܂��B����������͉��
-������@������܂��B�Ⴆ�΁A�h���C�uE:�֏������݂����ꍇ�A
+<註1>
+  HDDやCFへ書き込もうとすると、Win95などではエラーになります。しかしこれは回避
+する方法があります。例えば、ドライブE:へ書き込みたい場合、
 
     prompt>lock e:
     prompt>imgtol w e: cfimage.bin
     prompt>unlock e:
 
-�Ƃ���Ζ��Ȃ��������߂܂��B
+とすれば問題なく書き込めます。
 
 
-�S�D�f�B�X�N��ǂ�Ńf�B�X�N�C���[�W�������@
+４．ディスクを読んでディスクイメージを作る方法
 
-  PCAT�̏ꍇ�i�Ƃ�����1440KB-FD�̏ꍇ�j
+  PCATの場合（というか1440KB-FDの場合）
     prompt>imgtol r a: fdimage.bin 1440
 
-  TOWNS��NEC98�̏ꍇ�i�Ƃ�����1232KB-FD�̏ꍇ�j
+  TOWNSやNEC98の場合（というか1232KB-FDの場合）
     prompt>imgtol r -1024 a: fdimage.bin 1232 
 
-  �T�C�Y�w��͏ȗ��ł��܂���B���f�B�X�N�������Ȃ��l���w��ł��܂��B���̏ꍇ
-�͂����܂ł����ǂ݂܂���B
+  サイズ指定は省略できません。実ディスクよりも少ない値も指定できます。その場合
+はそこまでしか読みません。
 
-  �ua:�v�Ƃ��ufdimage.bin�v�̕����͎����̎g�������󋵂ɍ��킹�ď��������Ă�����
-���BHDD�̃h���C�u�⑼�̃f�o�C�X�ɂ����Ȃ��ł��܂����A31MB�ȏ�ɂ̓A�N�Z�X�ł�
-�Ȃ��̂ŁA����͂��������������B31MB�𒴂��ăA�N�Z�X�ł���̂�pcctol�ł��B
+  「a:」とか「fdimage.bin」の部分は自分の使いたい状況に合わせて書き換えてくださ
+い。HDDのドライブや他のデバイスにも問題なくできますが、31MB以上にはアクセスでき
+ないので、それはご了承ください。31MBを超えてアクセスできるのはpcctolです。
 
-  �Ȃ��A�r���o�߂͈�ؕ\������܂���B�C���ɑ҂��܂��傤�B
+  なお、途中経過は一切表示されません。気長に待ちましょう。
 
-�T�D�f�B�X�N�C���[�W�̃T�C�Y�̕ύX�̕��@
+５．ディスクイメージのサイズの変更の方法
 
-  ���Ƃ���600KB��AT�݊��@�p�f�B�X�N�C���[�W�������āA�u���ꂶ�Ⴀ�s�ւ��Ⴀ�`�A
-�l��1440KB�̃C���[�W���ق����񂾂��I�v�Ƃ����Ƃ��͎��̂悤�ɂ��܂��B
+  たとえば600KBのAT互換機用ディスクイメージがあって、「これじゃあ不便じゃあ〜、
+僕は1440KBのイメージがほしいんだあ！」というときは次のようにします。
 
     prompt>imgtol e src.bin dest.bin 1440
 
-��������ƁA600KB��src.bin���g������1440KB�ɂ������̂�dest.bin�Ƃ��ďo�͂����
-���B�����t�@�C�����w�肷�邱�Ƃ͂ł��܂���B�K�����̓t�@�C�����Əo�̓t�@�C����
-�͕ʁX�ɂ��Ă��������B����ē����t�@�C�����w�肷��ƃt�@�C�������܂��B�Ȃ��A
-1440KB�Ɋg���ƌ����Ă��A�v����ɂ����u00�v�Ŗ��܂����Z�N�^��v���T�C�Y�ɂȂ��
-�ŕt�������Ă��邾���ł��B�Ȃɂ��������Ă��܂���B
+こうすると、600KBのsrc.binを拡張して1440KBにしたものがdest.binとして出力されま
+す。同じファイルを指定することはできません。必ず入力ファイル名と出力ファイル名
+は別々にしてください。誤って同じファイルを指定するとファイルが壊れます。なお、
+1440KBに拡張と言っても、要するにただ「00」で埋まったセクタを要求サイズになるま
+で付け足しているだけです。なにもいじっていません。
 
-  �Ȃ��A�w�肵���t�@�C�������������T�C�Y���w�肷�邱�Ƃ��ł��A���̏ꍇ�́A�t
-�@�C���̌�낪�J�b�g���ꂽ���ʂ��o�Ă��܂��B������f�B�X�N�C���[�W�̌㔼��؂�
-�̂Ă����Ƃ��Ɏg���܂��B��ɂ���āA31MB�ȏ�̃T�C�Y�͎w��ł��܂���̂ł�낵
-���B
+  なお、指定したファイルよりも小さいサイズを指定することもでき、その場合は、フ
+ァイルの後ろがカットされた結果が出てきます。作ったディスクイメージの後半を切り
+捨てたいときに使います。例によって、31MB以上のサイズは指定できませんのでよろし
+く。
 
-�U�D�I�[�o�[���C�g�R�s�[�̕��@
+６．オーバーライトコピーの方法
 
-  �I�[�o�[���C�g�R�s�[�Ƃ����̂́A�����Ƃ��ăR�s�[��̃t�@�C���T�C�Y��ύX����
-�ɃR�s�[����Ƃ������̂ŁA�P�ɃT�C�Y���ς��Ȃ��Ƃ��������ł͂Ȃ��A�t�@�C����
-�f�B�X�N��̈ʒu���s�ςł��BOS�̃C���[�W�Ȃǂ��������ނ̂ɓK���Ă��܂��B
+  オーバーライトコピーというのは、原則としてコピー先のファイルサイズを変更せず
+にコピーするというもので、単にサイズが変わらないというだけではなく、ファイルの
+ディスク上の位置も不変です。OSのイメージなどを書き込むのに適しています。
 
     prompt>imgtol c src.bin dest.bin 50
 
-�Ƃ���ƁAsrc.bin�̍ŏ���50KB��dest.bin�ɏ������܂�܂��B����src.bin��50KB�ɖ�
-���Ȃ���΂��̕��́u00�v�Ŗ��߂����e��ǂݍ��񂾂��Ƃɂ��ď������݂܂��B������
-�݃T�C�Y��dest.bin�̃T�C�Y���������ꍇ�́A�f����dest.bin�̃t�@�C���T�C�Y���g
-�����ď������݂𑱂��܂��Bdest.bin�̃T�C�Y�̂ق����������݃T�C�Y�����傫����
-���ꍇ�A�T�C�Y�͕ύX����܂���B�܂����������͈͊O�̓��e�͂��̂܂ܕێ�����܂�
-�B�R�}���h���s�ɍۂ���dest.bin�����݂��Ȃ���΃G���[�ɂȂ�܂��B�Ō��50�Ƃ���
-�T�C�Y�w��͏ȗ��ł��A���̏ꍇ��src.bin�̃T�C�Y���w�肵�����ƂɂȂ�܂��B
+とすると、src.binの最初の50KBがdest.binに書き込まれます。もしsrc.binが50KBに満
+たなければその分は「00」で埋めた内容を読み込んだことにして書き込みます。書き込
+みサイズがdest.binのサイズを上回った場合は、素直にdest.binのファイルサイズを拡
+張して書き込みを続けます。dest.binのサイズのほうが書き込みサイズよりも大きかっ
+た場合、サイズは変更されません。また書き換え範囲外の内容はそのまま保持されます
+。コマンド実行に際してdest.binが存在しなければエラーになります。最後の50という
+サイズ指定は省略でき、この場合はsrc.binのサイズを指定したことになります。
 
-�V�Dexe2sys�Ƃ��Ă̎g�p���@
+７．exe2sysとしての使用方法
 
-  exe2sys�́Aexe�t�@�C���̃w�b�_�����߂��ď���̃A�h���X�փ����P�[�g������̃�
-�����C���[�W�𐶐�������̂ł��BOS��exe�`���ō���Ă����āA���[�h�C���[�W�ɕϊ�
-����ꍇ�Ɏg���܂��B
+  exe2sysは、exeファイルのヘッダを解釈して所定のアドレスへリロケートした後のメ
+モリイメージを生成するものです。OSをexe形式で作っておいて、ロードイメージに変換
+する場合に使います。
 
     prompt>imgtol s src.exe dest.bin 2048
 
-���̏ꍇ�̍Ō��2048�̓����P�[�g�Z�O�����g�A�h���X�ł��B�Ȃ����ӂ��K�v�Ȃ̂́A
-����2048��10�i���ł��邱�Ƃł��B16�i���w��͂ł��܂���B���̏ꍇ�A0x0800:0x0000
-�Ƀ��[�h���ꂽ�Ƃ��ă����P�[�V�������s���A���̌��ʂ��o�͂��܂��B
+この場合の最後の2048はリロケートセグメントアドレスです。なお注意が必要なのは、
+この2048が10進数であることです。16進数指定はできません。この場合、0x0800:0x0000
+にロードされたとしてリロケーションを行い、その結果を出力します。
 
-�W�DSF16��p�R�}���h�Q
+８．SF16専用コマンド群
 
-  imgtol�́AWin95��DOS�v�����v�g����SF16�t�H�[�}�b�g���|������A��������SF16�t
-�H�[�}�b�g�ŋL�q���ꂽOS���C���X�g�[�����邱�Ƃ��ł��܂��BSF16�t�H�[�}�b�g�Ƃ�
-���̂�FAT16���g���������̂ŁA�f�B�X�N�C���[�W�����ۂɃC���X�g�[����̗e�ʂ���
-�炩���ߌ��߂Ă����Ȃ��Ă悢�Ƃ������_�������������̂ł��B
+  imgtolは、Win95のDOSプロンプト内でSF16フォーマットを掛けたり、もしくはSF16フ
+ォーマットで記述されたOSをインストールすることができます。SF16フォーマットとい
+うのはFAT16を拡張したもので、ディスクイメージを作る際にインストール先の容量をあ
+らかじめ決めておかなくてよいという利点を持たせたものです。
 
-  �܂��ASF16�Ń��f�B�A���t�H�[�}�b�g���Ă݂܂��傤�Bf�R�}���h���g���A�u�����N�C
-���[�W���������܂��܂��isf16_08.bin��sf16set.lzh�̒��ɂ���܂��j�B
+  まず、SF16でメディアをフォーマットしてみましょう。fコマンドを使い、ブランクイ
+メージを書き込ませます（sf16_08.binはsf16set.lzhの中にあります）。
 
     prompt>imgtol f a: sf16_08.bin
 
-  Windows95OSR2.0�Ŏ��������Ƃ���A���̂܂܂ł͂��܂��F���ł����듮�삵�܂��B��
-��ŏ������񂾌�ɁA��U�f�B�X�N�𔲂��Ă��������B�����Ă����������ƁA����
-��ƔF�����܂��BCF�̏ꍇ���A��x���K�̑���ŃC�W�F�N�g���Ă��������BHDD�̏ꍇ��
-�Aunlock�����炷���ɍċN�����Ă��������B�E�E�E�����A�����ƁAFD�ȊO���w�肷���
-���Aw�R�}���h�Ɠ��l�ɁAlock/unlock�����K�v������܂��i�R�D�Q�Ɓj�B
+  Windows95OSR2.0で実験したところ、そのままではうまく認識できず誤動作します。こ
+れで書き込んだ後に、一旦ディスクを抜いてください。そしてもう一回入れると、きち
+んと認識します。CFの場合も、一度正規の操作でイジェクトしてください。HDDの場合は
+、unlockしたらすぐに再起動してください。・・・ああ、ええと、FD以外を指定する場
+合、wコマンドと同様に、lock/unlockをやる必要があります（３．参照）。
 
-  �܂�f�R�}���h�͌둀��ő�؂�HDD���΂��Ă��܂����肵�Ȃ��悤�ɁA2.0GB�ȏ��
-�p�[�e�B�V�����ւ̏������݂��Ɣ��f����ƁA����I�ɃG���[�ɂ��Ĉ�؂̏������݂�
-���܂���B
+  またfコマンドは誤操作で大切なHDDを飛ばしてしまったりしないように、2.0GB以上の
+パーティションへの書き込みだと判断すると、自主的にエラーにして一切の書き込みを
+しません。
 
-  �܂�f�R�}���h��FAT12��FAT16��SF16�ł��炩���߃t�H�[�}�b�g����Ă��Ȃ��ƁA����
-�h���C�u�����܂��F���ł��܂���̂ŁAfdisk��Ɉꉞ�K���Ƀt�H�[�}�b�g���āA���ꂩ
-�炱�̂��̃R�}���h��SF16�t�H�[�}�b�g���Ă��������B
+  またfコマンドはFAT12かFAT16かSF16であらかじめフォーマットされていないと、その
+ドライブをうまく認識できませんので、fdisk後に一応適当にフォーマットして、それか
+らこのこのコマンドでSF16フォーマットしてください。
 
-  ���āA����Ńf�B�X�N�ɂ��낢�돑������ŁA������ăC���X�g�[���\�ȃf�B�X�N
-�C���[�W�ɕϊ��������Ȃ�����Ar�R�}���h��R�R�}���h���g���܂��B
+  さて、これでディスクにいろいろ書き込んで、それを再インストール可能なディスク
+イメージに変換したくなったら、rコマンドとRコマンドを使います。
 
-  �܂��Ar�R�}���h�Ńf�B�X�N�C���[�W�����o���܂��i31MB�܂ł������o���Ȃ��̂�
-��������ɂ̓t�@�C�������݂��Ȃ��悤�ɂ��Ă��������j�B����̓h���C�u�̗e��
-�S�̂ł���K�v�͂Ȃ��A�t�@�C���������Ă���Ƃ���܂łł����ł��B�����āA
+  まず、rコマンドでディスクイメージを取り出します（31MBまでしか取り出せないので
+それより後ろにはファイルが存在しないようにしてください）。これはドライブの容量
+全体である必要はなく、ファイルが入っているところまででいいです。そして、
 
     prompt>imgtol R rawimage.bin release.bin
 
-�ȂǂƂ��ƁA���̕s�v�ȕ������؂�̂Ă��āAf�R�}���h�ŃC���X�g�[���\�ȃf
-�B�X�N�C���[�W�ɕϊ�����܂��B��x���̕ϊ�������΁Af�R�}���h�ōD���ȗe�ʂփC��
-�X�g�[���ł��܂��Bw�R�}���h�̂悤�ɁA�ǂݏo�����h���C�u�Ɠ��e�ʂłȂ���΂Ȃ��
-���A�Ƃ������Ƃ͂���܂���B
+などとやると、後ろの不要な部分が切り捨てられて、fコマンドでインストール可能なデ
+ィスクイメージに変換されます。一度この変換をすれば、fコマンドで好きな容量へイン
+ストールできます。wコマンドのように、読み出したドライブと同容量でなければならな
+い、ということはありません。
 
-�X�D�ӎ�
+９．謝辞
 
-  I.Tak.���񂪖l�ɂ��C���N������������������܂����B�ǂ������肪�Ƃ���������
-���B
+  I.Tak.さんが僕にやる気を起こすきっかけをくれました。どうもありがとうございま
+す。
 
-�P�O�D���C�Z���X
+１０．ライセンス
 
-  ���x��KL-01�ł��B
+  毎度のKL-01です。

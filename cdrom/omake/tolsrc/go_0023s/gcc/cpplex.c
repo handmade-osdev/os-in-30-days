@@ -1261,7 +1261,7 @@ _cpp_lex_direct (pfile)
     case '^': IF_NEXT_IS ('=', CPP_XOR_EQ, CPP_XOR); break;
     case '#': IF_NEXT_IS ('#', CPP_PASTE, CPP_HASH); break;
 
-    case '~': result->type = CPP_COMPL; break;
+    case '‾': result->type = CPP_COMPL; break;
     case ',': result->type = CPP_COMMA; break;
     case '(': result->type = CPP_OPEN_PAREN; break;
     case ')': result->type = CPP_CLOSE_PAREN; break;
@@ -1858,7 +1858,7 @@ cpp_interpret_charconst (pfile, token, warn_multi, traditional, pchars_seen)
   if (width < HOST_BITS_PER_WIDE_INT)
     mask = ((unsigned HOST_WIDE_INT) 1 << width) - 1;
   else
-    mask = ~0;
+    mask = ‾0;
   max_chars = HOST_BITS_PER_WIDE_INT / width;
 
   while (str < limit)
@@ -1915,11 +1915,11 @@ cpp_interpret_charconst (pfile, token, warn_multi, traditional, pchars_seen)
     {
       unsigned int nbits = chars_seen * width;
 
-      mask = (unsigned HOST_WIDE_INT) ~0 >> (HOST_BITS_PER_WIDE_INT - nbits);
+      mask = (unsigned HOST_WIDE_INT) ‾0 >> (HOST_BITS_PER_WIDE_INT - nbits);
       if (unsigned_p || ((result >> (nbits - 1)) & 1) == 0)
 	result &= mask;
       else
-	result |= ~mask;
+	result |= ‾mask;
     }
 
   *pchars_seen = chars_seen;
@@ -1952,7 +1952,7 @@ struct dummy
 };
 
 #define DEFAULT_ALIGNMENT (offsetof (struct dummy, u))
-#define CPP_ALIGN(size, align) (((size) + ((align) - 1)) & ~((align) - 1))
+#define CPP_ALIGN(size, align) (((size) + ((align) - 1)) & ‾((align) - 1))
 
 /* Create a new allocation buffer.  Place the control block at the end
    of the buffer, so that buffer overflows will cause immediate chaos.  */

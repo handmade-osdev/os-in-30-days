@@ -129,8 +129,8 @@ void GOL_sysabort(unsigned char termcode)
 		"[TERM_ABORT]\n"
 	};
 
-	GO_stderr.p1 += 128; /* —\”õ‚Éæ‚Á‚Ä‚¨‚¢‚½•ª‚ğ•œŠˆ */
-	/* ƒoƒbƒtƒ@‚ğo—Í */
+	GO_stderr.p1 += 128; /* äºˆå‚™ã«å–ã£ã¦ãŠã„ãŸåˆ†ã‚’å¾©æ´» */
+	/* ãƒãƒƒãƒ•ã‚¡ã‚’å‡ºåŠ› */
 	if (termcode <= 6)
 		errmsgout(termmsg[termcode]);
 	if (GO_stderr.p - GO_stderr.p0)

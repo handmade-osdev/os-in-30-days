@@ -1,4 +1,4 @@
-/* ƒ^ƒCƒ}ŠÖŒW */
+/* ã‚¿ã‚¤ãƒé–¢ä¿‚ */
 
 #include "bootpack.h"
 
@@ -19,9 +19,9 @@ void init_pit(void)
 
 void inthandler20(int *esp)
 {
-	io_out8(PIC0_OCW2, 0x60);	/* IRQ-00ó•tŠ®—¹‚ğPIC‚É’Ê’m */
+	io_out8(PIC0_OCW2, 0x60);	/* IRQ-00å—ä»˜å®Œäº†ã‚’PICã«é€šçŸ¥ */
 	timerctl.count++;
-	if (timerctl.timeout > 0) { /* ƒ^ƒCƒ€ƒAƒEƒg‚ªİ’è‚³‚ê‚Ä‚¢‚é */
+	if (timerctl.timeout > 0) { /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹ */
 		timerctl.timeout--;
 		if (timerctl.timeout == 0) {
 			fifo8_put(timerctl.fifo, timerctl.data);

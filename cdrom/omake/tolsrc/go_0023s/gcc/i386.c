@@ -361,7 +361,7 @@ const int x86_use_leave = m_386 | m_K6 | m_ATHLON;
 const int x86_push_memory = m_386 | m_K6 | m_ATHLON | m_PENT4;
 const int x86_zero_extend_with_and = m_486 | m_PENT;
 const int x86_movx = m_ATHLON | m_PPRO | m_PENT4 /* m_386 | m_K6 */;
-const int x86_double_with_add = ~m_386;
+const int x86_double_with_add = ‾m_386;
 const int x86_use_bit_test = m_386;
 const int x86_unroll_strlen = m_486 | m_PENT | m_PPRO | m_ATHLON | m_K6;
 const int x86_cmove = m_PPRO | m_ATHLON | m_PENT4;
@@ -371,23 +371,23 @@ const int x86_branch_hints = m_PENT4;
 const int x86_use_sahf = m_PPRO | m_K6 | m_PENT4;
 const int x86_partial_reg_stall = m_PPRO;
 const int x86_use_loop = m_K6;
-const int x86_use_fiop = ~(m_PPRO | m_ATHLON | m_PENT);
+const int x86_use_fiop = ‾(m_PPRO | m_ATHLON | m_PENT);
 const int x86_use_mov0 = m_K6;
-const int x86_use_cltd = ~(m_PENT | m_K6);
-const int x86_read_modify_write = ~m_PENT;
-const int x86_read_modify = ~(m_PENT | m_PPRO);
+const int x86_use_cltd = ‾(m_PENT | m_K6);
+const int x86_read_modify_write = ‾m_PENT;
+const int x86_read_modify = ‾(m_PENT | m_PPRO);
 const int x86_split_long_moves = m_PPRO;
 const int x86_promote_QImode = m_K6 | m_PENT | m_386 | m_486;
 const int x86_single_stringop = m_386 | m_PENT4;
-const int x86_qimode_math = ~(0);
+const int x86_qimode_math = ‾(0);
 const int x86_promote_qi_regs = 0;
-const int x86_himode_math = ~(m_PPRO);
+const int x86_himode_math = ‾(m_PPRO);
 const int x86_promote_hi_regs = m_PPRO;
 const int x86_sub_esp_4 = m_ATHLON | m_PPRO | m_PENT4;
 const int x86_sub_esp_8 = m_ATHLON | m_PPRO | m_386 | m_486 | m_PENT4;
 const int x86_add_esp_4 = m_ATHLON | m_K6 | m_PENT4;
 const int x86_add_esp_8 = m_ATHLON | m_PPRO | m_K6 | m_386 | m_486 | m_PENT4;
-const int x86_integer_DFmode_moves = ~(m_ATHLON | m_PENT4);
+const int x86_integer_DFmode_moves = ‾(m_ATHLON | m_PENT4);
 const int x86_partial_reg_dependency = m_ATHLON | m_PENT4;
 const int x86_memory_mismatch_stall = m_ATHLON | m_PENT4;
 const int x86_accumulate_outgoing_args = m_ATHLON | m_PENT4 | m_PPRO;
@@ -1009,7 +1009,7 @@ override_options ()
   else
     ix86_cost = processor_target_table[ix86_cpu].cost;
   target_flags |= processor_target_table[ix86_cpu].target_enable;
-  target_flags &= ~processor_target_table[ix86_cpu].target_disable;
+  target_flags &= ‾processor_target_table[ix86_cpu].target_disable;
 
   /* Arrange to set up i386_stack_locals for all functions.  */
   init_machine_status = ix86_init_machine_status;
@@ -1122,12 +1122,12 @@ override_options ()
   /* If we're doing fast math, we don't care about comparison order
      wrt NaNs.  This lets us use a shorter comparison sequence.  */
   if (flag_unsafe_math_optimizations)
-    target_flags &= ~MASK_IEEE_FP;
+    target_flags &= ‾MASK_IEEE_FP;
 
   /* If the architecture always has an FPU, turn off NO_FANCY_MATH_387,
      since the insns won't need emulation.  */
   if (x86_arch_always_fancy_math_387 & (1 << ix86_arch))
-    target_flags &= ~MASK_NO_FANCY_MATH_387;
+    target_flags &= ‾MASK_NO_FANCY_MATH_387;
 
   if (TARGET_64BIT)
     {
@@ -3802,7 +3802,7 @@ x86_64_zero_extended_value (value)
 	if (HOST_BITS_PER_WIDE_INT == 32)
 	  return INTVAL (value) >= 0;
 	else
-	  return !(INTVAL (value) & ~(HOST_WIDE_INT) 0xffffffff);
+	  return !(INTVAL (value) & ‾(HOST_WIDE_INT) 0xffffffff);
 	break;
 
       /* For certain code models, the symbolic references are known to fit.  */
@@ -8256,7 +8256,7 @@ ix86_expand_int_movcc (operands)
 	    {
 	      rtx out1;
 	      out1 = out;
-	      tmp = gen_rtx_MULT (mode, out1, GEN_INT (diff & ~1));
+	      tmp = gen_rtx_MULT (mode, out1, GEN_INT (diff & ‾1));
 	      nops++;
 	      if (diff & 1)
 		{
@@ -9213,7 +9213,7 @@ ix86_expand_movstr (dst, src, count_exp, align_exp)
 	       || optimize_size || count < (unsigned int) 64))
     {
       int size = TARGET_64BIT && !optimize_size ? 8 : 4;
-      if (count & ~(size - 1))
+      if (count & ‾(size - 1))
 	{
 	  countreg = copy_to_mode_reg (counter_mode,
 				       GEN_INT ((count >> (size == 4 ? 2 : 3))
@@ -9429,7 +9429,7 @@ ix86_expand_clrstr (src, count_exp, align_exp)
     {
       int size = TARGET_64BIT && !optimize_size ? 8 : 4;
       zeroreg = copy_to_mode_reg (size == 4 ? SImode : DImode, const0_rtx);
-      if (count & ~(size - 1))
+      if (count & ‾(size - 1))
 	{
 	  countreg = copy_to_mode_reg (counter_mode,
 				       GEN_INT ((count >> (size == 4 ? 2 : 3))

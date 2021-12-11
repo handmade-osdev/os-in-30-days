@@ -3,8 +3,8 @@
 
 	usage : >naskcnv0 [-l] [-s] [-w] input-file output-file
 
-	-l:leaをmovに変換
-	-s:余計なdword、word、byteを削除
+	-l:lea繧知ov縺ｫ螟画鋤
+	-s:菴呵ｨ医↑dword縲『ord縲｜yte繧貞炎髯､
 */
 
 #include <stdio.h>

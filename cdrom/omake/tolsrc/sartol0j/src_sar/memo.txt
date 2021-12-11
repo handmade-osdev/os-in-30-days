@@ -1,3 +1,3 @@
-sargow32.lib�́ALGPL�B
-mingw�̃��C�u��������win32API�ɕK�v�����Ȃ��̂𔲂��o�������̂ŁA
-���̒��g��golib00��lst�\��������΂����Ɋm�F�ł��܂��B
+sargow32.libは、LGPL。
+mingwのライブラリからwin32APIに必要そうなものを抜き出したもので、
+その中身はgolib00でlst表示させればすぐに確認できます。

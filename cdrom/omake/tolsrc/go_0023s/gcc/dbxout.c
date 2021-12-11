@@ -1581,13 +1581,13 @@ dbxout_type (type, full)
       CHARS (1);
 
       if (use_gnu_debug_info_extensions && TREE_CODE (type) == RECORD_TYPE
-	  /* Avoid the ~ if we don't really need it--it confuses dbx.  */
+	  /* Avoid the ‾ if we don't really need it--it confuses dbx.  */
 	  && TYPE_VFIELD (type))
 	{
 	  have_used_extensions = 1;
 
 	  /* Tell GDB+ that it may keep reading.  */
-	  putc ('~', asmfile);
+	  putc ('‾', asmfile);
 	  CHARS (1);
 
 	  /* We need to write out info about what field this class

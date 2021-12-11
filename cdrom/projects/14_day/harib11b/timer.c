@@ -1,4 +1,4 @@
-/* ƒ^ƒCƒ}ŠÖŒW */
+/* ã‚¿ã‚¤ãƒé–¢ä¿‚ */
 
 #include "bootpack.h"
 
@@ -7,8 +7,8 @@
 
 struct TIMERCTL timerctl;
 
-#define TIMER_FLAGS_ALLOC		1	/* Šm•Û‚µ‚½ó‘Ô */
-#define TIMER_FLAGS_USING		2	/* ƒ^ƒCƒ}ì“®’† */
+#define TIMER_FLAGS_ALLOC		1	/* ç¢ºä¿ã—ãŸçŠ¶æ…‹ */
+#define TIMER_FLAGS_USING		2	/* ã‚¿ã‚¤ãƒä½œå‹•ä¸­ */
 
 void init_pit(void)
 {
@@ -17,10 +17,10 @@ void init_pit(void)
 	io_out8(PIT_CNT0, 0x9c);
 	io_out8(PIT_CNT0, 0x2e);
 	timerctl.count = 0;
-	timerctl.next = 0xffffffff; /* Å‰‚Íì“®’†‚Ìƒ^ƒCƒ}‚ª‚È‚¢‚Ì‚Å */
+	timerctl.next = 0xffffffff; /* æœ€åˆã¯ä½œå‹•ä¸­ã®ã‚¿ã‚¤ãƒãŒãªã„ã®ã§ */
 	timerctl.using = 0;
 	for (i = 0; i < MAX_TIMER; i++) {
-		timerctl.timers0[i].flags = 0; /* –¢g—p */
+		timerctl.timers0[i].flags = 0; /* æœªä½¿ç”¨ */
 	}
 	return;
 }
@@ -34,12 +34,12 @@ struct TIMER *timer_alloc(void)
 			return &timerctl.timers0[i];
 		}
 	}
-	return 0; /* Œ©‚Â‚©‚ç‚È‚©‚Á‚½ */
+	return 0; /* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ */
 }
 
 void timer_free(struct TIMER *timer)
 {
-	timer->flags = 0; /* –¢g—p */
+	timer->flags = 0; /* æœªä½¿ç”¨ */
 	return;
 }
 
@@ -60,38 +60,38 @@ void timer_settime(struct TIMER *timer, unsigned int timeout)
 	io_cli();
 	timerctl.using++;
 	if (timerctl.using == 1) {
-		/* “®ì’†‚Ìƒ^ƒCƒ}‚Í‚±‚êˆê‚Â‚É‚È‚éê‡ */
+		/* å‹•ä½œä¸­ã®ã‚¿ã‚¤ãƒã¯ã“ã‚Œä¸€ã¤ã«ãªã‚‹å ´åˆ */
 		timerctl.t0 = timer;
-		timer->next = 0; /* Ÿ‚Í‚È‚¢ */
+		timer->next = 0; /* æ¬¡ã¯ãªã„ */
 		timerctl.next = timer->timeout;
 		io_store_eflags(e);
 		return;
 	}
 	t = timerctl.t0;
 	if (timer->timeout <= t->timeout) {
-		/* æ“ª‚É“ü‚ê‚éê‡ */
+		/* å…ˆé ­ã«å…¥ã‚Œã‚‹å ´åˆ */
 		timerctl.t0 = timer;
-		timer->next = t; /* Ÿ‚Ít */
+		timer->next = t; /* æ¬¡ã¯t */
 		timerctl.next = timer->timeout;
 		io_store_eflags(e);
 		return;
 	}
-	/* ‚Ç‚±‚É“ü‚ê‚ê‚Î‚¢‚¢‚©‚ğ’T‚· */
+	/* ã©ã“ã«å…¥ã‚Œã‚Œã°ã„ã„ã‹ã‚’æ¢ã™ */
 	for (;;) {
 		s = t;
 		t = t->next;
 		if (t == 0) {
-			break; /* ˆê”Ô‚¤‚µ‚ë‚É‚È‚Á‚½ */
+			break; /* ä¸€ç•ªã†ã—ã‚ã«ãªã£ãŸ */
 		}
 		if (timer->timeout <= t->timeout) {
-			/* s‚Æt‚ÌŠÔ‚É“ü‚ê‚éê‡ */
-			s->next = timer; /* s‚ÌŸ‚Ítimer */
-			timer->next = t; /* timer‚ÌŸ‚Ít */
+			/* sã¨tã®é–“ã«å…¥ã‚Œã‚‹å ´åˆ */
+			s->next = timer; /* sã®æ¬¡ã¯timer */
+			timer->next = t; /* timerã®æ¬¡ã¯t */
 			io_store_eflags(e);
 			return;
 		}
 	}
-	/* ˆê”Ô‚¤‚µ‚ë‚É“ü‚ê‚éê‡ */
+	/* ä¸€ç•ªã†ã—ã‚ã«å…¥ã‚Œã‚‹å ´åˆ */
 	s->next = timer;
 	timer->next = 0;
 	io_store_eflags(e);
@@ -102,28 +102,28 @@ void inthandler20(int *esp)
 {
 	int i;
 	struct TIMER *timer;
-	io_out8(PIC0_OCW2, 0x60);	/* IRQ-00ó•tŠ®—¹‚ğPIC‚É’Ê’m */
+	io_out8(PIC0_OCW2, 0x60);	/* IRQ-00å—ä»˜å®Œäº†ã‚’PICã«é€šçŸ¥ */
 	timerctl.count++;
 	if (timerctl.next > timerctl.count) {
 		return;
 	}
-	timer = timerctl.t0; /* ‚Æ‚è‚ ‚¦‚¸æ“ª‚Ì”Ô’n‚ğtimer‚É‘ã“ü */
+	timer = timerctl.t0; /* ã¨ã‚Šã‚ãˆãšå…ˆé ­ã®ç•ªåœ°ã‚’timerã«ä»£å…¥ */
 	for (i = 0; i < timerctl.using; i++) {
-		/* timers‚Ìƒ^ƒCƒ}‚Í‘S‚Ä“®ì’†‚Ì‚à‚Ì‚È‚Ì‚ÅAflags‚ğŠm”F‚µ‚È‚¢ */
+		/* timersã®ã‚¿ã‚¤ãƒã¯å…¨ã¦å‹•ä½œä¸­ã®ã‚‚ã®ãªã®ã§ã€flagsã‚’ç¢ºèªã—ãªã„ */
 		if (timer->timeout > timerctl.count) {
 			break;
 		}
-		/* ƒ^ƒCƒ€ƒAƒEƒg */
+		/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ */
 		timer->flags = TIMER_FLAGS_ALLOC;
 		fifo32_put(timer->fifo, timer->data);
-		timer = timer->next; /* Ÿ‚Ìƒ^ƒCƒ}‚Ì”Ô’n‚ğtimer‚É‘ã“ü */
+		timer = timer->next; /* æ¬¡ã®ã‚¿ã‚¤ãƒã®ç•ªåœ°ã‚’timerã«ä»£å…¥ */
 	}
 	timerctl.using -= i;
 
-	/* V‚µ‚¢‚¸‚ç‚µ */
+	/* æ–°ã—ã„ãšã‚‰ã— */
 	timerctl.t0 = timer;
 
-	/* timerctl.next‚Ìİ’è */
+	/* timerctl.nextã®è¨­å®š */
 	if (timerctl.using > 0) {
 		timerctl.next = timerctl.t0->timeout;
 	} else {

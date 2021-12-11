@@ -6,7 +6,7 @@ TOOLPATH = ../z_tools/
 include make_com.txt
 
 ALL :
-# �f�t�H���g����F�e���D���Ȃ悤�ɃJ�X�^�}�C�Y����΂���
+# デフォルト動作：各自好きなようにカスタマイズすればいい
 	$(MAKE) img_at
 
 all :
@@ -93,7 +93,7 @@ img_vm :
 		setattr file:@:OSASK.SYS attr:0x06 imgout:OSAIMGVM.BIN
 
 clean :
-# OSASK_??.EXE/SYS��f�B�X�N�C���[�W�͎c�邪���Ԑ������͑S�ď������
+# OSASK_??.EXE/SYSやディスクイメージは残るが中間生成物は全て消される
 	$(MAKE) -C pcat     clean
 	$(MAKE) -C towns    clean
 	$(MAKE) -C nec98    clean

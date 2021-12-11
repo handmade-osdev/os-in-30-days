@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-/* ƒeƒLƒXƒgƒ‚[ƒh‚Ìê‡A0x0d‚ğ‚½‚¾Á‚·‚Æ‚¢‚¤’Pƒ‚Èd—l */
+/* ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã®å ´åˆã€0x0dã‚’ãŸã æ¶ˆã™ã¨ã„ã†å˜ç´”ãªä»•æ§˜ */
 
 unsigned int fread(void *ptr, unsigned int size, unsigned int nobj, FILE *stream)
 {
@@ -18,7 +18,7 @@ unsigned int fread(void *ptr, unsigned int size, unsigned int nobj, FILE *stream
 		l++;
 		if (--bytes == 0)
 			goto done;
-		stream->flags &= ~0x10;
+		stream->flags &= â€¾0x10;
 	}
 reread:
 	ReadFile(stream->handle, ptr, bytes, &ll, NULL);
@@ -35,7 +35,7 @@ done:
 	l = (l + ll) / size;
 	if (l != nobj)
 		stream->flags |= 0x08; /* EOF */
-	return l; /* size‚ª1ˆÈŠO‚ÌA‚±‚ê‚¾‚Æ–{“–‚Í‚Ü‚¸‚¢ */
+	return l; /* sizeãŒ1ä»¥å¤–ã®æ™‚ã€ã“ã‚Œã ã¨æœ¬å½“ã¯ã¾ãšã„ */
 
 find_cr:
 	q = p;
@@ -47,8 +47,8 @@ find_cr:
 			p++;
 		} while (p < p1);
 	}
-	bytes = p - q; /* Á‚µ‚½ƒoƒCƒg” */
+	bytes = p - q; /* æ¶ˆã—ãŸãƒã‚¤ãƒˆæ•° */
 	ptr = q;
-	l += ll - bytes; /* —­‚Ü‚Á‚½•¶š” */
+	l += ll - bytes; /* æºœã¾ã£ãŸæ–‡å­—æ•° */
 	goto reread;
 }

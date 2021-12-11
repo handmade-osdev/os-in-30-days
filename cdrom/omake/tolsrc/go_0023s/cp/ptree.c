@@ -114,7 +114,7 @@ cxx_print_type (file, node, indent)
   if (TYPE_HAS_NONTRIVIAL_DESTRUCTOR (node))
     fputs (" needs-destructor", file);
   if (TYPE_HAS_DESTRUCTOR (node))
-    fputs (" ~X()", file);
+    fputs (" ‾X()", file);
   if (TYPE_HAS_DEFAULT_CONSTRUCTOR (node))
     fputs (" X()", file);
   if (TYPE_HAS_CONVERSION (node))

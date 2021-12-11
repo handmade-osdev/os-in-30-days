@@ -5,7 +5,7 @@
 int fclose(FILE *stream)
 {
 	if (stream == NULL)
-		return EOF; /* ƒI[ƒ‹ƒNƒ[ƒY‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢ */
+		return EOF; /* ã‚ªãƒ¼ãƒ«ã‚¯ãƒ­ãƒ¼ã‚ºã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„ */
 	if (CloseHandle(stream->handle) == 0)
 		return EOF;
 	free(stream);

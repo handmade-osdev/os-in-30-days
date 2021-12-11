@@ -27,12 +27,12 @@ void HariMain(void)
 	int win, i, j, fsize, xsize, info[8];
 	struct RGB picbuf[1024 * 768], *q;
 
-	/* �R�}���h���C����� */
+	/* コマンドライン解析 */
 	api_cmdline(s, 30);
-	for (p = s; *p > ' '; p++) { }	/* �X�y�[�X������܂œǂݔ�΂� */
-	for (; *p == ' '; p++) { }	/* �X�y�[�X��ǂݔ�΂� */
+	for (p = s; *p > ' '; p++) { }	/* スペースが来るまで読み飛ばす */
+	for (; *p == ' '; p++) { }	/* スペースを読み飛ばす */
 
-	/* �t�@�C���ǂݍ��� */
+	/* ファイル読み込み */
 	i = api_fopen(p); if (i == 0) { error("file not found.\n"); }
 	fsize = api_fsize(i, 0);
 	if (fsize > 512 * 1024) {
@@ -41,18 +41,18 @@ void HariMain(void)
 	api_fread(filebuf, fsize, i);
 	api_fclose(i);
 
-	/* �t�@�C���^�C�v�`�F�b�N */
+	/* ファイルタイプチェック */
 	if (info_BMP(&env, info, fsize, filebuf) == 0) {
-		/* BMP�ł͂Ȃ����� */
+		/* BMPではなかった */
 		if (info_JPEG(&env, info, fsize, filebuf) == 0) {
-			/* JPEG�ł��Ȃ����� */
+			/* JPEGでもなかった */
 			api_putstr0("file type unknown.\n");
 			api_end();
 		}
 	}
-	/* �ǂ��炩��info�֐�����������ƁA�ȉ��̏��info�ɓ����Ă��� */
-	/*	info[0] : �t�@�C���^�C�v (1:BMP, 2:JPEG) */
-	/*	info[1] : �J���[��� */
+	/* どちらかのinfo関数が成功すると、以下の情報がinfoに入っている */
+	/*	info[0] : ファイルタイプ (1:BMP, 2:JPEG) */
+	/*	info[1] : カラー情報 */
 	/*	info[2] : xsize */
 	/*	info[3] : ysize */
 
@@ -60,26 +60,26 @@ void HariMain(void)
 		error("picture too large.\n");
 	}
 
-	/* �E�B���h�E�̏��� */
+	/* ウィンドウの準備 */
 	xsize = info[2] + 16;
 	if (xsize < 136) {
 		xsize = 136;
 	}
 	win = api_openwin(winbuf, xsize, info[3] + 37, -1, "gview");
 
-	/* �t�@�C�����e���摜�f�[�^�ɕϊ� */
+	/* ファイル内容を画像データに変換 */
 	if (info[0] == 1) {
 		i = decode0_BMP (&env, fsize, filebuf, 4, (char *) picbuf, 0);
 	} else {
 		i = decode0_JPEG(&env, fsize, filebuf, 4, (char *) picbuf, 0);
 	}
-	/* b_type = 4 �́A struct RGB �`�����Ӗ����� */
-	/* skip��0�ɂ��Ă����΂悢 */
+	/* b_type = 4 は、 struct RGB 形式を意味する */
+	/* skipは0にしておけばよい */
 	if (i != 0) {
 		error("decode error.\n");
 	}
 
-	/* �\�� */
+	/* 表示 */
 	for (i = 0; i < info[3]; i++) {
 		p = winbuf + (i + 29) * xsize + (xsize - info[2]) / 2;
 		q = picbuf + i * info[2];
@@ -89,7 +89,7 @@ void HariMain(void)
 	}
 	api_refreshwin(win, (xsize - info[2]) / 2, 29, (xsize - info[2]) / 2 + info[2], 29 + info[3]);
 
-	/* �I���҂� */
+	/* 終了待ち */
 	for (;;) {
 		i = api_getkey(1);
 		if (i == 'Q' || i == 'q') {
@@ -102,13 +102,13 @@ unsigned char rgb2pal(int r, int g, int b, int x, int y)
 {
 	static int table[4] = { 3, 1, 0, 2 };
 	int i;
-	x &= 1; /* ��������� */
+	x &= 1; /* 偶数か奇数か */
 	y &= 1;
-	i = table[x + y * 2];	/* ���ԐF����邽�߂̒萔 */
-	r = (r * 21) / 256;	/* ����� 0�`20 �ɂȂ� */
+	i = table[x + y * 2];	/* 中間色を作るための定数 */
+	r = (r * 21) / 256;	/* これで 0〜20 になる */
 	g = (g * 21) / 256;
 	b = (b * 21) / 256;
-	r = (r + i) / 4;	/* ����� 0�`5 �ɂȂ� */
+	r = (r + i) / 4;	/* これで 0〜5 になる */
 	g = (g + i) / 4;
 	b = (b + i) / 4;
 	return 16 + r + g * 6 + b * 36;

@@ -1,11 +1,11 @@
-tolset�p bochs 2.2.6�g���p�b�P�[�W
+tolset用 bochs 2.2.6拡張パッケージ
 
-���̃t�H���_��qemu�Ɖ������āAtolset/z_tools/qemu�Ɠ���ւ���΁A
-�i�����e��qemu_nt�Ƃł����Ă����Ƃ悢�ł��傤�j
-�umake run�v��bochs�������悤�ɂȂ�܂��B
+このフォルダをqemuと改名して、tolset/z_tools/qemuと入れ替えれば、
+（旧内容はqemu_ntとでもしておくとよいでしょう）
+「make run」でbochsが動くようになります。
 
-bochs�ł́AF12���������Ń}�E�X���G�~�����[�^�̒��ɓ�������o�Ă����肵�܂��B
+bochsでは、F12を押す事でマウスがエミュレータの中に入ったり出てきたりします。
 
-bochs���I��������Ƃ��́A��ʏ㕔�A�C�R���̉E�[�́upower�v�{�^���������Ă��������B
+bochsを終了させるときは、画面上部アイコンの右端の「power」ボタンを押してください。
 
-���C�Z���X�́Abochs-smp.exe��bios.bin��LGPL�ŁA���̑���KL-01�ł��B
+ライセンスは、bochs-smp.exeとbios.binはLGPLで、その他はKL-01です。

@@ -69,7 +69,7 @@ too_many_object:
 	}
 	if (*obj->file0 != '!')
 		errout_s_NL("unknown file type: ", obj->name);
-	/* ���C�u�����̃��[�h */
+	/* ライブラリのロード */
 	p = obj->file0;
 	s = obj->file1;
 	t = &p[0x44];
@@ -262,7 +262,7 @@ static void libout(struct str_works *work)
 			for (i = 0; i < len; i++)
 				put32l(work->objs0[i].ofs);
 			put32l(len = work->label - work->label0);
-			/* �{���̓\�[�g���ďo�͂���̂����A�蔲���Ń\�[�g���Ă��Ȃ� */
+			/* 本来はソートして出力するのだが、手抜きでソートしていない */
 			for (i = 0; i < len; i++)
 				put16l(work->label0[i].obj - work->objs0 + 1);
 			for (i = 0; i < len; i++)

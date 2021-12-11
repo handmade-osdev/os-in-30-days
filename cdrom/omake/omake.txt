@@ -1,120 +1,120 @@
-���܂��t�H���_�̒��g�ɂ���
+おまけフォルダの中身について
 
-  �ȉ��ɂ��Ă悭������Ȃ����Ƃ�����΃T�|�[�g�y�[�W�Ŏ��₵�Ă��������B
+  以下についてよく分からないことがあればサポートページで質問してください。
 
-1.tolsrc�t�H���_
+1.tolsrcフォルダ
 
-  tolset�̃\�[�X�v���O�����ł��B����Ȃ��̂������Ă����܂�Q�l�ɂȂ�Ȃ�����
-����܂��񂪁A�Ȃ����̓}�V���낤�Ǝv���ē���Ă����܂����i�ǎ҂̒��̈�l
-���炢�́A�ǂ�ł݂����Ǝv����������Ȃ��Ǝv�����̂Łj�B
+  tolsetのソースプログラムです。こんなものがあってもあまり参考にならないかも
+しれませんが、ないよりはマシだろうと思って入れておきました（読者の中の一人
+くらいは、読んでみたいと思うかもしれないと思ったので）。
 
-    aksa1a      aksa.exe�̃\�[�X�v���O�����ł��B
-      -- ����͋tASKA������\�t�g�ł��i���s�t�@�C������\�[�X�v���O���������j�B
-         ASKA�ɂ��Ă͉��L���Q�Ƃ��Ă��������B
+    aksa1a      aksa.exeのソースプログラムです。
+      -- これは逆ASKAをするソフトです（実行ファイルからソースプログラムを作る）。
+         ASKAについては下記を参照してください。
 
-    aska        aska.exe�̃\�[�X�v���O�����ł��B
-      -- nask�Ƃ͕��@���Ⴄ�A�Z���u���ł��B���Ƃ��� EAX = ECX; ��MOV�ł��B
-         �M�҂͈��p���Ă��܂����A�ł��o�O�Ȃǂ������Ďg���ɂ����̂ŁA
-         �݂Ȃ���ɂ͂������߂��ɂ����ł��B
+    aska        aska.exeのソースプログラムです。
+      -- naskとは文法が違うアセンブラです。たとえば EAX = ECX; がMOVです。
+         筆者は愛用していますが、でもバグなどが多くて使いにくいので、
+         みなさんにはおすすめしにくいです。
 
-    bim2bi4w    bim2bin.exe�̃\�[�X�v���O�����ł��B
+    bim2bi4w    bim2bin.exeのソースプログラムです。
 
-    bim2hrb     bim2hrb.exe�̃\�[�X�v���O�����ł��B
+    bim2hrb     bim2hrb.exeのソースプログラムです。
 
-    bin2obj     bin2obj.exe�̃\�[�X�v���O�����ł��B
+    bin2obj     bin2obj.exeのソースプログラムです。
 
-    doscmd0a    doscmd.exe�̃\�[�X�v���O�����ł��B
-      -- ����͎��Cygwin��tolset�����܂������Ȃ��l�̂��߂̃c�[���ł��B�ڂ���
-         ���Ƃ� tolopt/fix_cygw/readme.txt ���T�|�[�g�y�[�W�ɂāB
+    doscmd0a    doscmd.exeのソースプログラムです。
+      -- これは主にCygwinでtolsetがうまく動かない人のためのツールです。詳しい
+         ことは tolopt/fix_cygw/readme.txt かサポートページにて。
 
-    edimg0j     edimg.exe�̃\�[�X�v���O�����ł��B
+    edimg0j     edimg.exeのソースプログラムです。
 
     go_0023s    cc1.exe, cpp0.exe, nask.exe, gas2nask.exe, golib00.exe,
-                naskcnv0.exe, sjisconv.exe, golibc.lib, w32clibc.lib ��
-                �\�[�X�v���O�����ł��B
-                  cc1.exe      -- C�R���p�C��
-                  cpp0.exe     -- #include �� #define ��������������v���O����
-                  nask.exe     -- �A�Z���u��
-                  gas2nask.exe --  cc1�̏o�͂�nask�`���ɕϊ�
-                  golib00.exe  -- ���C�u�����A��
-                  naskcnv0.exe -- aska�̏o�͂�nask�`���ɕϊ�
-                  sjisconv.exe -- �S�p�������܂񂾃\�[�X�v���O������
-                                  cc1�ň��S�ɏ����ł���`���ɕϊ�
-                  golibc.lib   -- sprintf�ȂǁAOS�Ɉˑ����Ȃ��W���֐��̃��C�u����
-                                  �R���p�C���̂��܂�
-                  w32clibc.lib -- Windows�p�̕W���֐��̃��C�u����
+                naskcnv0.exe, sjisconv.exe, golibc.lib, w32clibc.lib の
+                ソースプログラムです。
+                  cc1.exe      -- Cコンパイラ
+                  cpp0.exe     -- #include や #define だけを処理するプログラム
+                  nask.exe     -- アセンブラ
+                  gas2nask.exe --  cc1の出力をnask形式に変換
+                  golib00.exe  -- ライブラリアン
+                  naskcnv0.exe -- askaの出力をnask形式に変換
+                  sjisconv.exe -- 全角文字を含んだソースプログラムを
+                                  cc1で安全に処理できる形式に変換
+                  golibc.lib   -- sprintfなど、OSに依存しない標準関数のライブラリ
+                                  コンパイラのおまけ
+                  w32clibc.lib -- Windows用の標準関数のライブラリ
 
-    hrblib0a    z_tools/haribote/harilibc.lib�̃\�[�X�v���O�����ł��B
-      -- HariMain���Ăяo�����߂̃��C�u�����ł��B
+    hrblib0a    z_tools/haribote/harilibc.libのソースプログラムです。
+      -- HariMainを呼び出すためのライブラリです。
 
-    imgtol0d    imgtol.com�̃\�[�X�v���O�����ł��B
+    imgtol0d    imgtol.comのソースプログラムです。
 
-    makefont    makefont.exe�̃\�[�X�v���O�����ł��B
+    makefont    makefont.exeのソースプログラムです。
 
-    obj2bi4d    obj2bim.exe�̃\�[�X�v���O�����ł��B
+    obj2bi4d    obj2bim.exeのソースプログラムです。
 
-    osalink1    osalink1.exe�̃\�[�X�v���O�����ł��B
-      -- �����OSASK��OS�{�̐�p�����J�ł��B����Ȃ��̂������Ă����̖��ɂ�
-         �����܂��񂪁Atolset�ɂ͂��ꂪ�����Ă���Ƃ����̂�OSASK�E�̏펯��
-         �̂ŁA���ꂽ�܂܂ɂ��Ă��܂��܂����B���傤���Ȃ��̂ł��̂悤��
-         �\�[�X������܂����B���ꂾ���ł��B
+    osalink1    osalink1.exeのソースプログラムです。
+      -- これはOSASKのOS本体専用リンカです。こんなものがあっても何の役にも
+         立ちませんが、tolsetにはこれが入っているというのがOSASK界の常識な
+         ので、いれたままにしてしまいました。しょうがないのでこのように
+         ソースも入れました。それだけです。
 
-   sartol0j     sartol.exe�̃\�[�X�v���O�����ł��B
-     -- tek���k���g���ď��Ɂi.zip�݂����Ȃ��́j���������A�𓀂����肷��
-        �\�t�g�ł��B�W���̊g���q��.sar�ł��B
+   sartol0j     sartol.exeのソースプログラムです。
+     -- tek圧縮を使って書庫（.zipみたいなもの）を作ったり、解凍したりする
+        ソフトです。標準の拡張子は.sarです。
 
-   tk5lgpl1    t5lzma.exe�̃\�[�X�v���O�����ł��B
+   tk5lgpl1    t5lzma.exeのソースプログラムです。
 
-2.osask�t�H���_
+2.osaskフォルダ
 
-  �M�҂�����Ă���OSASK��ver.4.7������Ă����܂����B���܂��ł��B����Ȃ��̂�
-�����Ă����̎Q�l�ɂ��Ȃ�܂��񂪁A�܂��ɂԂ����炢�͂ł��邩������܂���B
+  筆者が作っているOSASKのver.4.7をいれておきました。おまけです。こんなものが
+あっても何の参考にもなりませんが、まあ暇つぶしくらいはできるかもしれません。
 
-    osat47i    �����Ƃ���{�I��OSASK�̃p�b�P�[�W�ł��BREADME0.TXT��4.�͂�
-               �ǂ߂΁A�ȒP�ɃC���X�g�[���ł���Ǝv���܂��B���̏͂ɂ�HDD��
-               �������J�[�h�ւ̃C���X�g�[�����@�������Ă���܂����A���낢��
-               ���ӎ����������Ă�������Ȃ��Ɗ�Ȃ��̂ŁA�������߂��܂���B
+    osat47i    もっとも基本的なOSASKのパッケージです。README0.TXTの4.章を
+               読めば、簡単にインストールできると思います。他の章にはHDDや
+               メモリカードへのインストール方法が書いてありますが、いろいろ
+               注意事項があってそれを守らないと危ないので、おすすめしません。
 
-    osat47uf   USB�̃t���b�s�[�f�B�X�N�h���C�u���g���Ă���l�́Aosat47i��
-               ����ɂ�����ǂ����B
+    osat47uf   USBのフロッピーディスクドライブを使っている人は、osat47iの
+               代わりにこれをどうぞ。
 
-    osat47cd   CD-ROM�N���p��.ISO�t�@�C���ł�OSASK�ł��B
+    osat47cd   CD-ROM起動用の.ISOファイル版のOSASKです。
 
-    make47     OSASK ver.4.7 �̃\�[�X�t�@�C���ł��B
+    make47     OSASK ver.4.7 のソースファイルです。
 
-3.heboos�t�H���_
+3.heboosフォルダ
 
-  �M�҂� http://community.osdev.info/?FirstStep �ŊJ���E���J���Ă����A����
-��@�\��OS�ł��B�A�Z���u�������ŏ�����Ă��āA������16bit���[�h�p�ł��B�{����
-�o��܂ł́A������g���āuOS�������v������Ă��܂����B
+  筆者が http://community.osdev.info/?FirstStep で開発・公開していた、非常に
+低機能なOSです。アセンブラだけで書かれていて、しかも16bitモード用です。本書が
+出るまでは、これを使って「OS自作入門」をやっていました。
 
-  minifsos�́A�u�������ȁimini�j�ŏ��̒i�K�ifirst-step�j��OS�v�Ƃ����Ӗ��ŁA
-OS�͂�������80�o�C�g�ł��B������ƊG���o�邾���ł��B�ڂ����͏�L�y�[�W������
-���������B
+  minifsosは、「ちいさな（mini）最初の段階（first-step）のOS」という意味で、
+OSはたったの80バイトです。ちょっと絵が出るだけです。詳しくは上記ページを見て
+ください。
 
-  heboos�́A�u�ւ�OS�v�Ƃ����Ӗ��ŁAOS�{�̂�1.08KB�ɑ����Ă��܂��B�����
-�u�͂�ڂ�OS�v��3%�ɂ������Ȃ��傫���ł����Adir�R�}���h�Ȃǂ����s�ł��܂��B
-�ڂ����͏�L�y�[�W�����Ă��������B
+  heboosは、「へぼOS」という意味で、OS本体は1.08KBに増えています。これは
+「はりぼてOS」の3%にも満たない大きさですが、dirコマンドなどが実行できます。
+詳しくは上記ページを見てください。
 
-  ��������A�{����OS�����w�񂾌�ł́A�قƂ�ǎQ�l�ɂȂ�Ȃ��ł��傤�B
-asmhead.nas������OS��������Ⴞ�Ǝv���ƕ�����₷�����Ǝv���܂��B�A�Z���u��
-�����ł��������OS������Ă������E������񂾂�Ƃ������ƂŁA���܂��ł���Ă���
-���Ƃɂ��܂����B
+  いずれも、本書でOS作りを学んだ後では、ほとんど参考にならないでしょう。
+asmhead.nasだけでOSを作った例だと思うと分かりやすいかと思います。アセンブラ
+だけでこうやってOSを作っていく世界もあるんだよということで、おまけでいれておく
+ことにしました。
 
-4.tolopt�t�H���_
+4.toloptフォルダ
 
-  tolset���g���E���ǂ��邽�߂̂��̂ł��Btolset�̃I�v�V�����L�b�g�ł��B�K�v��
-�l�͎g���Ă��������i��{�I�ɂ͕s�K�v�ł��j�B��������g�����͊e�t�H���_��
-readme.txt�����Ă��������B
+  tolsetを拡張・改良するためのものです。tolsetのオプションキットです。必要な
+人は使ってください（基本的には不必要です）。いずれも使い方は各フォルダの
+readme.txtを見てください。
 
-    fix_cygw   Cygwin���g���Ă��邹���ŁAmake�����܂������Ȃ��l�̂��߂̂��̂�
-               ���B
-    bochs226   �ǂ����Ă�QEMU�����܂����삵�Ȃ��A��������QEMU�͖O�����̂ő���
-               �G�~�����[�^�������Ă݂����A�Ƃ����l�̂��߂�bochs-2.2.6��
-               �p�ӂ��Ă݂܂����B
+    fix_cygw   Cygwinを使っているせいで、makeがうまくいかない人のためのもので
+               す。
+    bochs226   どうしてもQEMUがうまく動作しない、もしくはQEMUは飽きたので他の
+               エミュレータも試してみたい、という人のためにbochs-2.2.6を
+               用意してみました。
 
-5.���̑�
+5.その他
 
-  �M�ҍ��OSASK��QEMU�Ŏ�y�Ɋy���݂����ꍇ�́A tolset/z_osabin/ ��run.bat��
-�_�u���N���b�N���Ă��������B�g�����Ȃǂɂ��ẮA��L��osat47i�̒���readme
-�Ȃǂ��Q�Ƃ��Ă��������B
+  筆者作のOSASKをQEMUで手軽に楽しみたい場合は、 tolset/z_osabin/ のrun.batを
+ダブルクリックしてください。使い方などについては、上記のosat47iの中のreadme
+などを参照してください。

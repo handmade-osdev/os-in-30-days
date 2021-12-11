@@ -81,7 +81,7 @@ next_group:
 	keyflag[1] = 0;
 	keyflag[2] = 0;
 
-	ly = 0; /* ”ñ•\Ž¦ */
+	ly = 0; /* éžè¡¨ç¤º */
 	laserwait = 0;
 	movewait = movewait0;
 	idir = +1;
@@ -95,7 +95,7 @@ next_group:
 
 		wait(4, timer, keyflag);
 
-		/* Ž©‹@‚Ìˆ— */
+		/* è‡ªæ©Ÿã®å‡¦ç† */
 		if (keyflag[0 /* left */]  != 0 && fx > 0) {
 			fx--;
 			putstr(win, winbuf, fx, 13, 6, "efg ");
@@ -112,7 +112,7 @@ next_group:
 			ly = 13;
 		}
 
-		/* ƒCƒ“ƒx[ƒ_ˆÚ“® */
+		/* ã‚¤ãƒ³ãƒ™ãƒ¼ãƒ€ç§»å‹• */
 		if (movewait != 0) {
 			movewait--;
 		} else {
@@ -132,7 +132,7 @@ next_group:
 			}
 		}
 
-		/* ƒŒ[ƒU[ˆ— */
+		/* ãƒ¬ãƒ¼ã‚¶ãƒ¼å‡¦ç† */
 		if (ly > 0) {
 			if (ly < 13) {
 				if (ix < lx && lx < ix + 25 && iy <= ly && ly < iy + invline) {
@@ -174,7 +174,7 @@ next_group:
 							}
 						}
 					}
-					/* ‘S•”‚â‚Á‚Â‚¯‚ç‚ê‚½ */
+					/* å…¨éƒ¨ã‚„ã£ã¤ã‘ã‚‰ã‚ŒãŸ */
 					movewait0 -= movewait0 / 3;
 					goto next_group;
 	alive:
@@ -200,7 +200,7 @@ void putstr(int win, char *winbuf, int x, int y, int col, unsigned char *s)
 	x = x * 8 + 8;
 	y = y * 16 + 29;
 	x0 = x;
-	i = strlen(s);	/* s‚Ì•¶Žš”‚ð”‚¦‚é */
+	i = strlen(s);	/* sã®æ–‡å­—æ•°ã‚’æ•°ãˆã‚‹ */
 	api_boxfilwin(win + 1, x, y, x + i * 8 - 1, y + 15, 0);
 	q = winbuf + y * 336;
 	t[1] = 0;
@@ -241,7 +241,7 @@ void wait(int i, int timer, char *keyflag)
 {
 	int j;
 	if (i > 0) {
-		/* ˆê’èŽžŠÔ‘Ò‚Â */
+		/* ä¸€å®šæ™‚é–“å¾…ã¤ */
 		api_settimer(timer, i);
 		i = 128;
 	} else {
@@ -266,7 +266,7 @@ void wait(int i, int timer, char *keyflag)
 }
 
 void setdec8(char *s, int i)
-/* i‚ð10i”•\‹L‚Ås‚ÉŠi”[ */
+/* iã‚’10é€²æ•°è¡¨è¨˜ã§sã«æ ¼ç´ */
 {
 	int j;
 	for (j = 7; j >= 0; j--) {

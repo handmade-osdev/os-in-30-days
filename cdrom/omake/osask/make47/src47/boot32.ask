@@ -1,4 +1,4 @@
-/* "boot32.ask" ver.0.3 copyright(C) 2004 H.Kawai(ì‡GÀ) */
+/* "boot32.ask" ver.0.3 copyright(C) 2004 H.Kawai(å·åˆç§€å®Ÿ) */
 
 #include "osaskinc.ask"
 
@@ -14,27 +14,27 @@ void putstr();
 void dumpreg();
 void decode_tek0();
 
-/* i“üğŒF
+/* é€²å…¥æ¡ä»¶ï¼š
 	SS.base = 0xff000 (ff00)
 	DS.base = SysWork
-    IDTGDT = 1MB+0KB (‚±‚Ìƒy[ƒW‚Íb’èƒXƒ^ƒbƒN‚Æ‚µ‚Ä‚àg—p)
-	CR3 = 1MB+4KB (8K, 12K‚ÍPTE)
+    IDTGDT = 1MB+0KB (ã“ã®ãƒšãƒ¼ã‚¸ã¯æš«å®šã‚¹ã‚¿ãƒƒã‚¯ã¨ã—ã¦ã‚‚ä½¿ç”¨)
+	CR3 = 1MB+4KB (8K, 12Kã¯PTE)
 
-	‚È‚¨ƒŠƒAƒ‹‚ÌÅŒã‚Ì4KB(636KB)‚ÍV86—p‚ÌƒXƒ^ƒbƒN‚É‚È‚é
-	‚³‚ç‚É12KB‚ªBIOS‚Æ‚ÌŒğM—p
+	ãªãŠãƒªã‚¢ãƒ«ã®æœ€å¾Œã®4KB(636KB)ã¯V86ç”¨ã®ã‚¹ã‚¿ãƒƒã‚¯ã«ãªã‚‹
+	ã•ã‚‰ã«12KBãŒBIOSã¨ã®äº¤ä¿¡ç”¨
 
-	ƒŠƒAƒ‹‚Ì640KB(+128KB)‚ÆŸ‚Ì1MB‚É‚Â‚¢‚Ä‚ÍˆêØƒ`ƒFƒbƒN‚µ‚È‚¢B
-	‚»‚±‚ª‹^‚í‚µ‚¢‚æ‚¤‚Å‚ÍAOSASK‚ğ‹N“®‚·‚é‚Ì‚Íâ–]“I‚¾‚©‚çB
+	ãƒªã‚¢ãƒ«ã®640KB(+128KB)ã¨æ¬¡ã®1MBã«ã¤ã„ã¦ã¯ä¸€åˆ‡ãƒã‚§ãƒƒã‚¯ã—ãªã„ã€‚
+	ãã“ãŒç–‘ã‚ã—ã„ã‚ˆã†ã§ã¯ã€OSASKã‚’èµ·å‹•ã™ã‚‹ã®ã¯çµ¶æœ›çš„ã ã‹ã‚‰ã€‚
 
 */
 
-/* ‚¢‚Â‚©Ainit‚Æbase32‚ğ•ª‚¯‚æ‚¤I */
+/* ã„ã¤ã‹ã€initã¨base32ã‚’åˆ†ã‘ã‚ˆã†ï¼ */
 
 void far boot32()
 {
 	STR_SYSWORK *swork == DS:0;
 
-	ESP = 0x2000; /* b’èƒXƒ^ƒbƒN‚Ö */
+	ESP = 0x2000; /* æš«å®šã‚¹ã‚¿ãƒƒã‚¯ã¸ */
 
 	PUSHFD();
 	POP(EAX);
@@ -54,25 +54,25 @@ void far boot32()
 		CR0 = EAX;
 	}
 
-	/* all_sel‚Ìì¬(for dummy GDT) */
+	/* all_selã®ä½œæˆ(for dummy GDT) */
 	EBP = 0x1180 + 8;
 	(int) [SS:EBP + 0] = 0x0000ffff;
 	(int) [SS:EBP + 4] = 0x00cf9200;
 	PUSH(8);
 	POP(ES); /* ES = all_sel */
 
-	/* ƒvƒƒeƒNƒgƒƒ‚ƒŠƒeƒXƒg */
+	/* ãƒ—ãƒ­ãƒ†ã‚¯ãƒˆãƒ¡ãƒ¢ãƒªãƒ†ã‚¹ãƒˆ */
 	EBX = 16 * 1024 * 1024; /* i386DX, i486, Pentium */
 	EAX =  2 * 1024 * 1024;
 	testmemory();
 	ECX += 1024 * 1024;
 	swork->bootmalloc_fre2 = ECX;
-	/* A24-31‚ª¶‚«‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒN */	
+	/* A24-31ãŒç”Ÿãã¦ã„ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯ */	
 	EDI = 0x102c00; /* PTE 3MB */
 	EAX = 0x01000007;
 	TEST(DL, 0x04);
 	if (!= 0 /* 486 */)
-		AL= 0x1f /* ƒLƒƒƒbƒVƒ…‹Ö~(PCD = 1, PWT = 1) */;
+		AL= 0x1f /* ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç¦æ­¢(PCD = 1, PWT = 1) */;
 	STOSD();
 	EAX = CR3;
 	CR3 = EAX;
@@ -103,7 +103,7 @@ void far boot32()
 //	if ((unsigned) <= 0)
 //		INT(0x03);
 
-	/* ƒ‚ƒWƒ…[ƒ‹“]‘—æŠm•Û */
+	/* ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«è»¢é€å…ˆç¢ºä¿ */
 	AL = 16;
 	ECX = 0;
 	ESI = (offset) swork->modulelist;
@@ -121,7 +121,7 @@ void far boot32()
 	bmalloc();
 	swork->bmodule_paddr = EAX;
 
-	/* Šeíƒ[ƒNƒGƒŠƒA‚ÌŠm•Û */
+	/* å„ç¨®ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã®ç¢ºä¿ */
 
 	ESI = (offset) swork->modulelist;
 	do {
@@ -136,9 +136,9 @@ void far boot32()
 		ESI += 16;
 	} while ((unsigned) (int) [DS:ESI + 0] != 0);
 
-	/* PDEPTE‚ğì‚è’¼‚·(ì‚è’¼‚³‚È‚¢‚Æ—‚¿’…‚¢‚Äƒ}ƒbƒsƒ“ƒO‚ª‚Å‚«‚È‚¢) */
-	/* PDEPTE‚ÍÅ‘å‚Å1MB(=1GB) */
-	/* ‚à‚Á‚Æ‚àA‚±‚ÌŒã‚Å0ƒNƒŠƒAƒ‹[ƒ`ƒ“‚ğ’Ç‰Á‚µ‚Ä‚¢‚¯‚Î‚à‚Á‚Æ‘‚â‚¹‚é‚ª */
+	/* PDEPTEã‚’ä½œã‚Šç›´ã™(ä½œã‚Šç›´ã•ãªã„ã¨è½ã¡ç€ã„ã¦ãƒãƒƒãƒ”ãƒ³ã‚°ãŒã§ããªã„) */
+	/* PDEPTEã¯æœ€å¤§ã§1MB(=1GB) */
+	/* ã‚‚ã£ã¨ã‚‚ã€ã“ã®å¾Œã§0ã‚¯ãƒªã‚¢ãƒ«ãƒ¼ãƒãƒ³ã‚’è¿½åŠ ã—ã¦ã„ã‘ã°ã‚‚ã£ã¨å¢—ã‚„ã›ã‚‹ãŒ */
 
 	EDI = 0x102c00; /* PTE 3MB-4MB */
 	EAX = swork->alloclist[ENT_PDEPTE + 12];
@@ -159,7 +159,7 @@ void far boot32()
 	PUSH(EDI);
 	PUSH(ECX);
 	ECX /= 4;
-	asmout("REP STOSD"); /* PDEPTE‚Ì0ƒNƒŠƒA */
+	asmout("REP STOSD"); /* PDEPTEã®0ã‚¯ãƒªã‚¢ */
 	POP(ECX);
 	POP(EDI);
 
@@ -171,13 +171,13 @@ void far boot32()
 	if (!= 0)
 		BL = 0x1f;
 	#if (!defined(PCAT))
-		/* VRAM‚ÌÅ‘å‚Í4MB */
+		/* VRAMã®æœ€å¤§ã¯4MB */
 		[ES:EDI + 0x1e00] = EBX;
 		[ES:EDI + 0x0e00] = EAX;
 		EAX += 4096;
 		EBX += 4096;
 	#else
-		/* VRAM‚ÌÅ‘å‚Í16MB */
+		/* VRAMã®æœ€å¤§ã¯16MB */
 		[ES:EDI + 0x1e00] = EBX;
 		[ES:EDI + 0x0e00] = EAX;
 		EAX += 4096;
@@ -194,7 +194,7 @@ void far boot32()
 		[ES:EDI + 0x0e0c] = EAX;
 		EAX += 4096;
 		EBX += 4096;
-		/* PCIƒfƒoƒCƒX—p‹óŠÔ (0xac00_0000) */
+		/* PCIãƒ‡ãƒã‚¤ã‚¹ç”¨ç©ºé–“ (0xac00_0000) */
 		[ES:EDI + 0x1ac0] = EBX;
 		[ES:EDI + 0x0ac0] = EAX;
 		EAX += 4096;
@@ -222,8 +222,8 @@ fillpte:
 	asmout("LOOP .fillpte");
 	POP(ECX);
 
-	/* ptepde‚Ìƒ}ƒbƒsƒ“ƒO */
-	/* +0xxx:link, +1xxx:pde, +2xxx:VRAM, +3xxx:PTE(0-4) : ”ñPCAT */
+	/* ptepdeã®ãƒãƒƒãƒ”ãƒ³ã‚° */
+	/* +0xxx:link, +1xxx:pde, +2xxx:VRAM, +3xxx:PTE(0-4) : éPCAT */
 	/* +0xxx:link, +1xxx:pde, +2xxx:VRAM, +6xxx:c0000000 +7xxx:PTE(0-4) : PCAT */
 	#if (!defined(PCAT))
 		EDI = 0x303000 + 0x1200; /* 4.5MB */
@@ -251,7 +251,7 @@ fillpte:
 	swork->bootlinear_EDI = EDI;
 	swork->bootlinear += ECX;
 
-	/* idtgdt‚Ìƒ}ƒbƒsƒ“ƒO */
+	/* idtgdtã®ãƒãƒƒãƒ”ãƒ³ã‚° */
 	ECX = swork->alloclist[ENT_IDTGDT +  8];
 	EAX = swork->alloclist[ENT_IDTGDT + 12];
 	bmap();
@@ -259,7 +259,7 @@ fillpte:
 	EDI = EDX;
 	ECX /= 4;
 	EAX = 0;
-	asmout("REP STOSD"); /* 0ƒNƒŠƒA */
+	asmout("REP STOSD"); /* 0ã‚¯ãƒªã‚¢ */
 	POP(ECX);
 	(int) [ES:EDX + 384 +   8 + 0] = 0x0000ffff; /* all_sel */
 	(int) [ES:EDX + 384 +   8 + 4] = 0x00cf9200;
@@ -294,7 +294,7 @@ fillpte:
 /* pdepte = 0x480000 - 4c2ffff */
 /* GDTR.base = 0x4c3180 */
 
-	/* ‚±‚ê‚ÅASEL_ALL, SEL_IDTGDT, SEL_PDEPTE‚Íg‚¦‚é */
+	/* ã“ã‚Œã§ã€SEL_ALL, SEL_IDTGDT, SEL_PDEPTEã¯ä½¿ãˆã‚‹ */
 	PUSH(SEL_IDTGDT);
 	POP(GS); /* = SEL_IDTGDT */
 	PUSH(SEL_PDEPTE);
@@ -306,8 +306,8 @@ fillpte:
 	bmap();
 	swork->bmodule_laddr = EDX; /* 0x4c4000 */
 
-	/* ˆÈ‰º‚Íinit‚ª‚â‚é‚×‚«‚±‚Æ‚©‚à */
-	/* ‚¢‚âAbmap‚ğg‚¢‚½‚¢‚©‚çAboot32‚Å‚â‚é‚Ì‚ª³‚µ‚¢ */
+	/* ä»¥ä¸‹ã¯initãŒã‚„ã‚‹ã¹ãã“ã¨ã‹ã‚‚ */
+	/* ã„ã‚„ã€bmapã‚’ä½¿ã„ãŸã„ã‹ã‚‰ã€boot32ã§ã‚„ã‚‹ã®ãŒæ­£ã—ã„ */
 
 	asmout("MOV EDI,.initsel0");
 	do {
@@ -352,8 +352,8 @@ fillpte:
 				PUSH(EBP);
 				EBP = [DS:EBX +  8];
 				PUSH(EBX);
-				/* tek0“WŠJ */
-				/* FS:ESI‚©‚çFS:EDI‚Ö, EBPƒoƒCƒg */
+				/* tek0å±•é–‹ */
+				/* FS:ESIã‹ã‚‰FS:EDIã¸, EBPãƒã‚¤ãƒˆ */
 				decode_tek0();
 				POP(EBX);
 				POP(EBP);
@@ -380,7 +380,7 @@ fillpte:
 	POP(DS);
 	EAX = 6 * 8 /* stack_sel */;
 	SS = EAX;
-	ESP = /* (offset) stack_ESP0 */ 0xffffd000; /* ƒXƒ^ƒbƒN‚Ì‰Šú‰» */
+	ESP = /* (offset) stack_ESP0 */ 0xffffd000; /* ã‚¹ã‚¿ãƒƒã‚¯ã®åˆæœŸåŒ– */
 
 	EBP = swork->modulelist[ENT_FDIMAGE +  8];
 	PUSH(8);
@@ -390,7 +390,7 @@ fillpte:
 		ESI = (unsigned short) swork->modulelist[ENT_FDIMAGE + 12];
 		ESI *= 16;
 		decode_tek0();
-		(char) swork->DiskCacheLength = 160; /* 0-159ƒgƒ‰ƒbƒN */
+		(char) swork->DiskCacheLength = 160; /* 0-159ãƒˆãƒ©ãƒƒã‚¯ */
 	} else {
 		TEST(swork->DiskCacheReady, 0x02);
 		if (!= 0) {
@@ -403,7 +403,7 @@ fillpte:
 				ECX = 16 * 1024 / 4;
 			#endif
 			asmout("ES REP MOVSD");
-			(char) swork->DiskCacheLength = 2; /* 0-1ƒgƒ‰ƒbƒN */
+			(char) swork->DiskCacheLength = 2; /* 0-1ãƒˆãƒ©ãƒƒã‚¯ */
 		}
 	}
 
@@ -433,17 +433,17 @@ initsel1:
 	DW(0x409a, 0x030,  2 * 8 + 384); /* init */
 	DW(0);
 
-	/* ‚±‚±‚Å‚í‚´‚ÆƒŠƒAƒ‹‚©‚çƒƒ‚ƒŠ‚ğŠm•Û‚µ‚Ä‚İ‚¹‚é(IDTGDT‚ÆPDEPTE) */
+	/* ã“ã“ã§ã‚ã–ã¨ãƒªã‚¢ãƒ«ã‹ã‚‰ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã—ã¦ã¿ã›ã‚‹(IDTGDTã¨PDEPTE) */
 
-	/* DS == syswork_seg, GS == IDT&GDT_seg (‚Ç‚¿‚ç‚àƒZƒŒƒNƒ^‚Å‚Í‚È‚¢‚±‚Æ‚É’ˆÓ‚ª•K—v) */
+	/* DS == syswork_seg, GS == IDT&GDT_seg (ã©ã¡ã‚‰ã‚‚ã‚»ãƒ¬ã‚¯ã‚¿ã§ã¯ãªã„ã“ã¨ã«æ³¨æ„ãŒå¿…è¦) */
 }
 
 void testmemory()
-/* EAX‚©‚ç1MB’PˆÊ‚ÅƒeƒXƒg */
-/* Å‘åƒAƒhƒŒƒX‚ğEBX‚Éw’è */
-/* DL‚É‚Íelfags‚ğ */
+/* EAXã‹ã‚‰1MBå˜ä½ã§ãƒ†ã‚¹ãƒˆ */
+/* æœ€å¤§ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’EBXã«æŒ‡å®š */
+/* DLã«ã¯elfagsã‚’ */
 /* ES = all_sel */
-/* ESI, EDI, EBP‚ğ”j‰ó */
+/* ESI, EDI, EBPã‚’ç ´å£Š */
 {
 	PUSH(EAX);
 	do {
@@ -452,7 +452,7 @@ void testmemory()
 		AL = 7;
 		TEST(DL, 0x04);
 		if (!= 0 /* 486 */)
-			AL= 0x1f /* ƒLƒƒƒbƒVƒ…‹Ö~(PCD = 1, PWT = 1) */;
+			AL= 0x1f /* ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç¦æ­¢(PCD = 1, PWT = 1) */;
 		do {
 			STOSD();
 			EAX += 4096;
@@ -491,7 +491,7 @@ skip:
 }
 
 void bmalloc()
-/* ECX‚ÉƒTƒCƒY > EAX‚É•¨—ƒAƒhƒŒƒX */
+/* ECXã«ã‚µã‚¤ã‚º > EAXã«ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 {
 	STR_SYSWORK *swork == DS:0;
 
@@ -521,8 +521,8 @@ void error()
 }
 
 void bmap()
-/* ŠÈˆÕƒ}ƒbƒsƒ“ƒOƒvƒƒOƒ‰ƒ€ */
-/* EDX‚ğ•Ô‚· */
+/* ç°¡æ˜“ãƒãƒƒãƒ”ãƒ³ã‚°ãƒ—ãƒ­ã‚°ãƒ©ãƒ  */
+/* EDXã‚’è¿”ã™ */
 {
 	STR_SYSWORK *swork == DS:0;
 
@@ -549,7 +549,7 @@ void set_modulesegment()
 /* AL, AH = access_right
    ECX = size, EDX = base
    GS:EBX = DT-entry */
-/* size‚Í0xfffff000ˆÈ‰º‚Å‚ ‚é */
+/* sizeã¯0xfffff000ä»¥ä¸‹ã§ã‚ã‚‹ */
 {
 	struct DescriptTbl {
 		unsigned short limit1;
@@ -568,16 +568,16 @@ void set_modulesegment()
 	TEST(AL, 0x10);
 	if (!= 0) { /* S = 1 */
 		if (size > 0xfffff) {
-			AH |= 0x80; /* page’PˆÊ‚É•â³ */
+			AH |= 0x80; /* pageå˜ä½ã«è£œæ­£ */
 		//	size &= 0xfffff000;
 		}
 		AL &= 0x1e;
 		TEST(AH, 0x80);
 		if (!= 0) {
-			size /= 4096; /* ƒy[ƒW’PˆÊ‚É•â³(0`0xffffe) */
+			size /= 4096; /* ãƒšãƒ¼ã‚¸å˜ä½ã«è£œæ­£(0ã€œ0xffffe) */
 			if (AL == 0x16) {
-				size ^= 0x000fffff; /* 0¨0xfffff, 1¨0xffffe */
-				size--; /* 0¨0xffffe, 1¨0xffffd */
+				size ^= 0x000fffff; /* 0â†’0xfffff, 1â†’0xffffe */
+				size--; /* 0â†’0xffffe, 1â†’0xffffd */
 			}
 		}
 	}
@@ -627,8 +627,8 @@ void getbECX()
 }
 
 void getl1a()
-/* ECX‚É•Ô‚· */
-/* ECX = 1‚ÅŒÄ‚Ô‚±‚Æ */
+/* ECXã«è¿”ã™ */
+/* ECX = 1ã§å‘¼ã¶ã“ã¨ */
 {
 //	ECX = 1;
 	getb();
@@ -643,8 +643,8 @@ void getl1a()
 }
 
 void getl1b()
-/* ECX‚É•Ô‚· */
-/* ECX = 1‚ÅŒÄ‚Ô‚±‚Æ */
+/* ECXã«è¿”ã™ */
+/* ECX = 1ã§å‘¼ã¶ã“ã¨ */
 {
 //	ECX = 1;
 	getb();
@@ -663,8 +663,8 @@ void getl1b()
 }
 
 void getl0a()
-/* EBP‚É•Ô‚· */
-/* i“üğŒFEBP = 0, ECX = 0 */
+/* EBPã«è¿”ã™ */
+/* é€²å…¥æ¡ä»¶ï¼šEBP = 0, ECX = 0 */
 {
 	do {
 		EBP++;
@@ -693,13 +693,13 @@ void decode_tek0()
 	PUSH(EBP); /* bytes */
 	do {
 		CL = 9;
-		getbECX(); /* 9bit“ü—Í */
+		getbECX(); /* 9bitå…¥åŠ› */
 		(unsigned int) EAX >>= 1;
 	} while (CF == 0);
 	PUSH(EAX); /* dis_s */
 	EAX = 0;
 	CL = 2;
-	getbECX(); /* 2bit“ü—Í */
+	getbECX(); /* 2bitå…¥åŠ› */
 	PUSH(EAX); /* l_ofs */
 	EAX = (offset) &getl1a;
 	getb();
@@ -713,7 +713,7 @@ void decode_tek0()
 	do {
 		EAX = 0;
 		CL = 2;
-		getbECX(); /* 2bit“ü—Í */
+		getbECX(); /* 2bitå…¥åŠ› */
 		asmout("MOVSX EAX,BYTE PTR CS:[.table+EAX]");
 		PUSH(EAX); /* z0, z1 */
 		EDX--;
@@ -721,9 +721,9 @@ void decode_tek0()
 
 	EBP = 0;
 	do {
-		/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+		/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		EDX = *z0;
-		getl0a(); /* EBP‚É•Ô‚· */
+		getl0a(); /* EBPã«è¿”ã™ */
 		*bytes -= EBP;
 		do {
 			CL = 8;
@@ -735,15 +735,15 @@ void decode_tek0()
 		if (ECX == *bytes)
 			break;
 
-		/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+		/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		EDX = *z1;
-		getl0a(); /* EBP‚É•Ô‚· */
+		getl0a(); /* EBPã«è¿”ã™ */
 		do {
 			/* getdf */
 			unsigned int stopbits == EAX, distance == EDX;
 		//	distance = 0xffffffff;
 			LEA(EDX, [ECX - 1]);
-			ECX++; /* l1a‚âl1b‚Ì‚½‚ß */
+			ECX++; /* l1aã‚„l1bã®ãŸã‚ */
 			stopbits = *dis_s;
 			do {
 				do {
@@ -778,10 +778,10 @@ table:
 
 #if 0
 
-/* TOWNS—pƒfƒoƒbƒOƒ‹[ƒ`ƒ“ */
+/* TOWNSç”¨ãƒ‡ãƒãƒƒã‚°ãƒ«ãƒ¼ãƒãƒ³ */
 
 void putstr()
-/* ES:EDI‚Öo—Í, FS:EBX‚É•¶š—ñ, ECX‚ª•¶š’·, ES:ESI‚ÉƒtƒHƒ“ƒg */
+/* ES:EDIã¸å‡ºåŠ›, FS:EBXã«æ–‡å­—åˆ—, ECXãŒæ–‡å­—é•·, ES:ESIã«ãƒ•ã‚©ãƒ³ãƒˆ */
 {
 	PUSH(EDI);
 	PUSH(EBX);
@@ -876,7 +876,7 @@ void itoa8()
 }
 
 void dumpreg()
-/* i“üğŒFES = all_sel */
+/* é€²å…¥æ¡ä»¶ï¼šES = all_sel */
 {
 	int *bmodule_paddr == DS:0x228, *bmodule_laddr == DS:0x22c;
 

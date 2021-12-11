@@ -700,7 +700,7 @@ label_to_alignment (label)
    START and END might grow / shrink due to a different address for start
    which changes the size of alignment insns between START and END.
    KNOWN_ALIGN_LOG is the alignment known for START.
-   GROWTH should be ~0 if the objective is to compute potential code size
+   GROWTH should be ‾0 if the objective is to compute potential code size
    increase, and 0 if the objective is to compute potential shrink.
    The return value is undefined for any other value of GROWTH.  */
 
@@ -773,13 +773,13 @@ insn_current_reference_address (branch)
     {
       /* Forward branch.  */
       return (insn_last_address + insn_lengths[seq_uid]
-	      - align_fuzz (seq, dest, length_unit_log, ~0));
+	      - align_fuzz (seq, dest, length_unit_log, ‾0));
     }
   else
     {
       /* Backward branch.  */
       return (insn_current_address
-	      + align_fuzz (dest, seq, length_unit_log, ~0));
+	      + align_fuzz (dest, seq, length_unit_log, ‾0));
     }
 }
 #endif /* HAVE_ATTR_length */
@@ -1315,11 +1315,11 @@ shorten_branches (first)
 		{
 		  if (flags.base_after_vec && ! flags.min_after_vec)
 		    {
-		      min_addr -= align_fuzz (min_lab, insn, 0, ~0);
-		      min_addr -= align_fuzz (insn, rel_lab, 0, ~0);
+		      min_addr -= align_fuzz (min_lab, insn, 0, ‾0);
+		      min_addr -= align_fuzz (insn, rel_lab, 0, ‾0);
 		    }
 		  else
-		    min_addr -= align_fuzz (min_lab, rel_lab, 0, ~0);
+		    min_addr -= align_fuzz (min_lab, rel_lab, 0, ‾0);
 		}
 	      /* Likewise, determine the highest lowest possible value
 		 for the offset of MAX_LAB.  */
@@ -1327,11 +1327,11 @@ shorten_branches (first)
 		{
 		  if (! flags.base_after_vec && flags.max_after_vec)
 		    {
-		      max_addr += align_fuzz (rel_lab, insn, rel_align, ~0);
-		      max_addr += align_fuzz (insn, max_lab, 0, ~0);
+		      max_addr += align_fuzz (rel_lab, insn, rel_align, ‾0);
+		      max_addr += align_fuzz (insn, max_lab, 0, ‾0);
 		    }
 		  else
-		    max_addr += align_fuzz (rel_lab, max_lab, rel_align, ~0);
+		    max_addr += align_fuzz (rel_lab, max_lab, rel_align, ‾0);
 		}
 	      else
 		{
@@ -3689,7 +3689,7 @@ split_double (value, first, second)
 	  mask--;
 
 	  /* Set sign_extend as any remaining bits.  */
-	  sign_extend = ~mask;
+	  sign_extend = ‾mask;
 
 	  /* Pick the lower word and sign-extend it.  */
 	  low = INTVAL (value);

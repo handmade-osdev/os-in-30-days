@@ -46,21 +46,21 @@ struct bss_alloc {
 void mainCRTStartup(void)
 {
 	struct bss_alloc bss_image;
-	struct bss_alloc *bss0 = (void *) ((((int) &bss_image) + 0x0f) & ~0x0f);
+	struct bss_alloc *bss0 = (void *) ((((int) &bss_image) + 0x0f) & ‾0x0f);
 	int argc;
 	UCHAR **argv;
 	GO_stdout.p0 = GO_stdout.p = ((struct bss_alloc *) bss0)->_stdout;
 	GO_stdout.p1 = GO_stdout.p0 + SIZ_STDOUT;
-	GO_stdout.dummy = ~0;
+	GO_stdout.dummy = ‾0;
 	GO_stderr.p0 = GO_stderr.p = ((struct bss_alloc *) bss0)->_stderr;
 	GO_stderr.p1 = GO_stderr.p0 + SIZ_STDERR;
-	GO_stderr.dummy = ~0;
+	GO_stderr.dummy = ‾0;
 	GOL_memmaninit(&GOL_sysman, SIZ_SYSWRK, ((struct bss_alloc *) bss0)->syswrk);
 	GOL_memmaninit(&GOL_memman, SIZ_WORK, GOL_work0 = ((struct bss_alloc *) bss0)->work);
 	argv = ConvCmdLine0(&argc);
 
 	GOL_retcode = main1(argc, argv, bss0->work1);
-	/* �o�b�t�@���o�� */
+	/* バッファを出力 */
 	GOL_sysabort(0);
 }
 

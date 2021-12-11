@@ -833,7 +833,7 @@ flags_from_decl_or_type (exp)
   if (TREE_CODE (type) == FUNCTION_TYPE && TYPE_RETURNS_STACK_DEPRESSED (type))
     {
       flags |= ECF_SP_DEPRESSED;
-      flags &= ~(ECF_PURE | ECF_CONST | ECF_LIBCALL_BLOCK);
+      flags &= ‾(ECF_PURE | ECF_CONST | ECF_LIBCALL_BLOCK);
     }
 
   return flags;
@@ -1272,7 +1272,7 @@ initialize_argument_information (num_actuals, args, args_size, n_named_args,
 		copy = assign_temp (type, 0, 1, 0);
 
 	      store_expr (args[i].tree_value, copy, 0);
-	      *ecf_flags &= ~(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
+	      *ecf_flags &= ‾(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
 
 	      args[i].tree_value = build1 (ADDR_EXPR,
 					   build_pointer_type (type),
@@ -1331,7 +1331,7 @@ initialize_argument_information (num_actuals, args, args_size, n_named_args,
       /* If this is an addressable type, we cannot pre-evaluate it.  Thus,
 	 we cannot consider this function call constant.  */
       if (TREE_ADDRESSABLE (type))
-	*ecf_flags &= ~ECF_LIBCALL_BLOCK;
+	*ecf_flags &= ‾ECF_LIBCALL_BLOCK;
 
       /* Compute the stack-size of this argument.  */
       if (args[i].reg == 0 || args[i].partial != 0
@@ -2243,7 +2243,7 @@ expand_call (exp, target, ignore)
   if (aggregate_value_p (exp))
     {
       /* This call returns a big structure.  */
-      flags &= ~(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
+      flags &= ‾(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
 
 #ifdef PCC_STATIC_STRUCT_RETURN
       {
@@ -2390,7 +2390,7 @@ expand_call (exp, target, ignore)
 	 do this eventually, but it is too complicated to keep track of
 	 what insns go in the cse'able block and which don't.  */
 
-      flags &= ~ECF_LIBCALL_BLOCK;
+      flags &= ‾ECF_LIBCALL_BLOCK;
       must_preallocate = 1;
     }
 
@@ -2636,7 +2636,7 @@ expand_call (exp, target, ignore)
 	  save_stack_pointer_delta = stack_pointer_delta;
 	}
       if (pass)
-	flags &= ~ECF_SIBCALL;
+	flags &= ‾ECF_SIBCALL;
       else
 	flags |= ECF_SIBCALL;
 
@@ -3556,7 +3556,7 @@ emit_library_call_value_1 (retval, orgfun, value, fn_type, outmode, nargs, p)
 #endif
 
       /* This call returns a big structure.  */
-      flags &= ~(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
+      flags &= ‾(ECF_CONST | ECF_PURE | ECF_LIBCALL_BLOCK);
     }
 
   /* ??? Unfinished: must pass the memory address as an argument.  */

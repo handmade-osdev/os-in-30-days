@@ -177,9 +177,9 @@ _obstack_begin (h, size, alignment, chunkfun, freefun)
 
 	 These number are irrelevant to the new GNU malloc.  I suspect it is
 	 less sensitive to the size of the request.  */
-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
+      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ‾(DEFAULT_ROUNDING - 1))
 		    + 4 + DEFAULT_ROUNDING - 1)
-		   & ~(DEFAULT_ROUNDING - 1));
+		   & ‾(DEFAULT_ROUNDING - 1));
       size = 4096 - extra;
     }
 
@@ -236,9 +236,9 @@ _obstack_begin_1 (h, size, alignment, chunkfun, freefun, arg)
 
 	 These number are irrelevant to the new GNU malloc.  I suspect it is
 	 less sensitive to the size of the request.  */
-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
+      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ‾(DEFAULT_ROUNDING - 1))
 		    + 4 + DEFAULT_ROUNDING - 1)
-		   & ~(DEFAULT_ROUNDING - 1));
+		   & ‾(DEFAULT_ROUNDING - 1));
       size = 4096 - extra;
     }
 

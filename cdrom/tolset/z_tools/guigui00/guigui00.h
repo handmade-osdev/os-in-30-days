@@ -2,7 +2,7 @@
 #define __GUIGUI00_H
 
 /* gg00lib+ ver.0.8 */
-/* gg00lib9���x�[�X�ɂ��Ă��� */
+/* gg00lib9をベースにしている */
 
 struct LIB_WORK {
 	int data[256 / 4];
@@ -75,8 +75,8 @@ int lib_execcmd2(int ret, int cmd, ...);
 void *malloc(const unsigned int nbytes);
 
 #if 0
-	/* �ȉ��̊֐��̓}�N���Ŏ�������Ă���(�������ƃR���p�N�g���̂���) */
-	/* �����̌^�Ȃǂ�������₷���悤�ɁA�֐��^�錾�𒐎߂Ƃ��Ďc���Ă��� */
+	/* 以下の関数はマクロで実現されている(高速化とコンパクト化のため) */
+	/* 引数の型などが分かりやすいように、関数型宣言を註釈として残してある */
 
 struct LIB_WORK *lib_init(struct LIB_WORK *work);
 void lib_init_nm(struct LIB_WORK *work);
@@ -451,7 +451,7 @@ void lib_settimertime2(int opt, int slot0, int slot1, unsigned int *time);
 	(void *) (tbox), (int) (col), (int) (bcol), (int) (base), (int) (len), \
 	(void *) (str), (int) 0x000c, 0x0000)
 
-/* <guigui00.h>���ǌv��̂��߂̒ǋL */
+/* <guigui00.h>改良計画のための追記 */
 
 //void lib_initsignalbox0_256(int rewind);
 //void lib_initsignalbox0_4k(int rewind);
@@ -512,55 +512,55 @@ extern __inline__ void lib_initsignalbox0_64k(int rewind)
 
 #if (!defined(LIB_FN_INIT))
 /* function-number */
-#define LIB_FN_INIT				0x0004	/* non-malloc�^ */
+#define LIB_FN_INIT				0x0004	/* non-malloc型 */
 #define LIB_FN_CLOSE			0x0008
 #define LIB_FN_WAITSIGNAL		0x0018
 #define LIB_FN_WAITSIGNALTIME	0x0018
-#define LIB_FN_OPENWINDOW		0x0020	/* non-malloc�^ */
-#define LIB_FN_OPENWINDOW1		0x0020	/* non-malloc�^ */
-	/* ��slot�̂Ƃ����1�𑫂��Aflags�̂Ƃ����256�{���Ă����1�𑫂� */
+#define LIB_FN_OPENWINDOW		0x0020	/* non-malloc型 */
+#define LIB_FN_OPENWINDOW1		0x0020	/* non-malloc型 */
+	/* ↑slotのところに1を足す、flagsのところは256倍してさらに1を足す */
 #define LIB_FN_CLOSEWINDOW		0x0024
-#define LIB_FN_OPENTEXTBOX		0x0028	/* non-malloc�^ */
+#define LIB_FN_OPENTEXTBOX		0x0028	/* non-malloc型 */
 #define LIB_FN_CLOSETEXTBOX		0x002c
-#define LIB_FN_OPENGRAPHBOX		0x0030	/* non-malloc�^ */
-#define LIB_FN_OPENGRAPHBOX2	0x0030	/* non-malloc�^ */
+#define LIB_FN_OPENGRAPHBOX		0x0030	/* non-malloc型 */
+#define LIB_FN_OPENGRAPHBOX2	0x0030	/* non-malloc型 */
 #define LIB_FN_CONTROLWINDOW	0x003c
 #define LIB_FN_PUTSTRING		0x0040
-	/* �����ʂɎg���Ȃ�opt��0x4000�𑫂� */
-	/* ���e�L�X�g���ߍ��݂����Ȃ�0x4000�͑����Ȃ� */
+	/* ↑普通に使うならoptに0x4000を足す */
+	/* ↑テキスト埋め込みをやるなら0x4000は足さない */
 #define LIB_FN_DRAWLINE			0x0044
-#define LIB_FN_FLUSHGRAPHBOX	0x004c	/* �������0x000c��ǉ� */
-#define LIB_FN_PUTBLOCK1		0x004c	/* �擪��opt�Ƃ���1��ǉ��A����ɂ������0x000c��ǉ� */
-#define LIB_FN_DRAWPOINTS1		0x0050	/* �������0x000c��ǉ� */
+#define LIB_FN_FLUSHGRAPHBOX	0x004c	/* おしりに0x000cを追加 */
+#define LIB_FN_PUTBLOCK1		0x004c	/* 先頭にoptとして1を追加、さらにおしりに0x000cを追加 */
+#define LIB_FN_DRAWPOINTS1		0x0050	/* おしりに0x000cを追加 */
 #define LIB_FN_DRAWLINE0		0x0054
 #define LIB_FN_DRAWPOINT0		0x0054
-	/* ��x��y�̂��ƂɁA�܂�x��y��ǉ��F����DRAWLINE0�ł��܂����Ă��邽�� */
-#define LIB_FN_PUTBLOCK02001	0x0058	/* �擪��opt�Ƃ���0x2001��ǉ� */
-#define LIB_FN_PUTBLOCK03001	0x0058	/* �擪��opt�Ƃ���0x3001��ǉ� */
-#define LIB_FN_DRAWPOINTS0		0x005c	/* �������0x000c��ǉ� */
-#define LIB_FN_OPENSIGNALBOX	0x0060	/* non-malloc�^ */
+	/* ↑xとyのあとに、またxとyを追加：実はDRAWLINE0でごまかしているため */
+#define LIB_FN_PUTBLOCK02001	0x0058	/* 先頭にoptとして0x2001を追加 */
+#define LIB_FN_PUTBLOCK03001	0x0058	/* 先頭にoptとして0x3001を追加 */
+#define LIB_FN_DRAWPOINTS0		0x005c	/* おしりに0x000cを追加 */
+#define LIB_FN_OPENSIGNALBOX	0x0060	/* non-malloc型 */
 #define LIB_FN_DEFINESIGNAL		0x0068
-	/* ��0p0�̏ꍇ�́A�������0��2�ǉ� */
-	/* ��1p0�̏ꍇ�́Asignal�̑O��1��ǉ��Asignal�̌���0��ǉ� */
+	/* ↑0p0の場合は、おしりに0を2つ追加 */
+	/* ↑1p0の場合は、signalの前に1を追加、signalの後ろに0を追加 */
 #define LIB_FN_OPENTIMER		0x0070
 #define LIB_FN_CLOSETIMER		0x0074
 #define LIB_FN_SETTIMER			0x0078
 #define LIB_FN_SETTIMERTIME		0x0078
 #define LIB_FN_OPENSOUNDTRAK	0x0080
 #define LIB_FN_CONTROLFREQ		0x008c
-#define LIB_FN_MAPMODULE		0x00c0	/* addr�̌���0x000c��ǉ��Aofs��attr�͑����Z���Ĉ�� */
-#define LIB_FN_UNMAPMODULE		0x00c4	/* addr�̌���0x000c��ǉ� */
-#define LIB_FN_LOADFONTSET		0x00e0	/* �������0x000c��ǉ� */
+#define LIB_FN_MAPMODULE		0x00c0	/* addrの後ろに0x000cを追加、ofsとattrは足し算して一つに */
+#define LIB_FN_UNMAPMODULE		0x00c4	/* addrの後ろに0x000cを追加 */
+#define LIB_FN_LOADFONTSET		0x00e0	/* おしりに0x000cを追加 */
 #define LIB_FN_LOADFONTSET0		0x00e0
 #define LIB_FN_MAKECHARSET		0x00e8
 #define LIB_FN_WSJIS2GG00JPN0	0x00ec
-	/* ���擪��opt�Ƃ���1��ǉ��Asjis��gg00jpn�̂�����ɂ��ꂼ��0x000c��ǉ� */
+	/* ↑先頭にoptとして1を追加、sjisとgg00jpnのうしろにそれぞれ0x000cを追加 */
 #define LIB_FN_SEUC2GG00		0x00ec
-	/* ���擪��opt�Ƃ���2��ǉ��Aseuc��gg00�̂�����ɂ��ꂼ��0x000c��ǉ� */
-#define LIB_FN_DRAWLINES0		0x0108	/* �������0x000c��ǉ� */
-#define LIB_FN_CONVLINES		0x010c	/* �������0x000c��ǉ� */
-#define LIB_FN_DRAWLINES1		0x0110	/* �������0x000c��ǉ� */
-#define LIB_FN_RESIZEMODULE		0x0120	/* sig�̑O��1��ǉ� */
+	/* ↑先頭にoptとして2を追加、seucとgg00のうしろにそれぞれ0x000cを追加 */
+#define LIB_FN_DRAWLINES0		0x0108	/* おしりに0x000cを追加 */
+#define LIB_FN_CONVLINES		0x010c	/* おしりに0x000cを追加 */
+#define LIB_FN_DRAWLINES1		0x0110	/* おしりに0x000cを追加 */
+#define LIB_FN_RESIZEMODULE		0x0120	/* sigの前に1を追加 */
 #endif
 
 #define lib_openwintitle(size, window) \

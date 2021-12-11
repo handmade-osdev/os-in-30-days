@@ -18,7 +18,7 @@ protected:
   bool Open(const char *name, const char *access);
 public:
   CFileBase(): _handle(0){};
-  virtual ~CFileBase();
+  virtual ‾CFileBase();
   virtual bool Close();
 
   bool GetPosition(UInt64 &position) const;

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* •s³‚Èmode‚ª—ˆ‚½ê‡‚Ì“®ì‚Í•ÛØ‚µ‚È‚¢ */
+/* ä¸æ­£ãªmodeãŒæ¥ãŸå ´åˆã®å‹•ä½œã¯ä¿è¨¼ã—ãªã„ */
 
 FILE *fopen(const char *filename, const char *mode)
 {

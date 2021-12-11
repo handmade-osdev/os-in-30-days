@@ -1,5 +1,5 @@
-/* "papi0.ask" ver.0.6 copyright(C) 2002 H.Kawai(ì‡GÀ) */
-/* 64bitƒ^ƒCƒv */
+/* "papi0.ask" ver.0.6 copyright(C) 2002 H.Kawai(å·åˆç§€å®Ÿ) */
+/* 64bitã‚¿ã‚¤ãƒ— */
 
 #include "osaskinc.ask"
 
@@ -9,27 +9,27 @@ default(code == CODE);
 #define	DEBUG		0
 #define	DEBUG1		0
 
-/* ƒ[ƒNƒGƒŠƒA */
-/* G—p 4KB */
-/* •¨—ƒƒ‚ƒŠ‚Ì‹ó‚«ŠÇ—(2KB+2KB+4KB) */
-/* ƒŠƒjƒAƒAƒhƒŒƒX ¨ 64bitƒAƒhƒŒƒX 4KB */
-/* 64bitƒAƒhƒŒƒX ¨ •¨—ƒAƒhƒŒƒX 16KB */
+/* ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ */
+/* é›‘ç”¨ 4KB */
+/* ç‰©ç†ãƒ¡ãƒ¢ãƒªã®ç©ºãç®¡ç†(2KB+2KB+4KB) */
+/* ãƒªãƒ‹ã‚¢ã‚¢ãƒ‰ãƒ¬ã‚¹ â†’ 64bitã‚¢ãƒ‰ãƒ¬ã‚¹ 4KB */
+/* 64bitã‚¢ãƒ‰ãƒ¬ã‚¹ â†’ ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ 16KB */
 
-/* b’èƒAƒhƒŒƒXƒ}ƒbƒv */
+/* æš«å®šã‚¢ãƒ‰ãƒ¬ã‚¹ãƒãƒƒãƒ— */
 /*
-	0GB` 4GB : Àƒƒ‚ƒŠ‚Ì‚½‚ß‚ÉƒŠƒU[ƒu
-	4GB` 8GB : ƒtƒ‰ƒOƒƒ“ƒe[ƒVƒ‡ƒ“—p—Ìˆæ
-	8GB`12GB : ƒtƒƒbƒs[ƒfƒBƒXƒN(1ƒƒfƒBƒA‚Å2MB)
-	8EB`16EB : ‰¼‘zƒƒ‚ƒŠB–³s‘ ‚É‚ ‚éB
+	0GBã€œ 4GB : å®Ÿãƒ¡ãƒ¢ãƒªã®ãŸã‚ã«ãƒªã‚¶ãƒ¼ãƒ–
+	4GBã€œ 8GB : ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ç”¨é ˜åŸŸ
+	8GBã€œ12GB : ãƒ•ãƒ­ãƒƒãƒ”ãƒ¼ãƒ‡ã‚£ã‚¹ã‚¯(1ãƒ¡ãƒ‡ã‚£ã‚¢ã§2MB)
+	8EBã€œ16EB : ä»®æƒ³ãƒ¡ãƒ¢ãƒªã€‚ç„¡å°½è”µã«ã‚ã‚‹ã€‚
 */
 /*
-	‰¼‘zƒƒ‚ƒŠ‚Ìˆê•”‚ªƒƒ‚ƒŠ‚Éƒ[ƒh‚³‚ê‚é
-	‚Í‚ª‚³‚ê‚é‚Ü‚ÅƒXƒgƒA‚µ‚È‚¢B
-	ƒƒ‚ƒŠ‚ª•ª’f‚³‚ê‚é‚Æ‚¢‚¤–â‘è‚Í‚ ‚éB
+	ä»®æƒ³ãƒ¡ãƒ¢ãƒªã®ä¸€éƒ¨ãŒãƒ¡ãƒ¢ãƒªã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã‚‹
+	ã¯ãŒã•ã‚Œã‚‹ã¾ã§ã‚¹ãƒˆã‚¢ã—ãªã„ã€‚
+	ãƒ¡ãƒ¢ãƒªãŒåˆ†æ–­ã•ã‚Œã‚‹ã¨ã„ã†å•é¡Œã¯ã‚ã‚‹ã€‚
 */
 
-/* b’è“I‚Èd—l‚ÅA16TB‚Ü‚Å‚ğƒTƒ|[ƒg */
-/* ‰¼‘zƒƒ‚ƒŠ‚ÍA8TB` */
+/* æš«å®šçš„ãªä»•æ§˜ã§ã€16TBã¾ã§ã‚’ã‚µãƒãƒ¼ãƒˆ */
+/* ä»®æƒ³ãƒ¡ãƒ¢ãƒªã¯ã€8TBã€œ */
 
 struct area_man_struct_sub {
 	unsigned int size;
@@ -38,25 +38,25 @@ struct area_man_struct_sub {
 
 struct area_man_struct {
 	char res0[8];
-	unsigned int use, size0; // ’PˆÊ‚ÍƒoƒCƒg
+	unsigned int use, size0; // å˜ä½ã¯ãƒã‚¤ãƒˆ
 	void [16];
 	area_man_struct_sub data0, data[0];
-	/* use < size0 ‚Íí‚É¬—§‚·‚é */
-	/* data[use]‚Í-1,-1‚ğw‚· */
-	/* data0‚Í”Ô•º0,0 */
+	/* use < size0 ã¯å¸¸ã«æˆç«‹ã™ã‚‹ */
+	/* data[use]ã¯-1,-1ã‚’æŒ‡ã™ */
+	/* data0ã¯ç•ªå…µ0,0 */
 };
 
 struct AAC_Node {
 	unsigned int len, index, data, [4];
-	/* index == 0xffffffff, len == 0‚Íg‚¦‚È‚¢ */
-	/* index‚Ì—LŒø”ÍˆÍ‚ÍA[1,0xfffffffe) */
-	/* 0‚ªg‚¦‚È‚¢‚Ì‚Í’É‚¢‚©‚çAindex‚É+1‚µ‚Ä‚©‚çŒÄ‚Ño‚¹‚Î‚¢‚¢‚¾‚ë‚¤ */
+	/* index == 0xffffffff, len == 0ã¯ä½¿ãˆãªã„ */
+	/* indexã®æœ‰åŠ¹ç¯„å›²ã¯ã€[1,0xfffffffe) */
+	/* 0ãŒä½¿ãˆãªã„ã®ã¯ç—›ã„ã‹ã‚‰ã€indexã«+1ã—ã¦ã‹ã‚‰å‘¼ã³å‡ºã›ã°ã„ã„ã ã‚ã† */
 };
 
 struct AAC_Head {
 	int limit, last, [8];
 	AAC_Node head, node[0];
-	/* limit‚Í—Ìˆæ”ÍˆÍŠO‚ÌÅ‰‚ÌƒoƒCƒg‚ğw‚· */
+	/* limitã¯é ˜åŸŸç¯„å›²å¤–ã®æœ€åˆã®ãƒã‚¤ãƒˆã‚’æŒ‡ã™ */
 };
 
 struct WORK {
@@ -83,8 +83,8 @@ void near AAC_cancel();
 void near free_memory();
 
 void far PAPI_syscmd()
-/* PAPIƒRƒ}ƒ“ƒhó‚¯•t‚¯
-   ‚±‚ê‚ÍA‚©‚È‚ç‚¸lv0‚©‚çŒÄ‚Î‚ê‚é */
+/* PAPIã‚³ãƒãƒ³ãƒ‰å—ã‘ä»˜ã‘
+   ã“ã‚Œã¯ã€ã‹ãªã‚‰ãšlv0ã‹ã‚‰å‘¼ã°ã‚Œã‚‹ */
 {
 	unsigned int Init_sel     ==  2 * 8, TAPI_sel   == 12 * 8;
 	unsigned int pdepte_sel   == 14 * 8, idtgdt_sel    == 15 * 8;
@@ -101,17 +101,17 @@ nextcmd:
 	if (EAX == 0)
 		goto cmd0000;
 	if (EAX == 0x0100)
-		goto cmd0100; /* ‰Šú‰» */
+		goto cmd0100; /* åˆæœŸåŒ– */
 	if (EAX == 0x0104)
-		goto cmd0104; /* PageFaultƒnƒ“ƒhƒ‰ */
+		goto cmd0104; /* PageFaultãƒãƒ³ãƒ‰ãƒ© */
 	if (EAX == 0x0108)
 		goto cmd0108; /* mapping */
 	if (EAX == 0x010c)
 		goto cmd010c; /* unmapping */
 	if (EAX == 0x0110)
-		goto cmd0110; /* —˜—p‰Â”\•¨—ƒƒ‚ƒŠ’Ê’m(free_memory) */
+		goto cmd0110; /* åˆ©ç”¨å¯èƒ½ç‰©ç†ãƒ¡ãƒ¢ãƒªé€šçŸ¥(free_memory) */
 	if (EAX == 0x0114)
-		goto cmd0114; /* •¨—ƒƒ‚ƒŠæ“¾(ƒy[ƒW’PˆÊE˜A‘±EƒAƒ‰ƒCƒ“w’è‰Â) */
+		goto cmd0114; /* ç‰©ç†ãƒ¡ãƒ¢ãƒªå–å¾—(ãƒšãƒ¼ã‚¸å˜ä½ãƒ»é€£ç¶šãƒ»ã‚¢ãƒ©ã‚¤ãƒ³æŒ‡å®šå¯) */
 	if (EAX == 0x0118)
 		goto cmd0118; /* delete pages */
 
@@ -124,7 +124,7 @@ cmd0000:
 	return;
 
 cmd0100:
-	/* ‰Šú‰» */
+	/* åˆæœŸåŒ– */
 	/* cmd, opt, reserve0, reserve1 */
 	(offset) cmd += 16;
 	EDX = 0;
@@ -192,7 +192,7 @@ cmd0108:
 		EDX = cmd[12]; /* linear */
 		EAX = cmd[28];
 	//	if (ECX != 0) {
-			ESI = cmd[ 4] /* opt(bit0`11‚Íƒy[ƒW‘®«) */;
+			ESI = cmd[ 4] /* opt(bit0ã€œ11ã¯ãƒšãƒ¼ã‚¸å±æ€§) */;
 			EAX += cmd[20];
 			ESI &= 0xfff;
 			EAX |= ESI;
@@ -214,7 +214,7 @@ cmd0108:
 	}
 
 #if 0
-	/* “K“–‚Éget_memory‚µ‚ÄA“\‚è•t‚¯‚é */
+	/* é©å½“ã«get_memoryã—ã¦ã€è²¼ã‚Šä»˜ã‘ã‚‹ */
 	ECX = cmd[ 8]; /* size */
 	EDX = cmd[12]; /* linear */
 	LEA(ESI, (int) work->mem20_man);
@@ -242,7 +242,7 @@ cmd0108:
 	(unsigned int) EAX >>= 12;
 	SHRD(EDX, ESI, 12);
 	(unsigned int) ECX >>= 12;
-	EAX++; /* linear‚Å0‚Íg‚¢‚¤‚é‚©‚ç */
+	EAX++; /* linearã§0ã¯ä½¿ã„ã†ã‚‹ã‹ã‚‰ */
 	LEA(ESI, (int) [work->linear_addr64]);
 //	if (ECX != 0) {
 		AAC_regist();
@@ -316,7 +316,7 @@ POPFD();
 	goto nextcmd;
 
 cmd0114:
-	/* •¨—ƒƒ‚ƒŠæ“¾(˜A‘±) */
+	/* ç‰©ç†ãƒ¡ãƒ¢ãƒªå–å¾—(é€£ç¶š) */
 PUSHFD();
 CLI();
 	EAX = cmd[12];
@@ -402,7 +402,7 @@ cmd0114_specialreport:
 	EDX = 0;
 	/* ESI = (offset) work->mem20_man; */ LEA(ESI, (int) work->mem20_man);
 	EDX--;
-	count_free(); /* –{—ˆ‚ÍAinit_task‚É‚â‚ç‚¹‚é(ŒvZ’†‚É‚¨‚©‚µ‚­‚È‚é‚©‚à‚µ‚ê‚È‚¢‚©‚ç) */
+	count_free(); /* æœ¬æ¥ã¯ã€init_taskã«ã‚„ã‚‰ã›ã‚‹(è¨ˆç®—ä¸­ã«ãŠã‹ã—ããªã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã‹ã‚‰) */
 	EDI = cmd0114_areastr->use;
 	cmd[16] = EDX;
 	(unsigned int) EDI /= 8;
@@ -432,7 +432,7 @@ POPFD();
 cmd0118:
 	/* delete pages */
 	/* cmd, opt, size64, offset64, addr64(start or link) */
-	/* ‚±‚Ìƒo[ƒWƒ‡ƒ“‚Å‚ÍAoffset‚Í”F¯‚µ‚Ä‚È‚¢ */
+	/* ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯ã€offsetã¯èªè­˜ã—ã¦ãªã„ */
 	ECX = cmd[ 8]; /* size */
 	EAX = cmd[12];
 	ECX += 4095;
@@ -472,12 +472,12 @@ cmd0118:
 	/* cmd, opt, size, addr64 */
 
 	/* make-signal */
-	/* «—ˆ‚Í‚±‚ÌƒRƒ}ƒ“ƒh‚ÌŒ`‘Ô‚Í•Ï‚í‚é‚¾‚ë‚¤‚ªA‚Æ‚è‚ ‚¦‚¸‚Í‚±‚ÌŒ`®‚Ås‚­ */
+	/* å°†æ¥ã¯ã“ã®ã‚³ãƒãƒ³ãƒ‰ã®å½¢æ…‹ã¯å¤‰ã‚ã‚‹ã ã‚ã†ãŒã€ã¨ã‚Šã‚ãˆãšã¯ã“ã®å½¢å¼ã§è¡Œã */
 
 
-	/* —ÌˆæŠÇ—ƒT[ƒrƒX */
-	/* w’è—e—ÊŠm•Û(ŠÜ‚ŞnƒoƒCƒg‘}“ü) */
-	/* •”•ªŠJ•ú(ŠÜ‚Ş‘SŠJ•ú) */
+	/* é ˜åŸŸç®¡ç†ã‚µãƒ¼ãƒ“ã‚¹ */
+	/* æŒ‡å®šå®¹é‡ç¢ºä¿(å«ã‚€nãƒã‚¤ãƒˆæŒ¿å…¥) */
+	/* éƒ¨åˆ†é–‹æ”¾(å«ã‚€å…¨é–‹æ”¾) */
 
 
 	/* cmd, opt, size, linear, pageset, offset64, addr64(start or link) */
@@ -488,11 +488,11 @@ cmd0118:
 
 
 void near mapping()
-/* DS‚Émapspace-module
-   EAX‚É•¨—ƒAƒhƒŒƒX
-   ECX‚ÉƒTƒCƒY
-   EDX‚ÉüŒ`ƒAƒhƒŒƒX */
-/* «—ˆ“I‚É‚ÍA•¨—ƒAƒhƒŒƒX‚Å‚Í‚È‚­ƒfƒoƒCƒXƒAƒhƒŒƒX‚É‚È‚é */
+/* DSã«mapspace-module
+   EAXã«ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹
+   ECXã«ã‚µã‚¤ã‚º
+   EDXã«ç·šå½¢ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+/* å°†æ¥çš„ã«ã¯ã€ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã§ã¯ãªããƒ‡ãƒã‚¤ã‚¹ã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãªã‚‹ */
 {
 	unsigned int pteofs == EDI;
 	int linear == EDX, size == EBP, size2 == EBX;
@@ -522,9 +522,9 @@ void near mapping()
 }
 
 void near map_sub()
-/* DS:ESI‚©‚çƒ}ƒbƒsƒ“ƒO
-   EAX‚ÉÅ‰‚Ì’l(ŠÜFƒAƒgƒŠƒrƒ…[ƒg)
-   ECX‚Íƒy[ƒW” */
+/* DS:ESIã‹ã‚‰ãƒãƒƒãƒ”ãƒ³ã‚°
+   EAXã«æœ€åˆã®å€¤(å«ï¼šã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆ)
+   ECXã¯ãƒšãƒ¼ã‚¸æ•° */
 {
 	int *pte == DS:ESI;
 	do {
@@ -561,10 +561,10 @@ POP(DS);
 }
 
 void near mapping1p()
-/* DS‚Émapspace-module
-   EAX‚É•¨—ƒAƒhƒŒƒX
-   EDX‚ÉüŒ`ƒAƒhƒŒƒX */
-/* «—ˆ“I‚É‚ÍA•¨—ƒAƒhƒŒƒX‚Å‚Í‚È‚­ƒfƒoƒCƒXƒAƒhƒŒƒX‚É‚È‚é */
+/* DSã«mapspace-module
+   EAXã«ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹
+   EDXã«ç·šå½¢ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+/* å°†æ¥çš„ã«ã¯ã€ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã§ã¯ãªããƒ‡ãƒã‚¤ã‚¹ã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãªã‚‹ */
 {
 	unsigned int pteofs == EDI;
 	unsigned int linear == EDX;
@@ -604,7 +604,7 @@ POP(DS);
 }
 
 void near unmapping()
-/* ƒy[ƒW‚ğ‚Í‚ª‚·‚¾‚¯ */
+/* ãƒšãƒ¼ã‚¸ã‚’ã¯ãŒã™ã ã‘ */
 {
 	unsigned int pteofs == EDI;
 	int linear == EDX, size == EBP, size2 == EBX;
@@ -640,18 +640,18 @@ void near unmapping()
 }
 
 void near get_area()
-/* DS:ESI‚ÉŠÇ—î•ñ\‘¢‘Ì‚Ö‚Ìƒ|ƒCƒ“ƒ^B
-   ECX‚É—v‹˜A‘±ƒTƒCƒYB
-   EAX‚Éƒy[ƒWƒAƒhƒŒƒXB-1‚Ìê‡AƒGƒ‰[B */
+/* DS:ESIã«ç®¡ç†æƒ…å ±æ§‹é€ ä½“ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã€‚
+   ECXã«è¦æ±‚é€£ç¶šã‚µã‚¤ã‚ºã€‚
+   EAXã«ãƒšãƒ¼ã‚¸ã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚-1ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼ã€‚ */
 
-/* \‘¢‘Ì‚ÌÅ‰‚Ì8ƒoƒCƒg‚ÍƒŠƒU[ƒu
-   Ÿ‚Ì8ƒoƒCƒg‚ÍAg—pƒoƒCƒg”‚Æ\‘¢‘ÌƒTƒCƒY
-   ‚»‚ÌŸ‚Ì16ƒoƒCƒg‚ÍƒŠƒU[ƒu
-   ‚Æ‚¢‚¤‚±‚Æ‚ÅAÅ‰‚Ìƒf[ƒ^[‚Í+40‚©‚ç */
+/* æ§‹é€ ä½“ã®æœ€åˆã®8ãƒã‚¤ãƒˆã¯ãƒªã‚¶ãƒ¼ãƒ–
+   æ¬¡ã®8ãƒã‚¤ãƒˆã¯ã€ä½¿ç”¨ãƒã‚¤ãƒˆæ•°ã¨æ§‹é€ ä½“ã‚µã‚¤ã‚º
+   ãã®æ¬¡ã®16ãƒã‚¤ãƒˆã¯ãƒªã‚¶ãƒ¼ãƒ–
+   ã¨ã„ã†ã“ã¨ã§ã€æœ€åˆã®ãƒ‡ãƒ¼ã‚¿ãƒ¼ã¯+40ã‹ã‚‰ */
 
-/* first_fitƒAƒ‹ƒSƒŠƒYƒ€
-   ƒAƒNƒZƒX‹£‡‚È‚Ç‚ÍAãˆÊƒ‹[ƒ`ƒ“‚Å‰ğŒˆ‚µ‚Ä‚¨‚­‚±‚Æ
-   ZF == 1‚ÍƒGƒ‰[ (EAX == -1) */
+/* first_fitã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ 
+   ã‚¢ã‚¯ã‚»ã‚¹ç«¶åˆãªã©ã¯ã€ä¸Šä½ãƒ«ãƒ¼ãƒãƒ³ã§è§£æ±ºã—ã¦ãŠãã“ã¨
+   ZF == 1ã¯ã‚¨ãƒ©ãƒ¼ (EAX == -1) */
 {
 	area_man_struct *work == DS:ESI;
 	area_man_struct_sub *dat == DS:EBX;
@@ -673,7 +673,7 @@ void near get_area()
 		dat->size -= req;
 		if (== 0) {
 			work->use -= sizeof (area_man_struct_sub);
-			/* “]‘—(sizeof (area_man_struct_sub) == 8‚ğ‰¼’è) */
+			/* è»¢é€(sizeof (area_man_struct_sub) == 8ã‚’ä»®å®š) */
 			PUSH(ECX);
 			PUSH(EAX);
 			do {
@@ -687,20 +687,20 @@ void near get_area()
 			POP(ECX);
 			CMP(EAX, 0xffffffff); /* for ZF == 0 */
 		}
-		/* ‚±‚±‚É—ˆ‚é‚Æ‚«AZF == 0 */
+		/* ã“ã“ã«æ¥ã‚‹ã¨ãã€ZF == 0 */
 	}
 	POP((offset) dat);
 	return;
 }
 
 void near free_area()
-/* DS:ESI‚ÉŠÇ—î•ñ\‘¢‘Ì‚Ö‚Ìƒ|ƒCƒ“ƒ^B */
-/* ECX‚É‰ğ•úƒTƒCƒYB */
-/* EAX‚Éƒy[ƒWƒAƒhƒŒƒXB */
-/* ‘SƒŒƒWƒXƒ^•Û‘¶ */
-/* ‚Q•ªŒŸõƒAƒ‹ƒSƒŠƒYƒ€ */
-/* ƒAƒNƒZƒX‹£‡‚È‚Ç‚ÍAãˆÊƒ‹[ƒ`ƒ“‚Å‰ğŒˆ‚µ‚Ä‚¨‚­‚±‚Æ */
-/* ZF == 1‚ÍƒGƒ‰[(ŠÇ——Ìˆæ•s‘«) */
+/* DS:ESIã«ç®¡ç†æƒ…å ±æ§‹é€ ä½“ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã€‚ */
+/* ECXã«è§£æ”¾ã‚µã‚¤ã‚ºã€‚ */
+/* EAXã«ãƒšãƒ¼ã‚¸ã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚ */
+/* å…¨ãƒ¬ã‚¸ã‚¹ã‚¿ä¿å­˜ */
+/* ï¼’åˆ†æ¤œç´¢ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ  */
+/* ã‚¢ã‚¯ã‚»ã‚¹ç«¶åˆãªã©ã¯ã€ä¸Šä½ãƒ«ãƒ¼ãƒãƒ³ã§è§£æ±ºã—ã¦ãŠãã“ã¨ */
+/* ZF == 1ã¯ã‚¨ãƒ©ãƒ¼(ç®¡ç†é ˜åŸŸä¸è¶³) */
 {
 	area_man_struct *work == DS:ESI;
 	area_man_struct_sub *dat == DS:EBX;
@@ -711,28 +711,28 @@ void near free_area()
 	PUSH(dat0);
 	PUSH((offset) dat);
 	LEA(dat0, (int) work->data0);
-//	dat1 = (offset) work->data[dat1]; // ‚±‚ê‚ª‚¤‚Ü‚­ƒRƒ“ƒpƒCƒ‹‚Å‚«‚È‚¢
+//	dat1 = (offset) work->data[dat1]; // ã“ã‚ŒãŒã†ã¾ãã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã§ããªã„
 	LEA(dat1, [dat1 + (offset) work->data]);
 
 	LEA((offset) dat, [dat0 + dat1]);
 	(offset) dat /= 2;
-	(offset) dat &= 0xfffffff8; // 8ƒoƒCƒgƒAƒ‰ƒCƒ“
+	(offset) dat &= 0xfffffff8; // 8ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 	if ((unsigned) (offset) dat > dat0) {
 		for (;;) {
 			if (addr < dat->addr) {
 				dat1 = (offset) dat;
 				(offset) dat += dat0;
 				(offset) dat /= 2;
-				(offset) dat &= 0xfffffff8; // 8ƒoƒCƒgƒAƒ‰ƒCƒ“
+				(offset) dat &= 0xfffffff8; // 8ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 				if ((unsigned) (offset) dat > dat0)
 					continue;
 				break;
 			}
-			/* == ‚Í‚ ‚è‚¦‚È‚¢ */
+			/* == ã¯ã‚ã‚Šãˆãªã„ */
 			dat0 = (offset) dat;
 			(offset) dat += dat1;
 			(offset) dat /= 2;
-			(offset) dat &= 0xfffffff8; // 8ƒoƒCƒgƒAƒ‰ƒCƒ“
+			(offset) dat &= 0xfffffff8; // 8ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 			if ((unsigned) (offset) dat > dat0)
 				continue;
 			break;
@@ -745,15 +745,15 @@ void near free_area()
 	LEA(EDX, [addr + size]);
 	EDI += dat->addr;
 	if (!= 0) {
-		/* ã‚Í”Ô•º‚Å‚Í‚È‚¢ */
+		/* ä¸Šã¯ç•ªå…µã§ã¯ãªã„ */
 		if (addr == EDI) {
-			/* ã‚Æ‚Ì—Z‡‚Í‰Â”\ */
+			/* ä¸Šã¨ã®èåˆã¯å¯èƒ½ */
 			dat->size += size;
 			if (EDX == dat[8].addr) {
-				/* ‰º‚Æ‚Ì—Z‡‚à‰Â”\ */
+				/* ä¸‹ã¨ã®èåˆã‚‚å¯èƒ½ */
 				EDX = dat[8].size;
 				dat->size += EDX;
-				/* “]‘—(sizeof (area_man_struct_sub) == 8‚ğ‰¼’è) */
+				/* è»¢é€(sizeof (area_man_struct_sub) == 8ã‚’ä»®å®š) */
 				(offset) dat += sizeof (area_man_struct_sub);
 				PUSH(ECX);
 				PUSH(EAX);
@@ -777,7 +777,7 @@ void near free_area()
 	}
 
 	if (EDX == dat[8].addr) {
-		/* ‰º‚Æ‚Ì—Z‡‚Í‰Â”\ */
+		/* ä¸‹ã¨ã®èåˆã¯å¯èƒ½ */
 		dat[8].size += size; // ZF = 0
 		dat[8].addr = addr;
 		POP((offset) dat);
@@ -786,11 +786,11 @@ void near free_area()
 		return;
 	}
 
-	/* —Z‡•s‰Â”\E—v‘}“ü */
+	/* èåˆä¸å¯èƒ½ãƒ»è¦æŒ¿å…¥ */
 
 	(offset) dat = work->use;
 	(offset) dat += sizeof (area_man_struct_sub); 
-	if ((unsigned) (offset) dat < work->size0) { /* ‚±‚ê‚ª¬—§‚µ‚È‚¢ê‡AZF == 1 */
+	if ((unsigned) (offset) dat < work->size0) { /* ã“ã‚ŒãŒæˆç«‹ã—ãªã„å ´åˆã€ZF == 1 */
 		work->use = (offset) dat;
 		LEA((offset) dat, [/* (offset) dat */ EBX + (offset) work->data]);
 	//	PUSH(EDX);
@@ -801,7 +801,7 @@ void near free_area()
 			dat->size = ECX;
 			dat->addr = EDX;
 			(offset) dat -= 8;
-		} while (addr < EDX); // í‚ÉZF == 0
+		} while (addr < EDX); // å¸¸ã«ZF == 0
 		POP(ECX);
 	//	POP(EDX);
 		/* (dat + 8)->size */ dat[8].size = size;
@@ -814,37 +814,37 @@ void near free_area()
 }
 
 
-/* Å‰‚É—˜—p‚µ‚½‚¢•”•ª‚ğdispose‚µ‚Ä‚¨‚­B‚»‚¤‚·‚ê‚ÎAƒ[ƒh‚µ‚æ‚¤‚È‚ñ‚Äv‚í‚È‚¢B */
-/* Å‰‚Í‘S”ÍˆÍ‚ªdispose‚³‚ê‚Ä‚¢‚ÄA‚ ‚Æ‚Í—˜—p‚ªÏ‚ñ‚¾‚çdispose‚·‚é */
+/* æœ€åˆã«åˆ©ç”¨ã—ãŸã„éƒ¨åˆ†ã‚’disposeã—ã¦ãŠãã€‚ãã†ã™ã‚Œã°ã€ãƒ­ãƒ¼ãƒ‰ã—ã‚ˆã†ãªã‚“ã¦æ€ã‚ãªã„ã€‚ */
+/* æœ€åˆã¯å…¨ç¯„å›²ãŒdisposeã•ã‚Œã¦ã„ã¦ã€ã‚ã¨ã¯åˆ©ç”¨ãŒæ¸ˆã‚“ã ã‚‰disposeã™ã‚‹ */
 
 
 // getmemory();
 // freememory();
-// searchpage(); /* 64bitƒy[ƒW‚ªƒLƒƒƒbƒVƒ…‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚ÄAƒLƒƒƒbƒVƒ…‚³‚ê‚Ä‚¢‚ê‚Î•¨—ƒAƒhƒŒƒX‚ğ•Ô‚· */
-/* ¡‚Ì‚Æ‚±‚ëAƒ~ƒXƒqƒbƒg==V‹Kƒy[ƒW */
-// disposepage(); /* w’è‚³‚ê‚½64bitƒy[ƒW‚Í‹ó”’‚É‚È‚é */
+// searchpage(); /* 64bitãƒšãƒ¼ã‚¸ãŒã‚­ãƒ£ãƒƒã‚·ãƒ¥ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã¦ã€ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã•ã‚Œã¦ã„ã‚Œã°ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¿”ã™ */
+/* ä»Šã®ã¨ã“ã‚ã€ãƒŸã‚¹ãƒ’ãƒƒãƒˆ==æ–°è¦ãƒšãƒ¼ã‚¸ */
+// disposepage(); /* æŒ‡å®šã•ã‚ŒãŸ64bitãƒšãƒ¼ã‚¸ã¯ç©ºç™½ã«ãªã‚‹ */
 
 /*
-	PageFault‚ª—ˆ‚é ¨ ƒŠƒjƒAƒAƒhƒŒƒX‚©‚ç64bitƒAƒhƒŒƒX‚É•ÏŠ·
-	¨ ”»–¾‚µ‚½64bitƒAƒhƒŒƒX‚Åsearchpage();
-	(1)Œ©•t‚©‚ç‚È‚¢ê‡Agetmemory‚µ‚ÄAƒ[ƒhidispose‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚ÄA‚³‚ê‚Ä‚¢‚ê‚Î‰½‚à‚µ‚È‚¢jB
-	(2)Œ©•t‚©‚Á‚½‚çA‚»‚ê‚ğƒ}ƒbƒvB
-	‚Æ‚É‚©‚­ŠY“–ƒy[ƒW‚ğƒ}ƒbƒsƒ“ƒOB
+	PageFaultãŒæ¥ã‚‹ â†’ ãƒªãƒ‹ã‚¢ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰64bitã‚¢ãƒ‰ãƒ¬ã‚¹ã«å¤‰æ›
+	â†’ åˆ¤æ˜ã—ãŸ64bitã‚¢ãƒ‰ãƒ¬ã‚¹ã§searchpage();
+	(1)è¦‹ä»˜ã‹ã‚‰ãªã„å ´åˆã€getmemoryã—ã¦ã€ãƒ­ãƒ¼ãƒ‰ï¼ˆdisposeã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã¦ã€ã•ã‚Œã¦ã„ã‚Œã°ä½•ã‚‚ã—ãªã„ï¼‰ã€‚
+	(2)è¦‹ä»˜ã‹ã£ãŸã‚‰ã€ãã‚Œã‚’ãƒãƒƒãƒ—ã€‚
+	ã¨ã«ã‹ãè©²å½“ãƒšãƒ¼ã‚¸ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ã€‚
 
 */
 
 
-/* ƒ_ƒ~[ƒwƒbƒ_‚à•K—v(‚±‚±‚ÍŒŸõ‘ÎÛ‚É‚Í‚È‚ç‚È‚¢) */
-/* ƒ^[ƒ~ƒl[ƒ^[‚ÍAlen = 0, addrp = -1, addr64 = -1 */
+/* ãƒ€ãƒŸãƒ¼ãƒ˜ãƒƒãƒ€ã‚‚å¿…è¦(ã“ã“ã¯æ¤œç´¢å¯¾è±¡ã«ã¯ãªã‚‰ãªã„) */
+/* ã‚¿ãƒ¼ãƒŸãƒãƒ¼ã‚¿ãƒ¼ã¯ã€len = 0, addrp = -1, addr64 = -1 */
 
-/* 16ƒoƒCƒg‚Å1ƒy[ƒWB4KB‚Å256ƒy[ƒW(1MB) */
+/* 16ãƒã‚¤ãƒˆã§1ãƒšãƒ¼ã‚¸ã€‚4KBã§256ãƒšãƒ¼ã‚¸(1MB) */
 
 #if 0
 
 void near cacheoutpases()
-/* EDX:EAX ‚©‚ç ECX ƒoƒCƒg */
+/* EDX:EAX ã‹ã‚‰ ECX ãƒã‚¤ãƒˆ */
 {
-	/* ƒ\[ƒg‚³‚ê‚Ä‚¢‚é‚Ì‚Å“ñ•ªŒŸõ‚Å’T‚¹‚é‚Ì‚¾‚ªAè”²‚«‚ÅüŒ`ŒŸõ */
+	/* ã‚½ãƒ¼ãƒˆã•ã‚Œã¦ã„ã‚‹ã®ã§äºŒåˆ†æ¤œç´¢ã§æ¢ã›ã‚‹ã®ã ãŒã€æ‰‹æŠœãã§ç·šå½¢æ¤œç´¢ */
 	CachePageNode *node == DS:EBX;
 
 	PUSH((offset) node);
@@ -854,13 +854,13 @@ void near cacheoutpases()
 	(offset) node = work-> ;
 	SHRD(EAX, EDX, 12);
 
-	/* EAX‚ğ’T‚µ‚ÄAECX•ª‚ğÁ‹ */
+	/* EAXã‚’æ¢ã—ã¦ã€ECXåˆ†ã‚’æ¶ˆå» */
 	if ((unsigned) EAX >= node->addr64[0]) {
 		do {
 			(offset) node += sizeof (CachePageNode);
 		} while ((unsigned) EAX >= node->addr64[0]);
 	}
-	/* ’Ç‚¢”²‚¢‚Ä‚µ‚Ü‚Á‚Ä‚¢‚é‚Ì‚ÅAˆê‚Â–ß‚Á‚Ä”»’è */
+	/* è¿½ã„æŠœã„ã¦ã—ã¾ã£ã¦ã„ã‚‹ã®ã§ã€ä¸€ã¤æˆ»ã£ã¦åˆ¤å®š */
 	(offset) node -= sizeof (CachePageNode);
 	EAX -= node->addr64[0];
 	if (== 0) {
@@ -897,8 +897,8 @@ ret:
 	node->len = EDX;
 	if (EAX == ECX)
 		goto ret;
-	/* EAX + addrp, EAX / 4096 + addr64[0] : Ÿ‚Ìƒm[ƒh‚Ìæ“ª */
-	/* len - EAX : Ÿ‚Ìƒm[ƒh‚Ìlen */
+	/* EAX + addrp, EAX / 4096 + addr64[0] : æ¬¡ã®ãƒãƒ¼ãƒ‰ã®å…ˆé ­ */
+	/* len - EAX : æ¬¡ã®ãƒãƒ¼ãƒ‰ã®len */
 	PUSH(EBP);
 	PUSH(ESI);
 	PUSH(EDI);
@@ -928,17 +928,17 @@ ret:
 
 #endif
 
-/* cacheŠÇ—‚ÍAAC_Node‚Ås‚¤Bindex‚Íaddr64‚ğ12bitƒVƒtƒg‚µ‚Äˆµ‚¤‚Ì‚ÅAlen‚àdata‚à12bitƒVƒtƒg‚µ‚Äˆµ‚¤ */
+/* cacheç®¡ç†ã¯AAC_Nodeã§è¡Œã†ã€‚indexã¯addr64ã‚’12bitã‚·ãƒ•ãƒˆã—ã¦æ‰±ã†ã®ã§ã€lenã‚‚dataã‚‚12bitã‚·ãƒ•ãƒˆã—ã¦æ‰±ã† */
 
-/* dispose”ÍˆÍ‚Ì”cˆ¬‚ÍAarea_man_struct‚Ås‚¤Bdispose‚³‚ê‚Ä‚¢‚é‹óŠÔ‚ª\‘¢‘Ì‚É‹L˜^‚³‚ê‚é */
-/* w’è‚Ì”ÍˆÍ‚ğdispose‚·‚é‚Ì‚Ífree_area‚Å‚Å‚«‚é‚ªAw’è‚Ì”ÍˆÍ‚ğdispose‚©‚çØ‚è—£‚·‚Ì‚Í‚Å‚«‚È‚¢‚Ì‚ÅA‚±‚ê‚ğV‚µ‚­—pˆÓ‚·‚é */
+/* disposeç¯„å›²ã®æŠŠæ¡ã¯ã€area_man_structã§è¡Œã†ã€‚disposeã•ã‚Œã¦ã„ã‚‹ç©ºé–“ãŒæ§‹é€ ä½“ã«è¨˜éŒ²ã•ã‚Œã‚‹ */
+/* æŒ‡å®šã®ç¯„å›²ã‚’disposeã™ã‚‹ã®ã¯free_areaã§ã§ãã‚‹ãŒã€æŒ‡å®šã®ç¯„å›²ã‚’disposeã‹ã‚‰åˆ‡ã‚Šé›¢ã™ã®ã¯ã§ããªã„ã®ã§ã€ã“ã‚Œã‚’æ–°ã—ãç”¨æ„ã™ã‚‹ */
 
-/* ƒy[ƒWƒ“ƒO‚ÌƒŠƒjƒAƒAƒhƒŒƒX‚©‚çaddr64‚Ö‚Ì•ÏŠ·‚àAAC_Node‚Ås‚¤B */
+/* ãƒšãƒ¼ã‚¸ãƒ³ã‚°ã®ãƒªãƒ‹ã‚¢ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰addr64ã¸ã®å¤‰æ›ã‚‚AAC_Nodeã§è¡Œã†ã€‚ */
 
 
 void near AAC_searchsub()
-/* 2•ªŒŸõ‚Å’T‚· */
-/* EAX‚ÉindexBEDX‚ÆEDI‚ğ”j‰óBEBX‚É•Ô‚·B */
+/* 2åˆ†æ¤œç´¢ã§æ¢ã™ */
+/* EAXã«indexã€‚EDXã¨EDIã‚’ç ´å£Šã€‚EBXã«è¿”ã™ã€‚ */
 {
 	AAC_Node *node == DS:EBX;
 	AAC_Head *head == DS:ESI;
@@ -949,7 +949,7 @@ void near AAC_searchsub()
 
 	LEA((offset) node, [node0 + node1]);
 	(offset) node /= 2;
-	(offset) node &= 0xfffffff0; /* 16ƒoƒCƒgƒAƒ‰ƒCƒ“ */
+	(offset) node &= 0xfffffff0; /* 16ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ */
 
 	if ((unsigned) (offset) node > node0) {
 		for (;;) {
@@ -957,16 +957,16 @@ void near AAC_searchsub()
 				node1 = (offset) node;
 				(offset) node += node0;
 				(offset) node /= 2;
-				(offset) node &= 0xfffffff0; /* 16ƒoƒCƒgƒAƒ‰ƒCƒ“ */
+				(offset) node &= 0xfffffff0; /* 16ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ */
 				if ((unsigned) (offset) node > node0)
 					continue;
 				break;
 			}
-			/* “™‚µ‚­‚Ä‚à‘±s */
+			/* ç­‰ã—ãã¦ã‚‚ç¶šè¡Œ */
 			node0 = (offset) node;
 			(offset) node += node1;
 			(offset) node /= 2;
-			(offset) node &= 0xfffffff0; /* 16ƒoƒCƒgƒAƒ‰ƒCƒ“ */
+			(offset) node &= 0xfffffff0; /* 16ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ */
 			if ((unsigned) (offset) node > node0)
 				continue;
 			break;
@@ -977,9 +977,9 @@ void near AAC_searchsub()
 }
 
 void near AAC_convert()
-/* EAX(index) ¨ EDX(data) */
-/* DS:ESI‚Éstruct AAC_Head‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ */
-/* •ÏŠ·‚É¬Œ÷‚·‚ê‚ÎCF = 0, ¸”s‚·‚ê‚ÎCF = 1 */
+/* EAX(index) â†’ EDX(data) */
+/* DS:ESIã«struct AAC_Headã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’ */
+/* å¤‰æ›ã«æˆåŠŸã™ã‚Œã°CF = 0, å¤±æ•—ã™ã‚Œã°CF = 1 */
 {
 	AAC_Node *node == DS:EBX;
 	AAC_Head *head == DS:ESI;
@@ -988,7 +988,7 @@ void near AAC_convert()
 	PUSH((offset) node);
 	PUSH(EDI);
 
-	AAC_searchsub(); /* EDX‚ÆEDI‚Í”j‰ó‚³‚ê‚é */
+	AAC_searchsub(); /* EDXã¨EDIã¯ç ´å£Šã•ã‚Œã‚‹ */
 	/* node->index <= index < node[16].index */
 
 	EDX = index;
@@ -1005,8 +1005,8 @@ void near AAC_convert()
 }
 
 void near AAC_regist()
-/* ƒRƒ“ƒo[ƒg‹K‘¥’Ç‰Á */
-/* d•¡“o˜^‚Í‹–‚³‚È‚¢ */
+/* ã‚³ãƒ³ãƒãƒ¼ãƒˆè¦å‰‡è¿½åŠ  */
+/* é‡è¤‡ç™»éŒ²ã¯è¨±ã•ãªã„ */
 /* EAX(index), EDX(data), ECX(len) */
 {
 	AAC_Node *node == DS:EBX;
@@ -1016,7 +1016,7 @@ void near AAC_regist()
 	PUSH(EDI);
 	PUSH(EDX);
 
-	AAC_searchsub(); /* EDX‚ÆEDI‚Í”j‰ó‚³‚ê‚é */
+	AAC_searchsub(); /* EDXã¨EDIã¯ç ´å£Šã•ã‚Œã‚‹ */
 	/* node->index <= EAX < node[16].index */
 
 	EDI = node->len;
@@ -1027,7 +1027,7 @@ void near AAC_regist()
 	EDX ^= [SS:ESP];
 	EDI |= EDX;
 	if (== 0) {
-		/* ’Ç‰Á¬Œ÷ */
+		/* è¿½åŠ æˆåŠŸ */
 		node->len += ECX;
 		EDX = [SS:ESP];
 		PUSH(EAX);
@@ -1037,7 +1037,7 @@ void near AAC_regist()
 		EDX ^= node[16].data;
 		EAX |= EDX;
 		if (== 0) {
-			/* “‡ */
+			/* çµ±åˆ */
 			EAX = node[16].len;
 			head->last -= sizeof (AAC_Node);
 			node->len += EAX;
@@ -1058,7 +1058,7 @@ void near AAC_regist()
 		POP((offset) node);
 		return;
 	}
-	/* ‰º‚Æ‚Ì“‡‚ğ’²‚×‚é */
+	/* ä¸‹ã¨ã®çµ±åˆã‚’èª¿ã¹ã‚‹ */
 	EDX = [SS:ESP];
 	PUSH(EAX);
 	EAX += ECX;
@@ -1067,7 +1067,7 @@ void near AAC_regist()
 	EDX ^= node[16].data;
 	EAX |= EDX;
 	if (== 0) {
-		/* “‡ */
+		/* çµ±åˆ */
 		POP(EAX);
 		POP(EDX);
 		node[16].index = EAX;
@@ -1076,7 +1076,7 @@ void near AAC_regist()
 		POP((offset) node);
 		return;
 	}
-	/* ‘}“ü */
+	/* æŒ¿å…¥ */
 	EAX = [SS:ESP];
 	EDX = [SS:ESP + 4];
 	PUSH(ESI);
@@ -1114,8 +1114,8 @@ err:
 }
 
 void near AAC_cancel()
-/* ƒRƒ“ƒo[ƒg‹K‘¥íœ */
-/* “o˜^‚µ‚Ä‚¢‚È‚¢•”•ª‚ğíœ‚µ‚Ä‚à‚æ‚¢ */
+/* ã‚³ãƒ³ãƒãƒ¼ãƒˆè¦å‰‡å‰Šé™¤ */
+/* ç™»éŒ²ã—ã¦ã„ãªã„éƒ¨åˆ†ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã„ */
 /* EAX(index), ECX(len) */
 {
 	AAC_Node *node == DS:EBX;
@@ -1128,7 +1128,7 @@ void near AAC_cancel()
 	PUSH(ECX);
 	PUSH(index);
 
-	AAC_searchsub(); /* EDX‚ÆEDI‚Í”j‰ó‚³‚ê‚é */
+	AAC_searchsub(); /* EDXã¨EDIã¯ç ´å£Šã•ã‚Œã‚‹ */
 	/* node->index <= index < node[16].index */
 
 	for (;;) {
@@ -1137,13 +1137,13 @@ void near AAC_cancel()
 		EDX = node->index;
 		EDX += node->len;
 		if ((unsigned) EDX > index) {
-			/* ã‚ÌƒuƒƒbƒN‚Ìˆê•”‚Ü‚½‚Í‘S•”‚ğÁ‚· */
-			/* (ECX‚ª‘å‚«‚·‚¬‚ÄÁ‚µ‚«‚ê‚È‚¢‚©‚à‚µ‚ê‚È‚¢) */
+			/* ä¸Šã®ãƒ–ãƒ­ãƒƒã‚¯ã®ä¸€éƒ¨ã¾ãŸã¯å…¨éƒ¨ã‚’æ¶ˆã™ */
+			/* (ECXãŒå¤§ãã™ãã¦æ¶ˆã—ãã‚Œãªã„ã‹ã‚‚ã—ã‚Œãªã„) */
 			if (node->index == index) {
 cont2:
 				EDX = node->len;
 				if ((unsigned) ECX < EDX) {
-					/* æ“ª‚©‚çÁ‚·‚ªAc‚è‚Í‚ ‚é */
+					/* å…ˆé ­ã‹ã‚‰æ¶ˆã™ãŒã€æ®‹ã‚Šã¯ã‚ã‚‹ */
 					node->len -= ECX;
 					node->index += ECX;
 					node->data += ECX;
@@ -1173,27 +1173,27 @@ del:
 				(offset) node -= sizeof (AAC_Node);
 				continue;
 			}
-			/* “r’†‚©‚çÁ‚· */
-			/* ECX‚ª­‚È‚¢‚ÆA•ªŠ„‚³‚ê‚é */
+			/* é€”ä¸­ã‹ã‚‰æ¶ˆã™ */
+			/* ECXãŒå°‘ãªã„ã¨ã€åˆ†å‰²ã•ã‚Œã‚‹ */
 			/*
 				if (node->index + node->len <= index + ECX)
-					––”ö‚Ü‚ÅÁ‚¦‚é
+					æœ«å°¾ã¾ã§æ¶ˆãˆã‚‹
 				else
-					•ªŠ„‚³‚ê‚é(•ªŠ„ŒãAI—¹)
+					åˆ†å‰²ã•ã‚Œã‚‹(åˆ†å‰²å¾Œã€çµ‚äº†)
 			*/
 			EDX = index;
 			EDI = node->len;
-			EDX -= node->index; /* EDX = æ“ª‚©‚çc‚éƒTƒCƒY */
+			EDX -= node->index; /* EDX = å…ˆé ­ã‹ã‚‰æ®‹ã‚‹ã‚µã‚¤ã‚º */
 			PUSH(EDI);
-			EDI -= EDX; /* EDI = ˆê“x‚ÉÁ‹‚Å‚«‚éƒTƒCƒY */
+			EDI -= EDX; /* EDI = ä¸€åº¦ã«æ¶ˆå»ã§ãã‚‹ã‚µã‚¤ã‚º */
 			node->len = EDX;
-			index += EDI; /* index = node->index + ‹Œnode->len */
+			index += EDI; /* index = node->index + æ—§node->len */
 			ECX -= EDI;
-			POP(EDX); /* EDX = ‹Œnode->len */
-			if ((unsigned) >= 0) /* “r’†‚©‚ç––”ö‚Ü‚ÅÁ‚¦‚é */
+			POP(EDX); /* EDX = æ—§node->len */
+			if ((unsigned) >= 0) /* é€”ä¸­ã‹ã‚‰æœ«å°¾ã¾ã§æ¶ˆãˆã‚‹ */
 				continue;
-			/* •ªŠ„‚³‚ê‚é(•ªŠ„ŒãAI—¹) */
-			/* ECX‚Í•‰‚Ì’l */
+			/* åˆ†å‰²ã•ã‚Œã‚‹(åˆ†å‰²å¾Œã€çµ‚äº†) */
+			/* ECXã¯è² ã®å€¤ */
 			EDX += node->data;
 			(offset) node += sizeof (AAC_Node);
 			index += ECX;
@@ -1279,8 +1279,8 @@ free:
 unsigned int pdepte_sel   == 14 * 8, idtgdt_sel    == 15 * 8;
 PUSH(DS);
 PUSHAD();
-/* EDX‚ÍŠù‚Ég‚í‚ê‚Ä‚¢‚½‚è‚Í‚µ‚È‚¢‚©H */
-/* ‚Ç‚¤‚â‚çA}¯‚Ì‚æ‚¤‚¾ */
+/* EDXã¯æ—¢ã«ä½¿ã‚ã‚Œã¦ã„ãŸã‚Šã¯ã—ãªã„ã‹ï¼Ÿ */
+/* ã©ã†ã‚„ã‚‰ã€å›³æ˜Ÿã®ã‚ˆã†ã  */
 EDX = EAX;
 LEA(EBP, [EAX + ECX]);
 EAX = pdepte_sel;
@@ -1347,8 +1347,8 @@ void near init_AAChead()
 }
 
 void near count_free()
-/* DS:ESI‚ÉŠÇ—î•ñ\‘¢‘Ì‚Ö‚Ìƒ|ƒCƒ“ƒ^B */
-/* ECX‚É‡ŒvƒTƒCƒY‚ª•Ô‚èAEAX‚ÉÅ‘åƒTƒCƒY‚ª•Ô‚é */
+/* DS:ESIã«ç®¡ç†æƒ…å ±æ§‹é€ ä½“ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã€‚ */
+/* ECXã«åˆè¨ˆã‚µã‚¤ã‚ºãŒè¿”ã‚Šã€EAXã«æœ€å¤§ã‚µã‚¤ã‚ºãŒè¿”ã‚‹ */
 {
 	area_man_struct *work == DS:ESI;
 	area_man_struct_sub *dat == DS:EBX;
@@ -1384,7 +1384,7 @@ void far PageFaultHandler()
 	DS = EAX;
 	asmout("TEST BYTE PTR SS:[ESP+36],01H");
 	if (== 0) {
-		/* ƒy[ƒW•sİ */
+		/* ãƒšãƒ¼ã‚¸ä¸åœ¨ */
 		EAX = CR2;
 		(unsigned int) EAX >>= 12;
 		LEA(ESI, (int) [work->linear_addr64]);
@@ -1396,13 +1396,13 @@ void far PageFaultHandler()
 			EDX = [SS:ESP + 44]; /* CS */
 
 ESI = [SS:ESP + 4]; /* ESI */
-			INT(0x03); /* map‚µ‚Ä‚È‚¢‚Ì‚ÉQÆ‚³‚ê‚½ */
+			INT(0x03); /* mapã—ã¦ãªã„ã®ã«å‚ç…§ã•ã‚ŒãŸ */
 		}
 		LEA(EAX, [EDX + 1]);
 		LEA(ESI, (int) [work->addr64_addrp]);
 		AAC_convert();
 		if (CF == 1) {
-			/* V‹Kƒy[ƒW‚¾‚Æ‹­ˆø‚É‰¼’è */
+			/* æ–°è¦ãƒšãƒ¼ã‚¸ã ã¨å¼·å¼•ã«ä»®å®š */
 			PUSH(EAX);
 			ECX = 4096;
 			PUSH(ESI);
@@ -1448,8 +1448,8 @@ POP(ECX);
 #if (DEBUG1)
 PUSH(DS);
 PUSHAD();
-/* EDX‚ÍŠù‚Ég‚í‚ê‚Ä‚¢‚½‚è‚Í‚µ‚È‚¢‚©H */
-/* ‚Ç‚¤‚â‚çA}¯‚Ì‚æ‚¤‚¾ */
+/* EDXã¯æ—¢ã«ä½¿ã‚ã‚Œã¦ã„ãŸã‚Šã¯ã—ãªã„ã‹ï¼Ÿ */
+/* ã©ã†ã‚„ã‚‰ã€å›³æ˜Ÿã®ã‚ˆã†ã  */
 EAX = pdepte_sel;
 EBX = 0x4200; /* 4.5MB */
 DS = EAX;
@@ -1473,7 +1473,7 @@ POP(DS);
 #endif
 			AAC_regist();
 		}
-		/* •¨—ƒAƒhƒŒƒX:EDX */
+		/* ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹:EDX */
 		EDX <<= 12;
 		PUSH((int) pdepte_sel);
 		POP(DS);
@@ -1493,10 +1493,10 @@ POP(DS);
 /*
 
 
-  Eƒy[ƒWƒ“ƒO‹óŠÔƒI[ƒvƒ“^ƒNƒ[ƒY
-  Eƒ}ƒbƒsƒ“ƒO^ƒAƒ“ƒ}ƒbƒsƒ“ƒO    ˆø”‚ÍAopt(32bit)AƒTƒCƒY(32bit)‚ÆƒAƒhƒŒƒX(64bit)B
-  EƒvƒŠƒ[ƒhiŠÜ‚ŞFƒƒbƒNEEE—Dæ‡ˆÊ‚ª‚ ‚éjB
-  EƒvƒŠƒXƒgƒA
-  EƒfƒBƒ[[ƒuƒ‹ƒLƒƒƒbƒVƒ…
+  ãƒ»ãƒšãƒ¼ã‚¸ãƒ³ã‚°ç©ºé–“ã‚ªãƒ¼ãƒ—ãƒ³ï¼ã‚¯ãƒ­ãƒ¼ã‚º
+  ãƒ»ãƒãƒƒãƒ”ãƒ³ã‚°ï¼ã‚¢ãƒ³ãƒãƒƒãƒ”ãƒ³ã‚°    å¼•æ•°ã¯ã€opt(32bit)ã€ã‚µã‚¤ã‚º(32bit)ã¨ã‚¢ãƒ‰ãƒ¬ã‚¹(64bit)ã€‚
+  ãƒ»ãƒ—ãƒªãƒ­ãƒ¼ãƒ‰ï¼ˆå«ã‚€ï¼šãƒ­ãƒƒã‚¯ãƒ»ãƒ»ãƒ»å„ªå…ˆé †ä½ãŒã‚ã‚‹ï¼‰ã€‚
+  ãƒ»ãƒ—ãƒªã‚¹ãƒˆã‚¢
+  ãƒ»ãƒ‡ã‚£ã‚¼ãƒ¼ãƒ–ãƒ«ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 
 */

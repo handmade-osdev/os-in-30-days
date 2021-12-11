@@ -7,4 +7,4 @@ INCPATH    = ../z_tools/win32/
 CC1OPT     = -Dmain=main0
 include ../z_tools/com_mak.txt
 
-# tolset08‘Î‰žMakefile
+# tolset08å¯¾å¿œMakefile

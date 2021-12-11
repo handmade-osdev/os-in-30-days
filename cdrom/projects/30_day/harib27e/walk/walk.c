@@ -7,19 +7,19 @@ void HariMain(void)
 	api_initmalloc();
 	buf = api_malloc(160 * 100);
 	win = api_openwin(buf, 160, 100, -1, "walk");
-	api_boxfilwin(win, 4, 24, 155, 95, 0 /* • */);
+	api_boxfilwin(win, 4, 24, 155, 95, 0 /* é»’ */);
 	x = 76;
 	y = 56;
-	api_putstrwin(win, x, y, 3 /* ‰© */, 1, "*");
+	api_putstrwin(win, x, y, 3 /* é»„ */, 1, "*");
 	for (;;) {
 		i = api_getkey(1);
-		api_putstrwin(win, x, y, 0 /* • */, 1, "*"); /* •‚ÅÁ‚· */
+		api_putstrwin(win, x, y, 0 /* é»’ */, 1, "*"); /* é»’ã§æ¶ˆã™ */
 		if (i == '4' && x >   4) { x -= 8; }
 		if (i == '6' && x < 148) { x += 8; }
 		if (i == '8' && y >  24) { y -= 8; }
 		if (i == '2' && y <  80) { y += 8; }
-		if (i == 0x0a) { break; } /* Enter‚ÅI—¹ */
-		api_putstrwin(win, x, y, 3 /* ‰© */, 1, "*");
+		if (i == 0x0a) { break; } /* Enterã§çµ‚äº† */
+		api_putstrwin(win, x, y, 3 /* é»„ */, 1, "*");
 	}	
 	api_closewin(win);
 	api_end();

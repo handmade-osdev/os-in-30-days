@@ -1,7 +1,7 @@
-# Makefile‚ÌƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
-# ŠeŽíÝ’è—p
+# Makefileã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
+# å„ç¨®è¨­å®šç”¨
 
-# ƒEƒBƒ“ƒhƒEƒfƒUƒCƒ“
+# ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ‡ã‚¶ã‚¤ãƒ³
 DESIGN = WIN9X
 # DESIGN = WIN9X
 # DESIGN = TMENU
@@ -9,23 +9,23 @@ DESIGN = WIN9X
 # DESIGN = CHO_OSASK
 # DESIGN = NEWSTYLE
 
-# •W€”¼ŠpƒtƒHƒ“ƒg
+# æ¨™æº–åŠè§’ãƒ•ã‚©ãƒ³ãƒˆ
 FONTSRC = ibmank0.txt
 # FONTSRC = ibmank0.txt
 # FONTSRC = win31.txt
 # FONTSRC = newstyle.txt
 
-# pcat—p‚ÌƒIƒvƒVƒ‡ƒ“
+# pcatç”¨ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 DEFINES_AT =
 # DEFINES_AT = -DBOCHS
 
-# towns—p‚ÌƒIƒvƒVƒ‡ƒ“
+# townsç”¨ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 DEFINES_TW = -DTWVSW=1024 -DVMODE -DCLGD543X
 # DEFINES_TW = -DTWVSW=1024 -DVMODE -DCLGD543X
 
-# nec98—p‚ÌƒIƒvƒVƒ‡ƒ“
+# nec98ç”¨ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 DEFINES_NE = 
 # DEFINES_NE =
 
-# ‚»‚Ì‘¼‚ÌƒIƒvƒVƒ‡ƒ“
-#  ¡‚Ì‚Æ‚±‚ë‚È‚µ
+# ãã®ä»–ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
+#  ä»Šã®ã¨ã“ã‚ãªã—

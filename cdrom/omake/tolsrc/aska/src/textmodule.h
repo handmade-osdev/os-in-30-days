@@ -1,5 +1,5 @@
 /*
-	ƒeƒLƒXƒgƒtƒ@ƒCƒ‹ƒ‚ƒWƒ…[ƒ‹‰»ƒNƒ‰ƒX@`textmodule.h + textmodule.cpp`
+	ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åŒ–ã‚¯ãƒ©ã‚¹ã€€ã€œtextmodule.h + textmodule.cppã€œ
 															Ver.[2000/02/17]
 */
 #ifndef	__TEXTMODULE_H
@@ -20,7 +20,7 @@ using namespace std;
 
 class	TextModule{
   public:
-// ˆÈ‰º“ñ‚Â‚É‚æ‚èAString‚ÌÀ‘Ì‚ªstring‚©wstring‚©‚É‚ÍˆË‘¶‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+// ä»¥ä¸‹äºŒã¤ã«ã‚ˆã‚Šã€Stringã®å®Ÿä½“ãŒstringã‹wstringã‹ã«ã¯ä¾å­˜ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
 	typedef string					String;
 	typedef	unsigned char			Letter;
 	typedef	long					SizeType;
@@ -28,50 +28,50 @@ class	TextModule{
 	typedef	ListString::iterator	LineData;
 
   protected:
-	ListString	TextData;			// ƒeƒLƒXƒgƒf[ƒ^‚ğ•Û‘¶‚·‚éƒoƒbƒtƒ@
+	ListString	TextData;			// ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
 	
-	String		FileName;			// Œ»İŠÖ˜A‚Ã‚¯‚ç‚ê‚½ƒtƒ@ƒCƒ‹–¼
-	LineData	LineItr;			// Œ»İ‚Ìs‚ÌƒCƒeƒŒ[ƒ^
-	int			LinePos;			// Œ»İ‚Ìs”Ô†
-	bool		BufferEOF;			// EOF‚È‚çtrue‚É‚È‚é
+	String		FileName;			// ç¾åœ¨é–¢é€£ã¥ã‘ã‚‰ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«å
+	LineData	LineItr;			// ç¾åœ¨ã®è¡Œã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
+	int			LinePos;			// ç¾åœ¨ã®è¡Œç•ªå·
+	bool		BufferEOF;			// EOFãªã‚‰trueã«ãªã‚‹
 
   public:
 	TextModule(){ LineItr=TextData.begin(); LinePos=1; BufferEOF=false; }
-	~TextModule(){}
+	â€¾TextModule(){}
 	
-	void		New();					// V‹Kì¬
-	void		Open(String& filename);	// ŠJ‚­
-	void		Close(){ New(); }		// •Â‚¶‚é
-	void		Save();					// ã‘‚«•Û‘¶
-	void		Save(String& filename){ FileName=filename; Save(); }	// –¼‘O‚ğ•t‚¯‚Ä•Û‘¶
+	void		New();					// æ–°è¦ä½œæˆ
+	void		Open(String& filename);	// é–‹ã
+	void		Close(){ New(); }		// é–‰ã˜ã‚‹
+	void		Save();					// ä¸Šæ›¸ãä¿å­˜
+	void		Save(String& filename){ FileName=filename; Save(); }	// åå‰ã‚’ä»˜ã‘ã¦ä¿å­˜
 	
-	String		GetFileName(){ return FileName; }	// ƒtƒ@ƒCƒ‹–¼‚ğ“¾‚é
-	SizeType	GetLinePos(){ return LinePos; }		// ˆ—s‚ğ“¾‚é
-//	SizeType	GetFileSize();						// ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğ“¾‚é
-	SizeType	GetMaxLinePos(){ return TextData.size(); }	// Å‘åsÅIs
-	bool		IsEOF(){ return BufferEOF; }		// EOF‚ğ’²‚×‚é
+	String		GetFileName(){ return FileName; }	// ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å¾—ã‚‹
+	SizeType	GetLinePos(){ return LinePos; }		// å‡¦ç†è¡Œã‚’å¾—ã‚‹
+//	SizeType	GetFileSize();						// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’å¾—ã‚‹
+	SizeType	GetMaxLinePos(){ return TextData.size(); }	// æœ€å¤§è¡Œï¼æœ€çµ‚è¡Œ
+	bool		IsEOF(){ return BufferEOF; }		// EOFã‚’èª¿ã¹ã‚‹
 	
-	void		NextLine(SizeType line=1);		// Ÿ‚Ìs‚Öi‚Ş
-	void		PrevLine(SizeType line=1);		// ‘O‚Ìs‚Ö–ß‚é
-	void		SeekLine(SizeType linepos);		// s”Ô†‚Öi‚Ş
-	void		SeekLine(LineData);				// s‚Öi‚Ş
-	SizeType	Seek(LineData);					// sî•ñ‚©‚çs”Ô†‚ğ“¾‚é
+	void		NextLine(SizeType line=1);		// æ¬¡ã®è¡Œã¸é€²ã‚€
+	void		PrevLine(SizeType line=1);		// å‰ã®è¡Œã¸æˆ»ã‚‹
+	void		SeekLine(SizeType linepos);		// è¡Œç•ªå·ã¸é€²ã‚€
+	void		SeekLine(LineData);				// è¡Œã¸é€²ã‚€
+	SizeType	Seek(LineData);					// è¡Œæƒ…å ±ã‹ã‚‰è¡Œç•ªå·ã‚’å¾—ã‚‹
 
-	String		PeekLine();						// s“Ç‚İ‚İBŸ‚Éi‚Ü‚È‚¢
-	String		GetLine();						// s“Ç‚İ‚İBŸ‚Éi‚Ş
+	String		PeekLine();						// è¡Œèª­ã¿è¾¼ã¿ã€‚æ¬¡ã«é€²ã¾ãªã„
+	String		GetLine();						// è¡Œèª­ã¿è¾¼ã¿ã€‚æ¬¡ã«é€²ã‚€
 
 #ifdef WINVC
 	void		PutLine(String& str){ InsertLine(LineItr, str); }
 #else
-	void		PutLine(String str){ InsertLine(LineItr, str); }		// s‘‚«‚İBŸ‚Éi‚Ş
+	void		PutLine(String str){ InsertLine(LineItr, str); }		// è¡Œæ›¸ãè¾¼ã¿ã€‚æ¬¡ã«é€²ã‚€
 #endif
-	LineData	ReserveLine(){ return InsertLine(LineItr, String()); }	// ‹ó”’s‚ğ‘}“üBƒuƒbƒNƒ}[ƒN‚Æ‚µ‚Äg‚¤Bg‚Á‚½‚çEraseLine()‚ÅÁ‹‚Ì‚±‚Æ
+	LineData	ReserveLine(){ return InsertLine(LineItr, String()); }	// ç©ºç™½è¡Œã‚’æŒ¿å…¥ã€‚ãƒ–ãƒƒã‚¯ãƒãƒ¼ã‚¯ã¨ã—ã¦ä½¿ã†ã€‚ä½¿ã£ãŸã‚‰EraseLine()ã§æ¶ˆå»ã®ã“ã¨
 #ifdef WINVC
 	LineData	InsertLine(LineData, String&);
 #else
-	LineData	InsertLine(LineData, String);	// s‘}“ü
+	LineData	InsertLine(LineData, String);	// è¡ŒæŒ¿å…¥
 #endif
-	void		EraseLine(LineData);			// sÁ‹
+	void		EraseLine(LineData);			// è¡Œæ¶ˆå»
 };
 
 #endif

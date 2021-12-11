@@ -56,7 +56,7 @@ CPatricia::CPatricia():
 {
 }
 
-CPatricia::~CPatricia()
+CPatricia::‾CPatricia()
 {
   FreeMemory();
 }
@@ -96,7 +96,7 @@ STDMETHODIMP CPatricia::Create(UInt32 historySize, UInt32 keepAddBufferBefore,
   const UInt32 kAlignMask = (1 << 16) - 1;
   UInt32 windowReservSize = historySize;
   windowReservSize += kAlignMask;
-  windowReservSize &= ~(kAlignMask);
+  windowReservSize &= ‾(kAlignMask);
 
   const UInt32 kMinReservSize = (1 << 19);
   if (windowReservSize < kMinReservSize)

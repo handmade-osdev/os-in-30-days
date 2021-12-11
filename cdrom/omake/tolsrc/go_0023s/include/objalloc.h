@@ -90,7 +90,7 @@ extern PTR _objalloc_alloc PARAMS ((struct objalloc *, unsigned long));
      unsigned long __len = (l);						\
      if (__len == 0)							\
        __len = 1;							\
-     __len = (__len + OBJALLOC_ALIGN - 1) &~ (OBJALLOC_ALIGN - 1);	\
+     __len = (__len + OBJALLOC_ALIGN - 1) &‾ (OBJALLOC_ALIGN - 1);	\
      (__len <= __o->current_space					\
       ? (__o->current_ptr += __len,					\
 	 __o->current_space -= __len,					\

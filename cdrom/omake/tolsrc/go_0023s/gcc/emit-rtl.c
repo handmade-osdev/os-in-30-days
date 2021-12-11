@@ -1512,7 +1512,7 @@ constant_subword (op, offset, mode)
   val = (offset / size_ratio == 0
 	 ? (GET_CODE (op) == CONST_INT ? INTVAL (op) : CONST_DOUBLE_LOW (op))
 	 : (GET_CODE (op) == CONST_INT
-	    ? (INTVAL (op) < 0 ? ~0 : 0) : CONST_DOUBLE_HIGH (op)));
+	    ? (INTVAL (op) < 0 ? ‾0 : 0) : CONST_DOUBLE_HIGH (op)));
 
   /* Get the value we want into the low bits of val.  */
   if (BITS_PER_WORD < HOST_BITS_PER_WIDE_INT)

@@ -8549,10 +8549,10 @@ check_cv_quals_for_unify (strict, arg, parm)
       if (TREE_CODE (arg) == REFERENCE_TYPE
 	  || TREE_CODE (arg) == FUNCTION_TYPE
 	  || TREE_CODE (arg) == METHOD_TYPE)
-	parm_quals &= ~(TYPE_QUAL_CONST | TYPE_QUAL_VOLATILE);
+	parm_quals &= ‾(TYPE_QUAL_CONST | TYPE_QUAL_VOLATILE);
       if (!POINTER_TYPE_P (arg) &&
 	  TREE_CODE (arg) != TEMPLATE_TYPE_PARM)
-	parm_quals &= ~TYPE_QUAL_RESTRICT;
+	parm_quals &= ‾TYPE_QUAL_RESTRICT;
     }
   
   if (!(strict & (UNIFY_ALLOW_MORE_CV_QUAL | UNIFY_ALLOW_OUTER_MORE_CV_QUAL))
@@ -8654,12 +8654,12 @@ unify (tparms, targs, parm, arg, strict)
 
   if (!(strict & UNIFY_ALLOW_OUTER_LEVEL)
       && TYPE_P (parm) && !CP_TYPE_CONST_P (parm))
-    strict &= ~UNIFY_ALLOW_MORE_CV_QUAL;
-  strict &= ~UNIFY_ALLOW_OUTER_LEVEL;
-  strict &= ~UNIFY_ALLOW_DERIVED;
-  strict &= ~UNIFY_ALLOW_OUTER_MORE_CV_QUAL;
-  strict &= ~UNIFY_ALLOW_OUTER_LESS_CV_QUAL;
-  strict &= ~UNIFY_ALLOW_MAX_CORRECTION;
+    strict &= ‾UNIFY_ALLOW_MORE_CV_QUAL;
+  strict &= ‾UNIFY_ALLOW_OUTER_LEVEL;
+  strict &= ‾UNIFY_ALLOW_DERIVED;
+  strict &= ‾UNIFY_ALLOW_OUTER_MORE_CV_QUAL;
+  strict &= ‾UNIFY_ALLOW_OUTER_LESS_CV_QUAL;
+  strict &= ‾UNIFY_ALLOW_MAX_CORRECTION;
   
   switch (TREE_CODE (parm))
     {
@@ -8764,7 +8764,7 @@ unify (tparms, targs, parm, arg, strict)
 	  /* Consider the case where ARG is `const volatile int' and
 	     PARM is `const T'.  Then, T should be `volatile int'.  */
 	  arg = cp_build_qualified_type_real
-	    (arg, cp_type_quals (arg) & ~cp_type_quals (parm), tf_none);
+	    (arg, cp_type_quals (arg) & ‾cp_type_quals (parm), tf_none);
 	  if (arg == error_mark_node)
 	    return 1;
 

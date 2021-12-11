@@ -1,10 +1,10 @@
-; ‚Ö‚ÚOS—pƒAƒvƒŠ "HELLO.NAS"
+; ã¸ã¼OSç”¨ã‚¢ãƒ—ãƒª "HELLO.NAS"
 ; TAB = 4
-; copyright(C) 2003 ì‡GÀ, KL-01
+; copyright(C) 2003 å·åˆç§€å®Ÿ, KL-01
 
 ;	prompt>nask hello.nas hello.hoa hello.lst
-; ‚ÅƒAƒZƒ“ƒuƒ‹‚Å‚«‚Ü‚·Bnask‚Ítolset05ˆÈ~‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·B
-; tolset05‚Í http://www.imasy.orr/~kawai/osask/developers.html ‚É‚ ‚è‚Ü‚·B
+; ã§ã‚¢ã‚»ãƒ³ãƒ–ãƒ«ã§ãã¾ã™ã€‚naskã¯tolset05ä»¥é™ã«å«ã¾ã‚Œã¦ã„ã¾ã™ã€‚
+; tolset05ã¯ http://www.imasy.orr/â€¾kawai/osask/developers.html ã«ã‚ã‚Šã¾ã™ã€‚
 
 [FORMAT "BIN"]
 [INSTRSET "i386"]

@@ -1,5 +1,5 @@
 /*
-	ƒ}ƒNƒW@`macro.h`
+	ãƒžã‚¯ãƒ­é›†ã€€ã€œmacro.hã€œ
 */
 #ifndef	__MACRO_H
 #define	__MACRO_H
@@ -16,13 +16,13 @@
 //#define BOOL int
 //#define BOOLEAN char
 
-// ƒ[ƒ‚Å–„‚ß‚éƒ}ƒNƒ
+// ã‚¼ãƒ­ã§åŸ‹ã‚ã‚‹ãƒžã‚¯ãƒ­
 #define ZERO(var) memset(&var, 0, sizeof(var));
 
-// ƒ|ƒCƒ“ƒ^‚ª”ñNULL‚È‚ç‚Îdelete‚·‚éƒ}ƒNƒ
+// ãƒã‚¤ãƒ³ã‚¿ãŒéžNULLãªã‚‰ã°deleteã™ã‚‹ãƒžã‚¯ãƒ­
 #define DELETE_SAFE(var) if (var != NULL) { delete var; var = NULL; }
 
-// ƒNƒ‰ƒX‚Ìƒ|ƒCƒ“ƒ^“™‚ðdelete‚·‚éƒ}ƒNƒ
+// ã‚¯ãƒ©ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿ç­‰ã‚’deleteã™ã‚‹ãƒžã‚¯ãƒ­
 #define DELETEPTR_SAFE(var) if (var != NULL) { delete [] var; var = NULL; }
 
 #define IS_ALPHA(c)		(((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') || ((c) == '_'))

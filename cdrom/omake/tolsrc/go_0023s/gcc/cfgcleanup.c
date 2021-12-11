@@ -65,7 +65,7 @@ enum bb_flags
 #define BB_SET_FLAG(BB, FLAG) \
   (BB)->aux = (void *) (long) ((enum bb_flags) (BB)->aux | (FLAG))
 #define BB_CLEAR_FLAG(BB, FLAG) \
-  (BB)->aux = (void *) (long) ((enum bb_flags) (BB)->aux & ~(FLAG))
+  (BB)->aux = (void *) (long) ((enum bb_flags) (BB)->aux & ‾(FLAG))
 
 #define FORWARDER_BLOCK_P(BB) (BB_FLAGS (BB) & BB_FORWARDER_BLOCK)
 
@@ -179,7 +179,7 @@ try_simplify_condjump (cbranch_block)
   cbranch_fallthru_edge = redirect_edge_succ_nodup (cbranch_fallthru_edge,
 						    jump_dest_block);
   cbranch_jump_edge->flags |= EDGE_FALLTHRU;
-  cbranch_fallthru_edge->flags &= ~EDGE_FALLTHRU;
+  cbranch_fallthru_edge->flags &= ‾EDGE_FALLTHRU;
   update_br_prob_note (cbranch_block);
 
   /* Delete the block with the unconditional jump, and clean up the mess.  */

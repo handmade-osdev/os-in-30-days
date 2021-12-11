@@ -1,5 +1,5 @@
-/* ƒRƒ“ƒpƒNƒg‚¾‚ª’x‚¢”Å */
-/* ƒoƒbƒtƒ@ƒŠƒ“ƒO‚È‚µ */
+/* ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆã ãŒé…ã„ç‰ˆ */
+/* ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ãªã— */
 
 #include "windows.h"
 #include <stdio.h>	/* NULL */
@@ -43,5 +43,5 @@ unsigned int fwrite(const void *ptr, unsigned int size, unsigned int nmemb, FILE
 		} while (p < p1);
 	}
 err:
-	return l / size; /* size‚ª1ˆÈŠO‚ÌA‚±‚ê‚¾‚Æ–{“–‚Í‚Ü‚¸‚¢ */
+	return l / size; /* sizeãŒ1ä»¥å¤–ã®æ™‚ã€ã“ã‚Œã ã¨æœ¬å½“ã¯ã¾ãšã„ */
 }

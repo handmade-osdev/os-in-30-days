@@ -1,7 +1,7 @@
-/* "osalink1.c":OSASK LINKƒvƒƒOƒ‰ƒ€ version 0.1.
-	copyright(C) 2003 H.Kawai (ì‡GÀ)
+/* "osalink1.c":OSASK LINKãƒ—ãƒ­ã‚°ãƒ©ãƒ  version 0.1.
+	copyright(C) 2003 H.Kawai (å·åˆç§€å®Ÿ)
 
-	Å‰‚ªBASE.EXEA‚»‚ÌŒã‚ÍŠeí.BIN(.TEK)‚ğ‘z’è‚µ‚Ä‚¢‚é */
+	æœ€åˆãŒBASE.EXEã€ãã®å¾Œã¯å„ç¨®.BIN(.TEK)ã‚’æƒ³å®šã—ã¦ã„ã‚‹ */
 
 #include <stdio.h>
 #include <ctype.h>
@@ -56,7 +56,7 @@ const int main(int argc, char **argv)
 	if (argc >= 3)
 		outfile = argv[2];
 
-	// OPTIONFILE‚Ì“Ç‚İ‚İ‚ÆŠeƒtƒ@ƒCƒ‹‚ÌƒTƒCƒYæ“¾
+	// OPTIONFILEã®èª­ã¿è¾¼ã¿ã¨å„ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºå–å¾—
 	fp0 = fopen(optfile, "r");
 	if (fp0 == NULL) {
 		fprintf(stderr, "Can't open \"%s\".\n", optfile);
@@ -79,7 +79,7 @@ err1:
 			goto err1;
 		if (i == 0) {
 			buf2 = buf + (wordload(buf + 0x204) << 4) - 16 + 0x220;
-			goto skip; /* BASE.EXE‚Í‰ÁH‚µ‚È‚¢ */
+			goto skip; /* BASE.EXEã¯åŠ å·¥ã—ãªã„ */
 		}
 
 		for (j = 0; j < 8; j++)
@@ -99,10 +99,10 @@ err1:
 					c |= buf1[k] ^ "\x82\xff\xff\xff\x01\x00\x00\x00OSASKCMP"[k];
 				if (c == 0) {
 					size -= 20;
-					j = dwordload(buf1 + 16); /* “WŠJŒã‚ÌƒTƒCƒY */
+					j = dwordload(buf1 + 16); /* å±•é–‹å¾Œã®ã‚µã‚¤ã‚º */
 					for (k = 0; k < size; k++)
 						buf1[k] = buf1[k + 20];
-					buf3[0x0f] = 0x80; /* ˆ³kƒtƒ‰ƒO‚ğ—§‚Ä‚é */
+					buf3[0x0f] = 0x80; /* åœ§ç¸®ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹ */
 				}
 			}
 			dwordstore(buf3 + 0x08, j);
@@ -112,23 +112,23 @@ err1:
 skip:
 		totalsize += size;
 		while (totalsize & 0x0f)
-			*(buf + totalsize++) = '\0'; /* ƒpƒ‰ƒOƒ‰ƒt’PˆÊ‚ÌƒAƒ‰ƒCƒ“ */
+			*(buf + totalsize++) = '\0'; /* ãƒ‘ãƒ©ã‚°ãƒ©ãƒ•å˜ä½ã®ã‚¢ãƒ©ã‚¤ãƒ³ */
 	}
 	fclose(fp0);
 
-	/* ƒwƒbƒ_’²® */
-	wordstore(buf + 0x02, totalsize & 0x01ff); // ÅIƒy[ƒWƒTƒCƒY
-	wordstore(buf + 0x04, (totalsize + 0x1ff) >> 9); // ƒtƒ@ƒCƒ‹ƒy[ƒW”
-	wordstore(buf + 0x0e, (totalsize - 0x200) >> 4); // ‰ŠúSS
+	/* ãƒ˜ãƒƒãƒ€èª¿æ•´ */
+	wordstore(buf + 0x02, totalsize & 0x01ff); // æœ€çµ‚ãƒšãƒ¼ã‚¸ã‚µã‚¤ã‚º
+	wordstore(buf + 0x04, (totalsize + 0x1ff) >> 9); // ãƒ•ã‚¡ã‚¤ãƒ«ãƒšãƒ¼ã‚¸æ•°
+	wordstore(buf + 0x0e, (totalsize - 0x200) >> 4); // åˆæœŸSS
 
 	if (buf[0x0208] == 0x10 && buf[0x0209] == 0x89 && buf[0x020a] == 0x00) {
-		/* OSASK‚ÌKHBIOS—pƒXƒNƒŠƒvƒg‚ğ”­Œ© */
+		/* OSASKã®KHBIOSç”¨ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ç™ºè¦‹ */
 		size = (totalsize + (0x1ff - 0x200)) >> 9;
 		buf[0x020b] =  size       & 0xff;
 		buf[0x020c] = (size >> 8) & 0xff;
 	}
 
-	/* o—Í */
+	/* å‡ºåŠ› */
 	fp1 = fopen(outfile, "wb");
 	fwrite(buf, 1, totalsize, fp1);
 	fclose(fp1);
@@ -155,7 +155,7 @@ retry:
 }
 
 char *checktoken(char *s, char *s1)
-/* ‚±‚ê‚ğŒÄ‚Ô‘O‚Éskipspace‚µ‚Ä‚¨‚­‚±‚Æ */
+/* ã“ã‚Œã‚’å‘¼ã¶å‰ã«skipspaceã—ã¦ãŠãã“ã¨ */
 {
 	char *s0 = s;
 	if (s < s1) {
@@ -186,9 +186,9 @@ char *checktoken(char *s, char *s1)
 }
 
 int getnum(char *s, char *s1)
-/* 10i”‚Æ16i”‚Ì‚İ, ‚µ‚©‚à•‰‚Ì’l‚Íˆµ‚í‚È‚¢ */
-/* ƒGƒ‰[‚¾‚Æ-1‚ğ•Ô‚· */
-/* s‚Ískipspace()‚µ‚Ä‚¨‚­‚±‚Æ */
+/* 10é€²æ•°ã¨16é€²æ•°ã®ã¿, ã—ã‹ã‚‚è² ã®å€¤ã¯æ‰±ã‚ãªã„ */
+/* ã‚¨ãƒ©ãƒ¼ã ã¨-1ã‚’è¿”ã™ */
+/* sã¯skipspace()ã—ã¦ãŠãã“ã¨ */
 {
 	int i = 0, base = 10, c;
 	if (s >= s1)
@@ -302,7 +302,7 @@ err:
 }
 
 const int script(char *opt, char *inp, char *out)
-/* ƒXƒNƒŠƒvƒg‚ª4KB‚ğ’´‚¦‚½‚ç€‚É‚Ü‚· */
+/* ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒ4KBã‚’è¶…ãˆãŸã‚‰æ­»ã«ã¾ã™ */
 {
 	unsigned char *buf = buf0 + 4 * 1024, *scr0 = buf0, *scr1, *s, *s1;
 	FILE *fp;

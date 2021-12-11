@@ -2126,7 +2126,7 @@ immed_double_const (i0, i1, mode)
 	      != ((HOST_WIDE_INT) (-1) << (width - 1))))
 	i0 &= ((HOST_WIDE_INT) 1 << width) - 1, i1 = 0;
       else if (width == HOST_BITS_PER_WIDE_INT
-	       && ! (i1 == ~0 && i0 < 0))
+	       && ! (i1 == ‾0 && i0 < 0))
 	i1 = 0;
       else if (width > 2 * HOST_BITS_PER_WIDE_INT)
 	/* We cannot represent this value as a constant.  */
@@ -2163,11 +2163,11 @@ immed_double_const (i0, i1, mode)
 	 is being broken.  */
 
       if (width <= HOST_BITS_PER_WIDE_INT)
-	i1 = (i0 < 0) ? ~(HOST_WIDE_INT) 0 : 0;
+	i1 = (i0 < 0) ? ‾(HOST_WIDE_INT) 0 : 0;
 
       /* If this integer fits in one word, return a CONST_INT.  */
       if ((i1 == 0 && i0 >= 0)
-	  || (i1 == ~0 && i0 < 0))
+	  || (i1 == ‾0 && i0 < 0))
 	return GEN_INT (i0);
 
       /* We use VOIDmode for integers.  */
@@ -3811,7 +3811,7 @@ force_const_mem (mode, x)
 #endif
 
   pool_offset += (align / BITS_PER_UNIT) - 1;
-  pool_offset &= ~ ((align / BITS_PER_UNIT) - 1);
+  pool_offset &= ‾ ((align / BITS_PER_UNIT) - 1);
 
   if (GET_CODE (x) == LABEL_REF)
     LABEL_PRESERVE_P (XEXP (x, 0)) = 1;

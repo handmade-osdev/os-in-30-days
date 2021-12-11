@@ -59,10 +59,10 @@ typedef struct bitmap_head_def {
 /* Enumeration giving the various operations we support.  */
 enum bitmap_bits {
   BITMAP_AND,			/* TO = FROM1 & FROM2 */
-  BITMAP_AND_COMPL,		/* TO = FROM1 & ~ FROM2 */
+  BITMAP_AND_COMPL,		/* TO = FROM1 & ‾ FROM2 */
   BITMAP_IOR,			/* TO = FROM1 | FROM2 */
   BITMAP_XOR,			/* TO = FROM1 ^ FROM2 */
-  BITMAP_IOR_COMPL			/* TO = FROM1 | ~FROM2 */
+  BITMAP_IOR_COMPL			/* TO = FROM1 | ‾FROM2 */
 };
 
 /* Global data */
@@ -195,7 +195,7 @@ do {									\
 									\
 		  if ((word_ & mask_) != 0)				\
 		    {							\
-		      word_ &= ~ mask_;					\
+		      word_ &= ‾ mask_;					\
 		      (BITNUM) = (ptr_->indx * BITMAP_ELEMENT_ALL_BITS  \
 				  + word_num_ * HOST_BITS_PER_WIDE_INT  \
 				  + bit_num_);				\
@@ -252,7 +252,7 @@ do {									\
       for (; word_num_ < BITMAP_ELEMENT_WORDS; word_num_++)		\
 	{								\
 	  unsigned HOST_WIDE_INT word_ = (ptr1_->bits[word_num_]	\
-					  & ~ tmp2_->bits[word_num_]);	\
+					  & ‾ tmp2_->bits[word_num_]);	\
 	  if (word_ != 0)						\
 	    {								\
 	      for (; bit_num_ < HOST_BITS_PER_WIDE_INT; bit_num_++)	\
@@ -262,7 +262,7 @@ do {									\
 									\
 		  if ((word_ & mask_) != 0)				\
 		    {							\
-		      word_ &= ~ mask_;					\
+		      word_ &= ‾ mask_;					\
 		      (BITNUM) = (ptr1_->indx * BITMAP_ELEMENT_ALL_BITS \
 				  + word_num_ * HOST_BITS_PER_WIDE_INT  \
 				  + bit_num_);				\
@@ -335,7 +335,7 @@ do {									\
 									\
 		  if ((word_ & mask_) != 0)				\
 		    {							\
-		      word_ &= ~ mask_;					\
+		      word_ &= ‾ mask_;					\
 		      (BITNUM) = (ptr1_->indx * BITMAP_ELEMENT_ALL_BITS \
 				  + word_num_ * HOST_BITS_PER_WIDE_INT  \
 				  + bit_num_);				\

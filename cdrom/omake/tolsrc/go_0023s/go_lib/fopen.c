@@ -5,7 +5,7 @@
 
 GO_FILE *GO_fopen(const char *filename, const char *mode)
 {
-	struct GOL_STR_DIR *dir = (struct GOL_STR_DIR *) ~0;
+	struct GOL_STR_DIR *dir = (struct GOL_STR_DIR *) ‾0;
 	GO_FILE *fp;
 	GOL_FILE *gfp;
 	if (*mode == 'w') {
@@ -20,7 +20,7 @@ GO_FILE *GO_fopen(const char *filename, const char *mode)
 	}
 	filename = GOL_stepdir(&dir, filename);
 	gfp = GOL_open(dir, filename);
-	if (gfp == (GOL_FILE *) ~0) {
+	if (gfp == (GOL_FILE *) ‾0) {
 		errno = ENOENT;
 		return NULL;
 	}

@@ -90,22 +90,22 @@ typedef HARD_REG_ELT_TYPE HARD_REG_SET[HARD_REG_SET_LONGS];
 #define SET_HARD_REG_BIT(SET, BIT)  \
  ((SET) |= HARD_CONST (1) << (BIT))
 #define CLEAR_HARD_REG_BIT(SET, BIT)  \
- ((SET) &= ~(HARD_CONST (1) << (BIT)))
+ ((SET) &= ‾(HARD_CONST (1) << (BIT)))
 #define TEST_HARD_REG_BIT(SET, BIT)  \
  ((SET) & (HARD_CONST (1) << (BIT)))
 
 #define CLEAR_HARD_REG_SET(TO) ((TO) = HARD_CONST (0))
-#define SET_HARD_REG_SET(TO) ((TO) = ~ HARD_CONST (0))
+#define SET_HARD_REG_SET(TO) ((TO) = ‾ HARD_CONST (0))
 
 #define COPY_HARD_REG_SET(TO, FROM) ((TO) = (FROM))
-#define COMPL_HARD_REG_SET(TO, FROM) ((TO) = ~(FROM))
+#define COMPL_HARD_REG_SET(TO, FROM) ((TO) = ‾(FROM))
 
 #define IOR_HARD_REG_SET(TO, FROM) ((TO) |= (FROM))
-#define IOR_COMPL_HARD_REG_SET(TO, FROM) ((TO) |= ~ (FROM))
+#define IOR_COMPL_HARD_REG_SET(TO, FROM) ((TO) |= ‾ (FROM))
 #define AND_HARD_REG_SET(TO, FROM) ((TO) &= (FROM))
-#define AND_COMPL_HARD_REG_SET(TO, FROM) ((TO) &= ~ (FROM))
+#define AND_COMPL_HARD_REG_SET(TO, FROM) ((TO) &= ‾ (FROM))
 
-#define GO_IF_HARD_REG_SUBSET(X,Y,TO) if (HARD_CONST (0) == ((X) & ~(Y))) goto TO
+#define GO_IF_HARD_REG_SUBSET(X,Y,TO) if (HARD_CONST (0) == ((X) & ‾(Y))) goto TO
 
 #define GO_IF_HARD_REG_EQUAL(X,Y,TO) if ((X) == (Y)) goto TO
 
@@ -119,7 +119,7 @@ typedef HARD_REG_ELT_TYPE HARD_REG_SET[HARD_REG_SET_LONGS];
 
 #define CLEAR_HARD_REG_BIT(SET, BIT)		\
   ((SET)[(BIT) / UHOST_BITS_PER_WIDE_INT]	\
-   &= ~(HARD_CONST (1) << ((BIT) % UHOST_BITS_PER_WIDE_INT)))
+   &= ‾(HARD_CONST (1) << ((BIT) % UHOST_BITS_PER_WIDE_INT)))
 
 #define TEST_HARD_REG_BIT(SET, BIT)		\
   ((SET)[(BIT) / UHOST_BITS_PER_WIDE_INT]	\
@@ -143,8 +143,8 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM);	\
 
 #define COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] = ~ scan_fp_[0];				\
-     scan_tp_[1] = ~ scan_fp_[1]; } while (0)
+     scan_tp_[0] = ‾ scan_fp_[0];				\
+     scan_tp_[1] = ‾ scan_fp_[1]; } while (0)
 
 #define AND_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -153,8 +153,8 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define AND_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] &= ~ scan_fp_[0];				\
-     scan_tp_[1] &= ~ scan_fp_[1]; } while (0)
+     scan_tp_[0] &= ‾ scan_fp_[0];				\
+     scan_tp_[1] &= ‾ scan_fp_[1]; } while (0)
 
 #define IOR_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -163,13 +163,13 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define IOR_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] |= ~ scan_fp_[0];				\
-     scan_tp_[1] |= ~ scan_fp_[1]; } while (0)
+     scan_tp_[0] |= ‾ scan_fp_[0];				\
+     scan_tp_[1] |= ‾ scan_fp_[1]; } while (0)
 
 #define GO_IF_HARD_REG_SUBSET(X,Y,TO)  \
 do { HARD_REG_ELT_TYPE *scan_xp_ = (X), *scan_yp_ = (Y); 	\
-     if ((0 == (scan_xp_[0] & ~ scan_yp_[0]))			\
-	 && (0 == (scan_xp_[1] & ~ scan_yp_[1])))		\
+     if ((0 == (scan_xp_[0] & ‾ scan_yp_[0]))			\
+	 && (0 == (scan_xp_[1] & ‾ scan_yp_[1])))		\
 	goto TO; } while (0)
 
 #define GO_IF_HARD_REG_EQUAL(X,Y,TO)  \
@@ -200,9 +200,9 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM);	\
 
 #define COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] = ~ scan_fp_[0];				\
-     scan_tp_[1] = ~ scan_fp_[1];				\
-     scan_tp_[2] = ~ scan_fp_[2]; } while (0)
+     scan_tp_[0] = ‾ scan_fp_[0];				\
+     scan_tp_[1] = ‾ scan_fp_[1];				\
+     scan_tp_[2] = ‾ scan_fp_[2]; } while (0)
 
 #define AND_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -212,9 +212,9 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define AND_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] &= ~ scan_fp_[0];				\
-     scan_tp_[1] &= ~ scan_fp_[1];				\
-     scan_tp_[2] &= ~ scan_fp_[2]; } while (0)
+     scan_tp_[0] &= ‾ scan_fp_[0];				\
+     scan_tp_[1] &= ‾ scan_fp_[1];				\
+     scan_tp_[2] &= ‾ scan_fp_[2]; } while (0)
 
 #define IOR_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -224,15 +224,15 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define IOR_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] |= ~ scan_fp_[0];				\
-     scan_tp_[1] |= ~ scan_fp_[1];				\
-     scan_tp_[2] |= ~ scan_fp_[2]; } while (0)
+     scan_tp_[0] |= ‾ scan_fp_[0];				\
+     scan_tp_[1] |= ‾ scan_fp_[1];				\
+     scan_tp_[2] |= ‾ scan_fp_[2]; } while (0)
 
 #define GO_IF_HARD_REG_SUBSET(X,Y,TO)  \
 do { HARD_REG_ELT_TYPE *scan_xp_ = (X), *scan_yp_ = (Y); 	\
-     if ((0 == (scan_xp_[0] & ~ scan_yp_[0]))			\
-	 && (0 == (scan_xp_[1] & ~ scan_yp_[1]))		\
-	 && (0 == (scan_xp_[2] & ~ scan_yp_[2])))		\
+     if ((0 == (scan_xp_[0] & ‾ scan_yp_[0]))			\
+	 && (0 == (scan_xp_[1] & ‾ scan_yp_[1]))		\
+	 && (0 == (scan_xp_[2] & ‾ scan_yp_[2])))		\
 	goto TO; } while (0)
 
 #define GO_IF_HARD_REG_EQUAL(X,Y,TO)  \
@@ -267,10 +267,10 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM);	\
 
 #define COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] = ~ scan_fp_[0];				\
-     scan_tp_[1] = ~ scan_fp_[1];				\
-     scan_tp_[2] = ~ scan_fp_[2];				\
-     scan_tp_[3] = ~ scan_fp_[3]; } while (0)
+     scan_tp_[0] = ‾ scan_fp_[0];				\
+     scan_tp_[1] = ‾ scan_fp_[1];				\
+     scan_tp_[2] = ‾ scan_fp_[2];				\
+     scan_tp_[3] = ‾ scan_fp_[3]; } while (0)
 
 #define AND_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -281,10 +281,10 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define AND_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] &= ~ scan_fp_[0];				\
-     scan_tp_[1] &= ~ scan_fp_[1];				\
-     scan_tp_[2] &= ~ scan_fp_[2];				\
-     scan_tp_[3] &= ~ scan_fp_[3]; } while (0)
+     scan_tp_[0] &= ‾ scan_fp_[0];				\
+     scan_tp_[1] &= ‾ scan_fp_[1];				\
+     scan_tp_[2] &= ‾ scan_fp_[2];				\
+     scan_tp_[3] &= ‾ scan_fp_[3]; } while (0)
 
 #define IOR_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -295,17 +295,17 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 
 #define IOR_COMPL_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
-     scan_tp_[0] |= ~ scan_fp_[0];				\
-     scan_tp_[1] |= ~ scan_fp_[1];				\
-     scan_tp_[2] |= ~ scan_fp_[2];				\
-     scan_tp_[3] |= ~ scan_fp_[3]; } while (0)
+     scan_tp_[0] |= ‾ scan_fp_[0];				\
+     scan_tp_[1] |= ‾ scan_fp_[1];				\
+     scan_tp_[2] |= ‾ scan_fp_[2];				\
+     scan_tp_[3] |= ‾ scan_fp_[3]; } while (0)
 
 #define GO_IF_HARD_REG_SUBSET(X,Y,TO)  \
 do { HARD_REG_ELT_TYPE *scan_xp_ = (X), *scan_yp_ = (Y); 	\
-     if ((0 == (scan_xp_[0] & ~ scan_yp_[0]))			\
-	 && (0 == (scan_xp_[1] & ~ scan_yp_[1]))		\
-	 && (0 == (scan_xp_[2] & ~ scan_yp_[2]))		\
-	 && (0 == (scan_xp_[3] & ~ scan_yp_[3])))		\
+     if ((0 == (scan_xp_[0] & ‾ scan_yp_[0]))			\
+	 && (0 == (scan_xp_[1] & ‾ scan_yp_[1]))		\
+	 && (0 == (scan_xp_[2] & ‾ scan_yp_[2]))		\
+	 && (0 == (scan_xp_[3] & ‾ scan_yp_[3])))		\
 	goto TO; } while (0)
 
 #define GO_IF_HARD_REG_EQUAL(X,Y,TO)  \
@@ -340,7 +340,7 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
      int i;							\
      for (i = 0; i < HARD_REG_SET_LONGS; i++)			\
-       *scan_tp_++ = ~ *scan_fp_++; } while (0)
+       *scan_tp_++ = ‾ *scan_fp_++; } while (0)
 
 #define AND_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -352,7 +352,7 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
      int i;							\
      for (i = 0; i < HARD_REG_SET_LONGS; i++)			\
-       *scan_tp_++ &= ~ *scan_fp_++; } while (0)
+       *scan_tp_++ &= ‾ *scan_fp_++; } while (0)
 
 #define IOR_HARD_REG_SET(TO, FROM)  \
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
@@ -364,13 +364,13 @@ do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
 do { HARD_REG_ELT_TYPE *scan_tp_ = (TO), *scan_fp_ = (FROM); 	\
      int i;							\
      for (i = 0; i < HARD_REG_SET_LONGS; i++)			\
-       *scan_tp_++ |= ~ *scan_fp_++; } while (0)
+       *scan_tp_++ |= ‾ *scan_fp_++; } while (0)
 
 #define GO_IF_HARD_REG_SUBSET(X,Y,TO)  \
 do { HARD_REG_ELT_TYPE *scan_xp_ = (X), *scan_yp_ = (Y); 	\
      int i;							\
      for (i = 0; i < HARD_REG_SET_LONGS; i++)			\
-       if (0 != (*scan_xp_++ & ~ *scan_yp_++)) break;		\
+       if (0 != (*scan_xp_++ & ‾ *scan_yp_++)) break;		\
      if (i == HARD_REG_SET_LONGS) goto TO; } while (0)
 
 #define GO_IF_HARD_REG_EQUAL(X,Y,TO)  \

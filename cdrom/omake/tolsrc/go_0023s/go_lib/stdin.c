@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-/* �ʓ|�Ȃ̂ň�̃t�@�C���� */
-/* �������́A�K���ȃ��[�`������� */
+/* 面倒なので一つのファイルで */
+/* 初期化は、適当なルーチンがやる */
 
 GO_FILE GO_stdin, GO_stdout, GO_stderr;

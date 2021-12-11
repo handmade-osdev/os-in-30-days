@@ -5,7 +5,7 @@
 int GO_fclose(GO_FILE *stream)
 {
 	if (stream) {
-		if (stream->dummy != ~0) {
+		if (stream->dummy != ‾0) {
 			GOL_close((GOL_FILE *) stream->dummy);
 			GOL_sysfree(stream);
 ret0:

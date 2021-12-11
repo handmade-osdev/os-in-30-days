@@ -2917,7 +2917,7 @@ PREFIX(regex_compile) (ARG_PREFIX(pattern), ARG_PREFIX(size), syntax, bufp)
 				     b - 1);
 			alignedp = ((uintptr_t)(laststart + 6 + laststart[1])
 				    + __alignof__(wctype_t) - 1)
-			  	    & ~(uintptr_t)(__alignof__(wctype_t) - 1);
+			  	    & ‾(uintptr_t)(__alignof__(wctype_t) - 1);
 			/* Store the character class.  */
                         *((wctype_t*)alignedp) = wt;
                         /* Update length of char_classes */
@@ -3085,7 +3085,7 @@ PREFIX(regex_compile) (ARG_PREFIX(pattern), ARG_PREFIX(size), syntax, bufp)
 				       in the table.  */
 				    idx += 1 + extra[idx];
 				    /* Adjust for the alignment.  */
-				    idx = (idx + 3) & ~3;
+				    idx = (idx + 3) & ‾3;
 
 				    str[0] = (wchar_t) idx + 4;
 				  }
@@ -6347,7 +6347,7 @@ byte_re_match_2_internal (bufp, string1, size1,string2, size2, pos,
 		wctype_t wctype;
 		uintptr_t alignedp = ((uintptr_t)workp
 				      + __alignof__(wctype_t) - 1)
-		  		      & ~(uintptr_t)(__alignof__(wctype_t) - 1);
+		  		      & ‾(uintptr_t)(__alignof__(wctype_t) - 1);
 		wctype = *((wctype_t*)alignedp);
 		workp += CHAR_CLASS_SIZE;
 # ifdef _LIBC
@@ -7226,7 +7226,7 @@ byte_re_match_2_internal (bufp, string1, size1,string2, size2, pos,
 		    for (idx = 0; idx < (int) p2[1]; idx++)
 		      if (! (p2[2 + idx] == 0
 			     || (idx < (int) p1[4]
-				 && ((p2[2 + idx] & ~ p1[5 + idx]) == 0))))
+				 && ((p2[2 + idx] & ‾ p1[5 + idx]) == 0))))
 			break;
 
 		    if (idx == p2[1])
@@ -8097,7 +8097,7 @@ regcomp (preg, pattern, cflags)
   /* If REG_NEWLINE is set, newlines are treated differently.  */
   if (cflags & REG_NEWLINE)
     { /* REG_NEWLINE implies neither . nor [^...] match newline.  */
-      syntax &= ~RE_DOT_NEWLINE;
+      syntax &= ‾RE_DOT_NEWLINE;
       syntax |= RE_HAT_LISTS_NOT_NEWLINE;
       /* It also changes the matching behavior.  */
       preg->newline_anchor = 1;

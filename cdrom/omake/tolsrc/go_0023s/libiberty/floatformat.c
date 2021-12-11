@@ -299,7 +299,7 @@ put_field (data, order, total_len, start, len, stuff_to_put)
   cur_bitshift =
     ((start + len) % FLOATFORMAT_CHAR_BIT) - FLOATFORMAT_CHAR_BIT;
   *(data + cur_byte) &=
-    ~(((1 << ((start + len) % FLOATFORMAT_CHAR_BIT)) - 1) << (-cur_bitshift));
+    ‾(((1 << ((start + len) % FLOATFORMAT_CHAR_BIT)) - 1) << (-cur_bitshift));
   *(data + cur_byte) |=
     (stuff_to_put & ((1 << FLOATFORMAT_CHAR_BIT) - 1)) << (-cur_bitshift);
   cur_bitshift += FLOATFORMAT_CHAR_BIT;
@@ -315,7 +315,7 @@ put_field (data, order, total_len, start, len, stuff_to_put)
 	{
 	  /* This is the last byte.  */
 	  *(data + cur_byte) &=
-	    ~((1 << (len - cur_bitshift)) - 1);
+	    ‾((1 << (len - cur_bitshift)) - 1);
 	  *(data + cur_byte) |= (stuff_to_put >> cur_bitshift);
 	}
       else

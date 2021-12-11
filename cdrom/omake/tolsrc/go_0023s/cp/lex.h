@@ -44,7 +44,7 @@ typedef struct { unsigned long idata[2]; }
 			      } while (0)
 #define RIDBIT_RESET(N, V) do {						      \
 				  (V).idata[(N)/32]			      \
-				    &= ~((unsigned long)1 << (int) ((N)%32)); \
+				    &= ‾((unsigned long)1 << (int) ((N)%32)); \
 				} while (0)
 #define RIDBIT_RESET_ALL(V) do {					      \
 				   (V).idata[0] = 0;     		      \
@@ -60,7 +60,7 @@ typedef unsigned long RID_BIT_TYPE;	/* assumed at least 32 bits */
 #define RIDBIT_ANY_SET(V) (V)
 
 #define RIDBIT_SET(N, V) do { (V) |= RIDBIT_OF (N); } while (0)
-#define RIDBIT_RESET(N, V) do { (V) &= ~RIDBIT_OF (N); } while (0)
+#define RIDBIT_RESET(N, V) do { (V) &= ‾RIDBIT_OF (N); } while (0)
 #define RIDBIT_RESET_ALL(V) do { (V) = 0; } while (0)
 #endif
 

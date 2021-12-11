@@ -275,7 +275,7 @@ read_token (t)
     case CPP_RSHIFT:	YYCODE(RSHIFT_EXPR);	YYCHAR(RSHIFT);
     case CPP_LSHIFT:	YYCODE(LSHIFT_EXPR);	YYCHAR(LSHIFT);
 
-    case CPP_COMPL:				YYCHAR('~');
+    case CPP_COMPL:				YYCHAR('‾');
     case CPP_AND_AND:				YYCHAR(ANDAND);
     case CPP_OR_OR:				YYCHAR(OROR);
     case CPP_QUERY:				YYCHAR('?');
@@ -819,7 +819,7 @@ yylex ()
 
   /* class member lookup only applies to the first token after the object
      expression, except for explicit destructor calls.  */
-  if (yychr != '~')
+  if (yychr != '‾')
     got_object = NULL_TREE;
 
   yychar = yychr;

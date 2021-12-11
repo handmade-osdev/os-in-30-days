@@ -2,7 +2,7 @@
 #define __GUIGUI00_H
 
 /* gg00lib+ ver.0.8 */
-/* gg00lib9‚ğƒx[ƒX‚É‚µ‚Ä‚¢‚é */
+/* gg00lib9ã‚’ãƒ™ãƒ¼ã‚¹ã«ã—ã¦ã„ã‚‹ */
 
 struct LIB_WORK {
 	int data[256 / 4];
@@ -46,8 +46,8 @@ int lib_execcmd1(int ret, int cmd, ...);
 void *malloc(const unsigned int nbytes);
 
 #if 0
-	/* ˆÈ‰º‚ÌŠÖ”‚Íƒ}ƒNƒ‚ÅÀŒ»‚³‚ê‚Ä‚¢‚é(‚‘¬‰»‚ÆƒRƒ“ƒpƒNƒg‰»‚Ì‚½‚ß) */
-	/* ˆø”‚ÌŒ^‚È‚Ç‚ª•ª‚©‚è‚â‚·‚¢‚æ‚¤‚ÉAŠÖ”Œ^éŒ¾‚ğ’ß‚Æ‚µ‚Äc‚µ‚Ä‚ ‚é */
+	/* ä»¥ä¸‹ã®é–¢æ•°ã¯ãƒã‚¯ãƒ­ã§å®Ÿç¾ã•ã‚Œã¦ã„ã‚‹(é«˜é€ŸåŒ–ã¨ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆåŒ–ã®ãŸã‚) */
+	/* å¼•æ•°ã®å‹ãªã©ãŒåˆ†ã‹ã‚Šã‚„ã™ã„ã‚ˆã†ã«ã€é–¢æ•°å‹å®£è¨€ã‚’è¨»é‡ˆã¨ã—ã¦æ®‹ã—ã¦ã‚ã‚‹ */
 
 struct LIB_WORK *lib_init(struct LIB_WORK *work);
 void lib_init_nm(struct LIB_WORK *work);
@@ -423,7 +423,7 @@ void lib_settimertime2(int opt, int slot0, int slot1, unsigned int *time);
 	(void *) (tbox), (int) (col), (int) (bcol), (int) (base), (int) (len), \
 	(void *) (str), (int) 0x000c, 0x0000)
 
-/* <guigui00.h>‰ü—ÇŒv‰æ‚Ì‚½‚ß‚Ì’Ç‹L */
+/* <guigui00.h>æ”¹è‰¯è¨ˆç”»ã®ãŸã‚ã®è¿½è¨˜ */
 
 #define lib_openwintitle(size, window) \
     lib_opentextbox(0x1000, 0, 0, size, 1, 0, 0, window, 0x00c0, 0)

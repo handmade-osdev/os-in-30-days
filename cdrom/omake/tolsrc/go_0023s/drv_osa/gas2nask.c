@@ -3,8 +3,8 @@
 
 	usage : >gas2nask [-a] [-e] input-file output-file
 
-	-a:.text‚Ìbalign2‚ğíœ
-	-e:execcmdŒn‚ÌƒCƒ“ƒ‰ƒCƒ““WŠJ
+	-a:.textã®balign2ã‚’å‰Šé™¤
+	-e:execcmdç³»ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³å±•é–‹
 */
 
 #include "../include/string.h"		/* strlen, strstr, strchr */
@@ -27,10 +27,10 @@ struct STR_FLAGS {
 };
 
 struct STR_GAS2NASK {
-	UCHAR *cmdlin; /* '\0'‚ÅI‚í‚é */
-	UCHAR *outname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *dest0, *dest1; /* o—Íƒtƒ@ƒCƒ‹(dest0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *err0, *err1; /* ƒRƒ“ƒ\[ƒ‹ƒƒbƒZ[ƒW(err0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
+	UCHAR *cmdlin; /* '\0'ã§çµ‚ã‚ã‚‹ */
+	UCHAR *outname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *dest0, *dest1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(dest0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *err0, *err1; /* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(err0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
 	UCHAR *work0, *work1;
 	int errcode;
 };
@@ -92,7 +92,7 @@ int gas2nask_main(struct STR_GAS2NASK *params)
 					while ('0' <= *p0 && *p0 <= '9')
 						p0++;
 					flags.opt[j] = p0 - param_p[j];
-					p0--; /* Ÿ‚Ìƒ‹[ƒv‚Ì‚½‚ß */
+					p0--; /* æ¬¡ã®ãƒ«ãƒ¼ãƒ—ã®ãŸã‚ */
 				}
 				if (*p0 == 'b') {
 					j = FLAG_b;

@@ -150,8 +150,8 @@ pop (x)
      int x;
 {
   /* We assume that no more than 16 bits are used.  */
-  x = ((x & ~0x5555) >> 1) + (x & 0x5555);
-  x = ((x & ~0x3333) >> 2) + (x & 0x3333);
+  x = ((x & ‾0x5555) >> 1) + (x & 0x5555);
+  x = ((x & ‾0x3333) >> 2) + (x & 0x3333);
   x = ((x >> 4) + x) & 0x0f0f;
   x = ((x >> 8) + x) & 0xff;
 
@@ -318,7 +318,7 @@ _nl_make_l10nflist (l10nfile_list, dirlist, dirlist_len, mask, language,
      of the inner loop.  */
   cnt = __argz_count (dirlist, dirlist_len) == 1 ? mask - 1 : mask;
   for (; cnt >= 0; --cnt)
-    if ((cnt & ~mask) == 0
+    if ((cnt & ‾mask) == 0
 	&& ((cnt & CEN_SPECIFIC) == 0 || (cnt & XPG_SPECIFIC) == 0)
 	&& ((cnt & XPG_CODESET) == 0 || (cnt & XPG_NORM_CODESET) == 0))
       {

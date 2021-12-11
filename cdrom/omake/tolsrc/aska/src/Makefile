@@ -74,6 +74,6 @@ distclean: clean
 
 clean:
 	rm -f .depend a.out core ${PGNAME}
-	rm -f ${SRCDIR}*.${O} *~
+	rm -f ${SRCDIR}*.${O} *‾
 
 # Are You Ready to Be A Member of OSASK Project Now?

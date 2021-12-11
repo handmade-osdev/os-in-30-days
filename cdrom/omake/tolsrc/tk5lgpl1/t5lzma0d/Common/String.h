@@ -230,7 +230,7 @@ public:
     MyStringCopy(_chars, s._chars);
     _length = s._length;
   }
-  ~CStringBase() {  delete []_chars; }
+  ‾CStringBase() {  delete []_chars; }
 
   operator const T*() const { return _chars;} 
 

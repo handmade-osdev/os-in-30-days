@@ -1727,8 +1727,8 @@ mask_rtx (mode, bitpos, bitsize, complement)
 
   if (complement)
     {
-      maskhigh = ~maskhigh;
-      masklow = ~masklow;
+      maskhigh = ‾maskhigh;
+      masklow = ‾masklow;
     }
 
   return immed_double_const (masklow, maskhigh, mode);
@@ -1747,7 +1747,7 @@ lshift_value (mode, value, bitpos, bitsize)
   HOST_WIDE_INT low, high;
 
   if (bitsize < HOST_BITS_PER_WIDE_INT)
-    v &= ~((HOST_WIDE_INT) -1 << bitsize);
+    v &= ‾((HOST_WIDE_INT) -1 << bitsize);
 
   if (bitpos < HOST_BITS_PER_WIDE_INT)
     {
@@ -2712,7 +2712,7 @@ invert_mod2n (x, n)
   int nbit = 3;
 
   mask = (n == HOST_BITS_PER_WIDE_INT
-	  ? ~(unsigned HOST_WIDE_INT) 0
+	  ? ‾(unsigned HOST_WIDE_INT) 0
 	  : ((unsigned HOST_WIDE_INT) 1 << n) - 1);
 
   while (nbit < n)
@@ -2942,7 +2942,7 @@ expand_mult_highpart (mode, op0, cnst1, target, unsignedp, max_cost)
    Cross-sum rules for even numbers can be derived by leaving as many bits
    to the right alone as the divisor has zeros to the right.
    E.g. if x is an unsigned 32 bit number:
-   (x mod 12) == (((x & 1023) + ((x >> 8) & ~3)) * 0x15555558 >> 2 * 3) >> 28
+   (x mod 12) == (((x & 1023) + ((x >> 8) & ‾3)) * 0x15555558 >> 2 * 3) >> 28
    */
 
 #define EXACT_POWER_OF_2_OR_ZERO_P(x) (((x) & ((x) - 1)) == 0)
@@ -3404,7 +3404,7 @@ expand_divmod (rem_flag, code, mode, op0, op1, target, unsignedp)
 			    || size - 1 >= BITS_PER_WORD)
 			  goto fail1;
 
-			ml |= (~(unsigned HOST_WIDE_INT) 0) << (size - 1);
+			ml |= (‾(unsigned HOST_WIDE_INT) 0) << (size - 1);
 			extra_cost = (shift_cost[post_shift]
 				      + shift_cost[size - 1] + 2 * add_cost);
 			t1 = expand_mult_highpart (compute_mode, op0, ml,

@@ -1,5 +1,5 @@
-/* "golib00.c":golib00w‚ð•W€ƒ‰ƒCƒuƒ‰ƒŠŽd—l‚É‚µ‚½‚à‚Ì */
-/* copyright(C) 2003 ì‡GŽÀ  KL-01 */
+/* "golib00.c":golib00wã‚’æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä»•æ§˜ã«ã—ãŸã‚‚ã® */
+/* copyright(C) 2003 å·åˆç§€å®Ÿ  KL-01 */
 
 #include "../drv_w32/windows.h"
 
@@ -49,7 +49,7 @@ void mainCRTStartup(void)
 	UCHAR *p0;
 	int i;
 
-	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & ~0x0f);
+	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & â€¾0x0f);
 	works.label = works.label0 = pwork->label;
 	works.label1 = &pwork->label[sizeof (pwork->label) / sizeof(*pwork->label)];
 	works.objs = works.objs0 = pwork->objs;

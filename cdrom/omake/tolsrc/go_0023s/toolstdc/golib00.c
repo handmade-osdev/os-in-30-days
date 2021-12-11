@@ -1,5 +1,5 @@
-/* "golib00.c":golib00w‚ð•W€ƒ‰ƒCƒuƒ‰ƒŠŽd—l‚É‚µ‚½‚à‚Ì */
-/* copyright(C) 2003 ì‡GŽÀ  KL-01 */
+/* "golib00.c":golib00wã‚’æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä»•æ§˜ã«ã—ãŸã‚‚ã® */
+/* copyright(C) 2003 å·åˆç§€å®Ÿ  KL-01 */
 
 #include <stdio.h>
 #include <stdlib.h>

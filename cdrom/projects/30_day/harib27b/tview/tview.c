@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-int strtol(char *s, char **endp, int base);	/* •W€ŠÖ”istdlib.hj */
+int strtol(char *s, char **endp, int base);	/* æ¨™æº–é–¢æ•°ï¼ˆstdlib.hï¼‰ */
 
 char *skipspace(char *p);
 void textview(int win, int w, int h, int xskip, char *p, int tab, int lang);
@@ -16,9 +16,9 @@ void HariMain(void)
 	int win, i, j, lang = api_getlang(), xskip = 0;
 	char s[30], *p, *q = 0, *r = 0;
 
-	/* ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğÍ */
+	/* ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£æ */
 	api_cmdline(s, 30);
-	for (p = s; *p > ' '; p++) { }	/* ƒXƒy[ƒX‚ª—ˆ‚é‚Ü‚Å“Ç‚İ”ò‚Î‚· */
+	for (p = s; *p > ' '; p++) { }	/* ã‚¹ãƒšãƒ¼ã‚¹ãŒæ¥ã‚‹ã¾ã§èª­ã¿é£›ã°ã™ */
 	for (; *p != 0; ) {
 		p = skipspace(p);
 		if (*p == '-') {
@@ -48,12 +48,12 @@ err:
 				api_putstr0(" >tview file [-w30 -h10 -t4]\n");
 				api_end();
 			}
-		} else {	/* ƒtƒ@ƒCƒ‹–¼”­Œ© */
+		} else {	/* ãƒ•ã‚¡ã‚¤ãƒ«åç™ºè¦‹ */
 			if (q != 0) {
 				goto err;
 			}
 			q = p;
-			for (; *p > ' '; p++) { }	/* ƒXƒy[ƒX‚ª—ˆ‚é‚Ü‚Å“Ç‚İ”ò‚Î‚· */
+			for (; *p > ' '; p++) { }	/* ã‚¹ãƒšãƒ¼ã‚¹ãŒæ¥ã‚‹ã¾ã§èª­ã¿é£›ã°ã™ */
 			r = p;
 		}
 	}
@@ -61,11 +61,11 @@ err:
 		goto err;
 	}
 
-	/* ƒEƒBƒ“ƒhƒE‚Ì€”õ */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æº–å‚™ */
 	win = api_openwin(winbuf, w * 8 + 16, h * 16 + 37, -1, "tview");
 	api_boxfilwin(win, 6, 27, w * 8 + 9, h * 16 + 30, 7);
 
-	/* ƒtƒ@ƒCƒ‹“Ç‚İ‚İ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ */
 	*r = 0;
 	i = api_fopen(q);
 	if (i == 0) {
@@ -76,12 +76,12 @@ err:
 	if (j >= 240 * 1024 - 1) {
 		j = 240 * 1024 - 2;
 	}
-	txtbuf[0] = 0x0a; /* ”Ô•º—p‚Ì‰üsƒR[ƒh */
+	txtbuf[0] = 0x0a; /* ç•ªå…µç”¨ã®æ”¹è¡Œã‚³ãƒ¼ãƒ‰ */
 	api_fread(txtbuf + 1, j, i);
 	api_fclose(i);
 	txtbuf[j + 1] = 0;
 	q = txtbuf + 1;
-	for (p = txtbuf + 1; *p != 0; p++) {	/* ˆ—‚ğŠÈ’P‚É‚·‚é‚½‚ß‚É0x0d‚ÌƒR[ƒh‚ğÁ‚· */
+	for (p = txtbuf + 1; *p != 0; p++) {	/* å‡¦ç†ã‚’ç°¡å˜ã«ã™ã‚‹ãŸã‚ã«0x0dã®ã‚³ãƒ¼ãƒ‰ã‚’æ¶ˆã™ */
 		if (*p != 0x0d) {
 			*q = *p;
 			q++;
@@ -89,7 +89,7 @@ err:
 	}
 	*q = 0;
 
-	/* ƒƒCƒ“ */
+	/* ãƒ¡ã‚¤ãƒ³ */
 	p = txtbuf + 1;
 	for (;;) {
 		textview(win, w, h, xskip, p, t, lang);
@@ -115,7 +115,7 @@ err:
 				if (xskip < 0) {
 					xskip = 0;
 				}
-				if (api_getkey(0) != '4') { /* ‚à‚¤'4'‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚ÎAˆ—I‚í‚è */
+				if (api_getkey(0) != '4') { /* ã‚‚ã†'4'ã‚’æŠ¼ã—ã¦ã„ãªã‘ã‚Œã°ã€å‡¦ç†çµ‚ã‚ã‚Š */
 					break;
 				}
 			}
@@ -134,7 +134,7 @@ err:
 					if (p == txtbuf + 1) {
 						break;
 					}
-					for (p--; p[-1] != 0x0a; p--) { } /* ˆê•¶š‘O‚É0x0a‚ª‚Å‚é‚Ü‚Å‚³‚©‚Ì‚Ú‚é */
+					for (p--; p[-1] != 0x0a; p--) { } /* ä¸€æ–‡å­—å‰ã«0x0aãŒã§ã‚‹ã¾ã§ã•ã‹ã®ã¼ã‚‹ */
 				}
 				if (api_getkey(0) != '8') {
 					break;
@@ -160,7 +160,7 @@ err:
 
 char *skipspace(char *p)
 {
-	for (; *p == ' '; p++) { }	/* ƒXƒy[ƒX‚ğ“Ç‚İ”ò‚Î‚· */
+	for (; *p == ' '; p++) { }	/* ã‚¹ãƒšãƒ¼ã‚¹ã‚’èª­ã¿é£›ã°ã™ */
 	return p;
 }
 
@@ -203,7 +203,7 @@ char *lineview(int win, int w, int y, int xskip, unsigned char *p, int tab, int 
 				x = puttab(x, w, xskip, s, tab);
 				p++;
 			} else if ((0x81 <= *p && *p <= 0x9f) || (0xe0 <= *p && *p <= 0xfc)) {
-				/* ‘SŠp•¶š */
+				/* å…¨è§’æ–‡å­— */
 				if (x == -1) {
 					s[0] = ' ';
 				}
@@ -229,7 +229,7 @@ char *lineview(int win, int w, int y, int xskip, unsigned char *p, int tab, int 
 				x = puttab(x, w, xskip, s, tab);
 				p++;
 			} else if (0xa1 <= *p && *p <= 0xfe) {
-				/* ‘SŠp•¶š */
+				/* å…¨è§’æ–‡å­— */
 				if (x == -1) {
 					s[0] = ' ';
 				}

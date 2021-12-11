@@ -641,11 +641,11 @@ real_value_from_int_cst (type, i)
     {
       REAL_VALUE_TYPE e;
 
-      d = (double) (~TREE_INT_CST_HIGH (i));
+      d = (double) (‾TREE_INT_CST_HIGH (i));
       e = ((double) ((HOST_WIDE_INT) 1 << (HOST_BITS_PER_WIDE_INT / 2))
 	    * (double) ((HOST_WIDE_INT) 1 << (HOST_BITS_PER_WIDE_INT / 2)));
       d *= e;
-      e = (double) (~TREE_INT_CST_LOW (i));
+      e = (double) (‾TREE_INT_CST_LOW (i));
       d += e;
       d = (- d - 1.0);
     }
@@ -856,7 +856,7 @@ integer_all_onesp (expr)
 
   uns = TREE_UNSIGNED (TREE_TYPE (expr));
   if (!uns)
-    return (TREE_INT_CST_LOW (expr) == ~(unsigned HOST_WIDE_INT) 0
+    return (TREE_INT_CST_LOW (expr) == ‾(unsigned HOST_WIDE_INT) 0
 	    && TREE_INT_CST_HIGH (expr) == -1);
 
   /* Note that using TYPE_PRECISION here is wrong.  We care about the
@@ -879,7 +879,7 @@ integer_all_onesp (expr)
       else
 	high_value = ((HOST_WIDE_INT) 1 << shift_amount) - 1;
 
-      return (TREE_INT_CST_LOW (expr) == ~(unsigned HOST_WIDE_INT) 0
+      return (TREE_INT_CST_LOW (expr) == ‾(unsigned HOST_WIDE_INT) 0
 	      && TREE_INT_CST_HIGH (expr) == high_value);
     }
   else
@@ -917,12 +917,12 @@ integer_pow2p (expr)
   if (prec == 2 * HOST_BITS_PER_WIDE_INT)
     ;
   else if (prec > HOST_BITS_PER_WIDE_INT)
-    high &= ~((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
+    high &= ‾((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
   else
     {
       high = 0;
       if (prec < HOST_BITS_PER_WIDE_INT)
-	low &= ~((HOST_WIDE_INT) (-1) << prec);
+	low &= ‾((HOST_WIDE_INT) (-1) << prec);
     }
 
   if (high == 0 && low == 0)
@@ -959,12 +959,12 @@ tree_log2 (expr)
   if (prec == 2 * HOST_BITS_PER_WIDE_INT)
     ;
   else if (prec > HOST_BITS_PER_WIDE_INT)
-    high &= ~((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
+    high &= ‾((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
   else
     {
       high = 0;
       if (prec < HOST_BITS_PER_WIDE_INT)
-	low &= ~((HOST_WIDE_INT) (-1) << prec);
+	low &= ‾((HOST_WIDE_INT) (-1) << prec);
     }
 
   return (high != 0 ? HOST_BITS_PER_WIDE_INT + exact_log2 (high)
@@ -999,12 +999,12 @@ tree_floor_log2 (expr)
   if (prec == 2 * HOST_BITS_PER_WIDE_INT || prec == 0)
     ;
   else if (prec > HOST_BITS_PER_WIDE_INT)
-    high &= ~((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
+    high &= ‾((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
   else
     {
       high = 0;
       if (prec < HOST_BITS_PER_WIDE_INT)
-	low &= ~((HOST_WIDE_INT) (-1) << prec);
+	low &= ‾((HOST_WIDE_INT) (-1) << prec);
     }
 
   return (high != 0 ? HOST_BITS_PER_WIDE_INT + floor_log2 (high)

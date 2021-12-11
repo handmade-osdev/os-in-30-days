@@ -47,7 +47,7 @@ pass:
 	if (== 0)
 		goto decomped;
 	NEG(ESI);
-	LEA(ECX, [EDI + ESI]); /* ECX:ˆ³kƒf[ƒ^ƒTƒCƒY */
+	LEA(ECX, [EDI + ESI]); /* ECX:åœ§ç¸®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º */
 	NEG(ESI);
 	EDI = (int) [SS:ESP + 40]; /* siz0 */
 	LEA(EBX, [ECX + EBP]);
@@ -66,7 +66,7 @@ pass:
 	CH = [DS:EDI];
 	TEST(AL, 0x01);
 	if (== 0) {
-		/* ƒVƒ‡[ƒgŒ`®(tek5‚Ì‚İ) */
+		/* ã‚·ãƒ§ãƒ¼ãƒˆå½¢å¼(tek5ã®ã¿) */
 		if (CH != 0x89)
 			goto err;
 		ESI--;
@@ -125,7 +125,7 @@ sign:
 }
 
 void getnum_s7s()
-/* DS:ESI‚©‚çƒŠ[ƒh */
+/* DS:ESIã‹ã‚‰ãƒªãƒ¼ãƒ‰ */
 {
 	EAX = 0;
 	do {
@@ -136,12 +136,12 @@ void getnum_s7s()
 	return; /* CF = 1, TEST(EAX, EAX); */
 }
 
-/* ˆÈ‰ºtek5—p */
+/* ä»¥ä¸‹tek5ç”¨ */
 
 void decodemain();
 void decodemain1();
 
-struct STR_BITMODEL { /* 32ƒoƒCƒg */
+struct STR_BITMODEL { /* 32ãƒã‚¤ãƒˆ */
 	unsigned char t, m, s, dmy;
 	unsigned int prb0, prb1, tmsk, ntm, lt, lt0, prb01;
 };
@@ -166,7 +166,7 @@ struct STR_LZMA {
 
 void setbm();
 
-/* ASKA‚ÌƒoƒO‰ñ”ğ—p */
+/* ASKAã®ãƒã‚°å›é¿ç”¨ */
 #define aBM		bm[EDI]
 
 void lzrestore_tek5()
@@ -196,7 +196,7 @@ tek5_z0:
 	} else
 		LODSB();
 	DIV(CL);
-	ROR(EAX, 8); /* pb‚ğ24-31‚Ö, AH‚ğAL‚Ö */
+	ROR(EAX, 8); /* pbã‚’24-31ã¸, AHã‚’ALã¸ */
 	CL = 9;
 	AH = 0;
 	DIV(CL);
@@ -216,7 +216,7 @@ tek5_z0:
 	PUSH(EDI); /* rd->BufferLim -> outstream0 */
 	PUSH(ESI);
 	PUSH(EDI);
-	PUSH(EBP); /* o—ÍƒTƒCƒY */
+	PUSH(EBP); /* å‡ºåŠ›ã‚µã‚¤ã‚º */
 	EDI = ECX;
 
 	CL = AL; /* lp */
@@ -250,8 +250,8 @@ tek5_z0:
 	PUSH(-1);
 
 	EBP = ESP;
-	PUSH(EDI); /* ‹ŒƒXƒ^ƒbƒN */
-	/* ‡Œv‚Å64KB‚­‚ç‚¢‚Ì—]—T‚ª‚Ù‚µ‚¢ */
+	PUSH(EDI); /* æ—§ã‚¹ã‚¿ãƒƒã‚¯ */
+	/* åˆè¨ˆã§64KBãã‚‰ã„ã®ä½™è£•ãŒã»ã—ã„ */
 
 	CL = 4;
 	do {
@@ -317,7 +317,7 @@ tek5_z2:
 	EDX = 0x00780008;
 	DH = AH;
 	DL -= AH;
-	PUSH(EDX); /* ‚Æ‚è‚ ‚¦‚¸ lit0cntmsk=0x78 */
+	PUSH(EDX); /* ã¨ã‚Šã‚ãˆãš lit0cntmsk=0x78 */
 	EDX |= -1;
 	CL = AL; /* pb */
 	SHL(EDX, CL);
@@ -341,7 +341,7 @@ tek5_z2:
 	SHL(EDX, CL);
 	EDX += 320 + 2064;
 	PUSH(EDX); /* lit1 */
-	/* ˆÈ~EAX”j‰ó */
+	/* ä»¥é™EAXç ´å£Š */
 	BH = -1;
 	if (BL == 0x09) {
 		LODSB();
@@ -353,11 +353,11 @@ tek5_z2:
 		LODSB();
 		CL--;
 	} while (!= 0);
-	PUSH(EAX); /* code(‰¼) */
+	PUSH(EAX); /* code(ä»®) */
 	PUSH(-1); /* range */
 	PUSH(ESI);
 	EBP = ESP;
-	PUSH(EDI); /* ‹ŒƒXƒ^ƒbƒN */
+	PUSH(EDI); /* æ—§ã‚¹ã‚¿ãƒƒã‚¯ */
 
 	STR_TEK5 *work == SS:EBP;
 //	STR_BITMODEL *bm == SS:EBP + EDI;
@@ -450,7 +450,7 @@ prm_table1:
 	DB(0x00);
 }
 
-/* ˆÈ‰ºz0ê—p */
+/* ä»¥ä¸‹z0å°‚ç”¨ */
 
 #define kTopValue				0x01000000
 #define kNumBitModelTotalBits 	11
@@ -474,9 +474,9 @@ void rdd_direct()
 			goto shift;
 shift1:
 		range >>= 1;
-		CMP(code, range); /* >= ‚È‚ç CF = 0 */
+		CMP(code, range); /* >= ãªã‚‰ CF = 0 */
 		if ((unsigned) >=)
-			code -= range; /* ‘Š•Ï‚í‚ç‚¸CF = 0 */
+			code -= range; /* ç›¸å¤‰ã‚ã‚‰ãšCF = 0 */
 		RCL(result, 1);
 		ECX--;
 	} while (!= 0);
@@ -485,12 +485,12 @@ shift:
 	code <<= 8;
 	range <<= 8;
 	LODSB();
-	goto shift1;	/* 1‰ñ‚Å‚©‚È‚ç‚¸‘«‚è‚é‚©‚Ç‚¤‚©‚Í‚»‚ê‚æ‚è‘O‚É‚æ‚é */
+	goto shift1;	/* 1å›ã§ã‹ãªã‚‰ãšè¶³ã‚Šã‚‹ã‹ã©ã†ã‹ã¯ãã‚Œã‚ˆã‚Šå‰ã«ã‚ˆã‚‹ */
 }
 
 /* 00000011111 */
 /* 11111100001 */
-/* ‚Ç‚¿‚ç‚É‚µ‚Ä‚àA1‰ñ‚Å‘«‚è‚é */
+/* ã©ã¡ã‚‰ã«ã—ã¦ã‚‚ã€1å›ã§è¶³ã‚Šã‚‹ */
 
 void rdd_bittree()
 {
@@ -498,7 +498,7 @@ void rdd_bittree()
 }
 
 void rdd_bittree0()
-/* Œ‹‰Ê‚ÍãˆÊƒrƒbƒg‚É‚²‚İ‚ª‚Â‚­‚Ì‚ÅAŒÄ‚Ño‚µŒ³‚Åƒ}ƒXƒN‚¹‚æ */
+/* çµæœã¯ä¸Šä½ãƒ“ãƒƒãƒˆã«ã”ã¿ãŒã¤ãã®ã§ã€å‘¼ã³å‡ºã—å…ƒã§ãƒã‚¹ã‚¯ã›ã‚ˆ */
 /* EBX:prob0 */
 {
 	STR_LZMA *work == SS:EBP;
@@ -530,7 +530,7 @@ shift1:
 		range -= bound;
 		(signed int) tmp >>= kNumMoveBits;
 		POP(EBX);
-		prob -= tmp; /* CF‚ÉƒfƒR[ƒhŒ‹‰Ê */
+		prob -= tmp; /* CFã«ãƒ‡ã‚³ãƒ¼ãƒ‰çµæœ */
 		POP(ECX);
 		work->p[EBX * 4] = prob;
 		POP(result);
@@ -556,8 +556,8 @@ shift:
 #define kLenNumHighBits		8
 
 void getlen()
-/* EBX‚Éprob0, EDX:posState */
-/* EDX‚É•Ô‚· */
+/* EBXã«prob0, EDX:posState */
+/* EDXã«è¿”ã™ */
 {
 	PUSH(EDX);
 	rdd_bit(); /* LenChoice */
@@ -671,7 +671,7 @@ void decodemain()
 	EDI |= -1;
 	EAX = work->rd_code;
 	EBX = IsMatch;
-	rdd_bit(); /* ‚±‚ê‚Í‚©‚È‚ç‚¸CF = 0‚É‚È‚éistk5‚Å‚Íj */
+	rdd_bit(); /* ã“ã‚Œã¯ã‹ãªã‚‰ãšCF = 0ã«ãªã‚‹ï¼ˆstk5ã§ã¯ï¼‰ */
 	if (CF != 0)
 		goto err;
 	EBX = Literal;
@@ -828,10 +828,10 @@ lzphase:
 				EBX = EDX;
 				(unsigned int) ECX >>= 1;
 				EDX = 1;
-				ECX--; /* CF•s•Ï */
+				ECX--; /* CFä¸å¤‰ */
 				RCL(EDX, 1);
 				if ((unsigned) EBX < kEndPosModelIndex) {
-					/* ƒŠƒo[ƒX‚ÅECXƒrƒbƒg‚ğEDX‚É‰Ÿ‚µ‚Ş */
+					/* ãƒªãƒãƒ¼ã‚¹ã§ECXãƒ“ãƒƒãƒˆã‚’EDXã«æŠ¼ã—è¾¼ã‚€ */
 					PUSH(EDX);
 					SHL(EDX, CL);
 					NOT(EBX);
@@ -945,7 +945,7 @@ lit1load1:
 			range -= bound;
 			(signed int) tmp >>= kNumMoveBits;
 			POP(EBX);
-			prob -= tmp; /* CF‚ÉƒfƒR[ƒhŒ‹‰Ê */
+			prob -= tmp; /* CFã«ãƒ‡ã‚³ãƒ¼ãƒ‰çµæœ */
 			POP(ECX);
 			work->p[EBX * 4] = prob;
 			POP(result);
@@ -998,9 +998,9 @@ state_table:
 	DB(0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 4, 5);
 }
 
-/* ˆÈãz0ê—p */
+/* ä»¥ä¸Šz0å°‚ç”¨ */
 
-/* ˆÈ‰ºz1/z2—p */
+/* ä»¥ä¸‹z1/z2ç”¨ */
 
 void rdd_direct1b()
 {
@@ -1020,9 +1020,9 @@ void rdd_direct1()
 			goto shift;
 shift1:
 		range >>= 1;
-		CMP(code, range); /* >= ‚È‚ç CF = 0 */
+		CMP(code, range); /* >= ãªã‚‰ CF = 0 */
 		if ((unsigned) >=)
-			code -= range; /* ‘Š•Ï‚í‚ç‚¸CF = 0 */
+			code -= range; /* ç›¸å¤‰ã‚ã‚‰ãšCF = 0 */
 		RCL(result, 1);
 		ECX--;
 	} while (!= 0);
@@ -1040,7 +1040,7 @@ shift:
 
 void setbm()
 /* EBP, EDI */
-/* EAX, ECX, EDX‚Í”j‰ó */
+/* EAX, ECX, EDXã¯ç ´å£Š */
 {
 //	STR_BITMODEL *bm == SS:EBP + EDI;
 	STR_BITMODEL *bm == SS:EBP;
@@ -1055,7 +1055,7 @@ void setbm()
 	NEG(EAX); /* EAX = 1 << t; */
 	ECX &= 0xffff;
 	EAX |= EDX; /* EAX = -1 << (m + t) | 1 << t; */
-	NOT(EDX); /* EDX = ~(-1 << (m + t)); */
+	NOT(EDX); /* EDX = â€¾(-1 << (m + t)); */
 	EAX &= ECX;
 	EDX &= ECX;
 	aBM.prb1 = EAX;
@@ -1071,8 +1071,8 @@ void rdd_probtree1()
 }
 
 void rdd_probtree()
-/* range‚Æcode‚Íwork‚©‚çQÆ */
-/* EDI‚Í”j‰ó‚³‚ê‚é EBX‚ÍƒL[ƒv‚³‚ê‚é */
+/* rangeã¨codeã¯workã‹ã‚‰å‚ç…§ */
+/* EDIã¯ç ´å£Šã•ã‚Œã‚‹ EBXã¯ã‚­ãƒ¼ãƒ—ã•ã‚Œã‚‹ */
 {
 //	unsigned int result == EDX, range == EDI, code == EAX;
 //	unsigned int bound == EBX, prob == EDX, tmp == ECX;
@@ -1093,12 +1093,12 @@ void rdd_probtree()
 		EDX = [SS:EBP + EBX * 4];
 		if ((signed) <= 0)
 			goto bm_timeout0;
-		/* lt=0‚à‚±‚ê‚Å•ªŠò‚µ‚Ä–ˆ‰ñŒ³‚É–ß‚·...‚Ì‚Å‚Í‚È‚­Alt0‚ÌÅãˆÊ‚©‰½‚©‚ğƒtƒ‰ƒO‚É‚³‚¹‚æ‚¤ */
+		/* lt=0ã‚‚ã“ã‚Œã§åˆ†å²ã—ã¦æ¯å›å…ƒã«æˆ»ã™...ã®ã§ã¯ãªãã€lt0ã®æœ€ä¸Šä½ã‹ä½•ã‹ã‚’ãƒ•ãƒ©ã‚°ã«ã•ã›ã‚ˆã† */
 bm_timeout1:
 		prob = EDX;
-		EDX -= aBM.prb0; /* ‚à‚µprb0‚æ‚è‚à¬‚³‚¯‚ê‚ÎA‚±‚Ì“_‚Å‚Å‚©‚¢’l‚É‚È‚é */
+		EDX -= aBM.prb0; /* ã‚‚ã—prb0ã‚ˆã‚Šã‚‚å°ã•ã‘ã‚Œã°ã€ã“ã®æ™‚ç‚¹ã§ã§ã‹ã„å€¤ã«ãªã‚‹ */
 		prob &= aBM.tmsk;
-		EAX = work->range; /* ƒXƒ^ƒbƒN‚©‚çE‚Á‚Ä‚à‚¢‚¢‚ª */
+		EAX = work->range; /* ã‚¹ã‚¿ãƒƒã‚¯ã‹ã‚‰æ‹¾ã£ã¦ã‚‚ã„ã„ãŒ */
 		if ((unsigned) EDX > aBM.prb01)
 			goto fixprob0;
 fixprob2:
@@ -1117,9 +1117,9 @@ shift1:
 		}
 		SAR(tmp, CL);
 		work->code -= bound;
-		tmp &= aBM.tmsk; /* tmsk‚ÌãˆÊ‚Í1i‚»‚¤‚Å‚È‚¢‚Æ•‰‚Ì’l‚ª‚¨‚©‚µ‚­‚È‚éj */
+		tmp &= aBM.tmsk; /* tmskã®ä¸Šä½ã¯1ï¼ˆãã†ã§ãªã„ã¨è² ã®å€¤ãŒãŠã‹ã—ããªã‚‹ï¼‰ */
 		work->range -= bound;
-		prob -= tmp; /* CF‚ÉƒfƒR[ƒhŒ‹‰Ê */
+		prob -= tmp; /* CFã«ãƒ‡ã‚³ãƒ¼ãƒ‰çµæœ */
 		POP(result);
 		POP(EAX);
 		RCL(result, 1);
@@ -1129,11 +1129,11 @@ shift1:
 		(unsigned char) AL >>= 4;
 		POP(EBX);
 		AL &= CH;
-		CMP(AL, 1); /* TEST(AL, CH);‚ÌŒ‹‰Ê‚ª0‚È‚çCF=1 */
+		CMP(AL, 1); /* TEST(AL, CH);ã®çµæœãŒ0ãªã‚‰CF=1 */
 		SBB(EAX, EAX);
 		EAX &= 32;
 		EDI += EAX;
-		TEST(CH, 0x07); /* ‚±‚Ì‚½‚ß‚ÉA8‰ñˆÈã‚Ìƒ‹[ƒv‚Í‚Å‚«‚È‚¢ */
+		TEST(CH, 0x07); /* ã“ã®ãŸã‚ã«ã€8å›ä»¥ä¸Šã®ãƒ«ãƒ¼ãƒ—ã¯ã§ããªã„ */
 	} while (!= 0);
 	TEST(result, result);
 	return;
@@ -1200,7 +1200,7 @@ bm_timeout0:
 			POP(EDI);
 			DL &= 0x0f;
 			if (== 0)
-				goto err; /* m==0‚ÍƒŠƒU[ƒu */
+				goto err; /* m==0ã¯ãƒªã‚¶ãƒ¼ãƒ– */
 			aBM.m = DL;
 			DL += aBM.t;
 			if ((unsigned) DL > 15)
@@ -1226,9 +1226,9 @@ void rdd_probtree1_f()
 }
 
 void rdd_probtree_f()
-/* range‚Æcode‚Íwork‚©‚çQÆ */
-/* "EDI‚Í”j‰ó‚³‚ê‚é" EBX‚ÍƒL[ƒv‚³‚ê‚é */
-/* BM•s•ÏŒ^, CH‚ÉƒJƒEƒ“ƒ^(ãˆÊ‚Í0) */
+/* rangeã¨codeã¯workã‹ã‚‰å‚ç…§ */
+/* "EDIã¯ç ´å£Šã•ã‚Œã‚‹" EBXã¯ã‚­ãƒ¼ãƒ—ã•ã‚Œã‚‹ */
+/* BMä¸å¤‰å‹, CHã«ã‚«ã‚¦ãƒ³ã‚¿(ä¸Šä½ã¯0) */
 {
 	unsigned int bound == EAX, prob == EBX, tmp == EDX, result == EDX;
 //	STR_BITMODEL *bm == SS:EBP + EDI;
@@ -1251,7 +1251,7 @@ void rdd_probtree_f()
 	if ((signed) <= 0)
 		goto slow;
 	aBM.lt = EAX;
-	/* ‚±‚êˆÈ~ESI,EDI‚Í‚Ç‚¤‚Å‚à‚¢‚¢ */
+	/* ã“ã‚Œä»¥é™ESI,EDIã¯ã©ã†ã§ã‚‚ã„ã„ */
 	int tmsk == ESI, code == EDI;
 	code = work->code;
 	do {
@@ -1284,7 +1284,7 @@ shift1:
 		tmp &= tmsk;
 		work->range -= bound;
 		POP(EAX);
-		prob -= tmp; /* CF‚ÉƒfƒR[ƒhŒ‹‰Ê */
+		prob -= tmp; /* CFã«ãƒ‡ã‚³ãƒ¼ãƒ‰çµæœ */
 		POP(result);
 		[SS:EBP + EAX * 4] = prob;
 		RCL(result, 1);
@@ -1338,8 +1338,8 @@ slow:
 */
 
 void getlen1()
-/* EBX‚Éprob0, EDX:posState */
-/* EDX‚É•Ô‚· */
+/* EBXã«prob0, EDX:posState */
+/* EDXã«è¿”ã™ */
 {
 	STR_TEK5 *work == SS:EBP;
 	EDX *= 8;
@@ -1405,7 +1405,7 @@ void decodemain1()
 	EBX = 320 + 1632; /* mch */
 	CH = 0x01;
 	EDX = 0;
-	rdd_probtree_f(); /* ‚±‚ê‚Í1‚É‚È‚é */
+	rdd_probtree_f(); /* ã“ã‚Œã¯1ã«ãªã‚‹ */
 	if (== 0)
 		goto err;
 	EDI = 32 + 768; /* bm[24] */
@@ -1484,7 +1484,7 @@ lzphase:
 	CH = 0x01;
 	rdd_probtree_f();
 	POP(EDI);
-	if (== 0) { /* rep‚ÈLZ */
+	if (== 0) { /* repãªLZ */
 		EBX += 12; /* repg0 */
 	//	EDX = 0;
 		PUSH(EDI);
@@ -1524,13 +1524,13 @@ lzphase:
 			rdd_probtree_f();
 			ECX = work->repdis[4];
 			POP(EDI);
-			if (== 0) { /* rep[1]‚Å‚Í‚È‚¢ */
+			if (== 0) { /* rep[1]ã§ã¯ãªã„ */
 				EBX += 12; /* regp2 */
 			//	EDX = 0;
 				CH = 0x01;
 				rdd_probtree_f();
 				ECX = work->repdis[8];
-				if (== 0) { /* rep[2]‚Å‚Í‚È‚¢ */
+				if (== 0) { /* rep[2]ã§ã¯ãªã„ */
 					EDI = 32 + 704; /* bm[22] */
 					EBX = 320 + 65; /* repg3 */
 				//	EDX = 0;
@@ -1559,7 +1559,7 @@ lzphase:
 		getlen1();
 		ECX = EDX;
 		POP(EDX);
-	} else { /* ”ñrep‚ÈLZ */
+	} else { /* érepãªLZ */
 		EAX = work->repdis[8];
 		EDX = work->repdis[4];
 		EBX = work->repdis[0];
@@ -1592,10 +1592,10 @@ lzphase:
 			EBX = EDX;
 			(unsigned int) ECX >>= 1;
 			EDX = 1;
-			ECX--; /* CF•s•Ï */
+			ECX--; /* CFä¸å¤‰ */
 			RCL(EDX, 1);
 			if ((unsigned) EBX < 14) {
-				/* ƒŠƒo[ƒX‚ÅECXƒrƒbƒg‚ğEDX‚É‰Ÿ‚µ‚Ş */
+				/* ãƒªãƒãƒ¼ã‚¹ã§ECXãƒ“ãƒƒãƒˆã‚’EDXã«æŠ¼ã—è¾¼ã‚€ */
 				PUSH(EDX);
 				SHL(EDX, CL);
 				NOT(EBX);
@@ -1742,12 +1742,12 @@ state_table:
 	DB(0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 4, 5);
 }
 
-/* ˆÈãtek5—p */
+/* ä»¥ä¸Štek5ç”¨ */
 
 void lzrestore_stk2()
 /* ESI, EDI, EBP */
 {
-	ESI++; /* 01‚ğƒXƒLƒbƒv */
+	ESI++; /* 01ã‚’ã‚¹ã‚­ãƒƒãƒ— */
 	EBP += EDI;
 	DH = 0;
 	PUSH(EDI);
@@ -1758,8 +1758,8 @@ void lzrestore_stk2()
 	PUSH(0);
 	EBP = ESP;
 	do {
-		/* by‚Ì’·‚³‚Ìæ“¾ */
-		/* ‚±‚ê‚Í’·‚­‚È‚è‚â‚·‚¢ */
+		/* byã®é•·ã•ã®å–å¾— */
+		/* ã“ã‚Œã¯é•·ããªã‚Šã‚„ã™ã„ */
 		ECX = 0;
 		do {
 			ECX++;
@@ -1778,7 +1778,7 @@ long_by1:
 		if ((unsigned) EDI >= [SS:EBP + 16])
 			break;
 
-		/* lz‚Ì’·‚³‚Ìæ“¾ */
+		/* lzã®é•·ã•ã®å–å¾— */
 		ECX = 0;
 		do {
 			ECX++;
@@ -1935,8 +1935,8 @@ err:
 }
 
 void getnum_s7()
-/* DS:ESI‚©‚çƒŠ[ƒh */
-/* ECX, EDX ”j‰ó */
+/* DS:ESIã‹ã‚‰ãƒªãƒ¼ãƒ‰ */
+/* ECX, EDX ç ´å£Š */
 {
 	int tmp0 == ECX, tmp1 == EDX;
 	EAX = 0;
@@ -1960,7 +1960,7 @@ void getnum_s7()
 
 void lzrestore_stk1()
 {
-	ESI++; /* 01‚ğƒXƒLƒbƒv */
+	ESI++; /* 01ã‚’ã‚¹ã‚­ãƒƒãƒ— */
 	EBP += EDI;
 	ECX = 0; /* bugfix by K, 2004.07.26 */
 	PUSH(EDI);

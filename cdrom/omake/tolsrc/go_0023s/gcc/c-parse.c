@@ -562,7 +562,7 @@ static const char *const yytname[] =
   "UNARY", "PLUSPLUS", "MINUSMINUS", "HYPERUNARY", "POINTSAT", "'.'", 
   "'('", "'['", "INTERFACE", "IMPLEMENTATION", "END", "SELECTOR", "DEFS", 
   "ENCODE", "CLASSNAME", "PUBLIC", "PRIVATE", "PROTECTED", "PROTOCOL", 
-  "OBJECTNAME", "CLASS", "ALIAS", "')'", "';'", "'}'", "'~'", "'!'", 
+  "OBJECTNAME", "CLASS", "ALIAS", "')'", "';'", "'}'", "'‾'", "'!'", 
   "','", "'{'", "']'", "program", "extdefs", "@1", "@2", "extdef", 
   "datadef", "fndef", "@3", "@4", "@5", "@6", "@7", "@8", "identifier", 
   "unop", "expr", "exprlist", "nonnull_exprlist", "unary_expr", "sizeof", 
@@ -5157,7 +5157,7 @@ _yylex ()
     case CPP_RSHIFT:	yylval.code = RSHIFT_EXPR;	return RSHIFT;
     case CPP_LSHIFT:	yylval.code = LSHIFT_EXPR;	return LSHIFT;
 
-    case CPP_COMPL:					return '~';
+    case CPP_COMPL:					return '‾';
     case CPP_AND_AND:					return ANDAND;
     case CPP_OR_OR:					return OROR;
     case CPP_QUERY:					return '?';

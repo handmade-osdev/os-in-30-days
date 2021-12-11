@@ -1,20 +1,20 @@
-/* "wce.c":���C���h�J�[�h�W�J */
+/* "wce.c":ワイルドカード展開 */
 
 /* +:on -:off #:esc */
-/* default��on */
+/* defaultはon */
 
 /* prompt>wce.exe e arcfile basepath align #b=basepath * > $esar.ini */
 
-/* *:��ʃt�@�C���ƃf�B���N�g���Ƀ}�b�` */
-/* **:��ʃt�@�C���݂̂Ƀ}�b�`�i���X���b�V�����܂܂Ȃ��j */
+/* *:一般ファイルとディレクトリにマッチ */
+/* **:一般ファイルのみにマッチ（＝スラッシュを含まない） */
 
-/* #f=* ��#f����#w�̃T�|�[�g���A����##�� */
-/*	"#f=copy from:* to:@:" �ƁA "#f=#wpre *#w" �̈Ⴂ */
-/*	������Ƃ܂āA����"�t���@�\�Ƃ̌��ˍ����́H */
-/*	���Ⴀ��������΂����̂� */
+/* #f=* と#f内の#wのサポートを、あと##も */
+/*	"#f=copy from:* to:@:" と、 "#f=#wpre *#w" の違い */
+/*	ちょっとまて、自動"付加機能との兼ね合いは？ */
+/*	じゃあこうすればいいのか */
 /*	"#f=copy #wfrom:*#w to:@:" */
-/*	#w�͎������ʁB#W�͋��� */
-/*	�f�t�H���g��#f=#w*#w�Ƃ������ƂɂȂ� */
+/*	#wは自動判別。#Wは強制 */
+/*	デフォルトは#f=#w*#wということになる */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,7 +59,7 @@ int main(int argc, UCHAR **argv)
 			continue;
 		}
 		if (p[0] == '#' && p[1] != '\0') {
-			if (p[1] == 'b' && p[2] == '=') { /* basepath�w�� */
+			if (p[1] == 'b' && p[2] == '=') { /* basepath指定 */
 			//	if (p[3])
 					p += 3;
 			//	else {
@@ -74,8 +74,8 @@ int main(int argc, UCHAR **argv)
 				names1 = NULL;
 				continue;
 			}
-			if (p[1] == 'C' && p[2] == '=') { /* CAP�w�� */
-				/* �悭�l����Ɩ{���͂���ȃI�v�V�����͂���ׂ��ł͂Ȃ� */
+			if (p[1] == 'C' && p[2] == '=') { /* CAP指定 */
+				/* よく考えると本来はこんなオプションはあるべきではない */
 			//	if (p[3] == '\0')
 			//		mc ^= 1;
 				if (p[3] == '+' || p[3] == '1')
@@ -84,7 +84,7 @@ int main(int argc, UCHAR **argv)
 					mc = 0;
 				continue;
 			}
-			if (p[1] == 's' && p[2] == '=') { /* sort�w�� */
+			if (p[1] == 's' && p[2] == '=') { /* sort指定 */
 			//	if (p[3] == '\0')
 			//		ms ^= 1;
 				if (p[3] == '+' || p[3] == '1')
@@ -93,8 +93,8 @@ int main(int argc, UCHAR **argv)
 					ms = 0;
 				continue;
 			}
-			if (p[1] == '!' && p[2] == '=') { /* �r���w�� */
-				/* �����I�ɂ͔r���w��ł����C���h�J�[�h���g����悤�ɂ��� */
+			if (p[1] == '!' && p[2] == '=') { /* 排除指定 */
+				/* 将来的には排除指定でもワイルドカードを使えるようにする */
 				p0 = outb0;
 			//	if (p[3])
 					p += 3;
@@ -121,7 +121,7 @@ int main(int argc, UCHAR **argv)
 				continue;
 			}
 #if 0
-			if (p[1] == 'a' && p[2] == '=') { /* ������t���i�v�o�b�t�@�����O�j */
+			if (p[1] == 'a' && p[2] == '=') { /* 文字列付加（要バッファリング） */
 				if (p[3])
 					p += 3;
 				else {
@@ -141,7 +141,7 @@ int main(int argc, UCHAR **argv)
 				continue;
 			}
 #endif
-			if (p[1] == 'p' && p[2] == '=') { /* print�w�� */
+			if (p[1] == 'p' && p[2] == '=') { /* print指定 */
 			//	if (p[3] == '\0')
 			//		mp ^= 1;
 				if (p[3] == '+' || p[3] == '1')
@@ -170,8 +170,8 @@ through:
 			goto through;
 	//	}
 wild:
-		/* ���C���h�J�[�h�𕪊� */
-		/* �O����v�����A�����v�����A���ԔC�ӕ��� */
+		/* ワイルドカードを分割 */
+		/* 前方一致部分、後方一致部分、中間任意部分 */
 		len0 = 0;
 		p = p0;
 		while (p0[len0] != '*')
@@ -313,9 +313,9 @@ fin:
 }
 
 UCHAR *setnames(UCHAR *names0, UCHAR *base0, UCHAR *base1, UCHAR *tmp0, UCHAR *tmp1, UCHAR *ltmp0, UCHAR *ltmp1)
-/* Win2000��dir : �������I�[��0x00�ł��A�Ȃɂ͂Ƃ�����A���炩�̓��t���ŏ��ɓ��� */
-/* Win95��dir : �擪��8.3�t�@�C���� */
-/* WinXP��dir : 2000�Ƃ悭���Ă��邪�����ɈႤ�B */
+/* Win2000のdir : 日時がオール0x00でも、なにはともあれ、何らかの日付が最初に入る */
+/* Win95のdir : 先頭は8.3ファイル名 */
+/* WinXPのdir : 2000とよく似ているが微妙に違う。 */
 {
 	int i;
 	UCHAR *p1, *p = ltmp0, c, d, *q, *r, *s;
@@ -334,7 +334,7 @@ UCHAR *setnames(UCHAR *names0, UCHAR *base0, UCHAR *base1, UCHAR *tmp0, UCHAR *t
 		return names0;
 
 	/* Win95, Win2000, WinXP */
-	/* 5��'\n'��ǂݔ�΂� */
+	/* 5個の'\n'を読み飛ばせ */
 	for (i = 5; i > 0; i--) {
 		while (*p != '\n')
 			p++;
@@ -421,8 +421,8 @@ skip:
 }
 
 UCHAR *fixbase(UCHAR *base0, UCHAR *base1)
-/* win32���� */
-/* Linux�Ȃ瑽������ȏ����͂���Ȃ��āA������/�����邾���ł����̂��낤�B */
+/* win32向け */
+/* Linuxなら多分こんな処理はいらなくて、末尾に/をつけるだけでいいのだろう。 */
 {
 	UCHAR *p = base0;
 	while (p < base1) {
@@ -444,10 +444,10 @@ int pathcmp(UCHAR *p0, UCHAR *p1)
 		p0++;
 		p1++;
 	}
-	/* �������͂Ȃ� */
+	/* 等しくはない */
 	i = *p0 - *p1;
-	/* �f�B���N�g���͂ǂ�Ȉ�ʃt�@�C�������������A�Ƃ��邽�߂ɁA
-		�f�B���N�g���ł���΁A�L�����N�^�[�R�[�h����256�������ĕ]������ */
+	/* ディレクトリはどんな一般ファイルよりも小さい、とするために、
+		ディレクトリであれば、キャラクターコードから256を減じて評価する */
 	while (*p0 != '\0' && *p0 != '/')
 		p0++;
 	if (*p0)

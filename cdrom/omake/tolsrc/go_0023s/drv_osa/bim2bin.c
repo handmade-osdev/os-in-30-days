@@ -18,7 +18,7 @@
 
 #define SIZ_SYSWRK			(4 * 1024)
 
-/* +0x10 : ‘DS/SSƒTƒCƒY */
+/* +0x10 : ç·DS/SSã‚µã‚¤ã‚º */
 /* +0x14 : file */
 /* +0x18 : reserve */
 /* +0x1c : reserve */
@@ -35,10 +35,10 @@ static const int lzrestore_l2d3(unsigned char *buf, int k, int i, int outlimit);
 static const int lzrestore_tek0(unsigned char *buf, int k, int i, int outlimit);
 
 struct STR_BIM2BIN {
-	UCHAR *cmdlin; /* '\0'‚ÅI‚í‚é */
-	UCHAR *outname; /* '\0'‚ÅI‚í‚é, work‚Ì‚Ç‚±‚©‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	UCHAR *dest0, *dest1; /* o—Íƒtƒ@ƒCƒ‹(dest0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
-	UCHAR *err0, *err1; /* ƒRƒ“ƒ\[ƒ‹ƒƒbƒZ[ƒW(err0‚Í‘‚«Š·‚¦‚ç‚ê‚é) */
+	UCHAR *cmdlin; /* '\0'ã§çµ‚ã‚ã‚‹ */
+	UCHAR *outname; /* '\0'ã§çµ‚ã‚ã‚‹, workã®ã©ã“ã‹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	UCHAR *dest0, *dest1; /* å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«(dest0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
+	UCHAR *err0, *err1; /* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(err0ã¯æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹) */
 	UCHAR *work0, *work1;
 	int errcode;
 };
@@ -59,11 +59,11 @@ int bim2bin_main(struct STR_BIM2BIN *params)
 	UCHAR **argv, *tmp0;
 	UCHAR **argv1, **p;
 	GO_stdout.p0 = GO_stdout.p = params->err0;
-	GO_stdout.p1 = params->err0; /* stdout‚Í‚È‚µ */
-	GO_stdout.dummy = ~0;
+	GO_stdout.p1 = params->err0; /* stdoutã¯ãªã— */
+	GO_stdout.dummy = â€¾0;
 	GO_stderr.p0 = GO_stderr.p = params->err0;
 	GO_stderr.p1 = params->err1;
-	GO_stderr.dummy = ~0;
+	GO_stderr.dummy = â€¾0;
 
 	putb_count = 8;
 
@@ -81,7 +81,7 @@ int bim2bin_main(struct STR_BIM2BIN *params)
 	params->errcode = main0(argc, argv, params);
 
 skip:
-	/* ƒoƒbƒtƒ@‚ğo—Í */
+	/* ãƒãƒƒãƒ•ã‚¡ã‚’å‡ºåŠ› */
 	GOL_sysabort(0);
 }
 
@@ -153,7 +153,7 @@ static int main0(int argc, char **argv, struct STR_BIM2BIN *params)
 		return 1;
 	}
 
-	/* ƒpƒ‰ƒ[ƒ^[‰ğÍ */
+	/* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è§£æ */
 	for (argv++, i = 1; i < argc; argv++, i++) {
 		s = *argv;
 		if (strncmp(s, "malloc:", 7) == 0)
@@ -268,14 +268,14 @@ static int main0(int argc, char **argv, struct STR_BIM2BIN *params)
 	}
 	if (outtype == 1 || outtype == 4) { /* exe512 | bin0 */
 		if (outtype == 1 /* exe512 */) {
-			/* ƒwƒbƒ_[(512ƒoƒCƒg)‚ÌƒJƒbƒg */
+			/* ãƒ˜ãƒƒãƒ€ãƒ¼(512ãƒã‚¤ãƒˆ)ã®ã‚«ãƒƒãƒˆ */
 			filesize -= 512;
 			for (i = 0; i < filesize; i++)
 				buf[i] = buf[i + 512];
 		}
-		if (compress == -1) /* ’P‚È‚éƒwƒbƒ_ƒJƒbƒg */
+		if (compress == -1) /* å˜ãªã‚‹ãƒ˜ãƒƒãƒ€ã‚«ãƒƒãƒˆ */
 			goto write;
-		/* ƒXƒ^ƒeƒBƒbƒNƒf[ƒ^[ƒCƒ[ƒWˆ³k */
+		/* ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ãƒ‡ãƒ¼ã‚¿ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸åœ§ç¸® */
 		data_begin = get32(&buf[filesize - 4]);
 		datasize = filesize - 4 - data_begin;
 		putb_overbuf = overbuf;
@@ -297,7 +297,7 @@ static int main0(int argc, char **argv, struct STR_BIM2BIN *params)
 	data_begin = get32(&buf[0x10]);
 	stacksize = get32(&buf[0x14]);
 	entry = get32(&buf[0x18]);
-	worksize = (stacksize + datasize + mallocsize + 0xfff) & ~0xfff;
+	worksize = (stacksize + datasize + mallocsize + 0xfff) & â€¾0xfff;
 	if (compress >= 0) {
 		static unsigned char header1[0x48] = {
 			"\x2e\x8b\x62\x20"
@@ -332,7 +332,7 @@ static int main0(int argc, char **argv, struct STR_BIM2BIN *params)
 		if (compress == 1)
 			lzcompress_l2d3(buf + data_begin, datasize, 0, SIZEOFOVERBUF - 8, maxdis);
 		if (compress == 2) {
-			buf[0x35] = 0x82; /* tek0ˆ³kƒf[ƒ^[“WŠJ */
+			buf[0x35] = 0x82; /* tek0åœ§ç¸®ãƒ‡ãƒ¼ã‚¿ãƒ¼å±•é–‹ */
 			lzcompress_tek0(prm0, buf + data_begin, datasize, 0, SIZEOFOVERBUF - 8, maxdis);
 		}
 		if (putb_ptr < datasize) {
@@ -393,14 +393,14 @@ const int search0a(int prm0, unsigned char *buf, unsigned char *buf0, const int 
 	unsigned char *s;
 	unsigned char c = buf[0];
 
-	/* ƒAƒNƒZƒX‚µ‚Ä‚Í‚¢‚¯‚È‚¢ƒAƒhƒŒƒX : buf + max0 */
+	/* ã‚¢ã‚¯ã‚»ã‚¹ã—ã¦ã¯ã„ã‘ãªã„ã‚¢ãƒ‰ãƒ¬ã‚¹ : buf + max0 */
 	for (s = buf - 1; s >= buf0; s--) {
 		if (*s == c) {
-			for (l = max; l > 0; l--) { /* ‚‘¬‰»‚Ì‚½‚ßAŒã‚ë‚©‚ç”äŠr */
+			for (l = max; l > 0; l--) { /* é«˜é€ŸåŒ–ã®ãŸã‚ã€å¾Œã‚ã‹ã‚‰æ¯”è¼ƒ */
 				if (buf[l] != s[l])
 					goto nextloop;
 			}
-			/* ˆê’v’·‚ğZo, ‚½‚¾‚µmax0‚É‚È‚Á‚½‚ç‘Å‚¿~‚ß */
+			/* ä¸€è‡´é•·ã‚’ç®—å‡º, ãŸã ã—max0ã«ãªã£ãŸã‚‰æ‰“ã¡æ­¢ã‚ */
 			for (l = max; buf[l] == s[l]; ) {
 				if (++l >= max0) {
 					*p = s - buf;
@@ -408,7 +408,7 @@ const int search0a(int prm0, unsigned char *buf, unsigned char *buf0, const int 
 				}
 			}
 
-/* distance‚Ì‘‰Á—Ê‚ªl‚Ì‘‰Á—Ê‚Ìp”{‚ğ’´‚¦‚Ä‚¢‚é‚æ‚¤‚È‚çA‘¹‚Å‚ ‚é‚Ì‚ÅÌ—p‚µ‚È‚¢ */
+/* distanceã®å¢—åŠ é‡ãŒlã®å¢—åŠ é‡ã®på€ã‚’è¶…ãˆã¦ã„ã‚‹ã‚ˆã†ãªã‚‰ã€æã§ã‚ã‚‹ã®ã§æ¡ç”¨ã—ãªã„ */
 
 			d = s - buf;
 			if (d == -1)
@@ -462,7 +462,7 @@ void putbc(const int bits, int mask)
 void flushb()
 {
 	if (putb_count != 8) {
-		putb_byte = putb_byte << 1 | 1; /* "1"‚ğ‘—‚é */
+		putb_byte = putb_byte << 1 | 1; /* "1"ã‚’é€ã‚‹ */
 		if (--putb_count)
 			putb_byte <<= putb_count;
 		if (putb_ptr < 0)
@@ -478,7 +478,7 @@ void flushb()
 void flushb0()
 {
 	if (putb_count != 8) {
-		putb_byte = putb_byte << 1 | 0; /* "0"‚ğ‘—‚é */
+		putb_byte = putb_byte << 1 | 0; /* "0"ã‚’é€ã‚‹ */
 		if (--putb_count)
 			putb_byte <<= putb_count;
 		if (putb_ptr < 0)
@@ -511,7 +511,7 @@ const int getbc(int bits)
 }
 
 const int getbc0(int bits, int ret)
-/* ‰Šú’l•t‚« */
+/* åˆæœŸå€¤ä»˜ã */
 {
 	do {
 		if (putb_count == 8) {
@@ -561,7 +561,7 @@ const unsigned char *get_subbuf(unsigned char *subbuf, int *t, int *d, int *l)
 }
 
 const int get_subbuflen(unsigned char *subbuf, int *pt, int j)
-/* ƒŠƒs[ƒg’·‚ğŒŸo */
+/* ãƒªãƒ”ãƒ¼ãƒˆé•·ã‚’æ¤œå‡º */
 {
 	int l, d, t, len = 0;
 
@@ -600,8 +600,8 @@ const int get_subbuflen(unsigned char *subbuf, int *pt, int j)
 }
 
 void lzcmp_putnum1(int i)
-/* 19 <= i <= 273 ‚¾‚Æ14bitƒR[ƒh‚É‚È‚é */
-/* 2-4-8-16Œ`®‚Åo—Í */
+/* 19 <= i <= 273 ã ã¨14bitã‚³ãƒ¼ãƒ‰ã«ãªã‚‹ */
+/* 2-4-8-16å½¢å¼ã§å‡ºåŠ› */
 {
 	if (i <= 4 - 1)
 		putbc(i - 1 + 1, 0x2); /* 2bit */
@@ -626,7 +626,7 @@ void lzcmp_putnum1(int i)
 
 void putnum_l1a(unsigned int i)
 /* must i >= 1 */
-/* sxsxsxsxsŒ`®‚Åo—Í */
+/* sxsxsxsxså½¢å¼ã§å‡ºåŠ› */
 {
 	int j;
 	if (i == 1) {
@@ -639,7 +639,7 @@ void putnum_l1a(unsigned int i)
 		j--;
 	}
 	do {
-		i <<= 1; /* Å‰‚Ì1‚ÍÌ‚Ä‚é */
+		i <<= 1; /* æœ€åˆã®1ã¯æ¨ã¦ã‚‹ */
 		if (i & 0x80000000)
 			putbc(0x1, 0x2); /* sx */
 		else
@@ -651,22 +651,22 @@ void putnum_l1a(unsigned int i)
 
 void putnum_l1b(unsigned int i)
 /* must i >= 1 */
-/* ‚¨‚»‚ç‚­Al2a‚âl2b‚æ‚è‚à—D‚ê‚Ä‚¢‚é */
+/* ãŠãã‚‰ãã€l2aã‚„l2bã‚ˆã‚Šã‚‚å„ªã‚Œã¦ã„ã‚‹ */
 {
 	if (i <= 2) {
 		putbc(i + 1, 0x2); /* "10" or "11" */
 		return;
 	}
-	putnum_l1a(i - 1); /* 3‚ğ2‚É‚·‚é */
+	putnum_l1a(i - 1); /* 3ã‚’2ã«ã™ã‚‹ */
 	return;
 }
 
 void putnum_df(int d, unsigned int s)
-/* s‚Ìbit‚ª1‚¾‚ÆA‚»‚±‚Ü‚Åo—Í‚µ‚½‚ ‚Æ‚ÉAsƒrƒbƒg‚ğo—Í */
+/* sã®bitãŒ1ã ã¨ã€ãã“ã¾ã§å‡ºåŠ›ã—ãŸã‚ã¨ã«ã€sãƒ“ãƒƒãƒˆã‚’å‡ºåŠ› */
 {
 	int len;
 	unsigned int i = 1;
-//	if (d == 0) { /* ƒŠƒs[ƒgƒ}[ƒNo—Í */
+//	if (d == 0) { /* ãƒªãƒ”ãƒ¼ãƒˆãƒãƒ¼ã‚¯å‡ºåŠ› */
 //		for (i = 1; (i & s) == 0; i <<= 1)
 //			putbc(1, 1);
 //		putbc(0x2, 0x2); /* "10" */
@@ -676,7 +676,7 @@ void putnum_df(int d, unsigned int s)
 	i = 31;
 	while (i > 0 && (d & (1 << i)) != 0)
 		i--;
-	/* i = d‚Ì0‚ªŒ©•t‚©‚Á‚½ƒrƒbƒgˆÊ’u(0`31) */
+	/* i = dã®0ãŒè¦‹ä»˜ã‹ã£ãŸãƒ“ãƒƒãƒˆä½ç½®(0ã€œ31) */
 
 	len = -1;
 	do {
@@ -697,10 +697,10 @@ void putnum_df(int d, unsigned int s)
 			continue;
 		if (len < 0)
 			break;
-		putbc(0, 1); /* Œp‘±bit */
+		putbc(0, 1); /* ç¶™ç¶šbit */
 	}
 	if (s)
-		putbc(1, 1); /* ”ñŒp‘±bit */
+		putbc(1, 1); /* éç¶™ç¶šbit */
 	return;
 }
 
@@ -730,13 +730,13 @@ void putnum_l0a(int i, int z)
 	z = l[z];
 	if (i <= z) {
 		while (--i)
-			putbc(0x0, 0x1); /* (i - 1)ŒÂ‚Ì"0" */
+			putbc(0x0, 0x1); /* (i - 1)å€‹ã®"0" */
 		putbc(0x1, 0x1);
 		return;
 	}
 	j = z;
 	do {
-		putbc(0x0, 0x1); /* zŒÂ‚Ì"0" */
+		putbc(0x0, 0x1); /* zå€‹ã®"0" */
 	} while (--j);
 	putnum_l1b(i - z);
 	return;
@@ -825,7 +825,7 @@ const int getnum_l0a(int z)
 
 const int calclen_l1a(unsigned int i)
 /* must i >= 1 */
-/* sxsxsxsxsŒ`®‚Åo—Í */
+/* sxsxsxsxså½¢å¼ã§å‡ºåŠ› */
 {
 	int j, l = 0;
 	if (i == 1)
@@ -836,7 +836,7 @@ const int calclen_l1a(unsigned int i)
 		j--;
 	}
 	do {
-		i <<= 1; /* Å‰‚Ì1‚ÍÌ‚Ä‚é */
+		i <<= 1; /* æœ€åˆã®1ã¯æ¨ã¦ã‚‹ */
 		l += 2;
 	} while (--j);
 	return l + 1;
@@ -844,19 +844,19 @@ const int calclen_l1a(unsigned int i)
 
 const int calclen_l1b(unsigned int i)
 /* must i >= 1 */
-/* sxsxsxsxsŒ`®‚Åo—Í */
+/* sxsxsxsxså½¢å¼ã§å‡ºåŠ› */
 {
 	if (i <= 2)
 		return 2;
-	return calclen_l1a(i - 1); /* 3‚ğ2‚É‚·‚é */
+	return calclen_l1a(i - 1); /* 3ã‚’2ã«ã™ã‚‹ */
 }
 
 const int calclen_df(int d, unsigned int s)
-/* s‚Ìbit‚ª1‚¾‚ÆA‚»‚±‚Ü‚Åo—Í‚µ‚½‚ ‚Æ‚ÉAsƒrƒbƒg‚ğo—Í */
+/* sã®bitãŒ1ã ã¨ã€ãã“ã¾ã§å‡ºåŠ›ã—ãŸã‚ã¨ã«ã€sãƒ“ãƒƒãƒˆã‚’å‡ºåŠ› */
 {
 	int len, l = 0;
 	unsigned int i = 1;
-//	if (d == 0) { /* ƒŠƒs[ƒgƒ}[ƒNo—Í */
+//	if (d == 0) { /* ãƒªãƒ”ãƒ¼ãƒˆãƒãƒ¼ã‚¯å‡ºåŠ› */
 //		for (i = 1; (i & s) == 0; i <<= 1)
 //			l++;
 //		l += 2;
@@ -866,7 +866,7 @@ const int calclen_df(int d, unsigned int s)
 	i = 31;
 	while (i > 0 && (d & (1 << i)) != 0)
 		i--;
-	/* i = d‚Ì0‚ªŒ©•t‚©‚Á‚½ƒrƒbƒgˆÊ’u(0`31) */
+	/* i = dã®0ãŒè¦‹ä»˜ã‹ã£ãŸãƒ“ãƒƒãƒˆä½ç½®(0ã€œ31) */
 
 	len = -1;
 	do {
@@ -884,10 +884,10 @@ const int calclen_df(int d, unsigned int s)
 			continue;
 		if (len < 0)
 			break;
-		l++;/* Œp‘±bit */
+		l++;/* ç¶™ç¶šbit */
 	}
 	if (s)
-		l++; /* ”ñŒp‘±bit */
+		l++; /* éç¶™ç¶šbit */
 	return l;
 }
 
@@ -901,7 +901,7 @@ const int calclen_l0a(unsigned int i, int z)
 	return z + calclen_l1b(i - z);
 }
 
-/* l2d3ƒGƒ“ƒR[ƒh */
+/* l2d3ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ */
 
 const int lzcompress_l2d3(unsigned char *buf, int k, int i, int outlimit, int maxdis)
 {
@@ -946,11 +946,11 @@ const int lzcompress_l2d3(unsigned char *buf, int k, int i, int outlimit, int ma
 			putbc(0, 0x1);
 			lzcmp_putnum1(len);
 
-			/* ãˆÊ‚©‚ço—Í‚¹‚æ */
+			/* ä¸Šä½ã‹ã‚‰å‡ºåŠ›ã›ã‚ˆ */
 
 #if 1
 #define	DLEN	3
-			/* 2GBˆÈã‚É‚Í‘Î‰‚µ‚Ä‚¢‚È‚¢ */
+			/* 2GBä»¥ä¸Šã«ã¯å¯¾å¿œã—ã¦ã„ãªã„ */
 			for (j = 31 / DLEN; j >= 1 && (distance >> (j * DLEN)) == -1; j--);
 			if (j >= 0) {
 			//	putbc(1, 0x1); /* 1bit */
@@ -974,7 +974,7 @@ const int lzcompress_l2d3(unsigned char *buf, int k, int i, int outlimit, int ma
 	return k;
 }
 
-/* l2d3ƒfƒR[ƒh */
+/* l2d3ãƒ‡ã‚³ãƒ¼ãƒ‰ */
 
 const int lzrestore_l2d3(unsigned char *buf, int k, int i, int outlimit)
 {
@@ -1007,7 +1007,7 @@ const int lzrestore_l2d3(unsigned char *buf, int k, int i, int outlimit)
 					j = getbc(16);
 					len = j;
 					if (j <= 127)
-						len = getbc0(j, 1); /* Å‰‚Ìbit‚Í1‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚é‚©‚ç */
+						len = getbc0(j, 1); /* æœ€åˆã®bitã¯1ã«æ±ºã¾ã£ã¦ã„ã‚‹ã‹ã‚‰ */
 				}
 			}
 		}
@@ -1038,7 +1038,7 @@ const int calc_totalbits(const unsigned int *bit, const unsigned int stops)
 #if 0
 
 const int calc_stopbits0(const unsigned int *bit)
-/* ‰ºˆÊbit‚©‚ç“ü‚ê‚Ä‚¢‚­•û–@ */
+/* ä¸‹ä½bitã‹ã‚‰å…¥ã‚Œã¦ã„ãæ–¹æ³• */
 {
 	int l;
 	unsigned int t, s, maxlen, t0;
@@ -1051,7 +1051,7 @@ const int calc_stopbits0(const unsigned int *bit)
 	for (maxlen = 31; bit[maxlen] == 0; maxlen--);
 	s = 1 << maxlen;
 	t0 = calc_totalbits(bit, s);
-	for (l = 0; l < maxlen; l++) { /* ‰º‚©‚ç“ü‚ê‚Ä‚¢‚é */
+	for (l = 0; l < maxlen; l++) { /* ä¸‹ã‹ã‚‰å…¥ã‚Œã¦ã„ã‚‹ */
 		t = calc_totalbits(bit, s | 1 << l);
 		if (t0 > t) {
 			s |= 1 << l;
@@ -1062,7 +1062,7 @@ const int calc_stopbits0(const unsigned int *bit)
 }
 
 const int calc_stopbits1(const unsigned int *bit)
-/* ãˆÊbit‚©‚ç“ü‚ê‚Ä‚¢‚­•û–@ */
+/* ä¸Šä½bitã‹ã‚‰å…¥ã‚Œã¦ã„ãæ–¹æ³• */
 {
 	int l;
 	unsigned int t, s, maxlen, t0;
@@ -1075,7 +1075,7 @@ const int calc_stopbits1(const unsigned int *bit)
 	for (maxlen = 31; bit[maxlen] == 0; maxlen--);
 	s = 1 << maxlen;
 	t0 = calc_totalbits(bit, s);
-	for (l = maxlen - 1; l >= 0; l--) { /* ã‚©‚ç“ü‚ê‚Ä‚¢‚é */
+	for (l = maxlen - 1; l >= 0; l--) { /* ä¸Šã‹ã‚‰å…¥ã‚Œã¦ã„ã‚‹ */
 		t = calc_totalbits(bit, s | 1 << l);
 		if (t0 > t) {
 			s |= 1 << l;
@@ -1088,7 +1088,7 @@ const int calc_stopbits1(const unsigned int *bit)
 #endif
 
 const int calc_stopbits2(const unsigned int *bit)
-/* —˜‰v‚Ì‘½‚¢‚Æ‚±‚ë‚©‚ç“ü‚ê‚Ä‚¢‚­•û–@ */
+/* åˆ©ç›Šã®å¤šã„ã¨ã“ã‚ã‹ã‚‰å…¥ã‚Œã¦ã„ãæ–¹æ³• */
 {
 	int l, l0;
 	unsigned int t, s, maxlen, t0, min;
@@ -1146,7 +1146,7 @@ const int calc_stopbits(const unsigned int *bit)
 }
 
 const int calcdis_s(const unsigned char *subbuf, const int i)
-/* dis‚ÌƒGƒ“ƒR[ƒh•û®‚Ì©“®‘I‘ğ */
+/* disã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ–¹å¼ã®è‡ªå‹•é¸æŠ */
 {
 	unsigned int *distbl = malloc(32 * 4), dis_s;
 	int j, l, d, t, len, maxlen;
@@ -1260,17 +1260,17 @@ const int lzcompress_tek0(int prm, unsigned char *buf, int k, int i, int outlimi
 	}
 	*subbuf = 0x00;
 
-	/* len‚ÌƒGƒ“ƒR[ƒh•û®‚Ì©“®‘I‘ğ */
+	/* lenã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ–¹å¼ã®è‡ªå‹•é¸æŠ */
 	i0 = 0x7fffffff;
 	for (z = 0; z < 16; z++) {
 		for (ii = 0; ii < 2; ii++) {
 			for (j = 0; j < 4; j++) {
-				/* Å‰‚Édis_s‚ğZo‚µAl1b‚ğ³Šm‚ÉŒvZ‚·‚é */
+				/* æœ€åˆã«dis_sã‚’ç®—å‡ºã—ã€l1bã‚’æ­£ç¢ºã«è¨ˆç®—ã™ã‚‹ */
 				dis_s = calcdis_s(subbuf0, j);
 				subbuf = subbuf0;
 				len = 0;
 				for (;;) {
-					/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+					/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 					srchloglen = get_subbuflen(subbuf, &t, j);
 					if (srchloglen == 0)
 						break;
@@ -1286,7 +1286,7 @@ const int lzcompress_tek0(int prm, unsigned char *buf, int k, int i, int outlimi
 						}
 					} while (srchloglen);
 
-					/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+					/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 					srchloglen = get_subbuflen(subbuf, &t, j);
 					if (srchloglen == 0)
 						break;
@@ -1310,12 +1310,12 @@ const int lzcompress_tek0(int prm, unsigned char *buf, int k, int i, int outlimi
 		}
 	}
 
-	/* dis‚ÌƒGƒ“ƒR[ƒh•û®‚Ì©“®‘I‘ğ */
+	/* disã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ–¹å¼ã®è‡ªå‹•é¸æŠ */
 	dis_s = calcdis_s(subbuf0, i);
 //	printf("method:l1%c(+%d) = %8d rep-mode:%x ", 'a' + ii0, i, i0, z0);
 //	printf("dis_s = %08x\n", dis_s);
 
-	/* ƒGƒ“ƒR[ƒh */
+	/* ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ */
 	putnum_s8(dis_s);
 	putbc(i, 0x2);
 	putbc(ii0, 0x1); /* l1a/l1b */
@@ -1325,7 +1325,7 @@ const int lzcompress_tek0(int prm, unsigned char *buf, int k, int i, int outlimi
 	subbuf = subbuf0;
 	j = 0;
 	for (;;) {
-		/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+		/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		srchloglen = get_subbuflen(subbuf, &t, i);
 		if (srchloglen == 0)
 			break;
@@ -1342,7 +1342,7 @@ const int lzcompress_tek0(int prm, unsigned char *buf, int k, int i, int outlimi
 			} while (l);
 		} while (srchloglen);
 
-		/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+		/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		srchloglen = get_subbuflen(subbuf, &t, i);
 		if (srchloglen == 0)
 			break;
@@ -1369,7 +1369,7 @@ const int lzrestore_tek0(unsigned char *buf, int k, int i, int outlimit)
 	int len, distance, j, z0, z1;
 	unsigned int dis_s, l_ofs, method;
 
-	/* ƒwƒbƒ_“Ç‚İ‚İ */
+	/* ãƒ˜ãƒƒãƒ€èª­ã¿è¾¼ã¿ */
 	dis_s = getnum_s8();
 	l_ofs = getbc(2);
 	method = getbc(1); /* l1a/l1b */
@@ -1380,7 +1380,7 @@ const int lzrestore_tek0(unsigned char *buf, int k, int i, int outlimit)
 
 	i = 0;
 	for (;;) {
-		/* "0"-phase (”ñˆ³kƒtƒF[ƒY) */
+		/* "0"-phase (éåœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z0);
 		if (j < 0)
 			break;
@@ -1391,7 +1391,7 @@ const int lzrestore_tek0(unsigned char *buf, int k, int i, int outlimit)
 			buf[i++] = len;
 		} while (--j);
 
-		/* "1"-phase (ˆ³kƒtƒF[ƒY) */
+		/* "1"-phase (åœ§ç¸®ãƒ•ã‚§ãƒ¼ã‚º) */
 		j = getnum_l0a(z1);
 		if (j < 0)
 			break;

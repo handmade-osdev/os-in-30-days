@@ -71,7 +71,7 @@ sbitmap_vector_alloc (n_vecs, n_elms)
     /* Based on DEFAULT_ALIGNMENT computation in obstack.c.  */
     struct { char x; SBITMAP_ELT_TYPE y; } align;
     int alignment = (char *) & align.y - & align.x;
-    vector_bytes = (vector_bytes + alignment - 1) & ~ (alignment - 1);
+    vector_bytes = (vector_bytes + alignment - 1) & ‾ (alignment - 1);
   }
 
   amt = vector_bytes + (n_vecs * elm_bytes);
@@ -158,7 +158,7 @@ sbitmap_vector_ones (bmap, n_vecs)
 }
 
 /* Set DST to be A union (B - C).
-   DST = A | (B & ~C).
+   DST = A | (B & ‾C).
    Return non-zero if any change is made.  */
 
 int
@@ -172,7 +172,7 @@ sbitmap_union_of_diff (dst, a, b, c)
   for (dstp = dst->elms, ap = a->elms, bp = b->elms, cp = c->elms, i = 0;
        i < dst->size; i++, dstp++)
     {
-      SBITMAP_ELT_TYPE tmp = *ap++ | (*bp++ & ~*cp++);
+      SBITMAP_ELT_TYPE tmp = *ap++ | (*bp++ & ‾*cp++);
 
       if (*dstp != tmp)
 	{
@@ -194,11 +194,11 @@ sbitmap_not (dst, src)
   sbitmap_ptr dstp, srcp;
 
   for (dstp = dst->elms, srcp = src->elms, i = 0; i < dst->size; i++)
-    *dstp++ = ~(*srcp++);
+    *dstp++ = ‾(*srcp++);
 }
 
 /* Set the bits in DST to be the difference between the bits
-   in A and the bits in B. i.e. dst = a & (~b).  */
+   in A and the bits in B. i.e. dst = a & (‾b).  */
 
 void
 sbitmap_difference (dst, a, b)
@@ -208,7 +208,7 @@ sbitmap_difference (dst, a, b)
   sbitmap_ptr dstp, ap, bp;
   
   for (dstp = dst->elms, ap = a->elms, bp = b->elms, i = 0; i < dst->size; i++)
-    *dstp++ = *ap++ & (~*bp++);
+    *dstp++ = *ap++ & (‾*bp++);
 }
 
 /* Set DST to be (A and B).

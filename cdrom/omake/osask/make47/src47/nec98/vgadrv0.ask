@@ -1,11 +1,11 @@
-/* "VGADRV0.ASK" for NEC98 ver.1.9 copyright(C) 2003 ì‡GÀ */
+/* "VGADRV0.ASK" for NEC98 ver.1.9 copyright(C) 2003 å·åˆç§€å®Ÿ */
 
 #include "osaskinc.ask"
 
 segment CODE(USE32, PARA);
 default(code == CODE);
 
-#define XBYTES		 80		/* 640ƒhƒbƒg/ƒ‰ƒCƒ“ */
+#define XBYTES		 80		/* 640ãƒ‰ãƒƒãƒˆ/ãƒ©ã‚¤ãƒ³ */
 
 struct WORK_SUB {
 	unsigned int scr_x0, scr_width, scr_y0, scr_height;
@@ -30,18 +30,18 @@ struct GAPI_WORK {
 	int mouse_backup[192]; /* 16x4x3 */
 };
 
-//    ’Êí‚ÍEGCƒIƒ“
+//    é€šå¸¸ã¯EGCã‚ªãƒ³
 
 void far GAPI_entry()
-// •K‚¸AEFLAGS.IF == 1‚ÅŒÄ‚Ô‚±‚Æ
+// å¿…ãšã€EFLAGS.IF == 1ã§å‘¼ã¶ã“ã¨
 {
 	goto syscmd;
 //	ORG(0x0008);
 //	ORG(0x0010);
 	asmout("RESB 0x10-$");
 	asmout("DD OFFSET #syscmd, 0, 0, 0");
-	DD(4096); // ‰Šú‰»‚É•K—v‚Èƒ[ƒNƒGƒŠƒAƒTƒCƒY
-	DD(0); // Å‘åƒ[ƒJƒ‹ƒXƒ^ƒbƒNÁ”ï—Ê
+	DD(4096); // åˆæœŸåŒ–æ™‚ã«å¿…è¦ãªãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã‚µã‚¤ã‚º
+	DD(0); // æœ€å¤§ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚¿ãƒƒã‚¯æ¶ˆè²»é‡
 //	ORG(0x0040);
 	asmout("RESB 0x40-$");
 syscmd:
@@ -84,7 +84,7 @@ syscmd:
 */
 
 /*
-	// taskcount‚ğæ“¾
+	// taskcountã‚’å–å¾—
 	CLI();
 	EAX = work->nextcount;
 	EBP = EAX;
@@ -166,7 +166,7 @@ fontload:
 				EAX = 0;
 				EDX = 0;
 				do {
-					/* ‚¢‚©‚É‚àH•v‚Ì‚È‚¢•û–@ */
+					/* ã„ã‹ã«ã‚‚å·¥å¤«ã®ãªã„æ–¹æ³• */
 					EBX >>= 1;
 					RCL(AL, 1);
 					EBX >>= 1;
@@ -207,7 +207,7 @@ fontload:
 				EAX = 0;
 				EDX = 0;
 				do {
-					/* ‚¢‚©‚É‚àH•v‚Ì‚È‚¢•û–@ */
+					/* ã„ã‹ã«ã‚‚å·¥å¤«ã®ãªã„æ–¹æ³• */
 					EBX >>= 1;
 					RCL(AL, 1);
 					EBX >>= 1;
@@ -251,17 +251,17 @@ font_attr_table:
 	DB(5 /*  32bytes/font (8x 8 4bit color half height) */);
 }
 
-// ƒ}ƒEƒX‚É‚Í”ñ•\¦ƒJƒEƒ“ƒg‚Æ‚¢‚¤‚Ì‚ª‚ ‚é
-// ‚±‚ê‚ª0‚©‚çnon-0‚É‚È‚Á‚½‚Æ‚«‚âAnon-0‚©‚ç0‚É‚È‚Á‚½‚Æ‚«‚ÉA•`‰æE‘Ò”ğ‚ğs‚È‚¤
+// ãƒã‚¦ã‚¹ã«ã¯éè¡¨ç¤ºã‚«ã‚¦ãƒ³ãƒˆã¨ã„ã†ã®ãŒã‚ã‚‹
+// ã“ã‚ŒãŒ0ã‹ã‚‰non-0ã«ãªã£ãŸã¨ãã‚„ã€non-0ã‹ã‚‰0ã«ãªã£ãŸã¨ãã«ã€æç”»ãƒ»å¾…é¿ã‚’è¡Œãªã†
 
 void near fontwritesub8();
 void near fontwritesub16();
 
 void GAPI_fontwrite()
 {
-	// 8x16‚ÌƒtƒHƒ“ƒg‚ğ•`‰æ(”wŒiF•t‚«)
-	// Å‚‚Å‚à1,280ƒoƒCƒg‚É‚µ‚©ƒAƒNƒZƒX‚µ‚È‚¢
-	// ‚¾‚©‚çACLI‚Ì‚Ü‚Ü“Ë”j
+	// 8x16ã®ãƒ•ã‚©ãƒ³ãƒˆã‚’æç”»(èƒŒæ™¯è‰²ä»˜ã)
+	// æœ€é«˜ã§ã‚‚1,280ãƒã‚¤ãƒˆã«ã—ã‹ã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„
+	// ã ã‹ã‚‰ã€CLIã®ã¾ã¾çªç ´
 
 	int *cmd == FS:EBX;
 
@@ -282,7 +282,7 @@ void GAPI_fontwrite()
 	ESI = cmd[12]; // y
 	TEST(AL, 0x07);
 	if (!= 0)
-		goto error; // 8‚Ì”{”ˆÈŠO‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢
+		goto error; // 8ã®å€æ•°ä»¥å¤–ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„
 
 	(unsigned int) EAX /= 8;
 	IMUL(ESI, XBYTES);
@@ -290,8 +290,8 @@ void GAPI_fontwrite()
 
 	int *font == ES:EDI;
 //	ES = [FS:EBX + 28];
-	// fontsizeƒ`ƒFƒbƒN‚Í‚µ‚È‚­‚È‚Á‚½B‚»‚Ì•û‚ª‘¬‚¢B
-	// ƒ`ƒFƒbƒN‚ª•K—v‚È‚çAãˆÊƒ‹[ƒ`ƒ“‚Å‚â‚éB
+	// fontsizeãƒã‚§ãƒƒã‚¯ã¯ã—ãªããªã£ãŸã€‚ãã®æ–¹ãŒé€Ÿã„ã€‚
+	// ãƒã‚§ãƒƒã‚¯ãŒå¿…è¦ãªã‚‰ã€ä¸Šä½ãƒ«ãƒ¼ãƒãƒ³ã§ã‚„ã‚‹ã€‚
 
 	int *string == FS:EBP;
 	ECX = cmd[32]; // length
@@ -450,14 +450,14 @@ opt2:
 	ESI = cmd[12]; // y
 	TEST(AL, 0x07);
 	if (!= 0)
-		goto error; // 8‚Ì”{”ˆÈŠO‚Í‚Ü‚¾ƒTƒ|[ƒg‚µ‚Ä‚È‚¢
+		goto error; // 8ã®å€æ•°ä»¥å¤–ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„
 
 	(unsigned int) EAX /= 8;
 	IMUL(ESI, XBYTES);
 	ESI += EAX;
 
 //	int *font == ES:EDI;
-//	CL = [DS:0x0fff0]; /* ƒ‰ƒbƒ`ƒZƒbƒg(bc = 0) */
+//	CL = [DS:0x0fff0]; /* ãƒ©ãƒƒãƒã‚»ãƒƒãƒˆ(bc = 0) */
 
 //	int *string == FS:EBP;
 	ECX = cmd[32]; // length
@@ -504,7 +504,7 @@ opt3:
 	LEA((offset) string, [EBX + 36]);
 	LEA(EBX, [EBX + ECX * 4 + 36]);
 
-	/* GRCG(EGC)‚ğoff‚É‚·‚é */
+	/* GRCG(EGC)ã‚’offã«ã™ã‚‹ */
 	AL = 0x00;
 	CLI();
 	OUT(0x007c, AL);
@@ -526,7 +526,7 @@ opt3:
 		ECX--;
 	} while (!= 0);
 
-	/* GRCG(EGC)‚ğon‚É‚·‚é */
+	/* GRCG(EGC)ã‚’onã«ã™ã‚‹ */
 	AL = 0x80;
 	OUT(0x007c, AL);
 
@@ -536,14 +536,14 @@ opt3:
 opt_high:
 /*
 	0x0101, opt, x, y, col, bcol[20], dummy[24], dummy[28], len, str...
-	opt‚É‚æ‚Á‚ÄAx, y‚ªofs:sel‚É‚È‚é
-	opt8-10 : 0, 1, 2, 4(3) (0ˆÈŠO‚ÍRAM•`‰æ, dmy[24]‚ªƒ‰ƒCƒ“ƒoƒCƒg)
-	opt11 : extƒtƒ‰ƒO, str‚ğfar-ptr‚É‚·‚é(‚Å‚à‰¿’l–³‚µ‚¾‚È)
-	opt12 : col–³Œø‰»ƒtƒ‰ƒO‚É
-	opt13 : bcol–³Œø‰»ƒtƒ‰ƒO
+	optã«ã‚ˆã£ã¦ã€x, yãŒofs:selã«ãªã‚‹
+	opt8-10 : 0, 1, 2, 4(3) (0ä»¥å¤–ã¯RAMæç”», dmy[24]ãŒãƒ©ã‚¤ãƒ³ãƒã‚¤ãƒˆ)
+	opt11 : extãƒ•ãƒ©ã‚°, strã‚’far-ptrã«ã™ã‚‹(ã§ã‚‚ä¾¡å€¤ç„¡ã—ã ãª)
+	opt12 : colç„¡åŠ¹åŒ–ãƒ•ãƒ©ã‚°ã«
+	opt13 : bcolç„¡åŠ¹åŒ–ãƒ•ãƒ©ã‚°
 	opt14-15 : pset, and, or, xor
-	‚Æ‚è‚ ‚¦‚¸Aopt:0x0100‚Ì‚İ‚ÌƒTƒ|[ƒg‚ğ’Ç‰Á‚µ‚æ‚¤B
-	opt‚ÅŠÖ”‚ÌƒAƒhƒŒƒX‚ªŒˆ‚Ü‚èA‚»‚ê‚ğƒ‹[ƒv‚²‚Æ‚ÉŒÄ‚ÔBjmp‚Å‚à‚æ‚¢B
+	ã¨ã‚Šã‚ãˆãšã€opt:0x0100ã®ã¿ã®ã‚µãƒãƒ¼ãƒˆã‚’è¿½åŠ ã—ã‚ˆã†ã€‚
+	optã§é–¢æ•°ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒæ±ºã¾ã‚Šã€ãã‚Œã‚’ãƒ«ãƒ¼ãƒ—ã”ã¨ã«å‘¼ã¶ã€‚jmpã§ã‚‚ã‚ˆã„ã€‚
 */
 	if (EAX != 0x0100)
 		goto error;
@@ -672,8 +672,8 @@ void fontwritesub8()
 }
 
 void yline32()
-// EAX:ƒpƒ^[ƒ“, ESI‚©‚ç(ECX + 1)‰ñBCLI();‚µ‚½ó‘Ô‚ÅŒÄ‚Ño‚·B
-// ESI(’¼‰º‚ÌƒAƒhƒŒƒX), ECX(= 0)‚ğ”j‰óB
+// EAX:ãƒ‘ã‚¿ãƒ¼ãƒ³, ESIã‹ã‚‰(ECX + 1)å›ã€‚CLI();ã—ãŸçŠ¶æ…‹ã§å‘¼ã³å‡ºã™ã€‚
+// ESI(ç›´ä¸‹ã®ã‚¢ãƒ‰ãƒ¬ã‚¹), ECX(= 0)ã‚’ç ´å£Šã€‚
 {
 	ECX -= 7;
 	if ((unsigned) >= 0) {
@@ -732,12 +732,12 @@ void near xline_pset()
 #endif
 
 void xline()
-// AL:ƒpƒ^[ƒ“, ESI‚©‚çECX‰ñBCLI();‚µ‚½ó‘Ô‚ÅŒÄ‚Ño‚·B
-// DL, ESI(’¼‰º‚ÌƒAƒhƒŒƒX), ECX(= 0)‚ğ”j‰óB
+// AL:ãƒ‘ã‚¿ãƒ¼ãƒ³, ESIã‹ã‚‰ECXå›ã€‚CLI();ã—ãŸçŠ¶æ…‹ã§å‘¼ã³å‡ºã™ã€‚
+// DL, ESI(ç›´ä¸‹ã®ã‚¢ãƒ‰ãƒ¬ã‚¹), ECX(= 0)ã‚’ç ´å£Šã€‚
 {
 	ECX -= 8;
 	EAX = 0xffffffff;
-	if ((unsigned) >= 0) { /* 1loop‚Å256dot */
+	if ((unsigned) >= 0) { /* 1loopã§256dot */
 		do {
 			[DS:ESI +  0] = EAX;
 			[DS:ESI +  4] = EAX;
@@ -772,7 +772,7 @@ void xline()
 	 9:ffff7f00
 	...
 
-BSWAP‚Ì‘ã‚í‚è‚ª•K—v
+BSWAPã®ä»£ã‚ã‚ŠãŒå¿…è¦
 	0123
 	0132 ROL AX,8
 	3201 ROL EAX,16
@@ -840,9 +840,9 @@ boxfill:
 		ROL(AX, 8);
 		EDI -= EDX;
 		PUSH(EAX); /* right */
-		// EDI : x•ûŒü‚ÌƒTƒCƒY(DW”)
-		// EBP : y•ûŒü‚ÌƒTƒCƒY(ƒhƒbƒg” - 1)
-		// ESI : VRAMã‚ÌƒAƒhƒŒƒX
+		// EDI : xæ–¹å‘ã®ã‚µã‚¤ã‚º(DWæ•°)
+		// EBP : yæ–¹å‘ã®ã‚µã‚¤ã‚º(ãƒ‰ãƒƒãƒˆæ•° - 1)
+		// ESI : VRAMä¸Šã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		if ((unsigned) >) {
 			if ((unsigned) (int) [SS:ESP + 12] != 0xffffffff) {
 				ECX = EBP;
@@ -875,7 +875,7 @@ boxfill:
 						EAX = 0x0105;
 						CLI();
 						OUT(DX, AX); // Mode Reg (writing mode : 1)
-						CL = [DS:EBX]; // ƒ‰ƒbƒ`XV
+						CL = [DS:EBX]; // ãƒ©ãƒƒãƒæ›´æ–°
 					//	ECX = EBP;
 						EAX = ESI;
 					//	ECX -= 7;
@@ -940,7 +940,7 @@ boxfill:
 						EAX = 0x0105;
 						CLI();
 						OUT(DX, AX); // Mode Reg (writing mode : 1)
-						CL = [DS:EBX]; // ƒ‰ƒbƒ`XV
+						CL = [DS:EBX]; // ãƒ©ãƒƒãƒæ›´æ–°
 						ECX = EDI;
 						EAX = ESI;
 						xline_pset();
@@ -1145,16 +1145,16 @@ error:
 
 void GAPI_putbox()
 {
-	/* 16FƒuƒƒbƒN“]‘— */
+	/* 16è‰²ãƒ–ãƒ­ãƒƒã‚¯è»¢é€ */
 	/* cmd, opt, x0, y0, xsize, ysize, yskip, ofs, sel */
 
-	/* Å“K‰»‚Í‚µ‚Ä‚¢‚È‚¢ */
+	/* æœ€é©åŒ–ã¯ã—ã¦ã„ãªã„ */
 
 	/*	opt bit 0- 3 :	0x01 1byte/pixel
 						0x02 2byte/pixel
 						0x04 4byte/pixel
-			bit 4    :	“§–¾Fw’è‚ ‚è
-			bit 5    :	ƒpƒŒƒbƒg’l©“®•â³—LŒø */
+			bit 4    :	é€æ˜è‰²æŒ‡å®šã‚ã‚Š
+			bit 5    :	ãƒ‘ãƒ¬ãƒƒãƒˆå€¤è‡ªå‹•è£œæ­£æœ‰åŠ¹ */
 
 	int *cmd == FS:EBX;
 	unsigned char *p == DS:ESI, *q == ES:EDI;
@@ -1185,18 +1185,18 @@ void GAPI_putbox()
 //	LEA(EDI, [EDI + EAX + 0xa0000]);
 	EDI += EAX;
 	AL = (char) cmd[4];
-	PUSH(ECX); /* x0‚Ì’[” */
+	PUSH(ECX); /* x0ã®ç«¯æ•° */
 	TEST(AL, 0x10);
 	ECX = cmd[20]; /* ysize */
 	if (!= 0)
 		goto putbox1;
 	AL &= 0x2f;
 	if (AL == 0x01) {
-		(offset) p -= [SS:ESP + 0 /* x0‚Ì’[” */];
+		(offset) p -= [SS:ESP + 0 /* x0ã®ç«¯æ•° */];
 		do { /* ysize loop */
 			PUSH(ECX);
 			PUSH((offset) p);
-			(offset) p += [SS:ESP + 8 /* x0‚Ì’[” */];
+			(offset) p += [SS:ESP + 8 /* x0ã®ç«¯æ•° */];
 			ECX = cmd[16]; /* xsize */
 			EDX = 0;
 			EAX = 0;
@@ -1230,7 +1230,7 @@ OUT(DX,AX);
 POP(EAX);
 #endif
 					EAX <<= 8;
-					EDX = [SS:ESP + 16 /* x0‚Ì’[” */];
+					EDX = [SS:ESP + 16 /* x0ã®ç«¯æ•° */];
 					ECX = cmd[16]; /* xsize */
 					EDX--;
 					if (== 0)
@@ -1400,10 +1400,10 @@ skip_flush:
 		asmout("JMP next_command");
 	}
 	if (AL == 0x22) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[16bit, RRRRRGGG_GGGBBBBB */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼16bit, RRRRRGGG_GGGBBBBB */
 
-		/* [SS:ESP] : x‚Ì’[” */
-		/* p, q‚Í€”õÏ‚İ */
+		/* [SS:ESP] : xã®ç«¯æ•° */
+		/* p, qã¯æº–å‚™æ¸ˆã¿ */
 		EBP = ECX;
 		AL = 0x80;
 		CL = (char) [SS:ESP];
@@ -1436,7 +1436,7 @@ skip_flush:
 					EAX += 8;
 				EDX = 0x04a6; /* FGC */
 				OUT(DX, AX); // color
-			//	BH = *q; /* ƒ‰ƒbƒ`XV */
+			//	BH = *q; /* ãƒ©ãƒƒãƒæ›´æ–° */
 				*q = BL;
 				(unsigned char) BL >>= 1;
 				if (== 0) {
@@ -1461,10 +1461,10 @@ skip_flush:
 		asmout("JMP next_command");
 	}
 	if (AL == 0x24) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[32bit(24bit) */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼32bit(24bit) */
 
-		/* [SS:ESP] : x‚Ì’[” */
-		/* p, q‚Í€”õÏ‚İ */
+		/* [SS:ESP] : xã®ç«¯æ•° */
+		/* p, qã¯æº–å‚™æ¸ˆã¿ */
 		EBP = ECX;
 		AL = 0x80;
 		CL = (char) [SS:ESP];
@@ -1497,7 +1497,7 @@ skip_flush:
 					EAX += 8;
 				EDX = 0x04a6; /* FGC */
 				OUT(DX, AX); // color
-			//	BH = *q; /* ƒ‰ƒbƒ`XV */
+			//	BH = *q; /* ãƒ©ãƒƒãƒæ›´æ–° */
 				*q = BL;
 				(unsigned char) BL >>= 1;
 				if (== 0) {
@@ -1522,11 +1522,11 @@ skip_flush:
 		asmout("JMP next_command");
 	}
 	if (AL == 0x02) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[16bit, RRRRRGGG_GGGBBBBB */
-		/* ƒ^ƒCƒŠƒ“ƒO‚ ‚è */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼16bit, RRRRRGGG_GGGBBBBB */
+		/* ã‚¿ã‚¤ãƒªãƒ³ã‚°ã‚ã‚Š */
 
-		/* [SS:ESP] : x‚Ì’[” */
-		/* p, q‚Í€”õÏ‚İ */
+		/* [SS:ESP] : xã®ç«¯æ•° */
+		/* p, qã¯æº–å‚™æ¸ˆã¿ */
 		EBP = ECX;
 		CL = (char) [SS:ESP];
 		AL = 0x80;
@@ -1552,7 +1552,7 @@ skip_flush:
 					ECX++;
 				asmout("MOV BH,[CS:.table+ECX]"); /* { 0, 3, 7, 1 }[ECX] */
 
-				/* AL : ƒJƒ‰[”Ô† */
+				/* AL : ã‚«ãƒ©ãƒ¼ç•ªå· */
 				ECX = EBP; /* red */
 				EAX = EBP;
 				ECX >>= 13;
@@ -1603,7 +1603,7 @@ skip_flush:
 				EDX = 0x04a6; /* FGC */
 				EAX = EBP;
 				OUT(DX, AX); // color
-			//	BH = *q; /* ƒ‰ƒbƒ`XV */
+			//	BH = *q; /* ãƒ©ãƒƒãƒæ›´æ–° */
 				*q = BL;
 				STI();
 				(unsigned char) BL >>= 1;
@@ -1629,11 +1629,11 @@ skip_flush:
 		asmout("JMP next_command");
 	}
 	if (AL == 0x04) {
-		/* ƒ_ƒCƒŒƒNƒgƒJƒ‰[32bit(24bit) */
-		/* ƒ^ƒCƒŠƒ“ƒO‚ ‚è */
+		/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚«ãƒ©ãƒ¼32bit(24bit) */
+		/* ã‚¿ã‚¤ãƒªãƒ³ã‚°ã‚ã‚Š */
 
-		/* [SS:ESP] : x‚Ì’[” */
-		/* p, q‚Í€”õÏ‚İ */
+		/* [SS:ESP] : xã®ç«¯æ•° */
+		/* p, qã¯æº–å‚™æ¸ˆã¿ */
 		EBP = ECX;
 		CL = (char) [SS:ESP];
 		AL = 0x80;
@@ -1659,7 +1659,7 @@ skip_flush:
 					ECX++;
 				asmout("MOV BH,[CS:.table+ECX]"); /* { 0, 3, 7, 1 }[ECX] */
 
-				/* AL : ƒJƒ‰[”Ô† */
+				/* AL : ã‚«ãƒ©ãƒ¼ç•ªå· */
 				ECX = EBP; /* red */
 				EAX = EBP;
 				ECX >>= 21;
@@ -1710,7 +1710,7 @@ skip_flush:
 				EDX = 0x04a6; /* FGC */
 				EAX = EBP;
 				OUT(DX, AX); // color
-			//	BH = *q; /* ƒ‰ƒbƒ`XV */
+			//	BH = *q; /* ãƒ©ãƒƒãƒæ›´æ–° */
 				*q = BL;
 				STI();
 				(unsigned char) BL >>= 1;
@@ -1741,15 +1741,15 @@ table:
 	DB(0, 3, 7, 1);
 
 putbox1:
-	EAX = cmd[36]; /* “§–¾F */
+	EAX = cmd[36]; /* é€æ˜è‰² */
 	EDX = 0;
-	(offset) p -= [SS:ESP + 0 /* x0‚Ì’[” */];
-	(int) [SS:ESP + EAX * 4 + 4] = EDX; /* “§–¾F‚Íƒrƒbƒg‚ğ—§‚Ä‚È‚¢ */
+	(offset) p -= [SS:ESP + 0 /* x0ã®ç«¯æ•° */];
+	(int) [SS:ESP + EAX * 4 + 4] = EDX; /* é€æ˜è‰²ã¯ãƒ“ãƒƒãƒˆã‚’ç«‹ã¦ãªã„ */
 
 	do { /* ysize loop */
 		PUSH(ECX);
 		PUSH((offset) p);
-		(offset) p += [SS:ESP + 8 /* x0‚Ì’[” */];
+		(offset) p += [SS:ESP + 8 /* x0ã®ç«¯æ•° */];
 		ECX = cmd[16]; /* xsize */
 		EDX = 0;
 		EAX = 0;
@@ -1777,7 +1777,7 @@ putbox1:
 					PUSH((offset) p);
 					OUT(DX, AX); // color
 					EAX <<= 8;
-					EDX = [SS:ESP + 16 /* x0‚Ì’[” */];
+					EDX = [SS:ESP + 16 /* x0ã®ç«¯æ•° */];
 					ECX = cmd[16]; /* xsize */
 					EDX--;
 					if (== 0)
@@ -1950,13 +1950,13 @@ mode11_skip_flush:
 
 void GAPI_lineardots()
 {
-	/* Î‚ßü‚ğˆø‚­‚½‚ß‚È‚Ç‚Ég‚¤(“™ŠÔŠu‚Å“_‚ğ‘Å‚Â‚±‚Æ‚à‚Å‚«‚é) */
+	/* æ–œã‚ç·šã‚’å¼•ããŸã‚ãªã©ã«ä½¿ã†(ç­‰é–“éš”ã§ç‚¹ã‚’æ‰“ã¤ã“ã¨ã‚‚ã§ãã‚‹) */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx‚Æsy‚Í—˜—p‚µ‚Ä‚¢‚È‚¢ */
+	/* sxã¨syã¯åˆ©ç”¨ã—ã¦ã„ãªã„ */
 
-	/* ƒf[ƒ^[‚ÌŒ`® */
+	/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã®å½¢å¼ */
 	/* x0, y0, dx, dy, dots, color */
-	/* x0, y0, dx, dy‚ÍŒÅ’è­”“_ */
+	/* x0, y0, dx, dyã¯å›ºå®šå°‘æ•°ç‚¹ */
 
 	int *cmd == FS:EBX;
 	int *dat == ES:EBX;
@@ -2029,11 +2029,11 @@ void GAPI_lineardots()
 
 void GAPI_points()
 {
-	/* “_‚ğ‘Å‚Â */
+	/* ç‚¹ã‚’æ‰“ã¤ */
 	/* cmd, opt, x0, y0, sx, sy, lines, ofs, sel */
-	/* sx‚Æsy‚Í—˜—p‚µ‚Ä‚¢‚È‚¢ */
+	/* sxã¨syã¯åˆ©ç”¨ã—ã¦ã„ãªã„ */
 
-	/* ƒf[ƒ^[‚ÌŒ`® */
+	/* ãƒ‡ãƒ¼ã‚¿ãƒ¼ã®å½¢å¼ */
 	/* x0, y0, color */
 
 	int *cmd == FS:EBX;
@@ -2086,17 +2086,17 @@ void GAPI_clippingmouse();
 void init_mousecursor();
 
 void GAPI_mouse()
-// option:bit0  ’¼Úw’è(0)/ŠÔÚw’è(1)
+// option:bit0  ç›´æ¥æŒ‡å®š(0)/é–“æ¥æŒ‡å®š(1)
 // option:bit5,4  16x16(00)/32x31(01)
-// option:bit7,6  ƒ}ƒXƒNƒpƒ^[ƒ“‚ ‚è‚Ìƒ‚ƒmƒNƒ(00),ƒ}ƒXƒNƒpƒ^[ƒ“‚ ‚è‚ÌƒJƒ‰[(10)
-// option:bit9,8  ƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“ƒXƒgƒA(00),ƒJ[ƒ\ƒ‹•\¦(01),ƒJ[ƒ\ƒ‹Á‹(10),ƒJ[ƒ\ƒ‹ˆÚ“®(11)
-//   01,11‚Å‚ÍAƒJ[ƒ\ƒ‹À•W‚ğw’è‚·‚éB‚±‚ÌƒRƒ}ƒ“ƒh‚Å‚ÍAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Íˆê‚Â‚µ‚©§Œä‚Å‚«‚È‚¢B
-//   ƒfƒtƒHƒ‹ƒg‚Å‚ÍAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Æ‘¼‚ÌƒOƒ‰ƒtƒBƒbƒNƒRƒ}ƒ“ƒh‚Æ‚ÌŠÖŒW‚ğ‰ğÁ‚µ‚½‚è‚à‚µ‚È‚¢B
+// option:bit7,6  ãƒã‚¹ã‚¯ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚ã‚Šã®ãƒ¢ãƒã‚¯ãƒ­(00),ãƒã‚¹ã‚¯ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚ã‚Šã®ã‚«ãƒ©ãƒ¼(10)
+// option:bit9,8  ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚¹ãƒˆã‚¢(00),ã‚«ãƒ¼ã‚½ãƒ«è¡¨ç¤º(01),ã‚«ãƒ¼ã‚½ãƒ«æ¶ˆå»(10),ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•(11)
+//   01,11ã§ã¯ã€ã‚«ãƒ¼ã‚½ãƒ«åº§æ¨™ã‚’æŒ‡å®šã™ã‚‹ã€‚ã“ã®ã‚³ãƒãƒ³ãƒ‰ã§ã¯ã€ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã¯ä¸€ã¤ã—ã‹åˆ¶å¾¡ã§ããªã„ã€‚
+//   ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã¨ä»–ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚³ãƒãƒ³ãƒ‰ã¨ã®é–¢ä¿‚ã‚’è§£æ¶ˆã—ãŸã‚Šã‚‚ã—ãªã„ã€‚
 {
 	int *cmd == FS:EBX;
 	GAPI_WORK *work == ES:0x0000;
 
-	cmd[4] = 0xffffffff; // ƒRƒ}ƒ“ƒhI—¹
+	cmd[4] = 0xffffffff; // ã‚³ãƒãƒ³ãƒ‰çµ‚äº†
 	EAX = cmd[8];
 	CLI();
 	TEST(AH, 0x03);
@@ -2113,24 +2113,24 @@ void GAPI_mouse()
 	}
 	TEST(AH, 0x02);
 	if (!= 0) {
-		// ƒJ[ƒ\ƒ‹‚ğÁ‚·
+		// ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ¶ˆã™
 		if (work->mouseflag != 0) {
 			GAPI_removemouse(); // remove mouse (mouseflag = 0)
 			EAX = cmd[8];
 		}
 		TEST(AH, 0x01);
 		if (== 0)
-			work->mx1 = 0x80000000; // ”ñ•\¦ƒ‚[ƒh
+			work->mx1 = 0x80000000; // éè¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰
 	}
 	TEST(AH, 0x01);
 	if (!= 0) {
-		// ƒJ[ƒ\ƒ‹‚ğ•`‚­
+		// ã‚«ãƒ¼ã‚½ãƒ«ã‚’æã
 		ECX = cmd[12];
 		EDX = cmd[16];
 		work->mx = ECX;
 		work->my = EDX;
 		if (work->lockcount == 0) {
-			GAPI_clippingmouse(); // mx0, my0, mx1, my1‚ğİ’è
+			GAPI_clippingmouse(); // mx0, my0, mx1, my1ã‚’è¨­å®š
 			GAPI_putmouse(); // put mouse (mouseflag = 1)
 		} else {
 			work->mouselock = 0x80000000;
@@ -2158,7 +2158,7 @@ void init_mousecursor()
 	(offset) cursor_buf = 0; // LEA((offset) cursor_buf, work->mouse_pattern[0]);
 	EDX = 0;
 
-	GAPI_init_sub(); // (offset) cursor_buf += 16, (offset) cursor0 += 32 ‚³‚ê‚é
+	GAPI_init_sub(); // (offset) cursor_buf += 16, (offset) cursor0 += 32 ã•ã‚Œã‚‹
 
 //	asmout("MOV ESI,OFFSET #mouse_cursor+32");
 	(offset) cursor_buf += 32; // LEA((offset) cursor_buf, work->mouse_pattern[0x0030]);
@@ -2171,7 +2171,7 @@ void init_mousecursor()
 	LEA((offset) shift, [ESI + 96]); // LEA((offset) shift, work->mouse_pattern[0x0060]);
 	/* EBP = 7 * 2; */ LEA(EBP, [ESI + 14]);
 
-	// ‚¸‚ç‚µƒpƒ^[ƒ“‚Ì—pˆÓ
+	// ãšã‚‰ã—ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç”¨æ„
 	do {
 		ECX = 16;
 		do {
@@ -2202,7 +2202,7 @@ void GAPI_init()
 	int VRAM_sel == 20 * 8;
 	int *cmd == FS:EBX;
 
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 12;
 
 	GAPI_WORK *work == DS:0x0000, *workES == ES:0x0000;
@@ -2223,8 +2223,8 @@ void GAPI_init()
 	ECX = 0;
 	work->pattern0_color =  0;
 	work->pattern1_color = 15;
-	work->mx1 = 0x80000000; // ”ñ•\¦
-//	work->backup_addr = 800 * 600 / 8; // ‰æ–ÊŠO
+	work->mx1 = 0x80000000; // éè¡¨ç¤º
+//	work->backup_addr = 800 * 600 / 8; // ç”»é¢å¤–
 	work->taskcount = /* 0 */ ECX;
 	work->lockcount = /* 0 */ ECX;
 	work->mouselock = /* 0 */ ECX;
@@ -2250,7 +2250,7 @@ void GAPI_init()
 
 #if 0
 #if (!defined(TMENU))
-	/* ƒfƒtƒHƒ‹ƒgƒ}ƒEƒXƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“(16x16, mono) */
+	/* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³(16x16, mono) */
 	ALIGN(4);
 mouse_cursor:
 	asmout("DB 11000000B,00000000B");
@@ -2287,8 +2287,8 @@ mouse_cursor:
 	asmout("DB 00000011B,00000000B");
 	asmout("DB 00000000B,00000000B");
 #else
-	/* ƒIƒŠƒWƒiƒ‹ƒ}ƒEƒXƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“(16x16, mono) by I.Tak. */
-	/* TOWNS ‚Ì“à‘Ÿ‚É“ü‚Á‚Ä‚é‚à‚Ì‚É—‚¹‚Ä‚¢‚Ü‚·‚ªƒtƒ‹ƒXƒNƒ‰ƒbƒ`‚Å‚·B*/
+	/* ã‚ªãƒªã‚¸ãƒŠãƒ«ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³(16x16, mono) by I.Tak. */
+	/* TOWNS ã®å†…è‡“ã«å…¥ã£ã¦ã‚‹ã‚‚ã®ã«ä¼¼ã›ã¦ã„ã¾ã™ãŒãƒ•ãƒ«ã‚¹ã‚¯ãƒ©ãƒƒãƒã§ã™ã€‚*/
 	ALIGN(4);
 mouse_cursor:
 	asmout("DB 10000000B,00000000B");
@@ -2335,7 +2335,7 @@ void GAPI_init_sub()
 
 	ECX = 4;
 	do {
-		// 1loop“–‚½‚èA4lines
+		// 1loopå½“ãŸã‚Šã€4lines
 		EAX = cursor0[0]; // 2lines
 		cursor_buf[ 0] = AL;
 		cursor_buf[16] = AH;
@@ -2377,11 +2377,11 @@ void near GAPI_resetdevice()
 	AL = 0x06;
 	OUT(0x006a, AL);
 
-	/* ƒAƒiƒƒOƒpƒŒƒbƒg‘I‘ğ */
+	/* ã‚¢ãƒŠãƒ­ã‚°ãƒ‘ãƒ¬ãƒƒãƒˆé¸æŠ */
 	AL = 0x01;
 	OUT(0x006a, AL);
 
-	/* EGC‚ÌƒŒƒWƒXƒ^‰Šú‰» */
+	/* EGCã®ãƒ¬ã‚¸ã‚¹ã‚¿åˆæœŸåŒ– */
 	EAX = 0xfff0;
 	EDX = 0x04a0;
 	OUT(DX, AX); /* all-plan active */
@@ -2399,7 +2399,7 @@ void near GAPI_resetdevice()
 	AL = 31; /* AX = 31 */
 	OUT(DX, AX); /* bitlen = 16 */
 
-	// ƒpƒŒƒbƒg‰Šú‰»
+	// ãƒ‘ãƒ¬ãƒƒãƒˆåˆæœŸåŒ–
 	unsigned char *pt == CS:ESI, rgb_dat == AL;
 	/* (offset) pt = (offset) palette_table; */
 	asmout("MOV ESI,OFFSET #palette_table");
@@ -2410,24 +2410,24 @@ void near GAPI_resetdevice()
 		ECX++;
 		OUT(0x00a8, AL);
 		rgb_dat = pt[1];
-		rgb_dat /= 16; // 0`255 ¨ 0`15
+		rgb_dat /= 16; // 0ã€œ255 â†’ 0ã€œ15
 		OUT(0x00aa, rgb_dat);
 		rgb_dat = pt[0];
-		rgb_dat /= 16; // 0`255 ¨ 0`15
+		rgb_dat /= 16; // 0ã€œ255 â†’ 0ã€œ15
 		OUT(0x00ac, rgb_dat);
 		rgb_dat = pt[2];
-		rgb_dat /= 16; // 0`255 ¨ 0`15
+		rgb_dat /= 16; // 0ã€œ255 â†’ 0ã€œ15
 		OUT(0x00ae, rgb_dat);
 		(offset) pt += 3;
 	} while ((unsigned) ECX < 16);
 	STI();
 
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
 palette_table: // Red, Green, Blue
-	// 0:•, 7:ˆÃ‚¢ŠDF, 8:–¾‚é‚¢ŠDF, 6:ƒoƒbƒN‚ÌF, 15:”’
+	// 0:é»’, 7:æš—ã„ç°è‰², 8:æ˜ã‚‹ã„ç°è‰², 6:ãƒãƒƒã‚¯ã®è‰², 15:ç™½
 
 	asmout("DB 000H, 000H, 000H,   084H, 000H, 000H,   000H, 084H, 000H,   084H, 084H, 000H");
 	asmout("DB 000H, 000H, 084H,   084H, 000H, 084H,   000H, 084H, 084H,   084H, 084H, 084H");
@@ -2439,7 +2439,7 @@ palette_table: // Red, Green, Blue
 void near GAPI_setmode()
 // 001c, 0020, priority, mode(00, 12, 92, 6a, ea, 0102, 8102)
 {
-      0004 : ƒfƒoƒCƒXƒŠƒZƒbƒgiƒn[ƒhƒEƒFƒAƒRƒlƒNƒgj
+      0004 : ãƒ‡ãƒã‚¤ã‚¹ãƒªã‚»ãƒƒãƒˆï¼ˆãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã‚³ãƒã‚¯ãƒˆï¼‰
 
 
 }
@@ -2465,7 +2465,7 @@ struct PARAM_VGA640 {
 };
 
 void near GAPI_VGA640()
-// ƒn[ƒhƒEƒFƒA•Ê“Á•ÊƒRƒ}ƒ“ƒh(0x001c, pri, 0x0020, mode)
+// ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢åˆ¥ç‰¹åˆ¥ã‚³ãƒãƒ³ãƒ‰(0x001c, pri, 0x0020, mode)
 {
 	GAPI_WORK *work_DS == DS:0x0000;
 //	int all_sel == 1 * 8;
@@ -2475,7 +2475,7 @@ void near GAPI_VGA640()
 
 	LEA((offset) wsub, (int) [work_DS->worksub]);
 	EAX = 0;
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	wsub->scr_x0 = EAX;
 	wsub->scr_y0 = EAX;
 	(offset) cmd += 16;
@@ -2486,8 +2486,8 @@ void near GAPI_VGA640()
 
 void near GAPI_accesslock()
 // opt bit0  0:Lock 1:Unlock
-//     bit1  Lock‚ÌƒIƒvƒVƒ‡ƒ“   0:nearƒ|ƒCƒ“ƒ^‚ ‚è 1:‚È‚µ
-//           Unlock‚ÌƒIƒvƒVƒ‡ƒ“ 0:”ÍˆÍw’è‚È‚µ 1:‚ ‚è
+//     bit1  Lockæ™‚ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³   0:nearãƒã‚¤ãƒ³ã‚¿ã‚ã‚Š 1:ãªã—
+//           Unlockæ™‚ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ 0:ç¯„å›²æŒ‡å®šãªã— 1:ã‚ã‚Š
 //     bit8-31  Unlock-opt
 {
 	int *cmd == FS:EBX;
@@ -2510,7 +2510,7 @@ lock_bitset:
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
 	EBP = cmd[28]; // ofs
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 32;
 	CLI();
 	work->lockcount++;
@@ -2535,7 +2535,7 @@ lock_bitnoset:
 	ECX = cmd[16]; // y0
 	ESI = cmd[20]; // x1
 	EDI = cmd[24]; // y1
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 28;
 	CLI();
 	work->lockcount++;
@@ -2562,26 +2562,26 @@ unlock_optbit:
 		if (!= 0) {
 			work->mouselock--;
 			if (== 0) {
-				// ƒ}ƒEƒX‚ğˆÚ“®‚³‚¹‚é‚ÉAmouselock‚ª0x80000000‚É‚³‚ê‚é‚Ì‚ÅA
-				// ƒ}ƒEƒX‚ª”ñ•\¦’†‚ÉˆÚ“®‚·‚é‚ÆA‚±‚ê‚Í¬—§‚µ‚È‚­‚È‚éB
+				// ãƒã‚¦ã‚¹ã‚’ç§»å‹•ã•ã›ã‚‹æ™‚ã«ã€mouselockãŒ0x80000000ã«ã•ã‚Œã‚‹ã®ã§ã€
+				// ãƒã‚¦ã‚¹ãŒéè¡¨ç¤ºä¸­ã«ç§»å‹•ã™ã‚‹ã¨ã€ã“ã‚Œã¯æˆç«‹ã—ãªããªã‚‹ã€‚
 				GAPI_putmouse(); // put mouse (mouseflag = 1)
-				// mx1‚ğƒ`ƒFƒbƒN‚µ‚È‚­‚Ä‚¢‚¢‚Ì‚©H
+				// mx1ã‚’ãƒã‚§ãƒƒã‚¯ã—ãªãã¦ã„ã„ã®ã‹ï¼Ÿ
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; // I—¹
+		cmd[4] = 0xffffffff; // çµ‚äº†
 		(offset) cmd += 12;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1‚ª‚±‚Ì’l‚Ì‚ÍA”ñ•\¦‚ğˆÓ–¡‚·‚é */) {
+	if (work->mx1 != 0x80000000 /* mx1ãŒã“ã®å€¤ã®æ™‚ã¯ã€éè¡¨ç¤ºã‚’æ„å‘³ã™ã‚‹ */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); // mx0, my0, mx1, my1‚ğİ’è
+			GAPI_clippingmouse(); // mx0, my0, mx1, my1ã‚’è¨­å®š
 			GAPI_putmouse(); // put mouse (mouseflag = 1)
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 12;
 	asmout("JMP next_command");
 
@@ -2599,9 +2599,9 @@ unlock_area:
 					if ((signed) EDI /* y1 */ > work->my0) {
 						work->mouselock--;
 						if (== 0) {
-							// ƒ}ƒEƒX‚ğˆÚ“®‚³‚¹‚é‚ÉAmouselock‚ª0‚É‚³‚ê‚é‚Ì‚ÅA
-							// ƒ}ƒEƒX‚ªˆêÁ‹’†‚ÉˆÚ“®‚·‚é‚ÆA‚±‚ê‚Í¬—§‚µ‚È‚­‚È‚éB
-							// ƒ}ƒEƒX‚ª”ñ•\¦’†‚ÍÅ‰‚Ìmx1‚Ì”äŠr‚ª¬—§‚µ‚È‚¢
+							// ãƒã‚¦ã‚¹ã‚’ç§»å‹•ã•ã›ã‚‹æ™‚ã«ã€mouselockãŒ0ã«ã•ã‚Œã‚‹ã®ã§ã€
+							// ãƒã‚¦ã‚¹ãŒä¸€æ™‚æ¶ˆå»ä¸­ã«ç§»å‹•ã™ã‚‹ã¨ã€ã“ã‚Œã¯æˆç«‹ã—ãªããªã‚‹ã€‚
+							// ãƒã‚¦ã‚¹ãŒéè¡¨ç¤ºä¸­ã¯æœ€åˆã®mx1ã®æ¯”è¼ƒãŒæˆç«‹ã—ãªã„
 							GAPI_putmouse(); // put mouse (mouseflag = 1)
 						}
 					}
@@ -2609,30 +2609,30 @@ unlock_area:
 			}
 		}
 		STI();
-		cmd[4] = 0xffffffff; // I—¹
+		cmd[4] = 0xffffffff; // çµ‚äº†
 		(offset) cmd += 28;
 		asmout("JMP next_command");
 	}
 	work->mouselock = 0;
-	if (work->mx1 != 0x80000000 /* mx1‚ª‚±‚Ì’l‚Ì‚ÍA”ñ•\¦‚ğˆÓ–¡‚·‚é */) {
+	if (work->mx1 != 0x80000000 /* mx1ãŒã“ã®å€¤ã®æ™‚ã¯ã€éè¡¨ç¤ºã‚’æ„å‘³ã™ã‚‹ */) {
 		if (work->mouseflag == 0 /* mouse erased */) {
-			GAPI_clippingmouse(); // mx0, my0, mx1, my1‚ğİ’è
+			GAPI_clippingmouse(); // mx0, my0, mx1, my1ã‚’è¨­å®š
 			GAPI_putmouse(); // put mouse (mouseflag = 1)
 		}
 	}
 	STI();
-	cmd[4] = 0xffffffff; // I—¹
+	cmd[4] = 0xffffffff; // çµ‚äº†
 	(offset) cmd += 28;
 	asmout("JMP next_command");
 }
 
 void GAPI_mouse_backup16()
-// DS:ESI‚©‚çy•ûŒü‚É16ƒoƒCƒg‚ğADS:EDI‚Ö“]‘—B
-// ‚½‚¾‚µA‚Ç‚¿‚ç‚àVRAM“à‚ÌƒAƒhƒŒƒXB
-// ESI, EDI‚Í”j‰ó‚³‚ê‚È‚¢BAL‚Í”j‰óB
+// DS:ESIã‹ã‚‰yæ–¹å‘ã«16ãƒã‚¤ãƒˆã‚’ã€DS:EDIã¸è»¢é€ã€‚
+// ãŸã ã—ã€ã©ã¡ã‚‰ã‚‚VRAMå†…ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚
+// ESI, EDIã¯ç ´å£Šã•ã‚Œãªã„ã€‚ALã¯ç ´å£Šã€‚
 {
 	char *b == ES:EDI, *p == DS:ESI;
-	// ‘‚«‚İƒ‚[ƒh1‚ğg‚Á‚ÄAƒ‰ƒbƒ`Œo—R‚Å“]‘—
+	// æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰1ã‚’ä½¿ã£ã¦ã€ãƒ©ãƒƒãƒçµŒç”±ã§è»¢é€
 	AL = p[ 0 * XBYTES]; b[ 0] = AL;
 	AL = p[ 1 * XBYTES]; b[ 1] = AL;
 	AL = p[ 2 * XBYTES]; b[ 2] = AL;
@@ -2670,12 +2670,12 @@ void GAPI_mouse_backup16p4()
 }
 
 void GAPI_mouse_drawsub16()
-// ES:EDI‚É‚ ‚éƒpƒ^[ƒ“‚ğADS:ESI‚Ö
-// EAX, CL‚ğ”j‰ó
+// ES:EDIã«ã‚ã‚‹ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã€DS:ESIã¸
+// EAX, CLã‚’ç ´å£Š
 {
 	int *q == ES:EDI;
 	char *p == DS:ESI;
-	// ‘‚«‚İƒ‚[ƒh3‚Åƒpƒ^[ƒ“‚ğ‘‚«‚Ş
+	// æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰3ã§ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’æ›¸ãè¾¼ã‚€
 	EAX = q[ 0];
 	p[ 0 * XBYTES] = AL;
 	p[ 1 * XBYTES] = AH;
@@ -2707,7 +2707,7 @@ void GAPI_mouse_erasesub16()
 {
 	int *b == ES:EDI;
 	char *p == DS:ESI;
-	// ‘‚«‚İƒ‚[ƒh1‚ğg‚Á‚ÄAƒ‰ƒbƒ`Œo—R‚Å“]‘—
+	// æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰1ã‚’ä½¿ã£ã¦ã€ãƒ©ãƒƒãƒçµŒç”±ã§è»¢é€
 	EAX = b[ 0];
 	p[ 0 * XBYTES] = AL;
 	p[ 1 * XBYTES] = AH;
@@ -2753,18 +2753,18 @@ void GAPI_mouse_erasesub16p4()
 }
 
 void GAPI_putmouse()
-// CLIó‘Ô‚ÅŒÄ‚Ô
-// ”j‰óƒŒƒWƒXƒ^FEAX, ECX, EDX, ESI, EDI
-// ¡‚Ì‚Æ‚±‚ëAmono16ê—p
+// CLIçŠ¶æ…‹ã§å‘¼ã¶
+// ç ´å£Šãƒ¬ã‚¸ã‚¹ã‚¿ï¼šEAX, ECX, EDX, ESI, EDI
+// ä»Šã®ã¨ã“ã‚ã€mono16å°‚ç”¨
 {
 	GAPI_WORK *work == ES:0x0000;
 	char *b /* backup */ == ES:EDI, *p /* cursor */ == DS:ESI, *q /* pattern */ == ES:EDI;
 	unsigned char maskflag == CH;
 
-	// ƒoƒbƒNƒAƒbƒv
+	// ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—
 	AL = 0x00;
-	OUT(0x007c, AL); /* GRCG(EGC)‚ğoff‚É‚·‚é */
-	maskflag = work->maskflag; // 1‚Ìbit‚Í‘‚©‚È‚¢
+	OUT(0x007c, AL); /* GRCG(EGC)ã‚’offã«ã™ã‚‹ */
+	maskflag = work->maskflag; // 1ã®bitã¯æ›¸ã‹ãªã„
 	work->mouseflag = 1;
 
 	(offset) p = work->cursor_addr;
@@ -2784,9 +2784,9 @@ void GAPI_putmouse()
 	if (== 0)
 		GAPI_mouse_backup16p4();
 
-	/* ƒ}ƒEƒX•`‰æ */
+	/* ãƒã‚¦ã‚¹æç”» */
 	AL = 0x80;
-	OUT(0x007c, AL); /* GRCG(EGC)‚ğon‚É‚·‚é */
+	OUT(0x007c, AL); /* GRCG(EGC)ã‚’onã«ã™ã‚‹ */
 	(offset) p -= 2;
 	EDX = 0x04a4;
 	EAX = 0x2cac; /* PSET */
@@ -2825,14 +2825,14 @@ void GAPI_putmouse()
 	(offset) p++;
 	TEST(maskflag, 0x04);
 	if (== 0)
-		GAPI_mouse_drawsub16(); // jmp‚ÉÅ“K‰»‚·‚é‚Æ‚æ‚¢
+		GAPI_mouse_drawsub16(); // jmpã«æœ€é©åŒ–ã™ã‚‹ã¨ã‚ˆã„
 	return;
 }
 
 void GAPI_removemouse()
-// CLIó‘Ô‚ÅŒÄ‚Ô
-// ”j‰óƒŒƒWƒXƒ^FEAX, ECX, EDX, ESI, EDI
-// ¡‚Ì‚Æ‚±‚ëAmono16ê—p
+// CLIçŠ¶æ…‹ã§å‘¼ã¶
+// ç ´å£Šãƒ¬ã‚¸ã‚¹ã‚¿ï¼šEAX, ECX, EDX, ESI, EDI
+// ä»Šã®ã¨ã“ã‚ã€mono16å°‚ç”¨
 {
 	GAPI_WORK *work == ES:0x0000;
 	char *b /* backup */ == DS:EDI, *p /* cursor */ == DS:ESI;
@@ -2841,9 +2841,9 @@ void GAPI_removemouse()
 	work->mouseflag = 0;
 
 	AL = 0x00;
-	OUT(0x007c, AL); /* GRCG(EGC)‚ğoff‚É‚·‚é */
+	OUT(0x007c, AL); /* GRCG(EGC)ã‚’offã«ã™ã‚‹ */
 
-	maskflag = work->maskflag; // 1‚Ìbit‚Í‘‚©‚È‚¢
+	maskflag = work->maskflag; // 1ã®bitã¯æ›¸ã‹ãªã„
 //	(offset) b = work->backup_addr;
 	LEA((offset) b, (int) [work->mouse_backup]);
 	(offset) p = work->cursor_addr;
@@ -2860,20 +2860,20 @@ void GAPI_removemouse()
 	(offset) p++;
 	TEST(maskflag, 0x04);
 	if (== 0)
-		GAPI_mouse_erasesub16p4(); // jmp‚ÉÅ“K‰»‚·‚é‚Æ‚æ‚¢
+		GAPI_mouse_erasesub16p4(); // jmpã«æœ€é©åŒ–ã™ã‚‹ã¨ã‚ˆã„
 	AL = 0x80;
-	OUT(0x007c, AL); /* GRCG(EGC)‚ğon‚É‚·‚é */
+	OUT(0x007c, AL); /* GRCG(EGC)ã‚’onã«ã™ã‚‹ */
 	return;
 }
 
 void GAPI_clippingmouse()
-// ƒ‰ƒCƒ“”‚Ì“s‡‚ÅA‚ ‚Ü‚è‰º‚Ì•û‚Éƒ}ƒEƒX‚ğˆÚ“®‚³‚¹‚Ä‚Í‚¢‚¯‚È‚¢
-// ƒ‰ƒCƒ“”‰Â•Ï‚Ì•`‰æƒ‹[ƒ`ƒ“‚ğ—pˆÓ‚·‚é•K—v‚ª‚ ‚é
-// (EAX, EBP) : ‹¤‚É•„†•t‚«®”
-// EBXˆÈŠO‚ğ”j‰ó
+// ãƒ©ã‚¤ãƒ³æ•°ã®éƒ½åˆã§ã€ã‚ã¾ã‚Šä¸‹ã®æ–¹ã«ãƒã‚¦ã‚¹ã‚’ç§»å‹•ã•ã›ã¦ã¯ã„ã‘ãªã„
+// ãƒ©ã‚¤ãƒ³æ•°å¯å¤‰ã®æç”»ãƒ«ãƒ¼ãƒãƒ³ã‚’ç”¨æ„ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+// (EAX, EBP) : å…±ã«ç¬¦å·ä»˜ãæ•´æ•°
+// EBXä»¥å¤–ã‚’ç ´å£Š
 {
 	GAPI_WORK *work == ES:0x0000;
-	char *p == DS:EDI /* ƒJ[ƒ\ƒ‹ƒAƒhƒŒƒX */, *q == ES:EAX;
+	char *p == DS:EDI /* ã‚«ãƒ¼ã‚½ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ */, *q == ES:EAX;
 	char maskflag == CL;
 	signed int x == ESI, y == EBP, mouseline == EDX;
 
@@ -2882,7 +2882,7 @@ void GAPI_clippingmouse()
 	x = work->mx;
 	y = work->my;
 	(offset) q = x;
-	x &= /* ~0x07 */ 0xfffffff8;
+	x &= /* â€¾0x07 */ 0xfffffff8;
 	work->my0 = y;
 	y += 16;
 	work->mx0 = x;
@@ -2910,7 +2910,7 @@ void GAPI_clippingmouse()
 		if (x >= 8 * XBYTES - 8)
 			maskflag |= 0x06;
 	}
-//	PUSH(x); /* ©“®ƒXƒNƒ[ƒ‹‚ğg‚í‚È‚¢‚©‚ç‚¢‚ç‚È‚¢ */
+//	PUSH(x); /* è‡ªå‹•ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ä½¿ã‚ãªã„ã‹ã‚‰ã„ã‚‰ãªã„ */
 	x /= 8;
 //	x += 0x000a0000;
 	/* (false) */ if (y < 0) {
@@ -2935,8 +2935,8 @@ skip_imul:
 	work->cursor_addr = (offset) p;
 
 #if 0
-	/* ©“®ƒXƒNƒ[ƒ‹ƒ‹[ƒ`ƒ“ by I.Tak. */
-	/* (’)ì‡‚ªPC/AT—p‚É‰ü•Ï */
+	/* è‡ªå‹•ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒ«ãƒ¼ãƒãƒ³ by I.Tak. */
+	/* (è¨»)å·åˆãŒPC/ATç”¨ã«æ”¹å¤‰ */
 
 	unsigned int vx == ESI, vy == EBP; /* vectors */
 	unsigned int sx == ECX, sy == EAX; /* screen positons */
@@ -2992,12 +2992,12 @@ skip_imul:
 
 /*
 
-// 16ƒ‰ƒCƒ“ˆÈŠO‚Ìƒ}ƒEƒXƒJ[ƒ\ƒ‹ƒ‹[ƒ`ƒ“
+// 16ãƒ©ã‚¤ãƒ³ä»¥å¤–ã®ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãƒ«ãƒ¼ãƒãƒ³
 
 GAPI_mouse_backup_EDX	proc	near
-;	// DS:ESI‚©‚çy•ûŒü‚É16ƒoƒCƒg‚ğADS:EBX‚Ö“]‘—B
-;	// ‚½‚¾‚µA‚Ç‚¿‚ç‚àVRAM“à‚ÌƒAƒhƒŒƒXB
-;	// ESI, EBX‚Í”j‰ó‚³‚ê‚éB
+;	// DS:ESIã‹ã‚‰yæ–¹å‘ã«16ãƒã‚¤ãƒˆã‚’ã€DS:EBXã¸è»¢é€ã€‚
+;	// ãŸã ã—ã€ã©ã¡ã‚‰ã‚‚VRAMå†…ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚
+;	// ESI, EBXã¯ç ´å£Šã•ã‚Œã‚‹ã€‚
 ;	char *b == DS:EBX, *p == DS:ESI;
 
 			mov	ecx,edx
@@ -3013,7 +3013,7 @@ GAPI_mouse_backup_EDX	proc	near
 GAPI_mouse_backup_EDX	endp
 
 GAPI_mouse_drawsub_DL	proc	near
-;	// ES:EDI‚É‚ ‚éƒpƒ^[ƒ“‚ğADS:ESI‚Ö
+;	// ES:EDIã«ã‚ã‚‹ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã€DS:ESIã¸
 ;	char *q == ES:EDI, *p == DS:ESI;
 
 			movzx	ecx, dl

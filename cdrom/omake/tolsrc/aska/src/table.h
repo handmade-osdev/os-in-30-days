@@ -1,5 +1,5 @@
 /*
-	ƒf[ƒ^ƒe[ƒuƒ‹ƒNƒ‰ƒX@`table.h + table.cpp`
+	ãƒ‡ãƒ¼ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã‚¯ãƒ©ã‚¹ã€€ã€œtable.h + table.cppã€œ
 */
 #ifndef	__TABLE_H
 #define	__TABLE_H
@@ -22,22 +22,22 @@ using namespace std;
 #include "scanner.h"
 
 enum RegisterType{
-	R_GENERAL,		// ”Ä—pƒŒƒWƒXƒ^
-	R_SEGREG,		// ƒZƒOƒƒ“ƒgƒŒƒWƒXƒ^
-	R_CTRL,			// ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^
-	R_DEBUG,		// ƒfƒoƒbƒOƒŒƒWƒXƒ^
-	R_TEST,			// ƒeƒXƒgƒŒƒWƒXƒ^
-	R_FLOAT,		// •‚“®¬”“_ƒŒƒWƒXƒ^
-	R_MMX,			// MMXƒŒƒWƒXƒ^
+	R_GENERAL,		// æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿
+	R_SEGREG,		// ã‚»ã‚°ãƒ¡ãƒ³ãƒˆãƒ¬ã‚¸ã‚¹ã‚¿
+	R_CTRL,			// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿
+	R_DEBUG,		// ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¸ã‚¹ã‚¿
+	R_TEST,			// ãƒ†ã‚¹ãƒˆãƒ¬ã‚¸ã‚¹ã‚¿
+	R_FLOAT,		// æµ®å‹•å°æ•°ç‚¹ãƒ¬ã‚¸ã‚¹ã‚¿
+	R_MMX,			// MMXãƒ¬ã‚¸ã‚¹ã‚¿
 };
 
 class RegisterList{
   public:
-	LPSTR			name;	// ƒŒƒWƒXƒ^–¼
-	RegisterType	type;	// ƒŒƒWƒXƒ^ƒ^ƒCƒv
-	int				size;	// ƒŒƒWƒXƒ^ƒTƒCƒY
-	bool			bBase;	// ƒx[ƒXƒŒƒWƒXƒ^‚Å‚ ‚é‚©
-	bool			bIndex;	// ƒCƒ“ƒfƒbƒNƒXƒŒƒWƒXƒ^‚Å‚ ‚é‚©
+	LPSTR			name;	// ãƒ¬ã‚¸ã‚¹ã‚¿å
+	RegisterType	type;	// ãƒ¬ã‚¸ã‚¹ã‚¿ã‚¿ã‚¤ãƒ—
+	int				size;	// ãƒ¬ã‚¸ã‚¹ã‚¿ã‚µã‚¤ã‚º
+	bool			bBase;	// ãƒ™ãƒ¼ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ã§ã‚ã‚‹ã‹
+	bool			bIndex;	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ã§ã‚ã‚‹ã‹
 
 	RegisterList(LPSTR n, RegisterType t, int s, bool b, bool i)
 			{ name=n; type=t; size=s; bBase=b; bIndex=i; }
@@ -50,7 +50,7 @@ class Register{
 	
   public:
 	Register(void);
-	~Register();
+	â€¾Register();
 	
 	void			Add(LPSTR key, RegisterList* r){ string k=key; mapregister[k]=r; }
 	RegisterList*	Find(LPSTR key){
@@ -75,14 +75,14 @@ class SegmentList{
   public:
 	ListStaticDataList liststatic;
 
-	LPSTR			name;			// ƒZƒOƒƒ“ƒgƒl[ƒ€
-	Token			align;			// ƒAƒ‰ƒCƒ“‘®«
-	Token			combine;		// ƒRƒ“ƒoƒCƒ“‘®«
-	Token			use;			// USE‘®«
-	Token			access;			// ƒAƒNƒZƒX‘®«
-	LPSTR			segmentclass;	// ƒZƒOƒƒ“ƒgƒNƒ‰ƒX
+	LPSTR			name;			// ã‚»ã‚°ãƒ¡ãƒ³ãƒˆãƒãƒ¼ãƒ 
+	Token			align;			// ã‚¢ãƒ©ã‚¤ãƒ³å±æ€§
+	Token			combine;		// ã‚³ãƒ³ãƒã‚¤ãƒ³å±æ€§
+	Token			use;			// USEå±æ€§
+	Token			access;			// ã‚¢ã‚¯ã‚»ã‚¹å±æ€§
+	LPSTR			segmentclass;	// ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã‚¯ãƒ©ã‚¹
 
-	RegisterList*	assume;			// segment CODE == ES;‚ÌES‚ğ•Û‘¶‚·‚é‚½‚ß‚Ég‚¤
+	RegisterList*	assume;			// segment CODE == ES;ã®ESã‚’ä¿å­˜ã™ã‚‹ãŸã‚ã«ä½¿ã†
 
 	SegmentList(void)
 		{ name=NULL; align=TK_BYTE; combine=TK_PRIVATE; use=TK_USE32;
@@ -100,7 +100,7 @@ class Segment{
 	MaplpSegmentList	mapsegment;
 	
 	Segment(void);
-	~Segment();
+	â€¾Segment();
 	
 	void			Add(LPSTR key, SegmentList* s){ string k=key; mapsegment[k]=s; }
 	SegmentList*	Find(LPSTR key){
@@ -114,13 +114,13 @@ class TagList;
 
 class MemberList{
   public:
-	bool			bSigned;	// •„†‚ ‚èŒ^‚©‚Ç‚¤‚©
-	TagList*		type;		// •Ï”‚ÌŒ^
+	bool			bSigned;	// ç¬¦å·ã‚ã‚Šå‹ã‹ã©ã†ã‹
+	TagList*		type;		// å¤‰æ•°ã®å‹
 	Token			ptype;		// near:TK_NEAR, far:TK_FAR
-	int				pdepth;		// ƒ|ƒCƒ“ƒ^‚Ì[‚³B‚±‚ê‚ª0‚È‚çƒ|ƒCƒ“ƒ^‚Å‚È‚¢
-	bool			bArray;		// ”z—ñ‚Å‚ ‚é‚©
-	int				size;		// •Ï”‚ÌƒTƒCƒYi”z—ñAƒ|ƒCƒ“ƒ^A\‘¢‘Ì‚à‰Á–¡j
-	int				offset;		// \‘¢‘Ì‚Å‚Ìƒƒ“ƒo‚ÌƒIƒtƒZƒbƒg
+	int				pdepth;		// ãƒã‚¤ãƒ³ã‚¿ã®æ·±ã•ã€‚ã“ã‚ŒãŒ0ãªã‚‰ãƒã‚¤ãƒ³ã‚¿ã§ãªã„
+	bool			bArray;		// é…åˆ—ã§ã‚ã‚‹ã‹
+	int				size;		// å¤‰æ•°ã®ã‚µã‚¤ã‚ºï¼ˆé…åˆ—ã€ãƒã‚¤ãƒ³ã‚¿ã€æ§‹é€ ä½“ã‚‚åŠ å‘³ï¼‰
+	int				offset;		// æ§‹é€ ä½“ã§ã®ãƒ¡ãƒ³ãƒã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 
 	MemberList(void)
 		{ type=NULL; bSigned=true; ptype=TK_FAR; pdepth=0; bArray=false; size=0; offset=0; }
@@ -134,15 +134,15 @@ class MemberList{
 
 typedef map<string, MemberList*> MaplpMemberList;
 
-// typedef‚â‚Í‚¶‚ß‚©‚ç‚ ‚éŒ^‚Í"type"‚Æ‚¢‚¤ƒƒ“ƒo‚ğŒ©‚éBtypedef‚È‚çmember->type!=NULL
+// typedefã‚„ã¯ã˜ã‚ã‹ã‚‰ã‚ã‚‹å‹ã¯"type"ã¨ã„ã†ãƒ¡ãƒ³ãƒã‚’è¦‹ã‚‹ã€‚typedefãªã‚‰member->type!=NULL
 class TagList{
   public:
-	int				size;		// ‚±‚ÌŒ^‚ÌƒTƒCƒY
-	bool			bStruct;	// \‘¢‘Ì‚Å‚ ‚é‚©
-	MaplpMemberList	mapmember;	// \‘¢‘Ì‚Å‚ ‚ê‚Îƒƒ“ƒo‚ÌƒŠƒXƒg
+	int				size;		// ã“ã®å‹ã®ã‚µã‚¤ã‚º
+	bool			bStruct;	// æ§‹é€ ä½“ã§ã‚ã‚‹ã‹
+	MaplpMemberList	mapmember;	// æ§‹é€ ä½“ã§ã‚ã‚Œã°ãƒ¡ãƒ³ãƒã®ãƒªã‚¹ãƒˆ
 	
 	TagList(bool bs){ bStruct=bs; size=0;}
-	~TagList();
+	â€¾TagList();
 
 	void			AddMemberList(LPSTR n, bool bs, TagList* t, Token pt, int pd, bool ba, int s);
 	MemberList*		FindMemberList(LPSTR key){
@@ -159,7 +159,7 @@ class Tag{
 	
   public:
 	Tag(void);
-	~Tag();
+	â€¾Tag();
 	
 	void			Add(LPSTR key, TagList* t){ string k=key; maptag[k]=t; }
 	TagList*		Find(LPSTR key){
@@ -171,10 +171,10 @@ class Tag{
 
 
 enum ParameterType{
-	P_ERR,						// –¢‰Šú‰»‚à‚µ‚­‚ÍƒGƒ‰[
-	P_REG,						// ƒpƒ‰ƒ[ƒ^‚Ìƒ^ƒCƒv‚ªƒŒƒWƒXƒ^Bbase‚É“ü‚é
-	P_MEM,						// ƒpƒ‰ƒ[ƒ^‚Ìƒ^ƒCƒv‚ªƒƒ‚ƒŠBbase‚É“ü‚é
-	P_IMM,						// ƒpƒ‰ƒ[ƒ^‚Ìƒ^ƒCƒv‚ªƒŒƒWƒXƒ^Bbase‚É“ü‚é
+	P_ERR,						// æœªåˆæœŸåŒ–ã‚‚ã—ãã¯ã‚¨ãƒ©ãƒ¼
+	P_REG,						// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ãŒãƒ¬ã‚¸ã‚¹ã‚¿ã€‚baseã«å…¥ã‚‹
+	P_MEM,						// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ãŒãƒ¡ãƒ¢ãƒªã€‚baseã«å…¥ã‚‹
+	P_IMM,						// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ãŒãƒ¬ã‚¸ã‚¹ã‚¿ã€‚baseã«å…¥ã‚‹
 };
 
 class Parameter{
@@ -185,14 +185,14 @@ class Parameter{
 	RegisterList*	index;
 	int				scale;		// 1, 2, 4, 8
 	string			disp;
-	int				ndisp;		// ‚±‚±‚Íƒƒ“ƒoŒŸõ‚Ì‚ÌƒIƒtƒZƒbƒg‚Ì‚½‚ß‚É‚ ‚é
-	bool			bLabel;		// P_MEM‚Å‚àLabel‚©‚Ç‚¤‚©
-	bool			bSigned;	// •„†‚ ‚èŒ^‚©‚Ç‚¤‚©
-	TagList*		type;		// •Ï”‚ÌŒ^
+	int				ndisp;		// ã“ã“ã¯ãƒ¡ãƒ³ãƒæ¤œç´¢ã®æ™‚ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã®ãŸã‚ã«ã‚ã‚‹
+	bool			bLabel;		// P_MEMã§ã‚‚Labelã‹ã©ã†ã‹
+	bool			bSigned;	// ç¬¦å·ã‚ã‚Šå‹ã‹ã©ã†ã‹
+	TagList*		type;		// å¤‰æ•°ã®å‹
 	Token			ptype;		// near:TK_NEAR, far:TK_FAR, offset:TK_OFFSET, segment:TK_SEGMENT
-	int				pdepth;		// ƒ|ƒCƒ“ƒ^‚Ì[‚³B‚±‚ê‚ª0‚È‚çƒ|ƒCƒ“ƒ^‚Å‚È‚¢
-	int				size;		// •Ï”‚ÌƒTƒCƒYi”z—ñAƒ|ƒCƒ“ƒ^A\‘¢‘Ì‚à‰Á–¡j
-	bool			bArray;		// ”z—ñ‚Å‚ ‚é‚©
+	int				pdepth;		// ãƒã‚¤ãƒ³ã‚¿ã®æ·±ã•ã€‚ã“ã‚ŒãŒ0ãªã‚‰ãƒã‚¤ãƒ³ã‚¿ã§ãªã„
+	int				size;		// å¤‰æ•°ã®ã‚µã‚¤ã‚ºï¼ˆé…åˆ—ã€ãƒã‚¤ãƒ³ã‚¿ã€æ§‹é€ ä½“ã‚‚åŠ å‘³ï¼‰
+	bool			bArray;		// é…åˆ—ã§ã‚ã‚‹ã‹
 
 	void	Initialize()
 		{ paramtype=P_ERR; seg=NULL; base=NULL; index=NULL; scale=1; disp=""; ndisp=0; size=0;
@@ -204,22 +204,22 @@ class Parameter{
 
 //typedef list<TagList*> ListlpTagList;
 
-//label‚Ítype:dword, ptype:normal, bAddress:false, size:4‚Æ‚·‚é
+//labelã¯type:dword, ptype:normal, bAddress:false, size:4ã¨ã™ã‚‹
 class LabelList{
   public:
 	bool			bStatic;
-	bool			bSigned;	// •„†‚ ‚èŒ^‚©‚Ç‚¤‚©
-	TagList*		type;		// •Ï”‚ÌŒ^
+	bool			bSigned;	// ç¬¦å·ã‚ã‚Šå‹ã‹ã©ã†ã‹
+	TagList*		type;		// å¤‰æ•°ã®å‹
 	Token			ptype;		// near:TK_NEAR, far:TK_FAR
-	int				pdepth;		// ƒ|ƒCƒ“ƒ^‚Ì[‚³B‚±‚ê‚ª0‚È‚çƒ|ƒCƒ“ƒ^‚Å‚È‚¢
-	SegmentList*	segment;	// ƒf[ƒ^‚ğ‚Ç‚±‚ÉŠ„‚è•t‚¯‚é‚©
-	int				size;		// •Ï”‚ÌƒTƒCƒYi”z—ñAƒ|ƒCƒ“ƒ^A\‘¢‘Ì‚à‰Á–¡j
-	bool			bArray;		// ”z—ñ‚Å‚ ‚é‚©
-	bool			bAlias;		// ƒGƒCƒŠƒAƒX‚Å‚ ‚é‚©
-	Parameter		alias;		// ƒGƒCƒŠƒAƒX(’è”‚Í‚±‚±‚Ö”š‚ğ“ü‚ê‚é–‚Ås‚¤)
-	int				nLocalAddress;	// ƒ[ƒJƒ‹ƒ‰ƒxƒ‹‚È‚çƒ[ƒJƒ‹ƒAƒhƒŒƒX‚ğ“ü‚ê‚é
-	bool			bFunction;	// ŠÖ”‚Å‚ ‚é‚©
-//	ListlpTagList	listtag;	// ŠÖ”‚È‚çŠÖ”‚Ìˆø”‚ÌŒ^‚ğ“ü‚ê‚é
+	int				pdepth;		// ãƒã‚¤ãƒ³ã‚¿ã®æ·±ã•ã€‚ã“ã‚ŒãŒ0ãªã‚‰ãƒã‚¤ãƒ³ã‚¿ã§ãªã„
+	SegmentList*	segment;	// ãƒ‡ãƒ¼ã‚¿ã‚’ã©ã“ã«å‰²ã‚Šä»˜ã‘ã‚‹ã‹
+	int				size;		// å¤‰æ•°ã®ã‚µã‚¤ã‚ºï¼ˆé…åˆ—ã€ãƒã‚¤ãƒ³ã‚¿ã€æ§‹é€ ä½“ã‚‚åŠ å‘³ï¼‰
+	bool			bArray;		// é…åˆ—ã§ã‚ã‚‹ã‹
+	bool			bAlias;		// ã‚¨ã‚¤ãƒªã‚¢ã‚¹ã§ã‚ã‚‹ã‹
+	Parameter		alias;		// ã‚¨ã‚¤ãƒªã‚¢ã‚¹(å®šæ•°ã¯ã“ã“ã¸æ•°å­—ã‚’å…¥ã‚Œã‚‹äº‹ã§è¡Œã†)
+	int				nLocalAddress;	// ãƒ­ãƒ¼ã‚«ãƒ«ãƒ©ãƒ™ãƒ«ãªã‚‰ãƒ­ãƒ¼ã‚«ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…¥ã‚Œã‚‹
+	bool			bFunction;	// é–¢æ•°ã§ã‚ã‚‹ã‹
+//	ListlpTagList	listtag;	// é–¢æ•°ãªã‚‰é–¢æ•°ã®å¼•æ•°ã®å‹ã‚’å…¥ã‚Œã‚‹
 
 	LabelList(void)
 		{bSigned=true; type=NULL; ptype=TK_FAR; pdepth=0; segment=NULL; size=0; bArray=false;
@@ -242,7 +242,7 @@ class Label{
 
   public:
 	Label(void){}
-	~Label(){ Clear(); }
+	â€¾Label(){ Clear(); }
 	
 	void			Clear(void);
 	void			Add(LPSTR key, LabelList* l){ string k=key; maplabel[k]=l; }
@@ -254,7 +254,7 @@ class Label{
 };
 
 enum CompareType{
-	C_NOTHING,	// ‚È‚©‚Á‚½
+	C_NOTHING,	// ãªã‹ã£ãŸ
 	C_JA,		// (unsigned)>
 	C_JAE,		// (unsigned)>=
 	C_JB,		// (unsigned)<

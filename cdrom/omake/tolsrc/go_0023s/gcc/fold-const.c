@@ -126,7 +126,7 @@ static tree fold_binary_op_with_conditional_arg
    Overflow occurs if A and B have the same sign, but A and SUM differ in
    sign.  Use `^' to test whether signs differ, and `< 0' to isolate the
    sign.  */
-#define OVERFLOW_SUM_SIGN(a, b, sum) ((~((a) ^ (b)) & ((a) ^ (sum))) < 0)
+#define OVERFLOW_SUM_SIGN(a, b, sum) ((‾((a) ^ (b)) & ((a) ^ (sum))) < 0)
 
 /* To do constant folding on INTEGER_CST nodes requires two-word arithmetic.
    We do that by representing the two-word integer in 4 words, with only
@@ -214,12 +214,12 @@ force_fit_type (t, overflow)
     ;
   else if (prec > HOST_BITS_PER_WIDE_INT)
     TREE_INT_CST_HIGH (t)
-      &= ~((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
+      &= ‾((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
   else
     {
       TREE_INT_CST_HIGH (t) = 0;
       if (prec < HOST_BITS_PER_WIDE_INT)
-	TREE_INT_CST_LOW (t) &= ~((unsigned HOST_WIDE_INT) (-1) << prec);
+	TREE_INT_CST_LOW (t) &= ‾((unsigned HOST_WIDE_INT) (-1) << prec);
     }
 
   /* Unsigned types do not suffer sign extension or overflow unless they
@@ -301,7 +301,7 @@ neg_double (l1, h1, lv, hv)
   else
     {
       *lv = -l1;
-      *hv = ~h1;
+      *hv = ‾h1;
       return 0;
     }
 }
@@ -363,7 +363,7 @@ mul_double (l1, h1, l2, h2, lv, hv)
       neg_double (l1, h1, &neglow, &neghigh);
       add_double (neglow, neghigh, toplow, tophigh, &toplow, &tophigh);
     }
-  return (*hv < 0 ? ~(toplow & tophigh) : toplow | tophigh) != 0;
+  return (*hv < 0 ? ‾(toplow & tophigh) : toplow | tophigh) != 0;
 }
 
 /* Shift the doubleword integer in L1, H1 left by COUNT places
@@ -423,13 +423,13 @@ lshift_double (l1, h1, count, prec, lv, hv, arith)
     ;
   else if (prec >= HOST_BITS_PER_WIDE_INT)
     {
-      *hv &= ~((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
+      *hv &= ‾((HOST_WIDE_INT) (-1) << (prec - HOST_BITS_PER_WIDE_INT));
       *hv |= signmask << (prec - HOST_BITS_PER_WIDE_INT);
     }
   else
     {
       *hv = signmask;
-      *lv &= ~((unsigned HOST_WIDE_INT) (-1) << prec);
+      *lv &= ‾((unsigned HOST_WIDE_INT) (-1) << prec);
       *lv |= signmask << prec;
     }
 }
@@ -489,13 +489,13 @@ rshift_double (l1, h1, count, prec, lv, hv, arith)
     ;
   else if ((prec - count) >= HOST_BITS_PER_WIDE_INT)
     {
-      *hv &= ~((HOST_WIDE_INT) (-1) << (prec - count - HOST_BITS_PER_WIDE_INT));
+      *hv &= ‾((HOST_WIDE_INT) (-1) << (prec - count - HOST_BITS_PER_WIDE_INT));
       *hv |= signmask << (prec - count - HOST_BITS_PER_WIDE_INT);
     }
   else
     {
       *hv = signmask;
-      *lv &= ~((unsigned HOST_WIDE_INT) (-1) << (prec - count));
+      *lv &= ‾((unsigned HOST_WIDE_INT) (-1) << (prec - count));
       *lv |= signmask << (prec - count);
     }
 }
@@ -593,7 +593,7 @@ div_and_round_double (code, uns,
     {
       if (hnum < 0)
 	{
-	  quo_neg = ~ quo_neg;
+	  quo_neg = ‾ quo_neg;
 	  /* (minimum integer) / (-1) is the only overflow case.  */
 	  if (neg_double (lnum, hnum, &lnum, &hnum)
 	      && ((HOST_WIDE_INT) lden & hden) == -1)
@@ -601,7 +601,7 @@ div_and_round_double (code, uns,
 	}
       if (hden < 0)
 	{
-	  quo_neg = ~ quo_neg;
+	  quo_neg = ‾ quo_neg;
 	  neg_double (lden, hden, &lden, &hden);
 	}
     }
@@ -1560,7 +1560,7 @@ int_const_binop (code, arg1, arg2, notrunc)
       break;
 
     case BIT_ANDTC_EXPR:
-      low = int1l & ~int2l, hi = int1h & ~int2h;
+      low = int1l & ‾int2l, hi = int1h & ‾int2h;
       break;
 
     case RSHIFT_EXPR:
@@ -3090,7 +3090,7 @@ optimize_bit_field_compare (code, compare_type, lhs, rhs)
      within it. If the new reference is the same size as the original, we
      won't optimize anything, so return zero.  */
   nbitsize = GET_MODE_BITSIZE (nmode);
-  nbitpos = lbitpos & ~ (nbitsize - 1);
+  nbitpos = lbitpos & ‾ (nbitsize - 1);
   lbitpos -= nbitpos;
   if (nbitsize == lbitsize)
     return 0;
@@ -3099,7 +3099,7 @@ optimize_bit_field_compare (code, compare_type, lhs, rhs)
     lbitpos = nbitsize - lbitsize - lbitpos;
 
   /* Make the mask to be used against the extracted field.  */
-  mask = build_int_2 (~0, ~0);
+  mask = build_int_2 (‾0, ‾0);
   TREE_TYPE (mask) = unsigned_type;
   force_fit_type (mask, 0);
   mask = convert (unsigned_type, mask);
@@ -3250,7 +3250,7 @@ decode_field_reference (exp, pbitsize, pbitpos, pmode, punsignedp,
   unsigned_type = type_for_size (*pbitsize, 1);
   precision = TYPE_PRECISION (unsigned_type);
 
-  mask = build_int_2 (~0, ~0);
+  mask = build_int_2 (‾0, ‾0);
   TREE_TYPE (mask) = unsigned_type;
   force_fit_type (mask, 0);
   mask = const_binop (LSHIFT_EXPR, mask, size_int (precision - *pbitsize), 0);
@@ -3278,7 +3278,7 @@ all_ones_mask_p (mask, size)
   unsigned int precision = TYPE_PRECISION (type);
   tree tmask;
 
-  tmask = build_int_2 (~0, ~0);
+  tmask = build_int_2 (‾0, ‾0);
   TREE_TYPE (tmask) = signed_type (type);
   force_fit_type (tmask, 0);
   return
@@ -3546,7 +3546,7 @@ make_range (exp, pin_p, plow, phigh)
 	  continue;
 
 	case BIT_NOT_EXPR:
-	  /* ~ X -> -X - 1  */
+	  /* ‾ X -> -X - 1  */
 	  exp = build (MINUS_EXPR, type, negate_expr (arg0),
 		       convert (type, integer_one_node));
 	  continue;
@@ -4165,7 +4165,7 @@ fold_truthop (code, truth_type, lhs, rhs)
     return 0;
 
   lnbitsize = GET_MODE_BITSIZE (lnmode);
-  lnbitpos = first_bit & ~ (lnbitsize - 1);
+  lnbitpos = first_bit & ‾ (lnbitsize - 1);
   lntype = type_for_size (lnbitsize, 1);
   xll_bitpos = ll_bitpos - lnbitpos, xrl_bitpos = rl_bitpos - lnbitpos;
 
@@ -4236,7 +4236,7 @@ fold_truthop (code, truth_type, lhs, rhs)
 	return 0;
 
       rnbitsize = GET_MODE_BITSIZE (rnmode);
-      rnbitpos = first_bit & ~ (rnbitsize - 1);
+      rnbitpos = first_bit & ‾ (rnbitsize - 1);
       rntype = type_for_size (rnbitsize, 1);
       xlr_bitpos = lr_bitpos - rnbitpos, xrr_bitpos = rr_bitpos - rnbitpos;
 
@@ -5465,8 +5465,8 @@ fold (expr)
     case BIT_NOT_EXPR:
       if (wins)
 	{
-	  t = build_int_2 (~ TREE_INT_CST_LOW (arg0),
-			   ~ TREE_INT_CST_HIGH (arg0));
+	  t = build_int_2 (‾ TREE_INT_CST_LOW (arg0),
+			   ‾ TREE_INT_CST_HIGH (arg0));
 	  TREE_TYPE (t) = type;
 	  force_fit_type (t, 0);
 	  TREE_OVERFLOW (t) = TREE_OVERFLOW (arg0);
@@ -5952,7 +5952,7 @@ fold (expr)
 	    = TYPE_PRECISION (TREE_TYPE (TREE_OPERAND (arg1, 0)));
 
 	  if (prec < BITS_PER_WORD && prec < HOST_BITS_PER_WIDE_INT
-	      && (~TREE_INT_CST_LOW (arg0)
+	      && (‾TREE_INT_CST_LOW (arg0)
 		  & (((HOST_WIDE_INT) 1 << prec) - 1)) == 0)
 	    return build1 (NOP_EXPR, type, TREE_OPERAND (arg1, 0));
 	}
@@ -5963,7 +5963,7 @@ fold (expr)
 	    = TYPE_PRECISION (TREE_TYPE (TREE_OPERAND (arg0, 0)));
 
 	  if (prec < BITS_PER_WORD && prec < HOST_BITS_PER_WIDE_INT
-	      && (~TREE_INT_CST_LOW (arg1)
+	      && (‾TREE_INT_CST_LOW (arg1)
 		  & (((HOST_WIDE_INT) 1 << prec) - 1)) == 0)
 	    return build1 (NOP_EXPR, type, TREE_OPERAND (arg0, 0));
 	}
@@ -6417,7 +6417,7 @@ fold (expr)
 
 		    unsigned_type = type_for_size (size, 1);
 		    precision = TYPE_PRECISION (unsigned_type);
-		    mask = build_int_2 (~0, ~0);
+		    mask = build_int_2 (‾0, ‾0);
 		    TREE_TYPE (mask) = unsigned_type;
 		    force_fit_type (mask, 0);
 		    mask = const_binop (RSHIFT_EXPR, mask,
@@ -6478,7 +6478,7 @@ fold (expr)
 
 		    unsigned_type = type_for_size (size, 1);
 		    precision = TYPE_PRECISION (unsigned_type);
-		    mask = build_int_2 (~0, ~0);
+		    mask = build_int_2 (‾0, ‾0);
 		    TREE_TYPE (mask) = TREE_TYPE (varop);
 		    force_fit_type (mask, 0);
 		    mask = const_binop (RSHIFT_EXPR, mask,

@@ -221,9 +221,9 @@ md5_process_bytes (buffer, len, ctx)
 
       if (left_over + add > 64)
 	{
-	  md5_process_block (ctx->buffer, (left_over + add) & ~63, ctx);
+	  md5_process_block (ctx->buffer, (left_over + add) & ‾63, ctx);
 	  /* The regions in the following copy operation cannot overlap.  */
-	  memcpy (ctx->buffer, &ctx->buffer[(left_over + add) & ~63],
+	  memcpy (ctx->buffer, &ctx->buffer[(left_over + add) & ‾63],
 		  (left_over + add) & 63);
 	  ctx->buflen = (left_over + add) & 63;
 	}
@@ -235,8 +235,8 @@ md5_process_bytes (buffer, len, ctx)
   /* Process available complete blocks.  */
   if (len > 64)
     {
-      md5_process_block (buffer, len & ~63, ctx);
-      buffer = (const char *) buffer + (len & ~63);
+      md5_process_block (buffer, len & ‾63, ctx);
+      buffer = (const char *) buffer + (len & ‾63);
       len &= 63;
     }
 
@@ -252,11 +252,11 @@ md5_process_bytes (buffer, len, ctx)
 /* These are the four functions used in the four steps of the MD5 algorithm
    and defined in the RFC 1321.  The first function is a little bit optimized
    (as found in Colin Plumbs public domain implementation).  */
-/* #define FF(b, c, d) ((b & c) | (~b & d)) */
+/* #define FF(b, c, d) ((b & c) | (‾b & d)) */
 #define FF(b, c, d) (d ^ (b & (c ^ d)))
 #define FG(b, c, d) FF (d, b, c)
 #define FH(b, c, d) (b ^ c ^ d)
-#define FI(b, c, d) (c ^ (b | ~d))
+#define FI(b, c, d) (c ^ (b | ‾d))
 
 /* Process LEN bytes of BUFFER, accumulating context into CTX.
    It is assumed that LEN % 64 == 0.  */

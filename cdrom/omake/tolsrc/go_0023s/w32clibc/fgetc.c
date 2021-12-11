@@ -4,7 +4,7 @@ int fgetc(FILE *stream)
 {
 	int c;
 	if (stream->flags & 0x10) {
-		stream->flags &= ~0x10;
+		stream->flags &= ‾0x10;
 		return stream->ungetc;
 	}
 	if ((stream->flags & 0x08) == 0)

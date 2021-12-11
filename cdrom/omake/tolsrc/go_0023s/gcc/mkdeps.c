@@ -41,7 +41,7 @@ static const char *munge	PARAMS ((const char *));
 
 /* Given a filename, quote characters in that filename which are
    significant to Make.  Note that it's not possible to quote all such
-   characters - e.g. \n, %, *, ?, [, \ (in some contexts), and ~ are
+   characters - e.g. \n, %, *, ?, [, \ (in some contexts), and ‾ are
    not properly handled.  It isn't possible to get this right in any
    current version of Make.  (??? Still true?  Old comment referred to
    3.76.1.)  */

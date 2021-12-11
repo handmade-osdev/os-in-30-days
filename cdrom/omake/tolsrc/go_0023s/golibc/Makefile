@@ -8,8 +8,8 @@ OBJS       = abs.obj atof.obj atoi.obj errno.obj frexp.obj ldexp.obj \
 	strlen.obj strncat.obj strncmp.obj strncpy.obj strpbrk.obj strrchr.obj \
 	strspn.obj strstr.obj strtol.obj strtoul.obj strtoul0.obj vsprintf.obj
  
-# �ȏ�5�̓\�[�X���Ƃɏ���������
-# OBJS������������ƕ����R���p�C���Ή�
+# 以上5つはソースごとに書き換える
+# OBJSを書き換えると分割コンパイル対応
  
 TOOLPATH =
 INCPATH  = .
@@ -27,7 +27,7 @@ NASKCNV  = $(TOOLPATH)naskcnv0 -l -s -w
 GOLIB    = $(TOOLPATH)golib00w
 DELE     = del
 
-# �ȏ�̍��ڂ͂��Ȃ��̃f�B���N�g���\���ɂ��킹�ď���������
+# 以上の項目はあなたのディレクトリ構成にあわせて書き換える
 
 ALL :
 	$(MAKE) $(TARGET).lib

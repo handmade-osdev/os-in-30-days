@@ -200,9 +200,9 @@ check_dtor_name (basetype, name)
     }
   /* In the case of:
       
-       template <class T> struct S { ~S(); };
+       template <class T> struct S { ‾S(); };
        int i;
-       i.~S();
+       i.‾S();
 
      NAME will be a class template.  */
   else if (DECL_CLASS_TEMPLATE_P (name))
@@ -263,17 +263,17 @@ build_scoped_method_call (exp, basetype, name, parms)
   if (TREE_CODE (name) == BIT_NOT_EXPR)
     {
       /* We can get here if someone writes their destructor call like
-	 `obj.NS::~T()'; this isn't really a scoped method call, so hand
+	 `obj.NS::‾T()'; this isn't really a scoped method call, so hand
 	 it off.  */
       if (TREE_CODE (basetype) == NAMESPACE_DECL)
 	return build_method_call (exp, name, parms, NULL_TREE, LOOKUP_NORMAL);
 
       if (! check_dtor_name (basetype, name))
-	error ("qualified type `%T' does not match destructor name `~%T'",
+	error ("qualified type `%T' does not match destructor name `‾%T'",
 		  basetype, TREE_OPERAND (name, 0));
 
       /* Destructors can be "called" for simple types; see 5.2.4 and 12.4 Note
-	 that explicit ~int is caught in the parser; this deals with typedefs
+	 that explicit ‾int is caught in the parser; this deals with typedefs
 	 and template parms.  */
       if (! IS_AGGR_TYPE (basetype))
 	{
@@ -536,7 +536,7 @@ build_method_call (instance, name, parms, basetype_path, flags)
 
       if (! check_dtor_name (basetype, name))
 	error
-	  ("destructor name `~%T' does not match type `%T' of expression",
+	  ("destructor name `‾%T' does not match type `%T' of expression",
 	   TREE_OPERAND (name, 0), basetype);
 
       if (! TYPE_HAS_DESTRUCTOR (complete_type (basetype)))
@@ -1692,7 +1692,7 @@ add_builtin_candidate (candidates, code, code2, fnname, type1, type2,
 
 /* 11For every promoted integral type T,  there  exist  candidate  operator
      functions of the form
-	     T       operator~(T);  */
+	     T       operator‾(T);  */
 
     case BIT_NOT_EXPR:
       if (INTEGRAL_TYPE_P (type1))

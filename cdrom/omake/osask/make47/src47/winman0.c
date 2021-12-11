@@ -1,25 +1,25 @@
-/* "winman0.c":‚®‚¢‚®‚¢d—lƒEƒBƒ“ƒhƒEƒ}ƒl[ƒWƒƒ[ ver.3.9
-		copyright(C) 2004 ì‡GÀ, I.Tak., ¬–ö‰ë–¾, KIYOTO, nikq
+/* "winman0.c":ãã„ãã„ä»•æ§˜ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ ver.3.9
+		copyright(C) 2004 å·åˆç§€å®Ÿ, I.Tak., å°æŸ³é›…æ˜, KIYOTO, nikq
     stack:64k malloc:4272k file:4160k */
 
-/* 2004.08.13 ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ğBMP‰»
-   8,15,16,32bpp‚Å³í‚È‰æ‘œ‚ªæ‚ê‚écc‚Í‚¸ by I.Tak. */
+/* 2004.08.13 ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆã‚’BMPåŒ–
+   8,15,16,32bppã§æ­£å¸¸ãªç”»åƒãŒå–ã‚Œã‚‹â€¦â€¦ã¯ãš by I.Tak. */
 
-/* 2004.09.10 ‰æ–ÊŠÖŒW‚Ìglobal•Ï”‚ğ\‘¢‘Ì‚É‚·‚é‚¼
- * 2004.09.11 ƒfƒR[ƒ_‚ğDLLg—p‚É‚·‚é‚¼cc‚®‚Ápokon‚ª€‚Ê‚¼tss=4000 EIP=2f10‚Å
- *            page fault‚¾‚æccmmarea•ª‚ª•s‘«‚®‚Í‚ 
- *            PICTURE0.BIN‚ªSCRNSHOT.BMP (8bpp) ‚ğƒfƒR[ƒh‚Å‚«‚È‚¢(T_T
+/* 2004.09.10 ç”»é¢é–¢ä¿‚ã®globalå¤‰æ•°ã‚’æ§‹é€ ä½“ã«ã™ã‚‹ã
+ * 2004.09.11 ãƒ‡ã‚³ãƒ¼ãƒ€ã‚’DLLä½¿ç”¨ã«ã™ã‚‹ãâ€¦â€¦ãã£pokonãŒæ­»ã¬ãtss=4000 EIP=2f10ã§
+ *            page faultã ã‚ˆâ€¦â€¦mmareaåˆ†ãŒä¸è¶³ãã¯ã‚
+ *            PICTURE0.BINãŒSCRNSHOT.BMP (8bpp) ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã§ããªã„(T_T
  */
 #define int3 asm(".byte 0xcc")
 #include <guigui00.h>
 #include <sysgg00.h>
-/* sysgg‚ÍAˆê”Ê‚ÌƒAƒvƒŠ‚ª—˜—p‚µ‚Ä‚Í‚¢‚¯‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ
-   d—l‚à‚©‚È‚è—¬“®“I */
+/* sysggã¯ã€ä¸€èˆ¬ã®ã‚¢ãƒ—ãƒªãŒåˆ©ç”¨ã—ã¦ã¯ã„ã‘ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+   ä»•æ§˜ã‚‚ã‹ãªã‚Šæµå‹•çš„ */
 #include <stdlib.h>
 
-/* ƒvƒŠƒvƒƒZƒbƒT‚ÌƒIƒvƒVƒ‡ƒ“‚ÅA-DPCAT‚©-DTOWNS‚ğw’è‚·‚é‚±‚Æ */
+/* ãƒ—ãƒªãƒ—ãƒ­ã‚»ãƒƒã‚µã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã€-DPCATã‹-DTOWNSã‚’æŒ‡å®šã™ã‚‹ã“ã¨ */
 
-/* ƒn[ƒhƒR[ƒhBgas2naskƒo[ƒWƒ‡ƒ“ƒAƒbƒv‘Ò‚¿ */
+/* ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ã€‚gas2naskãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚¢ãƒƒãƒ—å¾…ã¡ */
 #define lib_readCSd(ofs)  ({ int _ret;\
  __asm__(".byte 0x2e\n movl %1, %0" : "=r" (_ret) : "m" (*(int*)(ofs)));\
  _ret;})
@@ -32,7 +32,7 @@ static inline void call_dll0207_48(int *env, int *cmd)
      ".byte 0x9a\n"
      ".long 0x48\n"
      ".word 0x207\n"		/* "lcall $0x0207,$0x00000048\n" */
-     "addl $8, %%esp"		/* ‚±‚ê‚ğÅ“K‰»‚Å‚«‚È‚¢‚Ì‚ªc”O */
+     "addl $8, %%esp"		/* ã“ã‚Œã‚’æœ€é©åŒ–ã§ããªã„ã®ãŒæ®‹å¿µ */
      : : "g" (env), "g" (cmd), "m" (*cmd) :"%ecx","%edx","memory");
 }
 
@@ -49,15 +49,15 @@ static void call_dll0207_48i(void *env, int cmd, ...)
 }
 
 #if (defined(TOWNS))
-	/* ƒ}ƒEƒX‘¶İflag (FMR<<4)|(R<<2)|L, 0:none,1:mouse,2:pad,3:6pad */
+	/* ãƒã‚¦ã‚¹å­˜åœ¨flag (FMR<<4)|(R<<2)|L, 0:none,1:mouse,2:pad,3:6pad */
 	static char townsmouse = 0x04;/* right mouse only */
 	#if (defined(VMODE) || defined(CLGD543X))
-	  #undef TWVSW        /* 1024‚Å‚È‚¢‚ÆƒCƒ“ƒ^[ƒŒ[ƒX‚Å‚«‚È‚¢ */
-	  #define TWVSW 1024  /* ƒCƒ“ƒ^[ƒŒ[ƒX‚µ‚È‚¢‚È‚ç–â‘è‚È‚¢‚ª
-                               * CLGD‚É‚Í1024‚Ìƒpƒ‰ƒ[ƒ^‚µ‚©ì‚Á‚Ä‚È‚¢ */
+	  #undef TWVSW        /* 1024ã§ãªã„ã¨ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ãƒ¼ã‚¹ã§ããªã„ */
+	  #define TWVSW 1024  /* ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ãƒ¼ã‚¹ã—ãªã„ãªã‚‰å•é¡Œãªã„ãŒ
+                               * CLGDã«ã¯1024ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã—ã‹ä½œã£ã¦ãªã„ */
 	#endif
-	#define FMRMOUSE 1    /* FMRMOUSE‚É‘Î‰ 2004.04.12 by I.Tak. */
-	#define KROM 1        /* font file ‚ª–³‚¢‚Æ‚«‚ÉROM‚Å‘ã—p‚·‚é 2004.04.12 by I.Tak. */
+	#define FMRMOUSE 1    /* FMRMOUSEã«å¯¾å¿œ 2004.04.12 by I.Tak. */
+	#define KROM 1        /* font file ãŒç„¡ã„ã¨ãã«ROMã§ä»£ç”¨ã™ã‚‹ 2004.04.12 by I.Tak. */
 	#if (!defined(TWVSW))
 		#define	TWVSW		1024
 	#endif
@@ -66,9 +66,9 @@ static void call_dll0207_48i(void *env, int cmd, ...)
 	#define DEFAULTCOLDEP 0
 #endif
 
-/* NEC PC-98 ‚Å‚Í•Ï‰»‚µ‚È‚¢•Ï”‚Éconst‚ğ‚Â‚¯, Å“K‰»‚ğŠú‘Ò‚·‚é 
- * •Ï”‚»‚Ì‚à‚Ì‚Í–³‚­‚È‚ç‚È‚¢‚ª (ƒ|ƒCƒ“ƒ^“n‚µ‚ª‚ ‚è‚¤‚é‚½‚ß),
- * QÆ‰ñ”‚ÍŒ¸‚é‚Í‚¸‚¾cc‚±‚ñ‚È‚±‚Æ‚·‚éˆÓ–¡‚ ‚é‚Ì‚© */
+/* NEC PC-98 ã§ã¯å¤‰åŒ–ã—ãªã„å¤‰æ•°ã«constã‚’ã¤ã‘, æœ€é©åŒ–ã‚’æœŸå¾…ã™ã‚‹ 
+ * å¤‰æ•°ãã®ã‚‚ã®ã¯ç„¡ããªã‚‰ãªã„ãŒ (ãƒã‚¤ãƒ³ã‚¿æ¸¡ã—ãŒã‚ã‚Šã†ã‚‹ãŸã‚),
+ * å‚ç…§å›æ•°ã¯æ¸›ã‚‹ã¯ãšã â€¦â€¦ã“ã‚“ãªã“ã¨ã™ã‚‹æ„å‘³ã‚ã‚‹ã®ã‹ */
 #if (defined(PCAT)) || (defined(TOWNS))
 	#define CONST98
 #elif (defined(NEC98))
@@ -101,7 +101,7 @@ static SCREEN screen = {
 	#define	RESERVELINE0		   0
 	#define	RESERVELINE1		  28
 	#if (defined(PCAT) || defined(TOWNS))
-		#define TIMEX				-192	/* 8‚Ì”{” */
+		#define TIMEX				-192	/* 8ã®å€æ•° */
 		#define TIMEY				 -20
 		#define TIMEC				   0
 		#define TIMEBC				   8
@@ -129,7 +129,7 @@ static SCREEN screen = {
 	#define	RESERVELINE0		   0
 	#define	RESERVELINE1		  20
 	#if (defined(PCAT)) || (defined(TOWNS))
-		#define TIMEX				-192	/* 8‚Ì”{” */
+		#define TIMEX				-192	/* 8ã®å€æ•° */
 		#define TIMEY				 -16
 		#define TIMEC				  15
 		#define TIMEBC				   7
@@ -153,8 +153,8 @@ static SCREEN screen = {
 
 //static int MALLOC_ADDR;
 #define MALLOC_ADDR			j
-#define malloc(bytes)		(void *) (MALLOC_ADDR -= ((bytes) + 7) & ~7)
-#define free(addr)			for (;;); /* free‚ª‚ ‚Á‚Ä‚Í¢‚é‚Ì‚Å‰i‹vƒ‹[ƒv */
+#define malloc(bytes)		(void *) (MALLOC_ADDR -= ((bytes) + 7) & â€¾7)
+#define free(addr)			for (;;); /* freeãŒã‚ã£ã¦ã¯å›°ã‚‹ã®ã§æ°¸ä¹…ãƒ«ãƒ¼ãƒ— */
 
 #define	AUTO_MALLOC			   0
 #define NULL				   0
@@ -187,7 +187,7 @@ struct WM0_WINDOW {	// total 108bytes
 	struct SGG_WINDOW sgg; // 68bytes
 //	struct DEFINESIGNAL *ds1;
 	int condition, x0, y0, x1, y1, job_flag0, job_flag1;
-	int tx0, ty0, tx1, ty1; /* ƒEƒBƒ“ƒhƒEˆÚ“®‚Ì‚½‚ß‚Ìƒ^ƒu */
+	int tx0, ty0, tx1, ty1; /* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç§»å‹•ã®ãŸã‚ã®ã‚¿ãƒ– */
 	int flags;
 	struct WM0_WINDOW *up, *down;
 };
@@ -199,15 +199,15 @@ struct SOUNDTRACK {
 struct MOSWINSIG { /* 32bytes */
 	int flags, sig[6];
 	struct WM0_WINDOW *win;
-	/* flags‚Ì‰ºˆÊ4bit‚Ílen */
-	/* sig[4], sig[5]‚Íê‡‚É‚æ‚Á‚Ä‚Íx0, y0 */
+	/* flagsã®ä¸‹ä½4bitã¯len */
+	/* sig[4], sig[5]ã¯å ´åˆã«ã‚ˆã£ã¦ã¯x0, y0 */
 };
 
 static struct STR_JOB {
 	int now, movewin4_ready, fontflag;
 	int *list, free, *rp, *wp;
 	int count, int0;
-	int movewin_x, movewin_y, movewin_x0, movewin_y0; /* ˆÚ“®æ‚ÆˆÚ“®Œ³ */
+	int movewin_x, movewin_y, movewin_x0, movewin_y0; /* ç§»å‹•å…ˆã¨ç§»å‹•å…ƒ */
 	int readCSd10;
 	void (*func)(int, int);
 	struct WM0_WINDOW *win;
@@ -234,8 +234,8 @@ int fromboot = 0, winmanerr_time = 0;
 struct {
 	int x, y;
 } windef[MAXWINDEF];
-int mouseaccel = 2;	/* ‚±‚ê‚æ‚è‘å‚«‚¢‚Æ‰Á‘¬“x”{‘ */
-int mousescale = 3; /* ‰Á‘¬ƒXƒP[ƒ‹‚É‚µ‚æ‚¤ */
+int mouseaccel = 2;	/* ã“ã‚Œã‚ˆã‚Šå¤§ãã„ã¨åŠ é€Ÿåº¦å€å¢— */
+int mousescale = 3; /* åŠ é€Ÿã‚¹ã‚±ãƒ¼ãƒ«ã«ã—ã‚ˆã† */
 struct SOUNDTRACK *sndtrk_buf, *sndtrk_active = NULL;
 struct DEFINESIGNAL *defsigbuf;
 struct MOSWINSIG *moswinsig;
@@ -317,11 +317,11 @@ void write_time();
 void winmanerr(const unsigned char *s);
 void winmanerr_clr();
 
-/* ƒL[‘€ìF
-      F9:ˆê”Ô‰º‚ÌƒEƒBƒ“ƒhƒE‚Ö
-      F10:ã‚©‚ç‚Q”Ô–Ú‚ÌƒEƒBƒ“ƒhƒE‚ğ‘I‘ğ
-      F11:ƒEƒBƒ“ƒhƒE‚ÌˆÚ“®
-      F12:ƒEƒBƒ“ƒhƒEƒNƒ[ƒY */
+/* ã‚­ãƒ¼æ“ä½œï¼š
+      F9:ä¸€ç•ªä¸‹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¸
+      F10:ä¸Šã‹ã‚‰ï¼’ç•ªç›®ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é¸æŠ
+      F11:ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç§»å‹•
+      F12:ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º */
 
 //int allclose = 0;
 
@@ -341,7 +341,7 @@ static int tapisigvec[] = {
 #define	NUMLKOF		6	/* 0x0000c072, 0x0012c072 */
 #define ALT			7   /* 0x0040c070 */
 
-/* “ü—Í•û–@ƒe[ƒuƒ‹(2’Ê‚è‚Ü‚ÅƒTƒ|[ƒg) */
+/* å…¥åŠ›æ–¹æ³•ãƒ†ãƒ¼ãƒ–ãƒ«(2é€šã‚Šã¾ã§ã‚µãƒãƒ¼ãƒˆ) */
 static struct KEYTABLE {
 	unsigned char rawcode0, shifttype0;
 	unsigned char rawcode1, shifttype1;
@@ -441,7 +441,7 @@ static struct KEYTABLE {
 		{ 0x1b, SHIFT,   0xff, 0xff    } /* '{' */,
 		{ 0x7d, SHIFT,   0xff, 0xff    } /* '|' */,
 		{ 0x2b, SHIFT,   0xff, 0xff    } /* '}' */,
-		{ 0x0d, SHIFT,   0x0b, SHIFT   } /* '~' */,
+		{ 0x0d, SHIFT,   0x0b, SHIFT   } /* 'â€¾' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\x7f' */,
 		{ 0x01, NOSHIFT, 0xff, 0xff    } /* Esc */,
 		{ 0x3b, NOSHIFT, 0xff, 0xff    } /* F1 */,
@@ -667,7 +667,7 @@ static struct KEYTABLE {
 		{ 0x1c, SHIFT,   0xff, 0xff    } /* '{' */,
 		{ 0x0e, SHIFT,   0xff, 0xff    } /* '|' */,
 		{ 0x29, SHIFT,   0xff, 0xff    } /* '}' */,
-		{ 0x0d, SHIFT,   0xff, 0xff    } /* '~' */,
+		{ 0x0d, SHIFT,   0xff, 0xff    } /* 'â€¾' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\x7f' */,
 		{ 0x01, NOSHIFT, 0xff, 0xff    } /* Esc */,
 		{ 0x5d, NOSHIFT, 0xff, 0xff    } /* F1 */,
@@ -761,20 +761,20 @@ static struct KEYTABLE {
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xd9' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xda' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xdb' */,
-		{ 0x67, NOSHIFT, 0xff, 0xff    } /* 'ewƒVƒtƒg¶' */,
-		{ 0x68, NOSHIFT, 0xff, 0xff    } /* 'ewƒVƒtƒg‰E' */,
+		{ 0x67, NOSHIFT, 0xff, 0xff    } /* 'è¦ªæŒ‡ã‚·ãƒ•ãƒˆå·¦' */,
+		{ 0x68, NOSHIFT, 0xff, 0xff    } /* 'è¦ªæŒ‡ã‚·ãƒ•ãƒˆå³' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xde' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xdf' */,
-/* e0`f7‚ÍAŠ„‚è“–‚Ä‚é‚Ì‚ª–Ê“|‚É‚È‚Á‚½‹@íŒÅ—L‚Ìƒ}ƒCƒi[ƒL[ */
-		{ 0x72, NOSHIFT, 0xff, 0xff    } /* æÁ */,
-		{ 0x73, NOSHIFT, 0xff, 0xff    } /* Às */,
-		{ 0x59, NOSHIFT, 0xff, 0xff    } /* ‚©‚ÈŠ¿š */,
+/* e0ã€œf7ã¯ã€å‰²ã‚Šå½“ã¦ã‚‹ã®ãŒé¢å€’ã«ãªã£ãŸæ©Ÿç¨®å›ºæœ‰ã®ãƒã‚¤ãƒŠãƒ¼ã‚­ãƒ¼ */
+		{ 0x72, NOSHIFT, 0xff, 0xff    } /* å–æ¶ˆ */,
+		{ 0x73, NOSHIFT, 0xff, 0xff    } /* å®Ÿè¡Œ */,
+		{ 0x59, NOSHIFT, 0xff, 0xff    } /* ã‹ãªæ¼¢å­— */,
 		{ 0x4a, NOSHIFT, 0xff, 0xff    } /* 000 */,
-		{ 0x6b, NOSHIFT, 0xff, 0xff    } /* Š¿š«‘ */,
-		{ 0x6c, NOSHIFT, 0xff, 0xff    } /* ’PŒê–•Á */,
-		{ 0x6d, NOSHIFT, 0xff, 0xff    } /* ’PŒê“o˜^ */,
-		{ 0x6a, NOSHIFT, 0xff, 0xff    } /* ‰pš */,
-		{ 0x6f, NOSHIFT, 0xff, 0xff    } /* ƒJƒ^ƒJƒi/‰p¬•¶š */,
+		{ 0x6b, NOSHIFT, 0xff, 0xff    } /* æ¼¢å­—è¾æ›¸ */,
+		{ 0x6c, NOSHIFT, 0xff, 0xff    } /* å˜èªæŠ¹æ¶ˆ */,
+		{ 0x6d, NOSHIFT, 0xff, 0xff    } /* å˜èªç™»éŒ² */,
+		{ 0x6a, NOSHIFT, 0xff, 0xff    } /* è‹±å­— */,
+		{ 0x6f, NOSHIFT, 0xff, 0xff    } /* ã‚«ã‚¿ã‚«ãƒŠ/è‹±å°æ–‡å­— */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xe9' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xea' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xeb' */,
@@ -790,8 +790,8 @@ static struct KEYTABLE {
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf5' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf6' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf7' */,
-/* f8`ff‚ÍAƒ}ƒCƒi[ƒVƒtƒgƒL[ */
-		{ 0x67, NOSHIFT, 0x68, NOSHIFT } /* ewƒVƒtƒg('\xf8') */,
+/* f8ã€œffã¯ã€ãƒã‚¤ãƒŠãƒ¼ã‚·ãƒ•ãƒˆã‚­ãƒ¼ */
+		{ 0x67, NOSHIFT, 0x68, NOSHIFT } /* è¦ªæŒ‡ã‚·ãƒ•ãƒˆ('\xf8') */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf9' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xfa' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xfb' */,
@@ -895,7 +895,7 @@ static struct KEYTABLE {
 		{ 0x1b, SHIFT,   0xff, 0xff    } /* '{' */,
 		{ 0x0d, SHIFT,   0xff, 0xff    } /* '|' */,
 		{ 0x28, SHIFT,   0xff, 0xff    } /* '}' */,
-		{ 0x1a, SHIFT,   0xff, 0xff    } /* '~' */,
+		{ 0x1a, SHIFT,   0xff, 0xff    } /* 'â€¾' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\x7f' */,
 		{ 0x00, NOSHIFT, 0xff, 0xff    } /* Esc */,
 		{ 0x62, NOSHIFT, 0xff, 0xff    } /* F1 */,
@@ -993,7 +993,7 @@ static struct KEYTABLE {
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xdd' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xde' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xdf' */,
-/* e0`f7‚ÍAŠ„‚è“–‚Ä‚é‚Ì‚ª–Ê“|‚É‚È‚Á‚½‹@íŒÅ—L‚Ìƒ}ƒCƒi[ƒL[ */
+/* e0ã€œf7ã¯ã€å‰²ã‚Šå½“ã¦ã‚‹ã®ãŒé¢å€’ã«ãªã£ãŸæ©Ÿç¨®å›ºæœ‰ã®ãƒã‚¤ãƒŠãƒ¼ã‚­ãƒ¼ */
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xe0' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xe1' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xe2' */,
@@ -1018,7 +1018,7 @@ static struct KEYTABLE {
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf5' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf6' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf7' */,
-/* f8`ff‚ÍAƒ}ƒCƒi[ƒVƒtƒgƒL[ */
+/* f8ã€œffã¯ã€ãƒã‚¤ãƒŠãƒ¼ã‚·ãƒ•ãƒˆã‚­ãƒ¼ */
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf8' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xf9' */,
 		{ 0xff, 0xff,    0xff, 0xff    } /* '\xfa' */,
@@ -1072,7 +1072,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x2a       /* rawcode(left-Shift) */,
 			0x4000c000 /* shiftmap */,
-			~0x0010    /* and bit */,
+			â€¾0x0010    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1086,7 +1086,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x36       /* rawcode(right-Shift) */,
 			0x4000c000 /* shiftmap */,
-			~0x0010    /* and bit */,
+			â€¾0x0010    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1100,7 +1100,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x1d       /* rawcode(left-Ctrl) */,
 			0x4000c000 /* shiftmap */,
-			~0x0020    /* and bit */,
+			â€¾0x0020    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1114,7 +1114,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x9d       /* rawcode(right-Ctrl) */,
 			0x4000c000 /* shiftmap */,
-			~0x0020    /* and bit */,
+			â€¾0x0020    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1128,7 +1128,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x38       /* rawcode(left-Alt) */,
 			0x4000c000 /* shiftmap */,
-			~0x0040    /* and bit */,
+			â€¾0x0040    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1142,7 +1142,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0xb8       /* rawcode(right-Alt) */,
 			0x4000c000 /* shiftmap */,
-			~0x0040    /* and bit */,
+			â€¾0x0040    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1184,7 +1184,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x53       /* rawcode(Shift) */,
 			0x4000c000 /* shiftmap */,
-			~0x0010    /* and bit */,
+			â€¾0x0010    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1198,7 +1198,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x52       /* rawcode(Ctrl) */,
 			0x4000c000 /* shiftmap */,
-			~0x0020    /* and bit */,
+			â€¾0x0020    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1212,21 +1212,21 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x5c       /* rawcode(Alt) */,
 			0x4000c000 /* shiftmap */,
-			~0x0040    /* and bit */,
+			â€¾0x0040    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
 			4          /* opt(len) */,
-			0x72       /* rawcode(æÁ) */,
+			0x72       /* rawcode(å–æ¶ˆ) */,
 			0x0000c000 /* shiftmap */,
 			0x0040     /* or bit */,
 			0x00040000 /* cmd(or) */,
 
 			0x010c     /* define */,
 			4          /* opt(len) */,
-			0x72       /* rawcode(æÁ) */,
+			0x72       /* rawcode(å–æ¶ˆ) */,
 			0x4000c000 /* shiftmap */,
-			~0x0040    /* and bit */,
+			â€¾0x0040    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1261,7 +1261,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x71       /* rawcode(CapsLock) */,
 			0x4000c070 /* shiftmap */,
-			~0x0004    /* and bit */,
+			â€¾0x0004    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1275,7 +1275,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x70       /* rawcode(Shift) */,
 			0x4000c000 /* shiftmap */,
-			~0x0010    /* and bit */,
+			â€¾0x0010    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1289,7 +1289,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x74       /* rawcode(Ctrl) */,
 			0x4000c000 /* shiftmap */,
-			~0x0020    /* and bit */,
+			â€¾0x0020    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1303,7 +1303,7 @@ static struct KEYTABLE {
 			4          /* opt(len) */,
 			0x73       /* rawcode(Alt) */,
 			0x4000c000 /* shiftmap */,
-			~0x0040    /* and bit */,
+			â€¾0x0040    /* and bit */,
 			0x00050000 /* cmd(and) */,
 
 			0x010c     /* define */,
@@ -1328,8 +1328,8 @@ void OsaskMain()
 	#if (defined(TOWNS))
 		static int TOWNS_mouseinit[] = {
 			0x0064, 17 * 4, 0x0030 /* SetMouseParam */, 0x030d,
-			20 /* ƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg 20ƒ~ƒŠ•b */,
-			0, 0, /* TAPI‚ÌƒVƒOƒiƒ‹ˆ—ƒxƒNƒ^(TAPI_SignalMessageTimer) */
+			20 /* ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆ 20ãƒŸãƒªç§’ */,
+			0, 0, /* TAPIã®ã‚·ã‚°ãƒŠãƒ«å‡¦ç†ãƒ™ã‚¯ã‚¿(TAPI_SignalMessageTimer) */
 			0x3245, 0x7f000004, 0x73756f6d, 0,
 			0x000d0019 /* wait0=25, wait1=13 */, 0x0f3f0f0f /* strobe */,
 			0x0f0f0f3f, 0x000030, 0x0f0f0f3f, 0x00000030,
@@ -1353,21 +1353,21 @@ void OsaskMain()
 
 	signal = signal0 = lib_opensignalbox(256 * 4, AUTO_MALLOC, 0, 4); // 1KB
 
-	// ƒEƒBƒ“ƒhƒE‚ğŠm•Û‚µ‚ÄA‘S‚Ä–¢g—pƒEƒCƒ“ƒhƒE‚Æ‚µ‚Ä“o˜^
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç¢ºä¿ã—ã¦ã€å…¨ã¦æœªä½¿ç”¨ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã¨ã—ã¦ç™»éŒ²
 	window = (struct WM0_WINDOW *) malloc(MAX_WINDOWS * sizeof (struct WM0_WINDOW));
 	for (i = 0; i < MAX_WINDOWS; i++) {
 		window[i].sgg.handle = 0;
 		chain_unuse(&window[i]);
 	}
 
-	// ƒTƒEƒ“ƒhƒgƒ‰ƒbƒN—pƒoƒbƒtƒ@‚Ì‰Šú‰»
+	// ã‚µã‚¦ãƒ³ãƒ‰ãƒˆãƒ©ãƒƒã‚¯ç”¨ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 	sndtrk_buf = (struct SOUNDTRACK *) malloc(MAX_SOUNDTRACK * sizeof (struct SOUNDTRACK));
 	for (i = 0; i < MAX_SOUNDTRACK; i++)
 	//	free_sndtrk(&sndtrk_buf[i]);
 		sndtrk_buf[i].sigbox = 0;
 
 	pjob->list = (int *) malloc(JOBLIST_SIZE * sizeof (int));
-	*(pjob->rp = pjob->wp = pjob->list) = 0; /* ‚½‚Ü‚Á‚½d–‚Í‚È‚¢ */
+	*(pjob->rp = pjob->wp = pjob->list) = 0; /* ãŸã¾ã£ãŸä»•äº‹ã¯ãªã„ */
 	pjob->free = JOBLIST_SIZE - 1;
 
 	defsigbuf = (struct DEFINESIGNAL *) malloc (DEFSIGBUFSIZ * sizeof (struct DEFINESIGNAL));
@@ -1422,7 +1422,7 @@ void OsaskMain()
 			continue;
 
 		case 0x0010:
-			/* ‰Šú‰»—v¿ */
+			/* åˆæœŸåŒ–è¦è«‹ */
 		//	siglen = 1;
 			#if (defined(PCAT))
 				writejob_n(4, 0x0030 /* open VGA driver */, 0x0000,
@@ -1435,7 +1435,7 @@ void OsaskMain()
 					0x0034 /* change VGA mode */, 0x0000);
 			#endif
 		fin_wrtjob:
-			*pjob->wp = 0; /* ƒXƒgƒbƒp[ */
+			*pjob->wp = 0; /* ã‚¹ãƒˆãƒƒãƒ‘ãƒ¼ */
 		check_jobnext:
 			if (pjob->now == 0)
 				runjobnext();
@@ -1447,7 +1447,7 @@ void OsaskMain()
 			fromboot = signal[1];
 			#if (defined(PCAT))
 				if (fromboot == 0) {
-					/* VESA‚Ì’²¸‚ğŠJn */
+					/* VESAã®èª¿æŸ»ã‚’é–‹å§‹ */
 					writejob_n(1, 0x0044 /* VESA check */);
 					goto fin_wrtjob;
 				} else {
@@ -1457,10 +1457,10 @@ void OsaskMain()
 			break;
 
 		case 0x001c:
-			/* I—¹—v¿ */
+			/* çµ‚äº†è¦è«‹ */
 #if 0
 			if (signal[1] == 4) {
-				/* close all-window(ŠÜ‚Şpokon0) */
+				/* close all-window(å«ã‚€pokon0) */
 				signal += 2;
 				lib_waitsignal(0x0000, 2, 0);
 	close_all:
@@ -1479,7 +1479,7 @@ void OsaskMain()
 			goto mikannsei;
 
 		case 0x0020:
-			/* ƒEƒBƒ“ƒhƒEƒI[ƒvƒ“—v¿(handle) */
+			/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ¼ãƒ—ãƒ³è¦è«‹(handle) */
 			win = get_unuse();
 			win->flags = 0;
 			sgg_wm0_openwindow(&win->sgg, signal[1]);
@@ -1489,22 +1489,22 @@ void OsaskMain()
 			goto fin_wrtjob;
 
 		case 0x0024:
-			/* ƒEƒBƒ“ƒhƒEƒNƒ[ƒY—v¿(handle) */
+			/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºè¦è«‹(handle) */
 			win = handle2window(signal[1]);
 			siglen++; /* siglen = 2; */
 			if ((win->flags & 0x01) == 0) {
-				win->flags |= 0x01; /* ƒNƒ[ƒYˆ—’† */
+				win->flags |= 0x01; /* ã‚¯ãƒ­ãƒ¼ã‚ºå‡¦ç†ä¸­ */
 				writejob_n(2, 0x002c /* close */, (int) win);
 				goto fin_wrtjob;
 			}
 			break;
 
 		case 0x0028:
-			/* ƒEƒBƒ“ƒhƒEƒAƒNƒeƒBƒu—v¿(opt, handle) */
+			/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¢ã‚¯ãƒ†ã‚£ãƒ–è¦è«‹(opt, handle) */
 			goto mikannsei;
 
 		case 0x002c:
-			/* ƒEƒBƒ“ƒhƒE˜A“®ƒfƒoƒCƒXw’è
+			/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é€£å‹•ãƒ‡ãƒã‚¤ã‚¹æŒ‡å®š
 			    (opt,  win-handle, reserve(signalbox),
 			       default-device, default-code, len(2), 0x7f000001, signal) */
 
@@ -1531,7 +1531,7 @@ void OsaskMain()
 			break;
 
 		case 0x0030:
-			/* ƒ}ƒEƒXƒVƒOƒiƒ‹w’è
+			/* ãƒã‚¦ã‚¹ã‚·ã‚°ãƒŠãƒ«æŒ‡å®š
 			    (win-handle, reserve(signalbox),
 			       default-device, default-code, [x0, y0], len(2), 0x7f000001, signal) */
 			for (mws = moswinsig; mws->win != NULL && mws->win != (struct WM0_WINDOW *) -1; mws++);
@@ -1553,22 +1553,22 @@ void OsaskMain()
 			}
 			moswinsig_flagset();
 			if ((sig4 & 0xff) == 0x12 && mx != 0x80000000)
-				mousesignal(mbutton, 0, 0); /* eye‚È‚Ç‚Ì‚½‚ß */
+				mousesignal(mbutton, 0, 0); /* eyeãªã©ã®ãŸã‚ */
 			break;
 
 		case 0x0040: /* open sound track (slot, tss, signal-base, reserve0, reserve1)
-			   ó—‚µ‚½‚±‚Æ‚ğ’m‚ç‚¹‚é‚½‚ß‚ÉAƒVƒOƒiƒ‹‚Å‰“š‚·‚é */
+			   å—ç†ã—ãŸã“ã¨ã‚’çŸ¥ã‚‰ã›ã‚‹ãŸã‚ã«ã€ã‚·ã‚°ãƒŠãƒ«ã§å¿œç­”ã™ã‚‹ */
 		//	sndtrk = alloc_sndtrk();
 			for (sndtrk = sndtrk_buf; sndtrk->sigbox != 0; sndtrk++);
 			sndtrk->sigbox  = signal[2 /* tss */] + 0x0240;
 			sndtrk->slot    = signal[1 /* slot */];
 			sndtrk->sigbase = signal[3 /* signal-base */];
 			siglen = 6;
-			/* ƒnƒ“ƒhƒ‹”Ô†‚Ì‘Î‰‚Ã‚¯‚ğ’Ê’B */
+			/* ãƒãƒ³ãƒ‰ãƒ«ç•ªå·ã®å¯¾å¿œã¥ã‘ã‚’é€šé” */
 			send_signal3dw(sndtrk->sigbox, sndtrk->sigbase + 0, sndtrk->slot, (int) sndtrk);
 			if (sndtrk_active == NULL) {
 				sndtrk_active = sndtrk;
-				/* ƒAƒNƒeƒBƒuƒVƒOƒiƒ‹‚ğ‘—‚é */
+				/* ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ã‚°ãƒŠãƒ«ã‚’é€ã‚‹ */
 	sndtrk_sendactsig:
 				send_signal2dw(sndtrk->sigbox, sndtrk->sigbase + 8 /* enable */, sndtrk->slot);
 			}
@@ -1577,12 +1577,12 @@ void OsaskMain()
 		case 0x0044: /* close sound track (handle) */
 			sndtrk = (struct SOUNDTRACK *) signal[1];
 			siglen++; /* siglen = 2; */
-			/* closeŠ®—¹‚ğ‚µ‚ç‚¹‚é */
+			/* closeå®Œäº†ã‚’ã—ã‚‰ã›ã‚‹ */
 			send_signal2dw(sndtrk->sigbox, sndtrk->sigbase + 4 /* close */, sndtrk->slot);
 		//	free_sndtrk(sndtrk);
 			sndtrk->sigbox = 0;
 			if (sndtrk == sndtrk_active) {
-				/* ˆá‚¤‚â‚Â‚ğƒAƒNƒeƒBƒu‚É‚·‚é */
+				/* é•ã†ã‚„ã¤ã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹ */
 				sndtrk = NULL;
 				for (i = 0; i < MAX_SOUNDTRACK; i++) {
 					if (sndtrk_buf[i].sigbox) {
@@ -1591,7 +1591,7 @@ void OsaskMain()
 					}
 				}
 				if (sndtrk_active = sndtrk)
-					goto sndtrk_sendactsig; /* ƒAƒNƒeƒBƒuƒVƒOƒiƒ‹‚ğ‘—‚é */
+					goto sndtrk_sendactsig; /* ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ã‚°ãƒŠãƒ«ã‚’é€ã‚‹ */
 			}
 			break;
 
@@ -1605,7 +1605,7 @@ void OsaskMain()
 		case 0x0051:
 		case 0x0052:
 		case 0x0053:
-		case 0x0054: /* 0x005f‚Ü‚Å‚ÍƒŠƒU[ƒu */
+		case 0x0054: /* 0x005fã¾ã§ã¯ãƒªã‚¶ãƒ¼ãƒ– */
 			(*pjob->func)(i - 0x0050, 0);
 		//	siglen = 1;
 			goto check_jobnext;
@@ -1635,9 +1635,9 @@ void OsaskMain()
 			redirect_input(iactive);
 			break;
 
-		case 0x0014: /* ‰æ–Êƒ‚[ƒh•ÏXŠ®—¹(result) */
-		case 0x00c0: /* XV’â~ƒVƒOƒiƒ‹(handle) */
-		case 0x00c4: /* •`‰æŠ®—¹ƒVƒOƒiƒ‹(handle) */
+		case 0x0014: /* ç”»é¢ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´å®Œäº†(result) */
+		case 0x00c0: /* æ›´æ–°åœæ­¢ã‚·ã‚°ãƒŠãƒ«(handle) */
+		case 0x00c4: /* æç”»å®Œäº†ã‚·ã‚°ãƒŠãƒ«(handle) */
 		//	i = signal[0];
 			j = signal[1];
 			siglen++; /* siglen = 2; */
@@ -1760,10 +1760,10 @@ void OsaskMain()
 			#endif
 
 			#if (defined(TOWNS)) && (defined(CLGD543X))
-		case 0x0220:	/* PF13‚¾‚¯‚Çcc0x210‚Å‚Í‚Ü‚¸‚¢‚È */
+		case 0x0220:	/* PF13ã ã‘ã©â€¦â€¦0x210ã§ã¯ã¾ãšã„ãª */
 		case 0x0221:	/* PF14 */
 			//	siglen = 1;
-			/* HW code(5430=0x100, 5434=0x200, none=0) ‚ª•Ô‚Á‚Ä‚­‚é */
+			/* HW code(5430=0x100, 5434=0x200, none=0) ãŒè¿”ã£ã¦ãã‚‹ */
 		  if (pf13mode < 0)
 		    pf13mode = sgg_execcmd1(1 * 4 + 12, 0x00a0, 0, 0x0000);
 				if (pf13mode) {
@@ -1833,7 +1833,7 @@ void OsaskMain()
 			#endif
 
 			#if (defined(PCAT))
-		case 0x10001 /* ‰pŒêƒL[ƒ{[ƒh‚É•ÏX */:
+		case 0x10001 /* è‹±èªã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã«å¤‰æ›´ */:
 			//	siglen = 1;
 				for (i = 0; i < 20; i++) {
 					static struct DIFF_KEYTABLE {
@@ -1859,7 +1859,7 @@ void OsaskMain()
 						'{',	{ 0x1a, SHIFT,   0xff, 0xff    },
 						'|',	{ 0x2b, SHIFT,   0xff, 0xff    },
 						'}',	{ 0x1b, SHIFT,   0xff, 0xff    },
-						'~',	{ 0x29, SHIFT,   0xff, 0xff    }
+						'â€¾',	{ 0x29, SHIFT,   0xff, 0xff    }
 					};
 					keybindtable[table[i].index - ' '] = table[i].bind;
 				}
@@ -1939,7 +1939,7 @@ void OsaskMain()
 
 		default:
 		mikannsei:
-		//	lib_drawline(0x0020, (void *) -1, 0, 0, 0, 15, 15); /* ‚±‚±‚É—ˆ‚½‚±‚Æ‚ğ’m‚ç‚¹‚é */
+		//	lib_drawline(0x0020, (void *) -1, 0, 0, 0, 15, 15); /* ã“ã“ã«æ¥ãŸã“ã¨ã‚’çŸ¥ã‚‰ã›ã‚‹ */
 		//	siglen = 1;
 			;
 		}
@@ -2170,7 +2170,7 @@ void init_screen(const int x, const int y)
 
 struct WM0_WINDOW *handle2window(const int handle)
 {
-	// top‚Ì’†‚©‚ç’T‚µ‚Ä‚à‚¢‚¢
+	// topã®ä¸­ã‹ã‚‰æ¢ã—ã¦ã‚‚ã„ã„
 	int i;
 	struct WM0_WINDOW *win = window;
 	for (i = 0; i < MAX_WINDOWS; i++, win++) {
@@ -2182,14 +2182,14 @@ struct WM0_WINDOW *handle2window(const int handle)
 
 void chain_unuse(struct WM0_WINDOW *win)
 {
-	// unuse‚Íˆê”Ôã
-	// win‚Íˆê”Ô‰º‚É’Ç‰Á
+	// unuseã¯ä¸€ç•ªä¸Š
+	// winã¯ä¸€ç•ªä¸‹ã«è¿½åŠ 
 	if (win->sgg.handle) {
 		/* (int) [stack_sel:handle] = 0; */
-		/* init.ask‚ÉAŠY“–‚Ìƒnƒ“ƒhƒ‹‚ªƒtƒŠ[‚Å‚ ‚é‚±‚Æ‚ğ‹³‚¦‚é‚½‚ß */
+		/* init.askã«ã€è©²å½“ã®ãƒãƒ³ãƒ‰ãƒ«ãŒãƒ•ãƒªãƒ¼ã§ã‚ã‚‹ã“ã¨ã‚’æ•™ãˆã‚‹ãŸã‚ */
 		static int zero = 0;
 		sgg_directwrite(0, 4, 0, win->sgg.handle, 0x01280030 /* stack_sel */, &zero, 0x000c);
-		win->sgg.handle = 0; // handle2window‚ªŠÔˆá‚Á‚ÄŒŸo‚µ‚È‚¢‚½‚ß‚É
+		win->sgg.handle = 0; // handle2windowãŒé–“é•ã£ã¦æ¤œå‡ºã—ãªã„ãŸã‚ã«
 	}
 	if (unuse) {
 		struct WM0_WINDOW *bottom;
@@ -2208,7 +2208,7 @@ void chain_unuse(struct WM0_WINDOW *win)
 
 struct WM0_WINDOW *get_unuse()
 {
-	// ˆê”Ôã‚©‚ç‚Æ‚Á‚Ä‚­‚é
+	// ä¸€ç•ªä¸Šã‹ã‚‰ã¨ã£ã¦ãã‚‹
 	struct WM0_WINDOW *win = unuse;
 	struct WM0_WINDOW *bottom = unuse->up;
 	unuse = unuse->down;
@@ -2236,7 +2236,7 @@ void mousesignal(const unsigned int header, int dx, int dy)
 	struct MOSWINSIG *mws;
 	char call_flagset = 0;
 
-	// ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“ó‘Ô‚ª•Ï‰»
+	// ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³çŠ¶æ…‹ãŒå¤‰åŒ–
 	// bit0:left
 	// bit1:right
 	// bit2:middle
@@ -2254,7 +2254,7 @@ void mousesignal(const unsigned int header, int dx, int dy)
 			int accel = (dy>0) ? mouseaccel : -mouseaccel;
 			dy = (dy - accel) * mousescale + accel;
 		}
-		// ƒ}ƒEƒXó‘Ô•ÏX
+		// ãƒã‚¦ã‚¹çŠ¶æ…‹å¤‰æ›´
 		int ox = _mx, oy = _my;
 		_mx += dx;
 		_my += dy;
@@ -2276,22 +2276,22 @@ void mousesignal(const unsigned int header, int dx, int dy)
 			}
 		}
 
-		if (mbutton == (nbutton = header & 0x07)) { /* ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“ó‘Ô‚Í•s•Ï */
-			if (nbutton | mbutton) { /* ƒhƒ‰ƒbƒO’† */
+		if (mbutton == (nbutton = header & 0x07)) { /* ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³çŠ¶æ…‹ã¯ä¸å¤‰ */
+			if (nbutton | mbutton) { /* ãƒ‰ãƒ©ãƒƒã‚°ä¸­ */
 				flagmask |= 0x02;
 				goto send0;
 			}
-			/* ’Êí‚Ìƒ}ƒEƒXˆÚ“®’† */
+			/* é€šå¸¸ã®ãƒã‚¦ã‚¹ç§»å‹•ä¸­ */
 			if (mws_sensitivecount) {
 	send0:
 				win = searchwin(_mx, _my);
 	send1:
 				if (mws_mousewin != win) {
 					if (mws_mousewin) {
-						/* sensitive‚ÌƒAƒEƒg‚ğ‘—M */
+						/* sensitiveã®ã‚¢ã‚¦ãƒˆã‚’é€ä¿¡ */
 						for (mws = moswinsig; mws->win != (struct WM0_WINDOW *) -1; mws++) {
 							if ((mws->flags & 0x0000ff00) == 0x00001100 && mws->win == mws_mousewin) {
-								/* !è”²‚«! len == 2‚Ì‚İ‚ğ‘z’è */
+								/* !æ‰‹æŠœã! len == 2ã®ã¿ã‚’æƒ³å®š */
 								//	if ((mws->flags & 0x0f) == 2) {
 									send_signal2dw(mws->win->sgg.image[WINSTR_SIGNALEBOX], mws->sig[0], mws->sig[1]);
 							//	}
@@ -2304,17 +2304,17 @@ void mousesignal(const unsigned int header, int dx, int dy)
 				flagmask |= 0x04;
 				if (call_flagset)
 					moswinsig_flagset();
-				/* ƒtƒ‰ƒO‚ÉŠî‚Ã‚¢‚Ä‘—M */
+				/* ãƒ•ãƒ©ã‚°ã«åŸºã¥ã„ã¦é€ä¿¡ */
 				flagmask <<= 16;
 				call_flagset = nbutton | mbutton << 4;
 				for (mws = moswinsig; mws->win != (struct WM0_WINDOW *) -1; mws++) {
 					if (mws->flags & flagmask) {
-						/* !è”²‚«! len == 2‚Ì‚İ‚ğ‘z’è */
+						/* !æ‰‹æŠœã! len == 2ã®ã¿ã‚’æƒ³å®š */
 						switch ((mws->flags >> 8) & 0xff) {
-						case 0x10: /* ƒ}ƒEƒXx-y */
+						case 0x10: /* ãƒã‚¦ã‚¹x-y */
 							if (win != mws->win)
 								break;
-						case 0x12: /* ƒ}ƒEƒXx-y(out‚È‚µ) */
+						case 0x12: /* ãƒã‚¦ã‚¹x-y(outãªã—) */
 							if (pjob->movewin4_ready != 0 && pjob->win == mws->win) {
 								if (press->pos == NO_PRESS || (press->pos == TITLE_BAR && press->win == pjob->win))
 									break;
@@ -2358,19 +2358,19 @@ void mousesignal(const unsigned int header, int dx, int dy)
 					moswinsig_flagset();
 				}
 			}
-		} else { /* ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“ó‘Ô‚ª•Ï‰» */
+		} else { /* ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³çŠ¶æ…‹ãŒå¤‰åŒ– */
 			if (pjob->movewin4_ready != 0 && press->pos == NO_PRESS && nbutton == 0x01) {
 				job_movewin4(0x00f0 /* Enter */);
 				goto skip;
 			}
 			if ((mbutton & 0x01) == 0x01 && (nbutton & 0x01) == 0x00 && press->pos != NO_PRESS) {
-				mousesignal_sub0(_mx, _my); /* ¶ƒ{ƒ^ƒ“‚ª•ú‚³‚ê‚½ */
+				mousesignal_sub0(_mx, _my); /* å·¦ãƒœã‚¿ãƒ³ãŒæ”¾ã•ã‚ŒãŸ */
 				press->pos = NO_PRESS;
 			}
 			flagmask |= 0x03;
 			if (mbutton != 0)
 				goto send0;
-			/* ƒvƒŒƒXó‘Ô‚Ì—§‚¿ã‚ª‚è */
+			/* ãƒ—ãƒ¬ã‚¹çŠ¶æ…‹ã®ç«‹ã¡ä¸ŠãŒã‚Š */
 			win = searchwin(_mx, _my);
 			if (top != win) {
 				if (mbutton == 0 && win != NULL) {
@@ -2381,13 +2381,13 @@ void mousesignal(const unsigned int header, int dx, int dy)
 			press->win = win;
 			call_flagset = 1;
 			if ((nbutton & 0x01) != 0 && press->win != NULL)
-				mousesignal_sub1(_mx, _my); /* ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½ */
+				mousesignal_sub1(_mx, _my); /* å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸ */
 			goto send1;
 		}
 skip:
 		mbutton = nbutton;
 	} else if ((header >> 28) == 0xa /* extmode byte2 */) {
-		/* ƒ}ƒEƒXƒŠƒZƒbƒg */
+		/* ãƒã‚¦ã‚¹ãƒªã‚»ãƒƒãƒˆ */
 		mbutton = 0;
 		sgg_wm0_enablemouse();
 		#if (defined(DEBUG))
@@ -2396,14 +2396,14 @@ skip:
 	} else {
 		/* mikannsei */
 	}
-	/* —­‚Ü‚Á‚½ƒWƒ‡ƒu‚ª‚ ‚ê‚ÎAÀs‚·‚é */
+	/* æºœã¾ã£ãŸã‚¸ãƒ§ãƒ–ãŒã‚ã‚Œã°ã€å®Ÿè¡Œã™ã‚‹ */
 	if (pjob->now == 0)
 		runjobnext();
 	return;
 }
 
 void mousesignal_sub1(int _mx, int _my)
-/* ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ì‘g‚İ‚İƒCƒxƒ“ƒg */
+/* å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ãã®çµ„ã¿è¾¼ã¿ã‚¤ãƒ™ãƒ³ãƒˆ */
 {
 	struct STR_JOB *pjob = &job;
 	struct STR_PRESS *press = &press0;
@@ -2411,12 +2411,12 @@ void mousesignal_sub1(int _mx, int _my)
 
 	#if (defined(WIN9X))
 		if (win->x1 - 21 <= _mx && _mx < win->x1 - 5 && win->y0 + 5 <= _my && _my < win->y0 + 19) {
-			// close button‚ğƒvƒŒƒX‚µ‚½
+			// close buttonã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ
 			press->pos = CLOSE_BUTTON;
 		} else if (win->x0 + 3 <= _mx && _mx < win->x1 - 4 && win->y0 + 3 <= _my && _my < win->y0 + 21) {
-			/* title-bar‚ğƒvƒŒƒX‚µ‚½ */
+			/* title-barã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ */
 			if (pjob->free >= 2) {
-				/* ‹ó‚«‚ª\•ª‚É‚ ‚é */
+				/* ç©ºããŒååˆ†ã«ã‚ã‚‹ */
 				press->pos = TITLE_BAR;
 				press->mx0 = _mx;
 				press->my0 = _my;
@@ -2425,12 +2425,12 @@ void mousesignal_sub1(int _mx, int _my)
 		}
 	#elif (defined(TMENU) || defined(WIN31))
 		if (win->x0 + 2 <= _mx && _mx < win->x0 + 20 && win->y0 + 3 <= _my && _my < win->y0 + 21) {
-			// close button‚ğƒvƒŒƒX‚µ‚½
+			// close buttonã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ
 			press->pos = CLOSE_BUTTON;
 		} else if (win->x0 + 1 <= _mx && _mx < win->x1 - 1 && win->y0 + 1 <= _my && _my < win->y0 + 21) {
-			/* title-bar‚ğƒvƒŒƒX‚µ‚½ */
+			/* title-barã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ */
 			if (pjob->free >= 2) {
-				/* ‹ó‚«‚ª\•ª‚É‚ ‚é */
+				/* ç©ºããŒååˆ†ã«ã‚ã‚‹ */
 				press->pos = TITLE_BAR;
 				press->mx0 = _mx;
 				press->my0 = _my;
@@ -2439,23 +2439,23 @@ void mousesignal_sub1(int _mx, int _my)
 		}
 	#elif (defined(CHO_OSASK))
 		if (win->x0 + 4 <= _mx && _mx < win->x0 + 20 && win->y0 + 4 <= _my && _my < win->y0 + 20) {
-			// close button‚ğƒvƒŒƒX‚µ‚½
+			// close buttonã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ
 			press->pos = CLOSE_BUTTON;
 		} else if (win->x0 + 1 <= _mx && _mx < win->x1 - 1 && win->y0 + 1 <= _my && _my < win->y0 + 21) {
-			/* title-bar‚ğƒvƒŒƒX‚µ‚½ */
+			/* title-barã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ */
 			if (pjob->free >= 2) {
-				/* ‹ó‚«‚ª\•ª‚É‚ ‚é */
+				/* ç©ºããŒååˆ†ã«ã‚ã‚‹ */
 				press->pos = TITLE_BAR;
 				press->mx0 = _mx;
 				press->my0 = _my;
 				writejob_n(2, 0x0028 /* move */, (int) win);
 			}
 		}
-	#elif (defined(NEWSTYLE)) /* ƒNƒ[ƒYƒ{ƒ^ƒ“‚Í‚ ‚è‚Ü‚¹‚ñ */
+	#elif (defined(NEWSTYLE)) /* ã‚¯ãƒ­ãƒ¼ã‚ºãƒœã‚¿ãƒ³ã¯ã‚ã‚Šã¾ã›ã‚“ */
 		if (win->x0 + 1 <= _mx && _mx < win->x1 - 1 && win->y0 + 1 <= _my && _my < win->y0 + 21) {
-			/* title-bar‚ğƒvƒŒƒX‚µ‚½ */
+			/* title-barã‚’ãƒ—ãƒ¬ã‚¹ã—ãŸ */
 			if (pjob->free >= 2) {
-				/* ‹ó‚«‚ª\•ª‚É‚ ‚é */
+				/* ç©ºããŒååˆ†ã«ã‚ã‚‹ */
 				press->pos = TITLE_BAR;
 				press->mx0 = _mx;
 				press->my0 = _my;
@@ -2467,7 +2467,7 @@ void mousesignal_sub1(int _mx, int _my)
 }
 
 void mousesignal_sub0(int _mx, int _my)
-/* ¶ƒ{ƒ^ƒ“‚ª•ú‚³‚ê‚½‚Æ‚«‚Ì‘g‚İ‚İƒCƒxƒ“ƒg */
+/* å·¦ãƒœã‚¿ãƒ³ãŒæ”¾ã•ã‚ŒãŸã¨ãã®çµ„ã¿è¾¼ã¿ã‚¤ãƒ™ãƒ³ãƒˆ */
 {
 	struct STR_JOB *pjob = &job;
 	struct STR_PRESS *press = &press0;
@@ -2498,7 +2498,7 @@ void mousesignal_sub0(int _mx, int _my)
 
 	case TITLE_BAR:
 		if (press->win == pjob->win && pjob->movewin4_ready != 0) {
-			/* ˆÚ“®æŠm’èƒVƒOƒiƒ‹‚ğ‘—‚é */
+			/* ç§»å‹•å…ˆç¢ºå®šã‚·ã‚°ãƒŠãƒ«ã‚’é€ã‚‹ */
 			job_movewin4(0x00f0 /* Enter */);
 		}
 	//	break;
@@ -2543,7 +2543,7 @@ void runjobnext()
 		if ((pjob->now = *pjob->rp) == 0)
 			return;
 
-		readjob(); // ‚©‚ç“Ç‚İ
+		readjob(); // ã‹ã‚‰èª­ã¿
 		func1 = NULL;
 		switch (pjob->now) {
 		case 0x0020 /* open new window */:
@@ -2620,7 +2620,7 @@ void job_openwin0(struct WM0_WINDOW *win)
 	int ysize = sgg_wm0_winsizey(&win->sgg);
 	int i;
 
-	// ‚Ü‚¸AÀ•W‚ğŒˆ‚ß‚é
+	// ã¾ãšã€åº§æ¨™ã‚’æ±ºã‚ã‚‹
 	if (top == NULL) {
 		// for pokon0
 		win->x0 = 16;
@@ -2633,14 +2633,14 @@ void job_openwin0(struct WM0_WINDOW *win)
 			win->x0 = (screen.x2 - xsize) / 2;
 			win->y0 = RESERVELINE0 + (screen.y2 - (RESERVELINE0 + RESERVELINE1) - ysize) / 2;
 		}
-		win->x0 &= ~(screen.moveunit - 1); // ƒI[ƒvƒ“ˆÊ’u‚ğ8‚Ì”{”‚É‚È‚é‚æ‚¤‚É’²®
+		win->x0 &= â€¾(screen.moveunit - 1); // ã‚ªãƒ¼ãƒ—ãƒ³ä½ç½®ã‚’8ã®å€æ•°ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´
 		for (i = 0; i < MAXWINDEF - 1; i++) {
 			windef[i].x = windef[i + 1].x;
 			windef[i].y = windef[i + 1].y;
 		}
 		windef[MAXWINDEF - 1].x = 0x10000000;
 		if (win->x0 < 0 || win->x0 > screen.x2 || win->y0 < RESERVELINE0 || win->y0 + ysize + RESERVELINE1 > screen.y2) {
-			win->up = win->down = win; /* ŒÇ—§ */
+			win->up = win->down = win; /* å­¤ç«‹ */
 			sgg_wm0s_close(&win->sgg);
 			win->job_flag0 = WINFLG_NOWINDOW;
 			win->condition = 0;
@@ -2652,16 +2652,16 @@ void job_openwin0(struct WM0_WINDOW *win)
 		}
 	}
 
-	// Šeíƒpƒ‰ƒ[ƒ^[‚Ì‰Šú‰»
+	// å„ç¨®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã®åˆæœŸåŒ–
 	win->x1 = win->x0 + xsize;
 	win->y1 = win->y0 + ysize;
 	win->job_flag0 = WINFLG_MUSTREDRAW | WINFLG_OVERRIDEDISABLED; // override-disable & must-redraw
 
-	// “ü—ÍƒAƒNƒeƒBƒu‚ğ•ÏX
-	redirect_input(win); // ‚±‚ÌŠÖ”‚ÍAƒEƒBƒ“ƒhƒE§Œä‚Í‚µ‚È‚¢
+	// å…¥åŠ›ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚’å¤‰æ›´
+	redirect_input(win); // ã“ã®é–¢æ•°ã¯ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åˆ¶å¾¡ã¯ã—ãªã„
 //	iactive = win;
 
-	// Ú‘±
+	// æ¥ç¶š
 	if (top == NULL)
 		win->up = win->down = top = win;
 	else {
@@ -2674,20 +2674,20 @@ void job_openwin0(struct WM0_WINDOW *win)
 	}
 
 	sgg_wm0s_movewindow(&win->sgg, win->x0, win->y0);
-	sgg_wm0s_setstatus(&win->sgg, win->condition = 0x03 /* bit0:•\¦, bit1:“ü—Í */);
+	sgg_wm0s_setstatus(&win->sgg, win->condition = 0x03 /* bit0:è¡¨ç¤º, bit1:å…¥åŠ› */);
 	job_general1();
 	return;
 }
 
 void redirect_input(struct WM0_WINDOW *win)
 {
-	// ƒL[“ü—ÍƒVƒOƒiƒ‹‚Ì‘Î‰‚Ã‚¯‚ğ‰Šú‰»
+	// ã‚­ãƒ¼å…¥åŠ›ã‚·ã‚°ãƒŠãƒ«ã®å¯¾å¿œã¥ã‘ã‚’åˆæœŸåŒ–
 //	sgg_wm0_definesignal0(255, 0x0100, 0);
 //	sgg_wm0_definesignal3com();
 	sgg_execcmd(&defbindcommand);
 
-	// winman0‚ÌƒL[‘€ì‚ğ“o˜^(F9`F12)
-	sgg_wm0_definesignal3(3, 0x0100, 0x00701089 /* F9`F12 */,
+	// winman0ã®ã‚­ãƒ¼æ“ä½œã‚’ç™»éŒ²(F9ã€œF12)
+	sgg_wm0_definesignal3(3, 0x0100, 0x00701089 /* F9ã€œF12 */,
 		0x3240 /* winman0 signalbox */, 0x7f000001, 0x0200);
 	// for WIN9X & WIN31 by koyanagi
 	#if (defined(WIN9X) || defined(WIN31))
@@ -2698,7 +2698,7 @@ void redirect_input(struct WM0_WINDOW *win)
 	#endif
 
 	sgg_wm0_definesignal3(0, 0x0100, 0x00701085 /* F5 */,
-		0x3240 /* winman0 signalbox */, 0x7f000001, 0x0240); /* JPN16$.FNT‚Ì‘¦ƒ[ƒh */
+		0x3240 /* winman0 signalbox */, 0x7f000001, 0x0240); /* JPN16$.FNTã®å³æ™‚ãƒ­ãƒ¼ãƒ‰ */
 	sgg_wm0_definesignal3(0, 0x0100, 0x00701087 /* F7 */,
 		0x3240 /* winman0 signalbox */, 0x7f000001, 0x0248); /* load wallpaper */
 
@@ -2713,7 +2713,7 @@ void redirect_input(struct WM0_WINDOW *win)
 			0x3240 /* winman0 signalbox */, 0x7f000001, 0x0220);
 	#endif
 	#if (defined(NEC98))
-		sgg_wm0_definesignal3(1, 0x0100, 0x20701089 /* Ctrl+F9`F10 */,
+		sgg_wm0_definesignal3(1, 0x0100, 0x20701089 /* Ctrl+F9ã€œF10 */,
 			0x3240 /* winman0 signalbox */, 0x7f000001, 0x0202);
 		sgg_wm0_definesignal3(0, 0x0100, 0x20701081 /* Ctrl+F1 */,
 			0x3240 /* winman0 signalbox */, 0x7f000001, 0x0999);
@@ -2744,26 +2744,26 @@ void job_activewin0(struct WM0_WINDOW *win)
 	struct WM0_WINDOW *win_up, *win_down;
 
 	if (top == win) {
-		/* top‚Æiactive‚Íí‚É“™‚µ‚¢ */
+		/* topã¨iactiveã¯å¸¸ã«ç­‰ã—ã„ */
 		job.now = 0;
 		return;
 	}
 
-	/* win‚ğƒŠƒXƒg‚©‚çˆê“xØ‚è—£‚· */
+	/* winã‚’ãƒªã‚¹ãƒˆã‹ã‚‰ä¸€åº¦åˆ‡ã‚Šé›¢ã™ */
 	win_up = win->up;
 	win_down = win->down;
 	win_up->down = win_down;
 	win_down->up = win_up;
 
-	/* ÄÚ‘± */
+	/* å†æ¥ç¶š */
 	win->up = win_down = top->up;
 	win->down = top;
 	top->up = win;
 	win_down->down = win;
 	top = win;
 
-	/* “ü—ÍƒAƒNƒeƒBƒu‚ğ•ÏX */
-	redirect_input(win); /* ‚±‚ÌŠÖ”‚ÍAƒEƒBƒ“ƒhƒE§Œä‚Í‚µ‚È‚¢ */
+	/* å…¥åŠ›ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚’å¤‰æ›´ */
+	redirect_input(win); /* ã“ã®é–¢æ•°ã¯ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åˆ¶å¾¡ã¯ã—ãªã„ */
 //	iactive = win;
 //	win = top;
 //	do {	/* deleted by I.Tak. (Jenny1.2) */
@@ -2775,15 +2775,15 @@ void job_activewin0(struct WM0_WINDOW *win)
 
 void job_movewin0(struct WM0_WINDOW *win)
 {
-	// win‚ÍA•K‚¸top‚ÅA‚©‚ÂAiactive‚Å‚ ‚é‚±‚Æ
+	// winã¯ã€å¿…ãštopã§ã€ã‹ã¤ã€iactiveã§ã‚ã‚‹ã“ã¨
 	struct STR_JOB *pjob = &job;
 
 	pjob->win = top /* win */;
 
-	/* ‚Ç‚¤‚¹Ä•`‰æ‚·‚é‚Ì‚¾‚©‚ç0‚É‚µ‚Ä‚µ‚Ü‚¤B
-	   •K‚¸0‚É‚µ‚Ä‚¨‚©‚È‚¢‚Æ, ƒEƒBƒ“ƒhƒE‚ğÁ‚µ‚Ä‚¢‚éÅ’†‚É
-	   •`‰æ‚³‚ê‚½‚è‚µ‚Ä‚â‚Á‚©‚¢‚¾BÁ‚·’¼‘O‚É•`‰æ‹Ö~‚É
-	   ‚·‚éè‚à‚ ‚é‚ªB*/
+	/* ã©ã†ã›å†æç”»ã™ã‚‹ã®ã ã‹ã‚‰0ã«ã—ã¦ã—ã¾ã†ã€‚
+	   å¿…ãš0ã«ã—ã¦ãŠã‹ãªã„ã¨, ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¶ˆã—ã¦ã„ã‚‹æœ€ä¸­ã«
+	   æç”»ã•ã‚ŒãŸã‚Šã—ã¦ã‚„ã£ã‹ã„ã ã€‚æ¶ˆã™ç›´å‰ã«æç”»ç¦æ­¢ã«
+	   ã™ã‚‹æ‰‹ã‚‚ã‚ã‚‹ãŒã€‚*/
 	win->condition = 0;
 	pjob->count = 1;
 	pjob->func = job_movewin1;
@@ -2792,13 +2792,13 @@ void job_movewin0(struct WM0_WINDOW *win)
 		win->job_flag0 = 0;
 	} while ((win = win->down) != top);
 
-	// ƒL[“ü—ÍƒVƒOƒiƒ‹‚Ì‘Î‰‚Ã‚¯‚ğ‰Šú‰»
+	// ã‚­ãƒ¼å…¥åŠ›ã‚·ã‚°ãƒŠãƒ«ã®å¯¾å¿œã¥ã‘ã‚’åˆæœŸåŒ–
 //	sgg_wm0_definesignal0(255, 0x0100, 0);
 //	sgg_wm0_definesignal3com();
 	sgg_execcmd(&defbindcommand);
 
 #if 0	/* deleted by I.Tak. (Jenny1.2) */
-	// ‚Æ‚è‚ ‚¦‚¸A‘S‚Ä‚ÌƒEƒBƒ“ƒhƒE‚Ì‰æ–ÊXVŒ ‚ğˆê“I‚É”’D‚·‚é
+	// ã¨ã‚Šã‚ãˆãšã€å…¨ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”»é¢æ›´æ–°æ¨©ã‚’ä¸€æ™‚çš„ã«å‰¥å¥ªã™ã‚‹
 	pjob->count = 0;
 	win = top;
 	pjob->func = job_movewin1;
@@ -2811,9 +2811,9 @@ void job_movewin0(struct WM0_WINDOW *win)
 		win = win->down;
 	} while (win != top);
 
-//	ˆÈ‰º‚Í¬—§‚µ‚È‚¢(Å’áˆê‚Â‚Ío—ÍƒAƒNƒeƒBƒu‚ÈƒEƒBƒ“ƒhƒE‚ª‘¶İ‚·‚é‚©‚ç)
+//	ä»¥ä¸‹ã¯æˆç«‹ã—ãªã„(æœ€ä½ä¸€ã¤ã¯å‡ºåŠ›ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒå­˜åœ¨ã™ã‚‹ã‹ã‚‰)
 //	if (pjob->count == 0) {
-//		job_movewin2(); // ‚·‚®‚ÉƒEƒBƒ“ƒhƒE˜g•\¦‚Ö
+//		job_movewin2(); // ã™ãã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ è¡¨ç¤ºã¸
 //	}
 #else	/* added by I.Tak. (Jenny1.2) */
 	pjob->movewin_x0 = pjob->movewin_x = win->x0;
@@ -2834,7 +2834,7 @@ void job_movewin1(const int cmd, const int handle)
 		#endif
 		return;
 	}
-	// 0x00c0‚µ‚©‚±‚È‚¢
+	// 0x00c0ã—ã‹ã“ãªã„
 	if (--job.count == 0)
 		job_movewin2();
 	return;
@@ -2845,13 +2845,13 @@ void job_movewin2()
 	struct STR_JOB *pjob = &job;
 	struct STR_PRESS *press = &press0;
 	struct WM0_WINDOW *win = pjob->win;
-	// ƒVƒOƒiƒ‹‚ğéŒ¾(0x00d0`0x00d3, 0x00f0)
+	// ã‚·ã‚°ãƒŠãƒ«ã‚’å®£è¨€(0x00d0ã€œ0x00d3, 0x00f0)
 	sgg_wm0_definesignal3(3, 0x0100, 0x00ac /* left */,
 		0x3240 /* winman0 signalbox */, 0x7f000001, 0x00d0);
 	sgg_wm0_definesignal3(0, 0x0100, 0x00a0 /* Enter */,
 		0x3240 /* winman0 signalbox */, 0x7f000001, 0x00f0);
 
-	// ˜g‚ğ•`‚­
+	// æ ã‚’æã
 //	pjob->movewin_x0 = pjob->movewin_x = win->x0;	/* deleted by I.Tak. (Jenny1.2) */
 //	pjob->movewin_y0 = pjob->movewin_y = win->y0;
 	job_movewin3();
@@ -2944,13 +2944,13 @@ void job_movewin4(int sig)
 		//		flag0 = WINFLG_MUSTREDRAW | WINFLG_OVERRIDEDISABLED; // override-disabled & must-redraw
 		//	win1->job_flag0 = flag0;
 			/* added by I.Tak. (Jenny1.2) */
-			/* Å‰‚©‚ç•`‰æ‹Ö~‚Å, ƒWƒ‡ƒuI—¹Œã‚à•`‰æ‹Ö~
-			   ‚ÌƒEƒBƒ“ƒhƒE‚Íjob_general‚Å‚ÍÄ•`‰æ‚³‚ê‚È‚¢ */
+			/* æœ€åˆã‹ã‚‰æç”»ç¦æ­¢ã§, ã‚¸ãƒ§ãƒ–çµ‚äº†å¾Œã‚‚æç”»ç¦æ­¢
+			   ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¯job_generalã§ã¯å†æç”»ã•ã‚Œãªã„ */
 			if ((win1->condition & 0x01) == 0 && overrapwin(win0, win1))
 				win1->job_flag0 |= WINFLG_MUSTREDRAW;
 		} while ((win1 = win1->down) != win0);
 
-		// ƒEƒBƒ“ƒhƒE‚ğÁ‚·
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¶ˆã™
 		putwallpaper(win0->x0, win0->y0, win0->x1, win0->y1);
 
 		win0->x0 = x0;
@@ -2969,7 +2969,7 @@ void job_movewin4m(int x, int y)
 	struct STR_JOB *pjob = &job;
 	struct WM0_WINDOW *win0 = pjob->win;
 
-	int x0 = pjob->movewin_x0 + (x - press0.mx0) & ~(screen.moveunit - 1);
+	int x0 = pjob->movewin_x0 + (x - press0.mx0) & â€¾(screen.moveunit - 1);
 	int y0 = pjob->movewin_y0 + y - press0.my0;
 	int xsize = win0->x1 - win0->x0;
 	int ysize = win0->y1 - win0->y0;
@@ -2977,7 +2977,7 @@ void job_movewin4m(int x, int y)
 	if (x0 < 0)
 		x0 = 0;
 	if (x0 > screen.x2 - xsize)
-		x0 = (screen.x2 - xsize) & ~(screen.moveunit - 1);
+		x0 = (screen.x2 - xsize) & â€¾(screen.moveunit - 1);
 	if (y0 < RESERVELINE0)
 		y0 = RESERVELINE0;
 	if (y0 > screen.y2 - ysize - RESERVELINE1)
@@ -3000,8 +3000,8 @@ void job_movewin4m(int x, int y)
 	return;
 }
 
-/* ƒEƒBƒ“ƒhƒE˜g•`‰æ‚Ì‘O‚É“–‚½‚è”»’è‚ğ‚µ, •`‰æ‹Ö~‚â·•ª•`‰æ‚ğ”­s‚·‚éB
-   ƒVƒOƒiƒ‹”­s”‚ğ•Ô‚·‚Ì‚Å, •Ô‚è’l‚ª”ñ—ë‚È‚çƒVƒOƒiƒ‹‚ğ‘Ò‚Â‚±‚ÆB */
+/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ æç”»ã®å‰ã«å½“ãŸã‚Šåˆ¤å®šã‚’ã—, æç”»ç¦æ­¢ã‚„å·®åˆ†æç”»ã‚’ç™ºè¡Œã™ã‚‹ã€‚
+   ã‚·ã‚°ãƒŠãƒ«ç™ºè¡Œæ•°ã‚’è¿”ã™ã®ã§, è¿”ã‚Šå€¤ãŒéé›¶ãªã‚‰ã‚·ã‚°ãƒŠãƒ«ã‚’å¾…ã¤ã“ã¨ã€‚ */
 int job_movewin5()
 {
 	struct STR_JOB *pjob = &job;
@@ -3024,7 +3024,7 @@ int job_movewin5()
 				}
 			} else if (flag == 0) {
 				count++;
-				win->job_flag0 &= ~WINFLG_OVERRIDEDISABLED;
+				win->job_flag0 &= â€¾WINFLG_OVERRIDEDISABLED;
 				sgg_wm0s_accessenable(&win->sgg);
 				sgg_wm0s_redrawdif(&win->sgg);
 			}
@@ -3037,26 +3037,26 @@ int job_movewin5()
 	return count;
 }
 
-/* •`‰æ‹Ö~‚È‚Ç‚ª‘S‚ÄóM‚³‚ê‚½‚ç˜g‚ğ•`‚­ */
+/* æç”»ç¦æ­¢ãªã©ãŒå…¨ã¦å—ä¿¡ã•ã‚ŒãŸã‚‰æ ã‚’æã */
 void job_movewin6(const int cmd, const int handle)
 {
 	if ((cmd & 0x00c3) != 0x00c0)
 		return;
-	// 0x00c0‚©0x00c4‚µ‚©‚±‚È‚¢
+	// 0x00c0ã‹0x00c4ã—ã‹ã“ãªã„
 	if (--job.count == 0)
 		job_movewin3();
 	return;
 }
 
 void job_closewin0(struct WM0_WINDOW *win0)
-// ‚±‚ÌƒEƒBƒ“ƒhƒE‚ÍŠù‚Éaccessdisable‚É‚È‚Á‚Ä‚¢‚é‚±‚Æ‚ª‘O’ñ
+// ã“ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¯æ—¢ã«accessdisableã«ãªã£ã¦ã„ã‚‹ã“ã¨ãŒå‰æ
 {
 	struct STR_JOB *pjob = &job;
 	struct WM0_WINDOW *win1, *win_up, *win_down;
 	struct DEFINESIGNAL *dsp;
 	struct MOSWINSIG *mws;
 
-	/* win0‚ğƒŠƒXƒg‚©‚çØ‚è—£‚· */
+	/* win0ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰åˆ‡ã‚Šé›¢ã™ */
 	win_up = win0->up;
 	win_down = win0->down;
 	win_up->down = win_down;
@@ -3106,10 +3106,10 @@ void job_closewin0(struct WM0_WINDOW *win0)
 	//	iactive = top;
 	}
 
-	/* Å‰‚©‚ç•`‰æ‹Ö~‚Å, ƒWƒ‡ƒuI—¹Œã‚à•`‰æ‹Ö~
-	   ‚ÌƒEƒBƒ“ƒhƒE‚Íjob_general‚ÅÄ•`‰æ‚³‚ê‚È‚¢ (Jenny1.2) */
-	/* ã‹LğŒ‚ÉŠY“–‚·‚éƒEƒBƒ“ƒhƒE‚Í‚ ‚è‚¦‚È‚¢‹C‚ª‚·‚é‚Ì‚ÅA
-		I.Tak.‚³‚ñ‚Ì‚»‚Ì”»’è•”•ª‚ğE‚µ‚Ä‚İ‚éB by K, Twitchell1 */
+	/* æœ€åˆã‹ã‚‰æç”»ç¦æ­¢ã§, ã‚¸ãƒ§ãƒ–çµ‚äº†å¾Œã‚‚æç”»ç¦æ­¢
+	   ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¯job_generalã§å†æç”»ã•ã‚Œãªã„ (Jenny1.2) */
+	/* ä¸Šè¨˜æ¡ä»¶ã«è©²å½“ã™ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¯ã‚ã‚Šãˆãªã„æ°—ãŒã™ã‚‹ã®ã§ã€
+		I.Tak.ã•ã‚“ã®ãã®åˆ¤å®šéƒ¨åˆ†ã‚’æ®ºã—ã¦ã¿ã‚‹ã€‚ by K, Twitchell1 */
 	win1 = top;
 	do {
 		/* deleted by I.Tak. (Jenny1.2) */
@@ -3130,7 +3130,7 @@ void job_closewin0(struct WM0_WINDOW *win0)
 
 no_window:
 
-	/* ƒEƒBƒ“ƒhƒE‚ğÁ‚· */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¶ˆã™ */
 	putwallpaper(win0->x0, win0->y0, win0->x1, win0->y1);
 	chain_unuse(win0);
 //	if (pjob->count == 0)	/* deleted by I.Tak. (Jenny1.2) */
@@ -3154,7 +3154,7 @@ void job_closewin1(const int cmd, const int handle)
 		#endif
 		return;
 	}
-	win->job_flag0 &= ~WINFLG_WAITDISABLE;
+	win->job_flag0 &= â€¾WINFLG_WAITDISABLE;
 	if (--job.count == 0)
 		job_general1();
 	return;
@@ -3162,13 +3162,13 @@ void job_closewin1(const int cmd, const int handle)
 
 #endif
 
-// ƒEƒBƒ“ƒhƒEÁ‹‚Ìê‡AÁ‚µ‚½‚¢ƒEƒBƒ“ƒhƒE‚Æd‚È‚Á‚Ä‚¢‚é‚à‚Ì‚ğ‘S‚Ä"must-redraw"‚É‚µ‚½‚ ‚Æ
-// ƒEƒBƒ“ƒhƒE‚ğÁ‚µA‚ ‚Æ‚Í©“®‚É”C‚¹‚é
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ¶ˆå»ã®å ´åˆã€æ¶ˆã—ãŸã„ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¨é‡ãªã£ã¦ã„ã‚‹ã‚‚ã®ã‚’å…¨ã¦"must-redraw"ã«ã—ãŸã‚ã¨
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¶ˆã—ã€ã‚ã¨ã¯è‡ªå‹•ã«ä»»ã›ã‚‹
 
-// ƒEƒBƒ“ƒhƒEƒI[ƒvƒ“‚Ìê‡A’Ç‰Á‚µ‚ÄAŒã‚Í©“®‚É”C‚¹‚é
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ¼ãƒ—ãƒ³ã®å ´åˆã€è¿½åŠ ã—ã¦ã€å¾Œã¯è‡ªå‹•ã«ä»»ã›ã‚‹
 
-// ƒEƒBƒ“ƒhƒEˆÚ“®‚Ìê‡AˆÚ“®Œ³‚Æd‚È‚Á‚Ä‚¢‚é‚à‚Ì‚ğ‘S‚Ä"must-redraw"‚É‚µ‚½‚ ‚Æ
-// ‚à‚Æ‚¢‚½êŠ‚ğÁ‚µA‚ ‚Æ‚Í©“®‚É”C‚¹‚é
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç§»å‹•ã®å ´åˆã€ç§»å‹•å…ƒã¨é‡ãªã£ã¦ã„ã‚‹ã‚‚ã®ã‚’å…¨ã¦"must-redraw"ã«ã—ãŸã‚ã¨
+// ã‚‚ã¨ã„ãŸå ´æ‰€ã‚’æ¶ˆã—ã€ã‚ã¨ã¯è‡ªå‹•ã«ä»»ã›ã‚‹
 
 
 void job_general1()
@@ -3183,12 +3183,12 @@ void job_general1()
    job_flag0.bit30 ... 0:normal 1:must-redraw-difference
    job_flag0.bit31 ... 0:normal 1:must-redraw
 
-   condition‚Íjob‚É“ü‚é‘O‚Ìó‘Ô
-   job_flag0‚Ì‘Î‰‚·‚éƒrƒbƒg‚ÍjobI—¹Œã‚Ìó‘Ô (‚É‚È‚é‚æ‚¤‚ÉŒvZ‚µ‚È‚¨‚·)
-   job_flag0‚ÌOVERRIDEDISABLED ‚Í, ‚Æ‚É‚©‚­Œ»İ‚Ì•`‰æ‹Ö~ó‘Ô */
+   conditionã¯jobã«å…¥ã‚‹å‰ã®çŠ¶æ…‹
+   job_flag0ã®å¯¾å¿œã™ã‚‹ãƒ“ãƒƒãƒˆã¯jobçµ‚äº†å¾Œã®çŠ¶æ…‹ (ã«ãªã‚‹ã‚ˆã†ã«è¨ˆç®—ã—ãªãŠã™)
+   job_flag0ã®OVERRIDEDISABLED ã¯, ã¨ã«ã‹ãç¾åœ¨ã®æç”»ç¦æ­¢çŠ¶æ…‹ */
 {
 	struct STR_JOB *pjob = &job;
-	struct WM0_WINDOW *win0, *win1, *bottom, *top_ = top /* ‚‘¬‰»AƒRƒ“ƒpƒNƒg‰»‚Ì‚½‚ß */;
+	struct WM0_WINDOW *win0, *win1, *bottom, *top_ = top /* é«˜é€ŸåŒ–ã€ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆåŒ–ã®ãŸã‚ */;
 	int flag0;
 
 	if (top_ == NULL) {
@@ -3200,35 +3200,35 @@ void job_general1()
 	/* accessenable & not input active */
 	win0 = top_;
 	do {
-		/* “ü—Í‚È‚µ, ‘Ò‚¿‚È‚µ, ‚Æ‚è‚ ‚¦‚¸•`‰æ‹–‰Â */
-		/* not-input-active & no-waiting(~0x0302), accessenable(1) */
-		flag0 = (win0->job_flag0 & ~0x0302) | 1;
-		/* •`‰æ‹Ö~‚¾‚Á‚½‚â‚Â‚É‚Íoverride-disabled */
+		/* å…¥åŠ›ãªã—, å¾…ã¡ãªã—, ã¨ã‚Šã‚ãˆãšæç”»è¨±å¯ */
+		/* not-input-active & no-waiting(â€¾0x0302), accessenable(1) */
+		flag0 = (win0->job_flag0 & â€¾0x0302) | 1;
+		/* æç”»ç¦æ­¢ã ã£ãŸã‚„ã¤ã«ã¯override-disabled */
 		if ((win0->condition & 0x01) == 0)
 			flag0 |= WINFLG_OVERRIDEDISABLED;
 		win0->job_flag0 = flag0;
 	} while ((win0 = win0->down) != top_);
 
-	/* ã‚©‚çŒ©‚Ä‚¢‚Á‚ÄAd‚È‚Á‚Ä‚¢‚é‚à‚Ì‚Íaccessdisable */
+	/* ä¸Šã‹ã‚‰è¦‹ã¦ã„ã£ã¦ã€é‡ãªã£ã¦ã„ã‚‹ã‚‚ã®ã¯accessdisable */
 	win0 = top_;
 	do {
 		for (win1 = win0->down; win1 != top_; win1 = win1->down) {
-			if (win1->job_flag0 & 0x01) { /* ‚±‚Ìif•¶‚ª‚È‚­‚Ä‚àÀsŒ‹‰Ê‚Í•Ï‚í‚ç‚È‚¢‚ªA‚‘¬‰»‚Ì‚½‚ß */
+			if (win1->job_flag0 & 0x01) { /* ã“ã®ifæ–‡ãŒãªãã¦ã‚‚å®Ÿè¡Œçµæœã¯å¤‰ã‚ã‚‰ãªã„ãŒã€é«˜é€ŸåŒ–ã®ãŸã‚ */
 				if (overrapwin(win0, win1))
-					win1->job_flag0 &= ~0x01; /* accessdisable */
+					win1->job_flag0 &= â€¾0x01; /* accessdisable */
 			}
 		}
 	} while ((win0 = win0->down) != top_);
 
-	/* top‚Íjob_flag0.bit 1 = 1; */
+	/* topã¯job_flag0.bit 1 = 1; */
 	top_->job_flag0 |= 0x02; /* input-active */
 
-	/* ‰º‚©‚çŒ©‚Ä‚¢‚Á‚ÄAcondition‚ª•Ï‰»‚·‚é—\’è‚È‚ç (·•ª) Ä•`‰æ
-	   ‚»‚Ì‚Æ‚«©•ª‚Éd‚È‚Á‚Ä‚¢‚éã‚Ì‚â‚Â‘S‚Ä‚àÄ•`‰æ */
-	/* ‚»‚ê‚Ü‚Å•`‰æ‹–‰Â‚Å‚ ‚Á‚½‚È‚ç, ·•ª•`‰æ‚ÅÏ‚Ü‚¹‚é */
+	/* ä¸‹ã‹ã‚‰è¦‹ã¦ã„ã£ã¦ã€conditionãŒå¤‰åŒ–ã™ã‚‹äºˆå®šãªã‚‰ (å·®åˆ†) å†æç”»
+	   ãã®ã¨ãè‡ªåˆ†ã«é‡ãªã£ã¦ã„ã‚‹ä¸Šã®ã‚„ã¤å…¨ã¦ã‚‚å†æç”» */
+	/* ãã‚Œã¾ã§æç”»è¨±å¯ã§ã‚ã£ãŸãªã‚‰, å·®åˆ†æç”»ã§æ¸ˆã¾ã›ã‚‹ */
 	pjob->count = 0;	/* added by I.Tak. (Jenny1.2) */
 	pjob->func = job_general2;	/* added by I.Tak. (Jenny1.2) */
-	win0 = bottom = top_->up; /* ˆê”Ôã‚Ìã‚ÍAˆê”Ô‰º */
+	win0 = bottom = top_->up; /* ä¸€ç•ªä¸Šã®ä¸Šã¯ã€ä¸€ç•ªä¸‹ */
 	do {
 		flag0 = win0->job_flag0;
 		if ((flag0 & (WINFLG_OVERRIDEDISABLED | 0x01)) == (WINFLG_OVERRIDEDISABLED | 0x01)
@@ -3238,13 +3238,13 @@ void job_general1()
 				flag0 |= WINFLG_MUSTREDRAWDIF;
 			else
 				flag0 |= WINFLG_MUSTREDRAW;
-				/* Ä•`‰æ‚Æ·•ª•`‰æ‚ª“¯‚É—§‚Â‚±‚Æ‚à‚ ‚é‚¯‚Ç
-				   Ä•`‰æ‚ğ—Dæ‚·‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚é */
+				/* å†æç”»ã¨å·®åˆ†æç”»ãŒåŒæ™‚ã«ç«‹ã¤ã“ã¨ã‚‚ã‚ã‚‹ã‘ã©
+				   å†æç”»ã‚’å„ªå…ˆã™ã‚‹ã‚ˆã†ã«ãªã£ã¦ã„ã‚‹ */
 			win0->job_flag0 = flag0;
 		}
 		if (flag0 & WINFLG_MUSTREDRAW) {
 			for (win1 = win0->up; win1 != bottom; win1 = win1->up) {
-				if ((win1->job_flag0 & WINFLG_MUSTREDRAW) == 0) { /* ‚±‚Ìif•¶‚ª‚È‚­‚Ä‚àÀsŒ‹‰Ê‚Í•Ï‚í‚ç‚È‚¢‚ªA‚‘¬‰»‚Ì‚½‚ß */
+				if ((win1->job_flag0 & WINFLG_MUSTREDRAW) == 0) { /* ã“ã®ifæ–‡ãŒãªãã¦ã‚‚å®Ÿè¡Œçµæœã¯å¤‰ã‚ã‚‰ãªã„ãŒã€é«˜é€ŸåŒ–ã®ãŸã‚ */
 					if (overrapwin(win0, win1))
 						win1->job_flag0 |= WINFLG_MUSTREDRAW; /* must-redraw */
 				}
@@ -3253,8 +3253,8 @@ void job_general1()
 	} while ((win0 = win0->down) != bottom);
 
 #if 0	/* deleted by I.Tak. (Jenny1.2) */
-	/* redraw‚ğ—\’è‚µ‚Ä‚¢‚éƒEƒBƒ“ƒhƒE‚ÅA‘¼‚Ìredraw—\’èƒEƒBƒ“ƒhƒE‚ÆƒI[ƒo[ƒ‰ƒbƒv‚µ‚Ä‚¢‚é‚à‚Ì‚ÍA
-		‘S‚Äoverride-accessdisabled‚É‚·‚é */
+	/* redrawã‚’äºˆå®šã—ã¦ã„ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§ã€ä»–ã®redrawäºˆå®šã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¨ã‚ªãƒ¼ãƒãƒ¼ãƒ©ãƒƒãƒ—ã—ã¦ã„ã‚‹ã‚‚ã®ã¯ã€
+		å…¨ã¦override-accessdisabledã«ã™ã‚‹ */
 	pjob->count = 0;
 	pjob->func = job_general2;
 	win0 = top_;
@@ -3293,9 +3293,9 @@ void job_general2(const int cmd, const int handle)
 
 	if (cmd != 0 || handle != 0) {
 		win = handle2window(handle);
-		if (cmd == 0x00c0 /* XV’â~ó—ƒVƒOƒiƒ‹ */) {
+		if (cmd == 0x00c0 /* æ›´æ–°åœæ­¢å—ç†ã‚·ã‚°ãƒŠãƒ« */) {
 			if (win->job_flag0 & WINFLG_WAITDISABLE)
-				win->job_flag0 &= ~WINFLG_WAITDISABLE;
+				win->job_flag0 &= â€¾WINFLG_WAITDISABLE;
 			else {
 				#if (defined(DEBUG))
 					unsigned char s[12];
@@ -3308,9 +3308,9 @@ error:
 				#endif
 				return;
 			}
-		} else if (cmd == 0x00c4 /* •`‰æŠ®—¹ƒVƒOƒiƒ‹ */) {
+		} else if (cmd == 0x00c4 /* æç”»å®Œäº†ã‚·ã‚°ãƒŠãƒ« */) {
 			if (win->job_flag0 & WINFLG_WAITREDRAW)
-				win->job_flag0 &= ~WINFLG_WAITREDRAW;
+				win->job_flag0 &= â€¾WINFLG_WAITREDRAW;
 			else
 				goto error;
 		}
@@ -3322,8 +3322,8 @@ error:
 
 	if (win == top && win->job_flag0 == 0)
 		goto fin;
-		/* ‚Pü–Ú‚Åwin->job_flag0‚ª0‚É‚È‚é‚±‚Æ‚à‚ ‚è‚¤‚é */
-		// ‘S‚Ä‚Ìì‹Æ‚ªŠ®—¹
+		/* ï¼‘å‘¨ç›®ã§win->job_flag0ãŒ0ã«ãªã‚‹ã“ã¨ã‚‚ã‚ã‚Šã†ã‚‹ */
+		// å…¨ã¦ã®ä½œæ¥­ãŒå®Œäº†
 	if (win == NULL)
 		win = top;
 
@@ -3449,8 +3449,8 @@ void gapi_driverinit(int drv)
 			S _ _ _ _ _ _ O O T _ _ _ _ _ _ _ _,
 			S _ _ _ _ _ _ _ _ T _ _ _ _ _ _ _ _
 		#elif (defined(TMENU))
-			/* ƒIƒŠƒWƒiƒ‹ƒ}ƒEƒXƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“(16x16, mono) by I.Tak. */
-			/* TOWNS ‚Ì“à‘Ÿ‚É“ü‚Á‚Ä‚é‚à‚Ì‚É—‚¹‚Ä‚¢‚Ü‚·‚ªƒtƒ‹ƒXƒNƒ‰ƒbƒ`‚Å‚·B*/
+			/* ã‚ªãƒªã‚¸ãƒŠãƒ«ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³(16x16, mono) by I.Tak. */
+			/* TOWNS ã®å†…è‡“ã«å…¥ã£ã¦ã‚‹ã‚‚ã®ã«ä¼¼ã›ã¦ã„ã¾ã™ãŒãƒ•ãƒ«ã‚¹ã‚¯ãƒ©ãƒƒãƒã§ã™ã€‚*/
 			S O _ _ _ _ _ _ _ T _ _ _ _ _ _ _ _,
 			S O O _ _ _ _ _ _ T _ _ _ _ _ _ _ _,
 			S O _ O _ _ _ _ _ T _ _ _ _ _ _ _ _,
@@ -3549,7 +3549,7 @@ void gapi_driverinit(int drv)
 			S _ _ _ _ _ _ _ _ T _ _ _ _ _ _ O _,
 			S _ _ _ _ _ _ _ _ T _ _ _ _ _ _ _ _
 		#elif (defined(WIN31))
-			/* ‰ü‘¢Ï‚İƒ}ƒEƒXƒJ[ƒ\ƒ‹ƒpƒ^[ƒ“(16x16, mono) by ¹l */
+			/* æ”¹é€ æ¸ˆã¿ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³(16x16, mono) by è–äºº */
 			S O O _ _ _ _ _ _ T _ _ _ _ _ _ _ _,
 			S O _ O _ _ _ _ _ T _ _ _ _ _ _ _ _,
 			S O _ _ O _ _ _ _ T _ _ _ _ _ _ _ _,
@@ -3591,11 +3591,11 @@ void gapi_driverinit(int drv)
 	#undef	_
 	#undef	T
 
-	// close‚·‚é‚É‚·‚×‚Ä‚ÌƒEƒBƒ“ƒhƒE‚Ídisable‚É‚È‚Á‚Ä‚¢‚é‚Í‚¸‚È‚Ì‚ÅA
-	// ‚±‚±‚Å‚Ídisable‚É‚Í‚µ‚È‚¢
+	// closeã™ã‚‹æ™‚ã«ã™ã¹ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¯disableã«ãªã£ã¦ã„ã‚‹ã¯ãšãªã®ã§ã€
+	// ã“ã“ã§ã¯disableã«ã¯ã—ãªã„
 
 	#if (defined(PCAT))
-		/* sgg‚Åƒhƒ‰ƒCƒoØ‚è‘Ö‚¦‚ğw’è */
+		/* sggã§ãƒ‰ãƒ©ã‚¤ãƒåˆ‡ã‚Šæ›¿ãˆã‚’æŒ‡å®š */
 		sgg_execcmd0(0x0088, 0x0000, drv, 0x0000);
 		if (drv == 3)
 			drv++;
@@ -3603,18 +3603,18 @@ void gapi_driverinit(int drv)
 			screen.wallpaper_exist = 0;
 		screen.vbecoldep = drv;
 	#elif (defined(TOWNS))
-		/* sgg‚Åƒhƒ‰ƒCƒoØ‚è‘Ö‚¦‚ğw’è */
+		/* sggã§ãƒ‰ãƒ©ã‚¤ãƒåˆ‡ã‚Šæ›¿ãˆã‚’æŒ‡å®š */
 		sgg_execcmd0(0x0088, 0x0000, drv, 0x0000);
 		if (screen.vbecoldep != drv)
 			screen.wallpaper_exist = 0;
-		screen.vbecoldep = drv;	/* ãˆÊ‚É“ü‚Á‚Ä‚¢‚éƒ`ƒbƒvî•ñ‚Í */
-		screen.driver = drv >> 8; /* ‚±‚±‚É•Û‘¶ */
+		screen.vbecoldep = drv;	/* ä¸Šä½ã«å…¥ã£ã¦ã„ã‚‹ãƒãƒƒãƒ—æƒ…å ±ã¯ */
+		screen.driver = drv >> 8; /* ã“ã“ã«ä¿å­˜ */
 	#endif
 
 	sgg_wm0_gapicmd_0010_0000();
 	gapi_loadankfont();
 
-	/* ƒ}ƒEƒXƒpƒ^[ƒ““]‘— */
+	/* ãƒã‚¦ã‚¹ãƒ‘ã‚¿ãƒ¼ãƒ³è»¢é€ */
 	sgg_execcmd0(0x0050, 7 * 4, 0x0180, 0, 0x0001, &mcursor, 0x000c, 0x0000);
 	return;
 }
@@ -3638,7 +3638,7 @@ void job_setvgamode0(const int mode)
 		mx = 0x80000000;
 	}
 
-	// ‚Æ‚è‚ ‚¦‚¸A‘S‚Ä‚ÌƒEƒBƒ“ƒhƒE‚Ì‰æ–ÊXVŒ ‚ğˆê“I‚É”’D‚·‚é
+	// ã¨ã‚Šã‚ãˆãšã€å…¨ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”»é¢æ›´æ–°æ¨©ã‚’ä¸€æ™‚çš„ã«å‰¥å¥ªã™ã‚‹
 	pjob->count = 0;
 	pjob->func = job_setvgamode1;
 	if (win = top) {
@@ -3653,14 +3653,14 @@ void job_setvgamode0(const int mode)
 	}
 
 	if (pjob->count == 0)
-		job_setvgamode2(); // ‚·‚®‚ÉƒfƒBƒXƒvƒŒ[ƒ‚[ƒh•ÏX‚Ö
+		job_setvgamode2(); // ã™ãã«ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ãƒ¼ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã¸
 
 	return;
 }
 
 void job_setvgamode1(const int cmd, const int handle)
 {
-	// 0x00c0‚µ‚©‚±‚È‚¢
+	// 0x00c0ã—ã‹ã“ãªã„
 	if (--job.count == 0)
 		job_setvgamode2();
 	return;
@@ -3692,20 +3692,20 @@ void job_setvgamode2()
 		char bpp[] = {1,1,1,2,1,2};
 		int newmode, newdrv;
 
-		/* drvcode: TOWNS15 = 0x002, VESA16 = 0x102/0x202 ‚Æ‚µ‚½B
-		 * job.int0‚Í‰æ–Êƒ‚[ƒh”Ô† 0,1,2,3, 0x101, 0x102 ‚Ì‚Ç‚ê‚©B
-		 * gapi_drvinit (sgg(0x0088)) ‚É‚Ídrvcode‚ğ—^‚¦‚éB
+		/* drvcode: TOWNS15 = 0x002, VESA16 = 0x102/0x202 ã¨ã—ãŸã€‚
+		 * job.int0ã¯ç”»é¢ãƒ¢ãƒ¼ãƒ‰ç•ªå· 0,1,2,3, 0x101, 0x102 ã®ã©ã‚Œã‹ã€‚
+		 * gapi_drvinit (sgg(0x0088)) ã«ã¯drvcodeã‚’ä¸ãˆã‚‹ã€‚
 		 * 1:8bpp, 2:16bpp | 0x000=FM, 0x100=CL5430, 0x200=CL5434
 		 */
 		newmode = job.int0;
 		if ((newdrv = job.int0 & 0xff00))
 		  newmode = (newmode & 0xff) + 3;
 		if (newmode == 4)
-		  newdrv &= 0xff; /* CL8bpp‚ÍTOWNSƒlƒCƒeƒBƒ”‹¤—pƒhƒ‰ƒCƒo */
+		  newdrv &= 0xff; /* CL8bppã¯TOWNSãƒã‚¤ãƒ†ã‚£ãƒ´å…±ç”¨ãƒ‰ãƒ©ã‚¤ãƒ */
 		newdrv |= bpp[newmode];
 
 		if ((width[newmode] < screen.x2 || height[newmode] < screen.y2) && (win = top)) {
-			/* ‘SƒEƒBƒ“ƒhƒE‚ÌÀ•W”ÍˆÍ‚ğŠm”F(‚Í‚İo‚µ‚½‚ç‰æ–Ê‚ğØ‚è‘Ö‚¦‚È‚¢) */
+			/* å…¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åº§æ¨™ç¯„å›²ã‚’ç¢ºèª(ã¯ã¿å‡ºã—ãŸã‚‰ç”»é¢ã‚’åˆ‡ã‚Šæ›¿ãˆãªã„) */
 			do {
 				if (win->x1 > width[newmode] || win->y1 > height[newmode] - RESERVELINE1) {
 					job_general1();
@@ -3715,12 +3715,12 @@ void job_setvgamode2()
 			} while ((win = win->down) != top);
 		}
 
-		/* ‰æ–Êƒ‚[ƒh0İ’è(640x480x8bpp) */
-		/* ‰æ–Êƒ‚[ƒh1İ’è(768x512x8bpp) */
-		/* ‰æ–Êƒ‚[ƒh2İ’è(640x480ƒrƒfƒI) */
-		/* ‰æ–Êƒ‚[ƒh3İ’è(512x480x16bpp) */
-		/* ‰æ–Êƒ‚[ƒh4İ’è(1024x768x8bpp CLGD543x) */
-		/* ‰æ–Êƒ‚[ƒh5İ’è(800x600x16bpp CLGD543x) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰0è¨­å®š(640x480x8bpp) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰1è¨­å®š(768x512x8bpp) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰2è¨­å®š(640x480ãƒ“ãƒ‡ã‚ª) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰3è¨­å®š(512x480x16bpp) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰4è¨­å®š(1024x768x8bpp CLGD543x) */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰5è¨­å®š(800x600x16bpp CLGD543x) */
 		screen.x2 = width[newmode];
 		screen.y2 = height[newmode];
 		if (mx > screen.x2)
@@ -3734,17 +3734,17 @@ void job_setvgamode2()
 			  screen.backcolor = 0;
 		#endif
 
-		/* GAPI·‚µ‘Ö‚¦ vesa16‚Ì‚Æ‚«‚Í‰æ–Êƒ‚[ƒh•ÏX‚à“¯‚É‚â‚é */
+		/* GAPIå·®ã—æ›¿ãˆ vesa16ã®ã¨ãã¯ç”»é¢ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚‚åŒæ™‚ã«ã‚„ã‚‹ */
 		gapi_driverinit(newdrv);
-		if ((newdrv & 0xff) == 2) /* towns15/vesa16‚Éx2,y2‚ğ’m‚ç‚¹‚é */
+		if ((newdrv & 0xff) == 2) /* towns15/vesa16ã«x2,y2ã‚’çŸ¥ã‚‰ã›ã‚‹ */
 		  sgg_execcmd0(0x0050, 8 * 4, 0x001c, 0, 0x0020, screen.x2, screen.y2, 0x0000, 0x0000);
 		else
-		  sgg_execcmd0(0x0050, 7 * 4, 0x001c, 0, 0x0020, job.int0 /* mode */, 0x0000, 0x0000); /* ‰æ–Êƒ‚[ƒh•ÏX */
+		  sgg_execcmd0(0x0050, 7 * 4, 0x001c, 0, 0x0020, job.int0 /* mode */, 0x0000, 0x0000); /* ç”»é¢ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ */
  		if (job.int0 < 3)
- 			sgg_wm0_gapicmd_001c_0004(); /* ƒn[ƒhƒEƒFƒA‰Šú‰»(ƒpƒŒƒbƒgİ’è) */
+ 			sgg_wm0_gapicmd_001c_0004(); /* ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢åˆæœŸåŒ–(ãƒ‘ãƒ¬ãƒƒãƒˆè¨­å®š) */
 		#if (defined(CLGD543X))
-			/* •s—v‚È‚Æ‚«‚à‘½‚¢‚Ì‚¾‚ªcc */
-			sgg_execcmd0(0x0088, 1, job.int0, 0x0000); /* VRAM&CRTo—Í Ø‘Ö‚¦ */
+			/* ä¸è¦ãªã¨ãã‚‚å¤šã„ã®ã ãŒâ€¦â€¦ */
+			sgg_execcmd0(0x0088, 1, job.int0, 0x0000); /* VRAM&CRTå‡ºåŠ› åˆ‡æ›¿ãˆ */
 		#endif
 		init_screen(screen.x2, screen.y2);
 		job_general1();
@@ -3758,7 +3758,7 @@ void job_setvgamode2()
 		int mode = job.int0 & 0x3fff;
 
 		#if (defined(BOCHS))
-			screen.x2 = 640; /* Bochs‚Í‰¼‘z‰æ–Ê‚ªg‚¦‚È‚¢ */
+			screen.x2 = 640; /* Bochsã¯ä»®æƒ³ç”»é¢ãŒä½¿ãˆãªã„ */
 			screen.y2 = 480;
 		#else
 			screen.x2 = 800;
@@ -3766,19 +3766,19 @@ void job_setvgamode2()
 		#endif
 
 		if (fromboot & 0x0001) {
-			/* •’Ê‚Ì•û–@‚ªg‚¦‚È‚¢ */
-			/* (‰¼‘z86ƒ‚[ƒh‚Å‚ÌVGAƒ‚[ƒhØ‚èŠ·‚¦‚ª‚¤‚Ü‚­s‚©‚È‚¢) */
+			/* æ™®é€šã®æ–¹æ³•ãŒä½¿ãˆãªã„ */
+			/* (ä»®æƒ³86ãƒ¢ãƒ¼ãƒ‰ã§ã®VGAãƒ¢ãƒ¼ãƒ‰åˆ‡ã‚Šæ›ãˆãŒã†ã¾ãè¡Œã‹ãªã„) */
 		//	x2 = 640;
 		//	y2 = 480;
-		//	sgg_wm0_gapicmd_001c_0020(); // ‰æ–Êƒ‚[ƒhİ’è(640x480)
+		//	sgg_wm0_gapicmd_001c_0020(); // ç”»é¢ãƒ¢ãƒ¼ãƒ‰è¨­å®š(640x480)
 			sgg_execcmd0(0x0050, 7 * 4, 0x001c, 0, 0x0020, 0x0012, 0x0000, 0x0000);
-			sgg_wm0_gapicmd_001c_0004(); // ƒn[ƒhƒEƒFƒA‰Šú‰»
+			sgg_wm0_gapicmd_001c_0004(); // ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢åˆæœŸåŒ–
 			init_screen(screen.x2, screen.y2);
 			job_general1();
 			return;
 		}
 		if (lock_v86())
-			goto skip; /* V86ƒ^ƒXƒN‚ªg—p’†‚È‚çØŠ·‚¦¸”s */
+			goto skip; /* V86ã‚¿ã‚¹ã‚¯ãŒä½¿ç”¨ä¸­ãªã‚‰åˆ‡æ›ãˆå¤±æ•— */
 		if (mode != 0x0012 && mode != 0x0102) {
 			struct STR_VBEMODE *p = vbe_modeinfo(mode);
 			int drv, vram;
@@ -3816,7 +3816,7 @@ skip:
 		screen.x2 = 640;
 		screen.y2 = 400;
 		sgg_execcmd0(0x0050, 7 * 4, 0x001c, 0, 0x0020, job.int0 /* mode */, 0x0000, 0x0000);
-		sgg_wm0_gapicmd_001c_0004(); /* ƒn[ƒhƒEƒFƒA‰Šú‰» */
+		sgg_wm0_gapicmd_001c_0004(); /* ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢åˆæœŸåŒ– */
 		init_screen(screen.x2, screen.y2);
 		job_general1();
 		return;
@@ -3830,9 +3830,9 @@ void job_setvgamode3(const int sig, const int result)
 	static int oldmode = 0x0012; /* VGA */
 	int x2y2[2];
 	int mode = job.int0 & 0x3fff;
-	// 0x0014‚µ‚©‚±‚È‚¢
+	// 0x0014ã—ã‹ã“ãªã„
 	if (result == 0) {
-		/* ‰æ–Êƒ‚[ƒhØ‚è‘Ö‚¦¬Œ÷ */
+		/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰åˆ‡ã‚Šæ›¿ãˆæˆåŠŸ */
 		int drv = 0 /* 4bit */, vram;
 		struct STR_VBEMODE *p;
 		struct WM0_WINDOW *win;
@@ -3850,7 +3850,7 @@ void job_setvgamode3(const int sig, const int result)
 				goto skip;
 			screen.x2 = p->x_res;
 			screen.y2 = p->y_res;
-			/* linear‚ğ“`’B */
+			/* linearã‚’ä¼é” */
 			sgg_execcmd0(0x0088, 0x0001, vram, 0x0000);
 		}
 		if (mxx > screen.x2 - 1 || my > screen.y2 - 16) {
@@ -3860,7 +3860,7 @@ void job_setvgamode3(const int sig, const int result)
 		x2y2[1] = screen.y2 - (RESERVELINE0 + RESERVELINE1);
 		sgg_execcmd0(0x00b0, 0, 2, 0, x2y2, 0x000c, 0x0000); /* set info */
 		if (drv == 0) {
-			/* linear = 0‚ğ“`’B */
+			/* linear = 0ã‚’ä¼é” */
 			sgg_execcmd0(0x0088, 0x0001, 0, 0x0000);
 		}
 		screen.backcolor = screen.backcolors[drv];
@@ -3868,15 +3868,15 @@ void job_setvgamode3(const int sig, const int result)
 		gapi_driverinit(drv);
 		if (drv == 0) {
 			sgg_execcmd0(0x0050, 7 * 4, 0x001c, 0, 0x0020, mode | 0x01000000, 0x0000, 0x0000);
-				/* ƒXƒNƒ[ƒ‹ƒpƒ‰ƒ[ƒ^‰Šú‰» */
+				/* ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åˆæœŸåŒ– */
 		}
 		if (drv != 0)
 			sgg_execcmd0(0x0050, 8 * 4, 0x001c, 0, 0x0020, screen.x2, screen.y2, 0x0000, 0x0000);
-		sgg_wm0_gapicmd_001c_0004(); // ƒn[ƒhƒEƒFƒA‰Šú‰»
+		sgg_wm0_gapicmd_001c_0004(); // ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢åˆæœŸåŒ–
 		if (win = top){
 			int mask = screen.moveunit - 1;
 			int d;
-			/* ‚±‚Á‚»‚èˆÊ’u‚ğC³ */
+			/* ã“ã£ãã‚Šä½ç½®ã‚’ä¿®æ­£ */
 			do {
 				if (d = win->x0 & mask){
 					win->x0 -= d;
@@ -3894,11 +3894,11 @@ void job_setvgamode3(const int sig, const int result)
 		return;
 	}
 
-	// VESA‚Ìƒmƒ“ƒTƒ|[ƒg‚È‚Ç‚É‚æ‚èA‰æ–Êƒ‚[ƒhØ‚èŠ·‚¦¸”s
+	// VESAã®ãƒãƒ³ã‚µãƒãƒ¼ãƒˆãªã©ã«ã‚ˆã‚Šã€ç”»é¢ãƒ¢ãƒ¼ãƒ‰åˆ‡ã‚Šæ›ãˆå¤±æ•—
 skip:
 //	job.func = job_setvgamode3;
 	#if (defined(BOCHS))
-		screen.x2 = 640; /* Bochs‚Í‰¼‘z‰æ–Ê‚ªg‚¦‚È‚¢ */
+		screen.x2 = 640; /* Bochsã¯ä»®æƒ³ç”»é¢ãŒä½¿ãˆãªã„ */
 		screen.y2 = 480;
 	#else
 		screen.x2 = 800;
@@ -3919,8 +3919,8 @@ void job_loadfont0(int fonttype, int tss, int sig)
 		job_loadfont1(0, 0);
 		return;
 	}
-	/* ƒ[ƒhƒR[ƒh */
-	lib_initmodulehandle0(0x000c, 0x0200); /* machine-dir‚É‰Šú‰» */
+	/* ãƒ­ãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ */
+	lib_initmodulehandle0(0x000c, 0x0200); /* machine-dirã«åˆæœŸåŒ– */
 	pjob->func = job_loadfont1;
 	lib_steppath0(0, 0x0200, "JPN16V00.FNT", 0x0050 /* sig */);
 	return;
@@ -3930,13 +3930,13 @@ void job_loadfont1(int flag, int dmy)
 {
 	struct STR_JOB *pjob = &job;
 	if ((pjob->fontflag & 0x01) == 0) {
-		char *fp = (char *) pjob->readCSd10 /* malloc—Ìˆæ‚ÌI‚í‚è == mapping—Ìˆæ‚Ìn‚Ü‚è */;
-		if (flag == 0 /* ƒ[ƒh¬Œ÷ */) {
+		char *fp = (char *) pjob->readCSd10 /* mallocé ˜åŸŸã®çµ‚ã‚ã‚Š == mappingé ˜åŸŸã®å§‹ã¾ã‚Š */;
+		if (flag == 0 /* ãƒ­ãƒ¼ãƒ‰æˆåŠŸ */) {
 			int siz = lib_readmodulesize(0x0200);
 			lib_mapmodule(0x0000, 0x0200, 0x5, 320 * 1024, fp, 0);
 
-			/* ‚±‚±‚Åslot:0x0210‚Égapidata‚ğ”z”õ */
-			/* ƒ[ƒh‚ªI‚í‚Á‚Ä‚©‚ç”z”õ‚·‚é‚Ì‚ªd—v‚ÅA‚»‚¤‚Å‚È‚¢‚Ægapidata‚ÌŠg’£‚ªI‚í‚Á‚Ä‚È‚¢‚©‚à‚µ‚ê‚È‚¢‚©‚ç */
+			/* ã“ã“ã§slot:0x0210ã«gapidataã‚’é…å‚™ */
+			/* ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã‹ã‚‰é…å‚™ã™ã‚‹ã®ãŒé‡è¦ã§ã€ãã†ã§ãªã„ã¨gapidataã®æ‹¡å¼µãŒçµ‚ã‚ã£ã¦ãªã„ã‹ã‚‚ã—ã‚Œãªã„ã‹ã‚‰ */
 			sgg_execcmd0(0x007c, 0, 0x0210, 0x0000);
 			lib_mapmodule(0x0000, 0x0210, 0x7 /* R/W */, 304 * 1024, fp + 320 * 1024, (8 + 16) * 1024);
 			if (siz != 304 * 1024)
@@ -3949,12 +3949,12 @@ void job_loadfont1(int flag, int dmy)
 			}
 			lib_unmapmodule(0, 768 * 1024, fp);
 			pjob->fontflag |= 0x01;
-			lib_initmodulehandle0(0x000c, 0x0200); /* machine-dir‚É‰Šú‰» */
+			lib_initmodulehandle0(0x000c, 0x0200); /* machine-dirã«åˆæœŸåŒ– */
 
 		}
 		#if (defined(TOWNS) && defined(KROM))
 			else {
-				/* fontfileƒ[ƒh‚É¸”s‚µ‚½‚Ì‚ÅROM‚ğ—Š‚é */
+				/* fontfileãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ãŸã®ã§ROMã‚’é ¼ã‚‹ */
 				sgg_execcmd0(0x007c, 0, 0x0210, 0x0000);
 				lib_mapmodule(0x0000, 0x0210, 0x7 /* R/W */, 304 * 1024, fp, (8 + 16) * 1024);
 				sgg_execcmd0(0x0100, fp, 0x000c, 0x0000); /* ROM to GAPI data */
@@ -3974,8 +3974,8 @@ void job_loadfont2()
 		job_loadfont3(0, 0);
 		return;
 	}
-	/* ƒ[ƒhƒR[ƒh */
-	lib_initmodulehandle0(0x000c, 0x0200); /* machine-dir‚É‰Šú‰» */
+	/* ãƒ­ãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ */
+	lib_initmodulehandle0(0x000c, 0x0200); /* machine-dirã«åˆæœŸåŒ– */
 	job.func = job_loadfont3;
 	lib_steppath0(0, 0x0200, "KOR16V00.FNT", 0x0050 /* sig */);
 	return;
@@ -3984,13 +3984,13 @@ void job_loadfont2()
 void job_loadfont3(int flag, int dmy)
 {
 	struct STR_JOB *pjob = &job;
-	if ((pjob->fontflag & 0x02) == 0 && flag == 0 /* ƒ[ƒh¬Œ÷ */) {
-		char *fp = (char *) pjob->readCSd10 /* malloc—Ìˆæ‚ÌI‚í‚è == mapping—Ìˆæ‚Ìn‚Ü‚è */;
+	if ((pjob->fontflag & 0x02) == 0 && flag == 0 /* ãƒ­ãƒ¼ãƒ‰æˆåŠŸ */) {
+		char *fp = (char *) pjob->readCSd10 /* mallocé ˜åŸŸã®çµ‚ã‚ã‚Š == mappingé ˜åŸŸã®å§‹ã¾ã‚Š */;
 		int siz = lib_readmodulesize(0x0200);
 		lib_mapmodule(0x0000, 0x0200, 0x5, 320 * 1024, fp, 0);
 
-		/* ‚±‚±‚Åslot:0x0210‚Égapidata‚ğ”z”õ */
-		/* ƒ[ƒh‚ªI‚í‚Á‚Ä‚©‚ç”z”õ‚·‚é‚Ì‚ªd—v‚ÅA‚»‚¤‚Å‚È‚¢‚Ægapidata‚ÌŠg’£‚ªI‚í‚Á‚Ä‚È‚¢‚©‚à‚µ‚ê‚È‚¢‚©‚ç */
+		/* ã“ã“ã§slot:0x0210ã«gapidataã‚’é…å‚™ */
+		/* ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã‹ã‚‰é…å‚™ã™ã‚‹ã®ãŒé‡è¦ã§ã€ãã†ã§ãªã„ã¨gapidataã®æ‹¡å¼µãŒçµ‚ã‚ã£ã¦ãªã„ã‹ã‚‚ã—ã‚Œãªã„ã‹ã‚‰ */
 		sgg_execcmd0(0x007c, 0, 0x0210, 0x0000);
 
 		lib_mapmodule(0x0000, 0x0210, 0x7 /* R/W */, 288 * 1024, fp + 320 * 1024, (8 + 320) * 1024);
@@ -4004,7 +4004,7 @@ void job_loadfont3(int flag, int dmy)
 		}
 		lib_unmapmodule(0, 768 * 1024, fp);
 		pjob->fontflag |= 0x02;
-		lib_initmodulehandle0(0x000c, 0x0200); /* machine-dir‚É‰Šú‰» */
+		lib_initmodulehandle0(0x000c, 0x0200); /* machine-dirã«åˆæœŸåŒ– */
 	}
 	if (pjob->fonttss) {
 		send_signal2dw(pjob->fonttss | 0x240, 0x7f000001, pjob->sig);
@@ -4022,9 +4022,9 @@ void lib_drawletters_ASCII(const int opt, const int win, const int charset, cons
 {
 	struct COMMAND {
 		int cmd; /* 0x0048 */
-		int opt /* •K‚¸0x0001‚É‚·‚é */;
-		int window, charset /* •K‚¸0x00c0‚É‚·‚é */;
-		int x0, y0 /* dot’PˆÊ */;
+		int opt /* å¿…ãš0x0001ã«ã™ã‚‹ */;
+		int window, charset /* å¿…ãš0x00c0ã«ã™ã‚‹ */;
+		int x0, y0 /* dotå˜ä½ */;
 		int color, backcolor;
 		int length;
 		int letters[80];
@@ -4035,7 +4035,7 @@ void lib_drawletters_ASCII(const int opt, const int win, const int charset, cons
 	int *t;
 	int length;
 	
-	// str‚Ì’·‚³‚ğ’²‚×‚é
+	// strã®é•·ã•ã‚’èª¿ã¹ã‚‹
 	for (s = (const unsigned char *) str; *s++; );
 
 	if (length = s - (const unsigned char *) str - 1) {
@@ -4076,7 +4076,7 @@ void debug_bin2hex(unsigned int i, unsigned char *s)
 
 #endif
 
-static int defsig_signal[4] /* , defsig_opt */; /* ƒTƒCƒYk¬‚Ì‚½‚ß */
+static int defsig_signal[4] /* , defsig_opt */; /* ã‚µã‚¤ã‚ºç¸®å°ã®ãŸã‚ */
 
 void sgg_wm0_definesignal3(const int opt, const int device, int keycode,
 	const int sig0, const int sig1, const int sig2)
@@ -4107,21 +4107,21 @@ void sgg_wm0_definesignal3(const int opt, const int device, int keycode,
 	return;
 /*
 
-Ekeysignal’è‹`‚É‚Â‚¢‚Ä
-  opt	bit 0-11 : ˜A‘±’è‹`ƒVƒOƒiƒ‹”
-		bit15	 : interval(+1‚©+4‚©)
+ãƒ»keysignalå®šç¾©ã«ã¤ã„ã¦
+  opt	bit 0-11 : é€£ç¶šå®šç¾©ã‚·ã‚°ãƒŠãƒ«æ•°
+		bit15	 : interval(+1ã‹+4ã‹)
 		bit16-19 : make/break/remake/overbreak
-				   ‚±‚ê‚ÍAŠg’£ƒ‚[ƒh‚ÖˆÚs‚·‚é‚½‚ß‚É•K—v
-				   ‚·‚×‚Ä‚ğ0‚É‚·‚é‚ÆAmake|remake‚Æ‚¢‚¤‚Ó‚¤‚Éˆµ‚í‚ê‚é
-				   ‚à‚¿‚ë‚ñAƒCƒ“ƒNƒŠƒƒ“ƒg‚Ì•ûj‚Æ‚µ‚Ä‚à—˜—p‚³‚ê‚é
-				   ƒXƒ^[ƒg‚ÍAkeycode“à‚Ìbit30-31‚É‘‚©‚ê‚Ä‚¢‚é
+				   ã“ã‚Œã¯ã€æ‹¡å¼µãƒ¢ãƒ¼ãƒ‰ã¸ç§»è¡Œã™ã‚‹ãŸã‚ã«å¿…è¦
+				   ã™ã¹ã¦ã‚’0ã«ã™ã‚‹ã¨ã€make|remakeã¨ã„ã†ãµã†ã«æ‰±ã‚ã‚Œã‚‹
+				   ã‚‚ã¡ã‚ã‚“ã€ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã®æ–¹é‡ã¨ã—ã¦ã‚‚åˆ©ç”¨ã•ã‚Œã‚‹
+				   ã‚¹ã‚¿ãƒ¼ãƒˆã¯ã€keycodeå†…ã®bit30-31ã«æ›¸ã‹ã‚Œã¦ã„ã‚‹
 */
 
 }
 
 void sgg_wm0_definesignal3sub(const int keycode)
-/* ˜A‘±w’è‚ğƒTƒ|[ƒg‚µ‚È‚¢ */
-/* ƒfƒR[ƒh‚Ì‚İ(make/break/remake‚Ì”»’è‚Í‚µ‚È‚¢) */
+/* é€£ç¶šæŒ‡å®šã‚’ã‚µãƒãƒ¼ãƒˆã—ãªã„ */
+/* ãƒ‡ã‚³ãƒ¼ãƒ‰ã®ã¿(make/break/remakeã®åˆ¤å®šã¯ã—ãªã„) */
 {
 	static struct {
 		int type0, type1;
@@ -4136,7 +4136,7 @@ void sgg_wm0_definesignal3sub(const int keycode)
 		{ 0x0040c070, 0 }
 	};
 	if ((keycode & 0xfffff000) == 0) {
-		/* ]—ˆ’Ê‚è‚Ìw’è */
+		/* å¾“æ¥é€šã‚Šã®æŒ‡å®š */
 		if (' ' <= keycode && keycode <= 0xff) {
 			struct KEYTABLE *kt = &keybindtable[keycode - ' '];
 			int rawcode, st, shiftmap;
@@ -4206,7 +4206,7 @@ void sgg_wm0_definesignal3sub3(int rawcode, const int shiftmap)
 		0);
 
 #if 0
-	/* cmd, opt(len), rawƒR[ƒh, shift-lock-bitmap(mask, equal), subcmd,... */
+	/* cmd, opt(len), rawã‚³ãƒ¼ãƒ‰, shift-lock-bitmap(mask, equal), subcmd,... */
 	static struct {
 		int cmd, length;
 		int deccmd[10];
@@ -4246,21 +4246,21 @@ void sgg_wm0_definesignal3com()
 #endif
 
 /*
-Ekeysignal’è‹`‚É‚Â‚¢‚Ä
-  opt	bit 0-11 : ˜A‘±’è‹`ƒVƒOƒiƒ‹”
-		bit15	 : interval(+1‚©+4‚©)
+ãƒ»keysignalå®šç¾©ã«ã¤ã„ã¦
+  opt	bit 0-11 : é€£ç¶šå®šç¾©ã‚·ã‚°ãƒŠãƒ«æ•°
+		bit15	 : interval(+1ã‹+4ã‹)
 		bit16-17 : make/break/remake/overbreak
-		bit20-23 : ƒCƒ“ƒNƒŠƒƒ“ƒg‚Ìmake/break/remake/overbreak
-				   ƒI[ƒ‹0‚©‚ÂƒCƒ“ƒNƒŠƒƒ“ƒgA‚Æ‚¢‚¤‚Ì‚Í‹–‚³‚È‚¢
-					bit16-23‚ª0‚Ìê‡A]—ˆ’Ê‚è‚Ìˆµ‚¢‚É‚È‚é
+		bit20-23 : ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆæ™‚ã®make/break/remake/overbreak
+				   ã‚ªãƒ¼ãƒ«0ã‹ã¤ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€ã¨ã„ã†ã®ã¯è¨±ã•ãªã„
+					bit16-23ãŒ0ã®å ´åˆã€å¾“æ¥é€šã‚Šã®æ‰±ã„ã«ãªã‚‹
 
-  keycode bit12-14 : 000:ƒL[ƒR[ƒhw’è
-					 001:ƒR[ƒh‚Å‚Í‚È‚­ƒL[w’èi‘æˆêƒL[j
-					 010:ƒR[ƒh‚Å‚Í‚È‚­ƒL[w’èi‘æ“ñƒL[j
-					 100:ƒR[ƒh‚Å‚Í‚È‚­ƒL[w’èi‘æOƒL[j
-		  bit15    : bit16-31‚Í—LŒø(bit12-14‚ªƒmƒ“ƒ[ƒ‚È‚ç—LŒø‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚é‚¶‚á‚È‚¢‚©)
-		  bit16-23 : shiftƒ}ƒXƒN
-		  bit24-31 : shift”äŠr
+  keycode bit12-14 : 000:ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰æŒ‡å®š
+					 001:ã‚³ãƒ¼ãƒ‰ã§ã¯ãªãã‚­ãƒ¼æŒ‡å®šï¼ˆç¬¬ä¸€ã‚­ãƒ¼ï¼‰
+					 010:ã‚³ãƒ¼ãƒ‰ã§ã¯ãªãã‚­ãƒ¼æŒ‡å®šï¼ˆç¬¬äºŒã‚­ãƒ¼ï¼‰
+					 100:ã‚³ãƒ¼ãƒ‰ã§ã¯ãªãã‚­ãƒ¼æŒ‡å®šï¼ˆç¬¬ä¸‰ã‚­ãƒ¼ï¼‰
+		  bit15    : bit16-31ã¯æœ‰åŠ¹(bit12-14ãŒãƒãƒ³ã‚¼ãƒ­ãªã‚‰æœ‰åŠ¹ã«æ±ºã¾ã£ã¦ã„ã‚‹ã˜ã‚ƒãªã„ã‹)
+		  bit16-23 : shiftãƒã‚¹ã‚¯
+		  bit24-31 : shiftæ¯”è¼ƒ
 */
 
 void gapi_loadankfont()
@@ -4289,7 +4289,7 @@ void gapi_loadankfont()
 			0x0000 /* EOC */
 		}, 0 /* EOC */
 	};
-	if (flag) { /* ˆê“x“]‘—‚·‚ê‚Î‚»‚ê‚Å‚æ‚¢‚©‚ç */
+	if (flag) { /* ä¸€åº¦è»¢é€ã™ã‚Œã°ãã‚Œã§ã‚ˆã„ã‹ã‚‰ */
 		sgg_execcmd(&command);
 		flag = 0;
 	}
@@ -4306,20 +4306,20 @@ void job_savevram0()
     return;
   }
 #endif
-    /* •Û‘¶æ—pˆÓ */
-    lib_initmodulehandle0(0x0008, 0x0200); /* user-dir‚É‰Šú‰» */
+    /* ä¿å­˜å…ˆç”¨æ„ */
+    lib_initmodulehandle0(0x0008, 0x0200); /* user-dirã«åˆæœŸåŒ– */
     job.func = &job_savevram1;
     lib_steppath0(1, 0x0200, "SCRNSHOT.BMP", 0x0050 /* sig */);
     return;
-    /* SCRNSHOT.TIF‚Í514KBˆÈã‚É‚È‚è‚Ü‚· */
-    /* –‘O‚Éƒ‚ƒWƒ…[ƒ‹‚ğì‚Á‚Ä‚¨‚©‚È‚­‚Ä‚à‚¢‚¢‚Å‚· */
+    /* SCRNSHOT.TIFã¯514KBä»¥ä¸Šã«ãªã‚Šã¾ã™ */
+    /* äº‹å‰ã«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ä½œã£ã¦ãŠã‹ãªãã¦ã‚‚ã„ã„ã§ã™ */
 }
 
 static int paletteSizeTable[] = {256, 3, 0, 3}; /* 256,64K/32K,,16M */
 
 void job_savevram1(int flag, int dmy)
 {
-  if (flag == 0) { /* open¬Œ÷ */
+  if (flag == 0) { /* openæˆåŠŸ */
     lib_resizemodule(0, 0x0200, 0x38 + paletteSizeTable[screen.vbecoldep-1] * 4
 		     + screen.x2 * screen.y2 * screen.vbecoldep, 0x0050 /* sig */);
     job.func = &job_savevram2;
@@ -4330,7 +4330,7 @@ void job_savevram1(int flag, int dmy)
 }
 
 #if 0
-/* BM‚ÌŒã‚ÉƒpƒfƒBƒ“ƒO‚ª“ü‚é‰Â”\«! ‚Ç‚¤‚â‚Á‚Ä–h‚®‚ñ‚¾‚Á‚¯? */
+/* BMã®å¾Œã«ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ãŒå…¥ã‚‹å¯èƒ½æ€§! ã©ã†ã‚„ã£ã¦é˜²ãã‚“ã ã£ã‘? */
 struct bmphead {
   char BM[2];
   int fileSize, reserved, imageOffset, infoheaderSize;
@@ -4380,7 +4380,7 @@ void job_savevram2(int flag, int dmy)
     fi[2] = imageOffset;
     fi[3] = 0x28;
     fi[4] = screen.x2;
-    fi[5] = -screen.y2;		/* ƒgƒbƒvƒ_ƒEƒ“Ši”[ */
+    fi[5] = -screen.y2;		/* ãƒˆãƒƒãƒ—ãƒ€ã‚¦ãƒ³æ ¼ç´ */
     fi[6] = (screen.vbecoldep*8 << 16) + 1;
     fi[7] = (screen.vbecoldep==1)?0:3;
     fi[8] = imageSize;
@@ -4398,7 +4398,7 @@ void job_savevram2(int flag, int dmy)
       fi[2] = 0x001f;		/* B */
 #elif (defined(TOWNS))
 #if (defined(CLGD543X))
-      if (screen.x2 == 800 && screen.y2 == 600) { /* CLGDccè”²‚«”»’è */
+      if (screen.x2 == 800 && screen.y2 == 600) { /* CLGDâ€¦â€¦æ‰‹æŠœãåˆ¤å®š */
 	fi[0] = 0xf800;		/* R */
 	fi[1] = 0x07e0;		/* G */
 	fi[2] = 0x001f;		/* B */
@@ -4415,21 +4415,21 @@ void job_savevram2(int flag, int dmy)
       fi[1] = 0x0000ff00;
       fi[2] = 0x000000ff;
     }
-    /* –{“–‚Í0x36‚¾‚ªalign‚·‚é */
+    /* æœ¬å½“ã¯0x36ã ãŒalignã™ã‚‹ */
     sgg_debug00(0, screen.x2 * screen.y2 * screen.vbecoldep, 0, 0xe0000000, 0x01280008,
 		(int)&fp[0x38 + paletteSize*4] , 0x000c);
     lib_unmapmodule(0, SCRNSHOTMAXSIZ, fp);
-    lib_initmodulehandle0(0x0008, 0x0200); /* user-dir‚É‰Šú‰» */
+    lib_initmodulehandle0(0x0008, 0x0200); /* user-dirã«åˆæœŸåŒ– */
     // send_signal3dw(0x4000 /* pokon0 */ | 0x240, 0x7f000002,
     //   0x008c /* SIGNAL_FREE_FILES */, 0x3000 /* winman0 */);
   }
-  lib_initmodulehandle0(0x0008, 0x0200); /* user-dir‚É‰Šú‰» */
+  lib_initmodulehandle0(0x0008, 0x0200); /* user-dirã«åˆæœŸåŒ– */
   job.now = 0;
   return;
 }
 #endif
 
-/* •Ç†ƒ[ƒhƒ‹[ƒ`ƒ“, DLLƒo[ƒWƒ‡ƒ“ */
+/* å£ç´™ãƒ­ãƒ¼ãƒ‰ãƒ«ãƒ¼ãƒãƒ³, DLLãƒãƒ¼ã‚¸ãƒ§ãƒ³ */
 
 static char picture0_mapped = 0;
 
@@ -4440,7 +4440,7 @@ void job_mappicture0(int flag, int dmy)
     job_loadwallpaper(1,0);
     return;
   }
-  /* PICTURE0.BIN‚ÌƒXƒƒbƒg‚Í0x210 */
+  /* PICTURE0.BINã®ã‚¹ãƒ­ãƒƒãƒˆã¯0x210 */
   fp = (char*)(lib_readCSd(0x10) + WALLPAPERMAXSIZE);
   lib_mapmodule(0x0000, 0x220, 0x5, 65536, fp, 0);
   lib_execcmd0(0x00f0, 0, 0x0200, 0x40fa, 65535, fp, 0x0008 ,0);
@@ -4449,13 +4449,13 @@ void job_mappicture0(int flag, int dmy)
 }
 
 void job_openwallpaper()
-/* 2002.05.27 ì‡ : •Ç†•\¦‚ªƒgƒOƒ‹‚É‚È‚é‚æ‚¤‚É•ÏX */
+/* 2002.05.27 å·åˆ : å£ç´™è¡¨ç¤ºãŒãƒˆã‚°ãƒ«ã«ãªã‚‹ã‚ˆã†ã«å¤‰æ›´ */
 {
 	int bytepp = screen.vbecoldep;
 	if (bytepp == 0)
 	  bytepp++;
 	if (screen.wallpaper_exist) {
-	  job_loadwallpaper(-1, 0); /* ‰ğœ */
+	  job_loadwallpaper(-1, 0); /* è§£é™¤ */
 	  return;
 	}
 	if (screen.x2 * screen.y2 * bytepp >= WALLPAPERMAXSIZE) {
@@ -4500,14 +4500,14 @@ void wallpaperdecode(int *env, char *wallpaper, int buftype, int c, int x2, int 
     if (buftype & 1)
       c *= 0x01010101;
     for (i = 0; i < x2 * y2 / (buftype & 7); i++)
-      ((int*)wallpaper)[i] = c;	/* è”²‚«“h‚è’×‚µ */
+      ((int*)wallpaper)[i] = c;	/* æ‰‹æŠœãå¡—ã‚Šæ½°ã— */
   }
   call_dll0207_48i(env, 5,0, info->type, xsz,ysz, x0,y0, ms, fp, buftype, wallpaper + (x2 * yskip + skip / 2) * (buftype & 7), skip * (buftype & 7), 0x0000);
 }
 
 void job_loadwallpaper(int flag, int dmy)
-/* 2002.05.27 ì‡ : ‚í‚¸‚©‚É‰ü—Ç */
-/* flag!=0‚È‚ç•Ç†‚È‚µ, 0‚È‚çopen¬Œ÷ */
+/* 2002.05.27 å·åˆ : ã‚ãšã‹ã«æ”¹è‰¯ */
+/* flag!=0ãªã‚‰å£ç´™ãªã—, 0ãªã‚‰openæˆåŠŸ */
 {
 	struct WM0_WINDOW *win;
 	screen.wallpaper_exist = 0;
@@ -4535,7 +4535,7 @@ void job_loadwallpaper(int flag, int dmy)
 	}
 	lib_initmodulehandle0(0x0008, 0x0200);
 
-	/* ‘SƒEƒBƒ“ƒhƒEÄ•`‰æ */
+	/* å…¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å†æç”» */
 	if (mx != 0x80000000) {
 		mxx = mx;
 		sgg_wm0_removemouse();
@@ -4548,7 +4548,7 @@ void job_loadwallpaper(int flag, int dmy)
 			win->job_flag0 |= WINFLG_MUSTREDRAW;
 		} while ((win = win->down) != top);
 	}
-	job_general1();		// job.now = 0; /* ©‚ğŠÜ‚Ş */
+	job_general1();		// job.now = 0; /* â†ã‚’å«ã‚€ */
 	return;
 }
 #define	lib_putblock(mode, win, x, y, sx, sy, skip, p) \
@@ -4556,7 +4556,7 @@ void job_loadwallpaper(int flag, int dmy)
 	(int) (sy), (int) (skip), (void *) (p), 0x000c, 0x0000)
 
 void putwallpaper(int x0, int y0, int x1, int y1)
-/* 2002.05.27 ì‡ : x1, y1‚Ì’l‚Ìˆµ‚¢‚ğd—l•ÏX */
+/* 2002.05.27 å·åˆ : x1, y1ã®å€¤ã®æ‰±ã„ã‚’ä»•æ§˜å¤‰æ›´ */
 {
 	int bytepp = screen.vbecoldep;
 	if (bytepp)
@@ -4582,7 +4582,7 @@ void moswinsig_flagset()
 				i = 8;
 			if (press0.win == mws->win)
 				i = 4;
-			mws->flags = (mws->flags & ~0x000f0000) | ((mws->flags >> i) & 0x000f0000);
+			mws->flags = (mws->flags & â€¾0x000f0000) | ((mws->flags >> i) & 0x000f0000);
 			if (mws->flags & 0x44000000)
 				mws_sensitivecount++;
 		}
@@ -4591,7 +4591,7 @@ void moswinsig_flagset()
 }
 
 struct WM0_WINDOW *searchwin(int x, int y)
-// ‚Ç‚Ìwindow‚ğƒNƒŠƒbƒN‚µ‚½‚Ì‚©‚ğŒŸo
+// ã©ã®windowã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸã®ã‹ã‚’æ¤œå‡º
 {
 	struct WM0_WINDOW *win;
 
@@ -4628,7 +4628,7 @@ void job_vesacheck1(int sig, int result)
 	if (flag_vbe2 == 0) {
 		vbelist[127].flag = 31;
 		if (result) {
-			flag_vbe2 = 0; /* VESA‚È‚µ */
+			flag_vbe2 = 0; /* VESAãªã— */
 			job_vesacheck2();
 			return;
 		}
@@ -4672,7 +4672,7 @@ void job_vesacheck1(int sig, int result)
 			plist->flag = 18; /* unknowned direct-color 24bit */
 		if (buf[4] == 32)
 			plist->flag = 19; /* unknowned direct-color 32bit */
-		if (buf[2] >= 640 && buf[3] >= 480) { /* ¬‚³‚·‚¬‚é‰æ–Ê‚Í‚¤‚Á‚Æ‚¤‚µ‚¢‚Ì‚Å”rœ */
+		if (buf[2] >= 640 && buf[3] >= 480) { /* å°ã•ã™ãã‚‹ç”»é¢ã¯ã†ã£ã¨ã†ã—ã„ã®ã§æ’é™¤ */
 			if (buf[5] == 4 && buf[4] == 8)
 				plist->flag = 1; /* 256 color */
 			if (buf[5] == 6) {
@@ -4735,7 +4735,7 @@ void write_time()
 	};
 	int year, month, day;
 	char *week;
-	sgg_execcmd(cmd); /* “ú•tæ“¾ */
+	sgg_execcmd(cmd); /* æ—¥ä»˜å–å¾— */
 	msg[ 9] = (((unsigned char *) cmd)[14] >> 4) + '0';
 	msg[10] = (((unsigned char *) cmd)[14] & 15) + '0';
 	msg[11] = (((unsigned char *) cmd)[13] >> 4) + '0';

@@ -12,7 +12,7 @@ OBJS = memchr.o memcmp.o memcpy.o memmove.o memset.o strcat.o strchr.o \
 
 ###
 
-# stdin‚ª•Ê‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÍAld.exe‚ÌƒoƒO‰ñ”ğ‚Ì‚½‚ß
+# stdinãŒåˆ¥ã«ãªã£ã¦ã„ã‚‹ã®ã¯ã€ld.exeã®ãƒã‚°å›é¿ã®ãŸã‚
 
 all :
 	$(MAKER) $(TARGETLIB) stdin.o

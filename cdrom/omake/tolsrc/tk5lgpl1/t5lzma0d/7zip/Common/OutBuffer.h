@@ -23,7 +23,7 @@ class COutBuffer
   void WriteBlock();
 public:
   COutBuffer(UInt32 bufferSize = (1 << 20));
-  ~COutBuffer();
+  ‾COutBuffer();
 
   void Init(ISequentialOutStream *stream);
   HRESULT Flush();

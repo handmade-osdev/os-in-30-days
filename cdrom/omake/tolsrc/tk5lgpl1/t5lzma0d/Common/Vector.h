@@ -21,7 +21,7 @@ protected:
 public:
   CBaseRecordVector(size_t itemSize):
       _size(0), _capacity(0), _items(0), _itemSize(itemSize) {}
-	virtual ~CBaseRecordVector();
+	virtual ‾CBaseRecordVector();
   int Size() const { return _size; }
 	bool IsEmpty() const { return (_size == 0); }
 	void Reserve(int newCapacity);
@@ -91,7 +91,7 @@ class CObjectVector: public CPointerVector
 {
 public:
   CObjectVector(){};
-  ~CObjectVector() { Clear(); }
+  ‾CObjectVector() { Clear(); }
   CObjectVector(const CObjectVector &objectVector)
     { *this = objectVector; }
 	CObjectVector& operator=(const CObjectVector &objectVector)

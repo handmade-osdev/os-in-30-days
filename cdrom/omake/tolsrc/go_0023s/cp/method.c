@@ -919,9 +919,9 @@ locate_copy (type, client_)
       if (!sufficient_parms_p (TREE_CHAIN (parms)))
         continue;
       quals = cp_type_quals (src_type);
-      if (client->quals & ~quals)
+      if (client->quals & ‾quals)
         continue;
-      excess = quals & ~client->quals;
+      excess = quals & ‾client->quals;
       if (!best || (excess_p && !excess))
         {
           best = fn;

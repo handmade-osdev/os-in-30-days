@@ -14,7 +14,7 @@ void HariMain(void)
 	api_refreshwin(win,  6, 26, 154, 90);
 	for (;;) {
 		if (api_getkey(1) == 0x0a) {
-			break; /* Enter‚È‚çbreak; */
+			break; /* Enterãªã‚‰break; */
 		}
 	}
 	api_closewin(win);

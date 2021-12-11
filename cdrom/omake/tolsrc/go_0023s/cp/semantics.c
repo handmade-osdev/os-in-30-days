@@ -1408,7 +1408,7 @@ finish_pseudo_destructor_call_expr (object, scope, destructor)
     return build_min_nt (PSEUDO_DTOR_EXPR, object, scope, destructor);
 
   if (scope && scope != destructor)
-    error ("destructor specifier `%T::~%T()' must have matching names", 
+    error ("destructor specifier `%T::‾%T()' must have matching names", 
 	      scope, destructor);
 
   if ((scope == NULL_TREE || IDENTIFIER_GLOBAL_VALUE (destructor))

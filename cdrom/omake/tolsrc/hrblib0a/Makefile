@@ -1,4 +1,4 @@
-# ƒ‰ƒCƒuƒ‰ƒŠ¶¬—pMakefile
+# ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”Ÿæˆç”¨Makefile
 
 TARGET   = harilibc.lib
 OBJS     = startup.obj

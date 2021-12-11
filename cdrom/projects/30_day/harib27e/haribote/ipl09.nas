@@ -1,54 +1,54 @@
 ; haribote-ipl
 ; TAB=4
 
-CYLS	EQU		9				; �ǂ��܂œǂݍ��ނ�
+CYLS	EQU		9				; どこまで読み込むか
 
-		ORG		0x7c00			; ���̃v���O�������ǂ��ɓǂݍ��܂��̂�
+		ORG		0x7c00			; このプログラムがどこに読み込まれるのか
 
-; �ȉ��͕W���I��FAT12�t�H�[�}�b�g�t���b�s�[�f�B�X�N�̂��߂̋L�q
+; 以下は標準的なFAT12フォーマットフロッピーディスクのための記述
 
 		JMP		entry
 		DB		0x90
-		DB		"HARIBOTE"		; �u�[�g�Z�N�^�̖��O�����R�ɏ����Ă悢�i8�o�C�g�j
-		DW		512				; 1�Z�N�^�̑傫���i512�ɂ��Ȃ���΂����Ȃ��j
-		DB		1				; �N���X�^�̑傫���i1�Z�N�^�ɂ��Ȃ���΂����Ȃ��j
-		DW		1				; FAT���ǂ�����n�܂邩�i���ʂ�1�Z�N�^�ڂ���ɂ���j
-		DB		2				; FAT�̌��i2�ɂ��Ȃ���΂����Ȃ��j
-		DW		224				; ���[�g�f�B���N�g���̈�̑傫���i���ʂ�224�G���g���ɂ���j
-		DW		2880			; ���̃h���C�u�̑傫���i2880�Z�N�^�ɂ��Ȃ���΂����Ȃ��j
-		DB		0xf0			; ���f�B�A�̃^�C�v�i0xf0�ɂ��Ȃ���΂����Ȃ��j
-		DW		9				; FAT�̈�̒����i9�Z�N�^�ɂ��Ȃ���΂����Ȃ��j
-		DW		18				; 1�g���b�N�ɂ����̃Z�N�^�����邩�i18�ɂ��Ȃ���΂����Ȃ��j
-		DW		2				; �w�b�h�̐��i2�ɂ��Ȃ���΂����Ȃ��j
-		DD		0				; �p�[�e�B�V�������g���ĂȂ��̂ł����͕K��0
-		DD		2880			; ���̃h���C�u�傫����������x����
-		DB		0,0,0x29		; �悭�킩��Ȃ����ǂ��̒l�ɂ��Ă����Ƃ����炵��
-		DD		0xffffffff		; ���Ԃ�{�����[���V���A���ԍ�
-		DB		"HARIBOTEOS "	; �f�B�X�N�̖��O�i11�o�C�g�j
-		DB		"FAT12   "		; �t�H�[�}�b�g�̖��O�i8�o�C�g�j
-		RESB	18				; �Ƃ肠����18�o�C�g�����Ă���
+		DB		"HARIBOTE"		; ブートセクタの名前を自由に書いてよい（8バイト）
+		DW		512				; 1セクタの大きさ（512にしなければいけない）
+		DB		1				; クラスタの大きさ（1セクタにしなければいけない）
+		DW		1				; FATがどこから始まるか（普通は1セクタ目からにする）
+		DB		2				; FATの個数（2にしなければいけない）
+		DW		224				; ルートディレクトリ領域の大きさ（普通は224エントリにする）
+		DW		2880			; このドライブの大きさ（2880セクタにしなければいけない）
+		DB		0xf0			; メディアのタイプ（0xf0にしなければいけない）
+		DW		9				; FAT領域の長さ（9セクタにしなければいけない）
+		DW		18				; 1トラックにいくつのセクタがあるか（18にしなければいけない）
+		DW		2				; ヘッドの数（2にしなければいけない）
+		DD		0				; パーティションを使ってないのでここは必ず0
+		DD		2880			; このドライブ大きさをもう一度書く
+		DB		0,0,0x29		; よくわからないけどこの値にしておくといいらしい
+		DD		0xffffffff		; たぶんボリュームシリアル番号
+		DB		"HARIBOTEOS "	; ディスクの名前（11バイト）
+		DB		"FAT12   "		; フォーマットの名前（8バイト）
+		RESB	18				; とりあえず18バイトあけておく
 
-; �v���O�����{��
+; プログラム本体
 
 entry:
-		MOV		AX,0			; ���W�X�^������
+		MOV		AX,0			; レジスタ初期化
 		MOV		SS,AX
 		MOV		SP,0x7c00
 		MOV		DS,AX
 
-; �f�B�X�N��ǂ�
+; ディスクを読む
 
 		MOV		AX,0x0820
 		MOV		ES,AX
-		MOV		CH,0			; �V�����_0
-		MOV		DH,0			; �w�b�h0
-		MOV		CL,2			; �Z�N�^2
-		MOV		BX,18*2*CYLS-1	; �ǂݍ��݂������v�Z�N�^��
-		CALL	readfast		; �����ǂݍ���
+		MOV		CH,0			; シリンダ0
+		MOV		DH,0			; ヘッド0
+		MOV		CL,2			; セクタ2
+		MOV		BX,18*2*CYLS-1	; 読み込みたい合計セクタ数
+		CALL	readfast		; 高速読み込み
 
-; �ǂݏI������̂�haribote.sys�����s���I
+; 読み終わったのでharibote.sysを実行だ！
 
-		MOV		BYTE [0x0ff0],CYLS	; IPL���ǂ��܂œǂ񂾂̂�������
+		MOV		BYTE [0x0ff0],CYLS	; IPLがどこまで読んだのかをメモ
 		JMP		0xc200
 
 error:
@@ -57,32 +57,32 @@ error:
 		MOV		SI,msg
 putloop:
 		MOV		AL,[SI]
-		ADD		SI,1			; SI��1�𑫂�
+		ADD		SI,1			; SIに1を足す
 		CMP		AL,0
 		JE		fin
-		MOV		AH,0x0e			; �ꕶ���\���t�@���N�V����
-		MOV		BX,15			; �J���[�R�[�h
-		INT		0x10			; �r�f�IBIOS�Ăяo��
+		MOV		AH,0x0e			; 一文字表示ファンクション
+		MOV		BX,15			; カラーコード
+		INT		0x10			; ビデオBIOS呼び出し
 		JMP		putloop
 fin:
-		HLT						; ��������܂�CPU���~������
-		JMP		fin				; �������[�v
+		HLT						; 何かあるまでCPUを停止させる
+		JMP		fin				; 無限ループ
 msg:
-		DB		0x0a, 0x0a		; ���s��2��
+		DB		0x0a, 0x0a		; 改行を2つ
 		DB		"load error"
-		DB		0x0a			; ���s
+		DB		0x0a			; 改行
 		DB		0
 
-readfast:	; AL���g���Ăł��邾���܂Ƃ߂ēǂݏo��
-;	ES:�ǂݍ��ݔԒn, CH:�V�����_, DH:�w�b�h, CL:�Z�N�^, BX:�ǂݍ��݃Z�N�^��
+readfast:	; ALを使ってできるだけまとめて読み出す
+;	ES:読み込み番地, CH:シリンダ, DH:ヘッド, CL:セクタ, BX:読み込みセクタ数
 
-		MOV		AX,ES			; < ES����AL�̍ő�l���v�Z >
-		SHL		AX,3			; AX��32�Ŋ����āA���̌��ʂ�AH�ɓ��ꂽ���ƂɂȂ� �iSHL�͍��V�t�g���߁j
-		AND		AH,0x7f			; AH��AH��128�Ŋ������]��i512*128=64K�j
-		MOV		AL,128			; AL = 128 - AH; ��ԋ߂�64KB���E�܂ōő剽�Z�N�^���邩
+		MOV		AX,ES			; < ESからALの最大値を計算 >
+		SHL		AX,3			; AXを32で割って、その結果をAHに入れたことになる （SHLは左シフト命令）
+		AND		AH,0x7f			; AHはAHを128で割った余り（512*128=64K）
+		MOV		AL,128			; AL = 128 - AH; 一番近い64KB境界まで最大何セクタ入るか
 		SUB		AL,AH
 
-		MOV		AH,BL			; < BX����AL�̍ő�l��AH�Ɍv�Z >
+		MOV		AH,BL			; < BXからALの最大値をAHに計算 >
 		CMP		BH,0			; if (BH != 0) { AH = 18; }
 		JE		.skip1
 		MOV		AH,18
@@ -92,7 +92,7 @@ readfast:	; AL���g���Ăł��邾���܂Ƃ߂ēǂݏo��
 		MOV		AL,AH
 .skip2:
 
-		MOV		AH,19			; < CL����AL�̍ő�l��AH�Ɍv�Z >
+		MOV		AH,19			; < CLからALの最大値をAHに計算 >
 		SUB		AH,CL			; AH = 19 - CL;
 		CMP		AL,AH			; if (AL > AH) { AL = AH; }
 		JBE		.skip3
@@ -100,23 +100,23 @@ readfast:	; AL���g���Ăł��邾���܂Ƃ߂ēǂݏo��
 .skip3:
 
 		PUSH	BX
-		MOV		SI,0			; ���s�񐔂𐔂��郌�W�X�^
+		MOV		SI,0			; 失敗回数を数えるレジスタ
 retry:
-		MOV		AH,0x02			; AH=0x02 : �f�B�X�N�ǂݍ���
+		MOV		AH,0x02			; AH=0x02 : ディスク読み込み
 		MOV		BX,0
-		MOV		DL,0x00			; A�h���C�u
+		MOV		DL,0x00			; Aドライブ
 		PUSH	ES
 		PUSH	DX
 		PUSH	CX
 		PUSH	AX
-		INT		0x13			; �f�B�X�NBIOS�Ăяo��
-		JNC		next			; �G���[�������Ȃ����next��
-		ADD		SI,1			; SI��1�𑫂�
-		CMP		SI,5			; SI��5���r
-		JAE		error			; SI >= 5 ��������error��
+		INT		0x13			; ディスクBIOS呼び出し
+		JNC		next			; エラーがおきなければnextへ
+		ADD		SI,1			; SIに1を足す
+		CMP		SI,5			; SIと5を比較
+		JAE		error			; SI >= 5 だったらerrorへ
 		MOV		AH,0x00
-		MOV		DL,0x00			; A�h���C�u
-		INT		0x13			; �h���C�u�̃��Z�b�g
+		MOV		DL,0x00			; Aドライブ
+		INT		0x13			; ドライブのリセット
 		POP		AX
 		POP		CX
 		POP		DX
@@ -126,28 +126,28 @@ next:
 		POP		AX
 		POP		CX
 		POP		DX
-		POP		BX				; ES�̓��e��BX�Ŏ󂯎��
-		SHR		BX,5			; BX��16�o�C�g�P�ʂ���512�o�C�g�P�ʂ�
+		POP		BX				; ESの内容をBXで受け取る
+		SHR		BX,5			; BXを16バイト単位から512バイト単位へ
 		MOV		AH,0
 		ADD		BX,AX			; BX += AL;
-		SHL		BX,5			; BX��512�o�C�g�P�ʂ���16�o�C�g�P�ʂ�
-		MOV		ES,BX			; ����� ES += AL * 0x20; �ɂȂ�
+		SHL		BX,5			; BXを512バイト単位から16バイト単位へ
+		MOV		ES,BX			; これで ES += AL * 0x20; になる
 		POP		BX
 		SUB		BX,AX
 		JZ		.ret
-		ADD		CL,AL			; CL��AL�𑫂�
-		CMP		CL,18			; CL��18���r
-		JBE		readfast		; CL <= 18 ��������readfast��
+		ADD		CL,AL			; CLにALを足す
+		CMP		CL,18			; CLと18を比較
+		JBE		readfast		; CL <= 18 だったらreadfastへ
 		MOV		CL,1
 		ADD		DH,1
 		CMP		DH,2
-		JB		readfast		; DH < 2 ��������readfast��
+		JB		readfast		; DH < 2 だったらreadfastへ
 		MOV		DH,0
 		ADD		CH,1
 		JMP		readfast
 .ret:
 		RET
 
-		RESB	0x7dfe-$		; 0x7dfe�܂ł�0x00�Ŗ��߂閽��
+		RESB	0x7dfe-$		; 0x7dfeまでを0x00で埋める命令
 
 		DB		0x55, 0xaa

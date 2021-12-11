@@ -2278,7 +2278,7 @@ c_build_qualified_type (type, type_quals)
 	  || !C_TYPE_OBJECT_OR_INCOMPLETE_P (TREE_TYPE (type))))
     {
       error ("invalid use of `restrict'");
-      type_quals &= ~TYPE_QUAL_RESTRICT;
+      type_quals &= ‾TYPE_QUAL_RESTRICT;
     }
 
   if (TREE_CODE (type) == ARRAY_TYPE)

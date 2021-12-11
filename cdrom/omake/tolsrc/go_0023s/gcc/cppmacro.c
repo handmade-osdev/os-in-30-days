@@ -858,7 +858,7 @@ replace_args (pfile, node, args)
 	  if (src->flags & PASTE_LEFT)
 	    token->flags = (*paste_flag)->flags | PASTE_LEFT;
 	  else
-	    token->flags = (*paste_flag)->flags & ~PASTE_LEFT;
+	    token->flags = (*paste_flag)->flags & ‾PASTE_LEFT;
 	  *paste_flag = token;
 	}
     }
@@ -994,7 +994,7 @@ _cpp_pop_context (pfile)
   cpp_context *context = pfile->context;
 
   if (context->macro)
-    context->macro->flags &= ~NODE_DISABLED;
+    context->macro->flags &= ‾NODE_DISABLED;
 
   if (context->buff)
     _cpp_release_buff (pfile, context->buff);
@@ -1187,7 +1187,7 @@ _cpp_free_definition (h)
   /* Macros and assertions no longer have anything to free.  */
   h->type = NT_VOID;
   /* Clear builtin flag in case of redefinition.  */
-  h->flags &= ~(NODE_BUILTIN | NODE_DISABLED);
+  h->flags &= ‾(NODE_BUILTIN | NODE_DISABLED);
 }
 
 /* Save parameter NODE to the parameter list of macro MACRO.  Returns
@@ -1377,7 +1377,7 @@ _cpp_create_definition (pfile, node)
 	{
 	  if (token->type == CPP_MACRO_ARG)
 	    {
-	      token->flags &= ~PREV_WHITE;
+	      token->flags &= ‾PREV_WHITE;
 	      token->flags |= STRINGIFY_ARG;
 	      token->flags |= token[-1].flags & PREV_WHITE;
 	      token[-1] = token[0];
@@ -1424,7 +1424,7 @@ _cpp_create_definition (pfile, node)
 
   /* Clear whitespace on first token for warn_of_redefinition().  */
   if (macro->count)
-    macro->expansion[0].flags &= ~PREV_WHITE;
+    macro->expansion[0].flags &= ‾PREV_WHITE;
 
   /* Commit the memory.  */
   BUFF_FRONT (pfile->a_buff) = (U_CHAR *) &macro->expansion[macro->count];

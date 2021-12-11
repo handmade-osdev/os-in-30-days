@@ -1,18 +1,18 @@
 /* for stdc */
 
-//	void GOLD_exit(int s);		/* �I������ */
-int GOLD_getsize(const UCHAR *name); /* �t�@�C���T�C�Y�擾 */
+//	void GOLD_exit(int s);		/* 終了する */
+int GOLD_getsize(const UCHAR *name); /* ファイルサイズ取得 */
 int GOLD_read(const UCHAR *name, int len, UCHAR *b0);
-	/* �t�@�C���ǂݍ��݁A�o�C�i�����[�h�A
-		�T�C�Y���Ăяo�����Œ��O�Ƀt�@�C���`�F�b�N���Ă��āA
-		�t�@�C���T�C�Y�҂������v�����Ă��� */
+	/* ファイル読み込み、バイナリモード、
+		サイズを呼び出し側で直前にファイルチェックしていて、
+		ファイルサイズぴったりを要求してくる */
 
 #if (defined(USE_SYS_STAT_H))
 
 #include <sys/stat.h>
 
 int GOLD_getsize(const UCHAR *name)
-/* �t�@�C���T�C�Y�擾 */
+/* ファイルサイズ取得 */
 {
 	FILE *fp;
 	struct stat st;

@@ -382,7 +382,7 @@ insn_unit (insn)
          range, don't cache it.  */
       if (FUNCTION_UNITS_SIZE < HOST_BITS_PER_SHORT
 	  || unit >= 0
-	  || (unit & ~((1 << (HOST_BITS_PER_SHORT - 1)) - 1)) == 0)
+	  || (unit & ‾((1 << (HOST_BITS_PER_SHORT - 1)) - 1)) == 0)
 	INSN_UNIT (insn) = unit;
     }
   return (unit > 0 ? unit - 1 : unit);
@@ -467,7 +467,7 @@ insn_issue_delay (insn)
 	delay = function_units[unit].blockage_function (insn, insn);
     }
   else
-    for (i = 0, unit = ~unit; unit; i++, unit >>= 1)
+    for (i = 0, unit = ‾unit; unit; i++, unit >>= 1)
       if ((unit & 1) != 0 && function_units[i].blockage_range_function
 	  && function_units[i].blockage_function)
 	delay = MAX (delay, function_units[i].blockage_function (insn, insn));
@@ -540,7 +540,7 @@ schedule_unit (unit, insn, clock)
       unit_tick[instance] = (clock + function_units[unit].max_blockage);
     }
   else
-    for (i = 0, unit = ~unit; unit; i++, unit >>= 1)
+    for (i = 0, unit = ‾unit; unit; i++, unit >>= 1)
       if ((unit & 1) != 0)
 	schedule_unit (i, insn, clock);
 }
@@ -583,7 +583,7 @@ actual_hazard (unit, insn, clock, cost)
       cost = MAX (cost, best_cost);
     }
   else
-    for (i = 0, unit = ~unit; unit; i++, unit >>= 1)
+    for (i = 0, unit = ‾unit; unit; i++, unit >>= 1)
       if ((unit & 1) != 0)
 	cost = actual_hazard (i, insn, clock, cost);
 
@@ -631,7 +631,7 @@ potential_hazard (unit, insn, cost)
 	}
     }
   else
-    for (i = 0, unit = ~unit; unit; i++, unit >>= 1)
+    for (i = 0, unit = ‾unit; unit; i++, unit >>= 1)
       if ((unit & 1) != 0)
 	cost = potential_hazard (i, insn, cost);
 

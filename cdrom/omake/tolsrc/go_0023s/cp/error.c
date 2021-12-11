@@ -142,7 +142,7 @@ dump_scope (scope, flags)
      tree scope;
      int flags;
 {
-  int f = ~TFF_RETURN_TYPE & (flags & (TFF_SCOPE | TFF_CHASE_TYPEDEF));
+  int f = ‾TFF_RETURN_TYPE & (flags & (TFF_SCOPE | TFF_CHASE_TYPEDEF));
 
   if (scope == NULL_TREE)
     return;
@@ -213,9 +213,9 @@ dump_template_argument (arg, flags)
      int flags;
 {
   if (TYPE_P (arg) || TREE_CODE (arg) == TEMPLATE_DECL)
-    dump_type (arg, flags & ~TFF_CLASS_KEY_OR_ENUM);
+    dump_type (arg, flags & ‾TFF_CLASS_KEY_OR_ENUM);
   else
-    dump_expr (arg, (flags | TFF_EXPR_IN_PARENS) & ~TFF_CLASS_KEY_OR_ENUM);
+    dump_expr (arg, (flags | TFF_EXPR_IN_PARENS) & ‾TFF_CLASS_KEY_OR_ENUM);
 }
 
 /* Dump a template-argument-list ARGS (always a TREE_VEC) under control
@@ -272,7 +272,7 @@ dump_template_parameter (parm, flags)
     {
       output_add_string (scratch_buffer, " = ");
       if (TREE_CODE (p) == TYPE_DECL || TREE_CODE (p) == TEMPLATE_DECL)
-        dump_type (a, flags & ~TFF_CHASE_TYPEDEF);
+        dump_type (a, flags & ‾TFF_CHASE_TYPEDEF);
       else
         dump_expr (a, flags | TFF_EXPR_IN_PARENS);
     }
@@ -374,7 +374,7 @@ dump_type (t, flags)
 
     case TEMPLATE_DECL:
     case NAMESPACE_DECL:
-      dump_decl (t, flags & ~TFF_DECL_SPECIFIERS);
+      dump_decl (t, flags & ‾TFF_DECL_SPECIFIERS);
       break;
 
     case COMPLEX_TYPE:
@@ -475,7 +475,7 @@ dump_type (t, flags)
 
     case TYPEOF_TYPE:
       output_add_string (scratch_buffer, "__typeof (");
-      dump_expr (TYPE_FIELDS (t), flags & ~TFF_EXPR_IN_PARENS);
+      dump_expr (TYPE_FIELDS (t), flags & ‾TFF_EXPR_IN_PARENS);
       print_right_paren (scratch_buffer);
       break;
 
@@ -502,7 +502,7 @@ dump_typename (t, flags)
   if (TREE_CODE (ctx) == TYPENAME_TYPE)
     dump_typename (ctx, flags);
   else
-    dump_type (ctx, flags & ~TFF_CLASS_KEY_OR_ENUM);
+    dump_type (ctx, flags & ‾TFF_CLASS_KEY_OR_ENUM);
   print_scope_operator (scratch_buffer);
   dump_decl (TYPENAME_TYPE_FULLNAME (t), flags);
 }
@@ -584,7 +584,7 @@ dump_aggr_type (t, flags)
   if (tmplate)
     dump_template_parms (TYPE_TEMPLATE_INFO (t),
                          !CLASSTYPE_USE_TEMPLATE (t),
-                         flags & ~TFF_TEMPLATE_HEADER);
+                         flags & ‾TFF_TEMPLATE_HEADER);
 }
 
 /* Dump into the obstack the initial part of the output for a given type.
@@ -741,7 +741,7 @@ dump_type_suffix (t, flags)
 
 	/* Function pointers don't have default args.  Not in standard C++,
 	   anyway; they may in g++, but we'll just pretend otherwise.  */
-	dump_parameters (arg, flags & ~TFF_FUNCTION_DEFAULT_ARGUMENTS);
+	dump_parameters (arg, flags & ‾TFF_FUNCTION_DEFAULT_ARGUMENTS);
 
 	if (TREE_CODE (t) == METHOD_TYPE)
 	  dump_qualifiers
@@ -761,12 +761,12 @@ dump_type_suffix (t, flags)
                tree_low_cst (TYPE_MAX_VALUE (TYPE_DOMAIN (t)), 0) + 1);
 	  else if (TREE_CODE (TYPE_MAX_VALUE (TYPE_DOMAIN (t))) == MINUS_EXPR)
 	    dump_expr (TREE_OPERAND (TYPE_MAX_VALUE (TYPE_DOMAIN (t)), 0),
-	               flags & ~TFF_EXPR_IN_PARENS);
+	               flags & ‾TFF_EXPR_IN_PARENS);
 	  else
 	    dump_expr (fold (cp_build_binary_op
 			     (PLUS_EXPR, TYPE_MAX_VALUE (TYPE_DOMAIN (t)),
 			      integer_one_node)),
-	               flags & ~TFF_EXPR_IN_PARENS);
+	               flags & ‾TFF_EXPR_IN_PARENS);
 	}
       print_right_bracket (scratch_buffer);
       dump_type_suffix (TREE_TYPE (t), flags);
@@ -899,7 +899,7 @@ dump_decl (t, flags)
       break;
 
     case SCOPE_REF:
-      dump_decl (TREE_OPERAND (t, 0), flags & ~TFF_DECL_SPECIFIERS);
+      dump_decl (TREE_OPERAND (t, 0), flags & ‾TFF_DECL_SPECIFIERS);
       print_scope_operator (scratch_buffer); 
       dump_decl (TREE_OPERAND (t, 1), flags);
       break;
@@ -1054,7 +1054,7 @@ dump_template_decl (t, flags)
 
   if (TREE_CODE (DECL_TEMPLATE_RESULT (t)) == TYPE_DECL)
     dump_type (TREE_TYPE (t),
-               ((flags & ~TFF_CLASS_KEY_OR_ENUM) | TFF_TEMPLATE_NAME
+               ((flags & ‾TFF_CLASS_KEY_OR_ENUM) | TFF_TEMPLATE_NAME
                 | (flags & TFF_DECL_SPECIFIERS ? TFF_CLASS_KEY_OR_ENUM : 0)));
   else if (TREE_CODE (DECL_TEMPLATE_RESULT (t)) == VAR_DECL)
     dump_decl (DECL_TEMPLATE_RESULT (t), flags | TFF_TEMPLATE_NAME);
@@ -1070,7 +1070,7 @@ dump_template_decl (t, flags)
       default:
         /* This case can occur with some illegal code.  */
         dump_type (TREE_TYPE (t),
-                   (flags & ~TFF_CLASS_KEY_OR_ENUM) | TFF_TEMPLATE_NAME
+                   (flags & ‾TFF_CLASS_KEY_OR_ENUM) | TFF_TEMPLATE_NAME
                    | (flags & TFF_DECL_SPECIFIERS ? TFF_CLASS_KEY_OR_ENUM : 0));
     }
 }
@@ -1246,7 +1246,7 @@ dump_function_name (t, flags)
 
   if (DECL_DESTRUCTOR_P (t))
     {
-      output_add_character (scratch_buffer, '~');
+      output_add_character (scratch_buffer, '‾');
       dump_decl (name, TFF_PLAIN_IDENTIFIER);
     }
   else if (DECL_CONV_FN_P (t))
@@ -1290,7 +1290,7 @@ dump_template_parms (info, primary, flags)
 
   if (primary && flags & TFF_TEMPLATE_NAME)
     return;
-  flags &= ~(TFF_CLASS_KEY_OR_ENUM | TFF_TEMPLATE_NAME);
+  flags &= ‾(TFF_CLASS_KEY_OR_ENUM | TFF_TEMPLATE_NAME);
   print_template_argument_list_start (scratch_buffer);
 
   /* Be careful only to print things when we have them, so as not
@@ -1350,7 +1350,7 @@ dump_template_parms (info, primary, flags)
           if (ix)
             separate_with_comma (scratch_buffer);
 
-          dump_decl (parm, flags & ~TFF_DECL_SPECIFIERS);
+          dump_decl (parm, flags & ‾TFF_DECL_SPECIFIERS);
         }
     }
   print_template_argument_list_end (scratch_buffer);
@@ -1436,7 +1436,7 @@ dump_expr (t, flags)
     case TEMPLATE_DECL:
     case NAMESPACE_DECL:
     case OVERLOAD:
-      dump_decl (t, flags & ~TFF_DECL_SPECIFIERS);
+      dump_decl (t, flags & ‾TFF_DECL_SPECIFIERS);
       break;
 
     case INTEGER_CST:
@@ -1489,7 +1489,7 @@ dump_expr (t, flags)
 	          {
 		    output_add_character (scratch_buffer, '-');
 		    val = build_int_2 (-TREE_INT_CST_LOW (val),
-				       ~TREE_INT_CST_HIGH (val)
+				       ‾TREE_INT_CST_HIGH (val)
 	                               + !TREE_INT_CST_LOW (val));
 	          }
 	        /* Would "%x%0*x" or "%x%*0x" get zero-padding on all
@@ -1725,7 +1725,7 @@ dump_expr (t, flags)
 	    dump_expr (ob, flags | TFF_EXPR_IN_PARENS);
 	    output_add_character (scratch_buffer, '.');
 	  }
-	dump_expr (TREE_OPERAND (t, 1), flags & ~TFF_EXPR_IN_PARENS);
+	dump_expr (TREE_OPERAND (t, 1), flags & ‾TFF_EXPR_IN_PARENS);
       }
       break;
 
@@ -1815,7 +1815,7 @@ dump_expr (t, flags)
 	      if (flags & TFF_EXPR_IN_PARENS)
 	        print_left_paren (scratch_buffer);
 	      output_add_character (scratch_buffer, '*');
-	      dump_expr (TREE_OPERAND (t, 0), flags & ~TFF_EXPR_IN_PARENS);
+	      dump_expr (TREE_OPERAND (t, 0), flags & ‾TFF_EXPR_IN_PARENS);
 	      if (flags & TFF_EXPR_IN_PARENS)
 	        print_right_paren (scratch_buffer);
 	      break;
@@ -1911,7 +1911,7 @@ dump_expr (t, flags)
       }
 
     case TEMPLATE_PARM_INDEX:
-      dump_decl (TEMPLATE_PARM_DECL (t), flags & ~TFF_DECL_SPECIFIERS);
+      dump_decl (TEMPLATE_PARM_DECL (t), flags & ‾TFF_DECL_SPECIFIERS);
       break;
 
     case IDENTIFIER_NODE:
@@ -2000,7 +2000,7 @@ dump_expr (t, flags)
       dump_expr (TREE_OPERAND (t, 2), flags);
       output_add_character (scratch_buffer, '.');
       dump_type (TREE_OPERAND (t, 0), flags);
-      output_add_string (scratch_buffer, "::~");
+      output_add_string (scratch_buffer, "::‾");
       dump_type (TREE_OPERAND (t, 1), flags);
       break;
 
@@ -2016,19 +2016,19 @@ dump_expr (t, flags)
 
     case BIND_EXPR:
       output_add_character (scratch_buffer, '{');
-      dump_expr (TREE_OPERAND (t, 1), flags & ~TFF_EXPR_IN_PARENS);
+      dump_expr (TREE_OPERAND (t, 1), flags & ‾TFF_EXPR_IN_PARENS);
       output_add_character (scratch_buffer, '}');
       break;
 
     case LOOP_EXPR:
       output_add_string (scratch_buffer, "while (1) { ");
-      dump_expr (TREE_OPERAND (t, 0), flags & ~TFF_EXPR_IN_PARENS);
+      dump_expr (TREE_OPERAND (t, 0), flags & ‾TFF_EXPR_IN_PARENS);
       output_add_character (scratch_buffer, '}');
       break;
 
     case EXIT_EXPR:
       output_add_string (scratch_buffer, "if (");
-      dump_expr (TREE_OPERAND (t, 0), flags & ~TFF_EXPR_IN_PARENS);
+      dump_expr (TREE_OPERAND (t, 0), flags & ‾TFF_EXPR_IN_PARENS);
       output_add_string (scratch_buffer, ") break; ");
       break;
 
@@ -2079,7 +2079,7 @@ dump_unary_op (opstring, t, flags)
   if (flags & TFF_EXPR_IN_PARENS)
     print_left_paren (scratch_buffer);
   print_identifier (scratch_buffer, opstring);
-  dump_expr (TREE_OPERAND (t, 0), flags & ~TFF_EXPR_IN_PARENS);
+  dump_expr (TREE_OPERAND (t, 0), flags & ‾TFF_EXPR_IN_PARENS);
   if (flags & TFF_EXPR_IN_PARENS)
     print_right_paren (scratch_buffer);
 }

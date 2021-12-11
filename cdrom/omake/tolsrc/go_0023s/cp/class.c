@@ -1837,7 +1837,7 @@ maybe_warn_about_overly_private_class (t)
        // Oops - forgot `public:'
        A();
        A(const A&);
-       ~A();
+       ‾A();
      };
 
      we warn several times about essentially the same problem.  */
@@ -5997,7 +5997,7 @@ instantiate_type (lhstype, rhs, flags)
                ? COMPARE_NO_ATTRIBUTES : COMPARE_STRICT;
   int allow_ptrmem = flags & tf_ptrmem_ok;
   
-  flags &= ~tf_ptrmem_ok;
+  flags &= ‾tf_ptrmem_ok;
   
   if (TREE_CODE (lhstype) == UNKNOWN_TYPE)
     {

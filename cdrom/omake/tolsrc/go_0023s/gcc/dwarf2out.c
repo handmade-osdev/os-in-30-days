@@ -760,7 +760,7 @@ reg_save (label, reg, sreg, offset)
      the value isn't a register number.  */
   if (sreg == (unsigned int) -1)
     {
-      if (reg & ~0x3f)
+      if (reg & ‾0x3f)
 	/* The register number won't fit in 6 bits, so we have to use
 	   the long form.  */
 	cfi->dw_cfi_opc = DW_CFA_offset_extended;
@@ -6211,8 +6211,8 @@ output_loc_list (list_head)
      in more than one section.  */
   if (strcmp (curr->section, ".text") == 0)
     {
-      /* dw2_asm_output_data will mask off any extra bits in the ~0.  */
-      dw2_asm_output_data (DWARF2_ADDR_SIZE, ~(unsigned HOST_WIDE_INT) 0,
+      /* dw2_asm_output_data will mask off any extra bits in the ‾0.  */
+      dw2_asm_output_data (DWARF2_ADDR_SIZE, ‾(unsigned HOST_WIDE_INT) 0,
 			   "Location list base address specifier fake entry");
       dw2_asm_output_offset (DWARF2_ADDR_SIZE, curr->section,
 			     "Location list base address specifier base");

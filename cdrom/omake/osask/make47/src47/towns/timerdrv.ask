@@ -1,10 +1,10 @@
 /*	"timerdrv.ask"
-	OSASK/TOWNS—p‚Ìƒ^ƒCƒ}[ƒ‹[ƒ`ƒ“(type-A ver.1.2)
-	Copyright(C) 2003 ì‡GÀ(ì‡“°)		*/
+	OSASK/TOWNSç”¨ã®ã‚¿ã‚¤ãƒãƒ¼ãƒ«ãƒ¼ãƒãƒ³(type-A ver.1.2)
+	Copyright(C) 2003 å·åˆç§€å®Ÿ(å·åˆå ‚)		*/
 
-/*	ŒÃ‚¢ƒ`ƒbƒvƒZƒbƒg‚É‚Í‘Î‰‚µ‚Ä‚¢‚È‚¢B‚È‚º‚È‚çA˜A‘±ƒAƒNƒZƒX‚ÌÛ‚ÉƒEƒFƒCƒg‚ª“ü‚Á‚Ä‚¢‚È‚¢‚©‚çB */
+/*	å¤ã„ãƒãƒƒãƒ—ã‚»ãƒƒãƒˆã«ã¯å¯¾å¿œã—ã¦ã„ãªã„ã€‚ãªãœãªã‚‰ã€é€£ç¶šã‚¢ã‚¯ã‚»ã‚¹ã®éš›ã«ã‚¦ã‚§ã‚¤ãƒˆãŒå…¥ã£ã¦ã„ãªã„ã‹ã‚‰ã€‚ */
 
-/* mouse‚ÌƒZƒ“ƒX‚É‘Î‰(PIT1) */
+/* mouseã®ã‚»ãƒ³ã‚¹ã«å¯¾å¿œ(PIT1) */
 
 #include "osaskinc.ask"
 
@@ -22,27 +22,27 @@ struct SS0_struct {
 };
 
 struct TimerNode {
-	int signalbuf[32]; /* ƒ^ƒCƒ}[ƒVƒOƒiƒ‹‚ÍA•’Ê‚æ‚è‚à¬‚³‚¢ */
+	int signalbuf[32]; /* ã‚¿ã‚¤ãƒãƒ¼ã‚·ã‚°ãƒŠãƒ«ã¯ã€æ™®é€šã‚ˆã‚Šã‚‚å°ã•ã„ */
 	int call_vector[8];
 	int time[12], interval;
 	// int near *back, near *next;
 	int back, next;
-	/* ‚±‚ê‚Å‚¿‚å‚¤‚Ç64bytes. */
+	/* ã“ã‚Œã§ã¡ã‚‡ã†ã©64bytes. */
 };
 
 struct TimerWork {
-	int jmpvec; /* g‚Á‚Ä‚¢‚È‚¢itimer type-B‚Ì‚È‚²‚èj */
-	int longcounter; /* c‚è‘Ò‚¿ŠÔi‰½‰ñ‚ÌŠ„‚è‚İ‚ğ‘Ò‚Â‚Ì‚©j */
-	int predict_PIT1_count /* ƒ^ƒCƒ€ƒAƒEƒg‚µ‚½‚Æ‚«‚Ì’l */; /* g‚Á‚Ä‚¢‚È‚¢ */
+	int jmpvec; /* ä½¿ã£ã¦ã„ãªã„ï¼ˆtimer type-Bã®ãªã”ã‚Šï¼‰ */
+	int longcounter; /* æ®‹ã‚Šå¾…ã¡æ™‚é–“ï¼ˆä½•å›ã®å‰²ã‚Šè¾¼ã¿ã‚’å¾…ã¤ã®ã‹ï¼‰ */
+	int predict_PIT1_count /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ãŸã¨ãã®å€¤ */; /* ä½¿ã£ã¦ã„ãªã„ */
 	char status, [3];
 
 	// origin(0x0010)
 
-	/* ˆÈ‰º‘S‚Äg‚Á‚Ä‚¢‚È‚¢ */
-	unsigned int PIT1_count0 /* İ’è’l */;
-	unsigned int PIT1_delta_100000000, PIT1_delta_10000, PIT1_delta_fffeffff /* ‚»‚ê‚¼‚êA‚Ç‚ê‚¾‚¯Œ¸‚é‚©‚ğ•\‚µ‚½‚à‚Ì */;
+	/* ä»¥ä¸‹å…¨ã¦ä½¿ã£ã¦ã„ãªã„ */
+	unsigned int PIT1_count0 /* è¨­å®šå€¤ */;
+	unsigned int PIT1_delta_100000000, PIT1_delta_10000, PIT1_delta_fffeffff /* ãã‚Œãã‚Œã€ã©ã‚Œã ã‘æ¸›ã‚‹ã‹ã‚’è¡¨ã—ãŸã‚‚ã® */;
 	signed int PIT1_delta_max, PIT1_delta_min /* PIT1_count0 / 2, - PIT1_count0 / 2 */;
-	int limit /* æsÀsŒÀŠE’l */;
+	int limit /* å…ˆè¡Œå®Ÿè¡Œé™ç•Œå€¤ */;
 
 	void [20];
 	void [64];
@@ -53,7 +53,7 @@ struct TimerWork {
 	int mousemask0, mousedefault0, mousemask1, mousedefault1;
 	int mousesignalbuf[16];
 	int mousebuf0[4], mousebuf1[4], mousetimernode, mousewait1[2], mousewait0[2];
-	/* mouseflag‚ª0‚¾‚Æmousedefault‚ğXV‚·‚é */
+	/* mouseflagãŒ0ã ã¨mousedefaultã‚’æ›´æ–°ã™ã‚‹ */
 	int mousebutton0, mousebutton1, [8];
 	void [48];
 
@@ -65,7 +65,7 @@ struct TimerWork {
 void calc_count1ms();
 
 void far TimerSysCmd()
-/* FS:EBX‚©‚çƒRƒ}ƒ“ƒh */
+/* FS:EBXã‹ã‚‰ã‚³ãƒãƒ³ãƒ‰ */
 {
 	PUSH(DS);
 	ESP -= 24;
@@ -75,7 +75,7 @@ void far TimerSysCmd()
 	EAX += 8;
 	[SS:ESP +  8] = EDX;
 	DS = EAX;
-	EAX = [FS:EBX]; /* 4‚Ì”{” */
+	EAX = [FS:EBX]; /* 4ã®å€æ•° */
 	[SS:ESP + 12] = EBP;
 	[SS:ESP + 16] = ESI;
 	[SS:ESP + 20] = EDI;
@@ -96,7 +96,7 @@ void far TimerInt()
 	DS = AX;
 
 	IN(AL, 0x0060);
-	/* PIT1‚Ìƒ^ƒCƒ€ƒAƒEƒg‚©H */
+	/* PIT1ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‹ï¼Ÿ */
 	AH = AL;
 	AH &= 0x0a;
 	if (AH == 0x0a) {
@@ -105,7 +105,7 @@ void far TimerInt()
 		PUSH(EAX);
 		AL = 0x70; /* PIT1 #1, L/H, mode0, bin */
 		OUT(0x0046, AL);
-		EAX = work->mousewait1[0]; /* 13‚Å42.32ƒ}ƒCƒNƒ•b */
+		EAX = work->mousewait1[0]; /* 13ã§42.32ãƒã‚¤ã‚¯ãƒ­ç§’ */
 		OUT(0x0042, AL);
 		EDX = 0x04d0;
 		AL = AH;
@@ -134,30 +134,30 @@ void far TimerInt()
 		asmout("JMP TimerInt_IRETD");
 	}
 
-	/* PIT0‚Ìƒ^ƒCƒ€ƒAƒEƒg‚ğó— */
+	/* PIT0ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’å—ç† */
 	AL >>= 2;
 	AL &= 0x07;
 	AL |= 0x80;
 	OUT(0x0060, AL);
 
-	/* Œ»İ‚ÌZo•û–@ : head.time - c‚èƒJƒEƒ“ƒg */
+	/* ç¾åœ¨æ™‚åˆ»ã®ç®—å‡ºæ–¹æ³• : head.time - æ®‹ã‚Šã‚«ã‚¦ãƒ³ãƒˆ */
 
-	/* ‚³‚ç‚É‚‘¬‰»‚Å‚«‚éBEEEshort_wait‚Å‚àA‚í‚´‚Ælongcounter‚ğ1‚É‚µ‚Ä‚¨‚­B */
-	/* Š„‚è‚İ‚ğƒLƒƒƒ“ƒZƒ‹‚·‚éƒ‹[ƒ`ƒ“‚ÍAstatus‚ğŒ©‚éB0‚È‚çlong,1‚È‚çshortB */
-	/* 2‚È‚çŠ„‚è‚İˆ—’†B */
+	/* ã•ã‚‰ã«é«˜é€ŸåŒ–ã§ãã‚‹ã€‚ãƒ»ãƒ»ãƒ»short_waitã§ã‚‚ã€ã‚ã–ã¨longcounterã‚’1ã«ã—ã¦ãŠãã€‚ */
+	/* å‰²ã‚Šè¾¼ã¿ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã™ã‚‹ãƒ«ãƒ¼ãƒãƒ³ã¯ã€statusã‚’è¦‹ã‚‹ã€‚0ãªã‚‰long,1ãªã‚‰shortã€‚ */
+	/* 2ãªã‚‰å‰²ã‚Šè¾¼ã¿å‡¦ç†ä¸­ã€‚ */
 }
 
-/*	Šî–{‚Í32bitƒo[ƒWƒ‡ƒ“B‚Ü‚³‚É2^32ƒJƒEƒ“ƒg‚Éˆê“xA•â³Š„‚è‚İ‚ª‹N‚«‚é‚©‚ç
-	–â‘è‚Í‚È‚¢B‚¿‚È‚İ‚ÉA‚±‚ÌŠ„‚è‚İ‚Í‚PŠÔ‚É‚P“x‚Å‚ ‚éB‚à‚Á‚Æ‚¢‚¤‚Á‚ÆA
-	•â³Š„‚è‚İ‚Æ‚ÍA‰½‚à‚µ‚È‚¢Š„‚è‚İ‚Ì‚±‚Æ‚Å‚ ‚éBEEE‚¢‚âAˆá‚¤A
-	•â³Š„‚è‚İ‚Í2^(32+16)ƒJƒEƒ“ƒg‚Éˆê“x‚Å‚ ‚éB‚±‚ê‚ÍA‚V”N‚Éˆê“xB
+/*	åŸºæœ¬ã¯32bitãƒãƒ¼ã‚¸ãƒ§ãƒ³ã€‚ã¾ã•ã«2^32ã‚«ã‚¦ãƒ³ãƒˆã«ä¸€åº¦ã€æ™‚åˆ»è£œæ­£å‰²ã‚Šè¾¼ã¿ãŒèµ·ãã‚‹ã‹ã‚‰
+	å•é¡Œã¯ãªã„ã€‚ã¡ãªã¿ã«ã€ã“ã®å‰²ã‚Šè¾¼ã¿ã¯ï¼‘æ™‚é–“ã«ï¼‘åº¦ã§ã‚ã‚‹ã€‚ã‚‚ã£ã¨ã„ã†ã£ã¨ã€
+	æ™‚åˆ»è£œæ­£å‰²ã‚Šè¾¼ã¿ã¨ã¯ã€ä½•ã‚‚ã—ãªã„å‰²ã‚Šè¾¼ã¿ã®ã“ã¨ã§ã‚ã‚‹ã€‚ãƒ»ãƒ»ãƒ»ã„ã‚„ã€é•ã†ã€
+	æ™‚åˆ»è£œæ­£å‰²ã‚Šè¾¼ã¿ã¯2^(32+16)ã‚«ã‚¦ãƒ³ãƒˆã«ä¸€åº¦ã§ã‚ã‚‹ã€‚ã“ã‚Œã¯ã€ï¼—å¹´ã«ä¸€åº¦ã€‚
 
-	ƒ^ƒCƒ€ƒAƒEƒg‚·‚é‚ÆA‚·‚®‚ÉŒ»İ‚ªXV‚³‚êAƒCƒ“ƒ^[ƒoƒ‹‚à’²ß‚³‚ê‚éB
-	‚±‚Ìó‘Ô‚É‚È‚é‚ÆA‹¤’Êƒ‹[ƒ`ƒ“‚É“ü‚éiŠ„‚è‚İA”ñŠ„‚è‚İjB
+	ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã™ã‚‹ã¨ã€ã™ãã«ç¾åœ¨æ™‚åˆ»ãŒæ›´æ–°ã•ã‚Œã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«ã‚‚èª¿ç¯€ã•ã‚Œã‚‹ã€‚
+	ã“ã®çŠ¶æ…‹ã«ãªã‚‹ã¨ã€å…±é€šãƒ«ãƒ¼ãƒãƒ³ã«å…¥ã‚‹ï¼ˆå‰²ã‚Šè¾¼ã¿ã€éå‰²ã‚Šè¾¼ã¿ï¼‰ã€‚
 */
 
-/*	‚±‚Ìƒo[ƒWƒ‡ƒ“‚Å‚ÍAŠ„‚è‚İ‚ğ‹Ö~‚µ‚½‚Ü‚ÜŸX‚Æˆ—‚µ‚Ä‚¢‚­‚ªA
-	‚»‚¤‚Å‚È‚¢ƒo[ƒWƒ‡ƒ“‚ğì‚é‚±‚Æ‚à‰Â”\‚¾‚ë‚¤B‚µ‚©‚µA‚Ç‚¿‚ç‚ªD‚Ü‚µ‚¢‚©‚Í•ª‚©‚ç‚È‚¢B
+/*	ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯ã€å‰²ã‚Šè¾¼ã¿ã‚’ç¦æ­¢ã—ãŸã¾ã¾æ¬¡ã€…ã¨å‡¦ç†ã—ã¦ã„ããŒã€
+	ãã†ã§ãªã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’ä½œã‚‹ã“ã¨ã‚‚å¯èƒ½ã ã‚ã†ã€‚ã—ã‹ã—ã€ã©ã¡ã‚‰ãŒå¥½ã¾ã—ã„ã‹ã¯åˆ†ã‹ã‚‰ãªã„ã€‚
 */
 
 void near TimerRegister();
@@ -171,7 +171,7 @@ void near TimerLongcount()
 	work->longcounter--;
 	/* (true) */ if (!= 0) {
 		asmout("TimerInt_IRETD: EQU $");
-		AL = 0x60 /* IRQ-00‚ğI—¹ */;
+		AL = 0x60 /* IRQ-00ã‚’çµ‚äº† */;
 		OUT(PIC_mastar_OCW2, AL);
 		POP(EAX);
 		POP(DS);
@@ -180,31 +180,31 @@ void near TimerLongcount()
 	//	asmout("JZ TimerRing0Call");
 		IRETD();
 	}
-	AL = 0x60 /* IRQ-00‚ğI—¹ */;
+	AL = 0x60 /* IRQ-00ã‚’çµ‚äº† */;
 	OUT(PIC_mastar_OCW2, AL);
 
 	// goto TimerCountout;
 }
 
 void near TimerCountout()
-/*	‚±‚±‚É—ˆ‚½‚çACLIŠúŠÔ‚ª‚©‚È‚è’·‚­‚È‚é‚Ì‚ÅAIRQ-00‚ğmask‚µ‚Ä
-	Š„‚è‚İI—¹‚ğ‚â‚Á‚Ä‚µ‚Ü‚¤•û‚ª‚¢‚¢‚©‚à‚µ‚ê‚È‚¢B
-	‚µ‚©‚µAƒm[ƒh‚ğŒq‚¬•Ï‚¦‚Ä‚¢‚é‚Æ‚«‚É‘¼‚ÌŠ„‚è‚İ‚ª”­¶‚µA
-	‚»‚¢‚Â‚ªƒ^ƒCƒ}[‚ğİ’è‚µ‚æ‚¤‚Æ‚³‚ê‚é‚Æ¢‚éB
+/*	ã“ã“ã«æ¥ãŸã‚‰ã€CLIæœŸé–“ãŒã‹ãªã‚Šé•·ããªã‚‹ã®ã§ã€IRQ-00ã‚’maskã—ã¦
+	å‰²ã‚Šè¾¼ã¿çµ‚äº†ã‚’ã‚„ã£ã¦ã—ã¾ã†æ–¹ãŒã„ã„ã‹ã‚‚ã—ã‚Œãªã„ã€‚
+	ã—ã‹ã—ã€ãƒãƒ¼ãƒ‰ã‚’ç¹‹ãå¤‰ãˆã¦ã„ã‚‹ã¨ãã«ä»–ã®å‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã—ã€
+	ãã„ã¤ãŒã‚¿ã‚¤ãƒãƒ¼ã‚’è¨­å®šã—ã‚ˆã†ã¨ã•ã‚Œã‚‹ã¨å›°ã‚‹ã€‚
 
-	‚»‚Ì‚½‚ß‚ÉAÚ‘±‘Ò‹@ŒQ‚ğƒ`ƒF[ƒ“‚ÅŒq‚¢‚Å‚¨‚­‚©H
-	ƒ`ƒF[ƒ“‚¶‚á‚È‚­‚Ä32ƒGƒ“ƒgƒŠ‚­‚ç‚¢‚ÌƒXƒ^ƒbƒN‚ª‚ ‚ê‚Î‚¢‚¢‚¾‚ë‚¤B
-	‚±‚ÌˆÄ‚ÍŒ‹\‚¢‚¢‚©‚àB
+	ãã®ãŸã‚ã«ã€æ¥ç¶šå¾…æ©Ÿç¾¤ã‚’ãƒã‚§ãƒ¼ãƒ³ã§ç¹‹ã„ã§ãŠãã‹ï¼Ÿ
+	ãƒã‚§ãƒ¼ãƒ³ã˜ã‚ƒãªãã¦32ã‚¨ãƒ³ãƒˆãƒªãã‚‰ã„ã®ã‚¹ã‚¿ãƒƒã‚¯ãŒã‚ã‚Œã°ã„ã„ã ã‚ã†ã€‚
+	ã“ã®æ¡ˆã¯çµæ§‹ã„ã„ã‹ã‚‚ã€‚
 
-	ƒL[ƒ{[ƒh‚àƒVƒOƒiƒ‹‚ğo‚·‚Í‚ß‚É‚È‚é‚Æ‚í‚©‚Á‚½‚çA‚»‚¤‚µ‚½•û‚ª‚¢‚¢‚¾‚ë‚¤B
+	ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚‚ã‚·ã‚°ãƒŠãƒ«ã‚’å‡ºã™ã¯ã‚ã«ãªã‚‹ã¨ã‚ã‹ã£ãŸã‚‰ã€ãã†ã—ãŸæ–¹ãŒã„ã„ã ã‚ã†ã€‚
 
-	‚¢‚âA‚â‚Á‚Ï‚è‚â‚ç‚È‚­‚Ä‚à•½‹C‚©‚ÈHEEE‚¤[‚ñA”Y‚Ü‚µ‚¢B
+	ã„ã‚„ã€ã‚„ã£ã±ã‚Šã‚„ã‚‰ãªãã¦ã‚‚å¹³æ°—ã‹ãªï¼Ÿãƒ»ãƒ»ãƒ»ã†ãƒ¼ã‚“ã€æ‚©ã¾ã—ã„ã€‚
 
-	ÅIˆÄFmask‚Í‚µ‚È‚¢B‚µ‚È‚­‚Ä‚¢‚¢‚æ‚¤‚ÉAÅŒã‚Ìˆê”­‚Ímode0‚Å‚â‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚éB
-	TimerNode‚ğ•t‚¯‘Ö‚¦‚é‚Æ‚«‚ÍIF = 0‚É‚È‚Á‚Ä‚¢‚é‚ªA‚»‚ê‚ªÏ‚ß‚ÎIF = 1‚É‚È‚éB
+	æœ€çµ‚æ¡ˆï¼šmaskã¯ã—ãªã„ã€‚ã—ãªãã¦ã„ã„ã‚ˆã†ã«ã€æœ€å¾Œã®ä¸€ç™ºã¯mode0ã§ã‚„ã‚‹ã‚ˆã†ã«ãªã£ã¦ã„ã‚‹ã€‚
+	TimerNodeã‚’ä»˜ã‘æ›¿ãˆã‚‹ã¨ãã¯IF = 0ã«ãªã£ã¦ã„ã‚‹ãŒã€ãã‚ŒãŒæ¸ˆã‚ã°IF = 1ã«ãªã‚‹ã€‚
 
-	Š„‚è‚İ‚ÌƒLƒƒƒ“ƒZƒ‹‚ª‚Å‚«‚È‚¢‚½‚ßA‹t‚É‘Ò‚¿ŠÔ1‚Å‚·‚®‚ÉŠmÀ‚ÉŠ„‚è‚Ü‚¹‚éB
-	‚±‚Ì‚½‚ß‚ÉAƒ^ƒCƒ€ƒAƒEƒgƒ`ƒFƒbƒNƒ‹[ƒ`ƒ“‚ÍAƒCƒ“ƒ‰ƒCƒ“‚Å‘g‚İ‚Ş */
+	å‰²ã‚Šè¾¼ã¿ã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãŒã§ããªã„ãŸã‚ã€é€†ã«å¾…ã¡æ™‚é–“1ã§ã™ãã«ç¢ºå®Ÿã«å‰²ã‚Šè¾¼ã¾ã›ã‚‹ã€‚
+	ã“ã®ãŸã‚ã«ã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒã‚§ãƒƒã‚¯ãƒ«ãƒ¼ãƒãƒ³ã¯ã€ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã§çµ„ã¿è¾¼ã‚€ */
 {
 	TimerWork *work == DS:0x0000;
 	SS0_struct *ss0 == /* SS:(- sizeof (SS0_struct)) */ SS:0xffffffc0;
@@ -219,21 +219,21 @@ void near TimerCountout()
 	PUSHAD();
 
 
-/*	ƒ^ƒCƒ€ƒAƒEƒgŒQ‚Ì‘¶İ‚ğƒ`ƒFƒbƒNB
-	work->head.interval‚ª³‚È‚çAEBX‚ğ‰Á‚¦‚é
-	‚»‚Ì‚ ‚Æ‚ÅA‚»‚Ìƒm[ƒh‚ğØ‚è—£‚µAƒtƒ‰ƒCƒ“ƒOƒ^ƒCƒ€ƒAƒEƒgƒ‹[ƒ`ƒ“‚Ö
-	work->head.interval‚Ü‚Å‚àƒ^ƒCƒ€ƒAƒEƒg‚µ‚Ä‚µ‚Ü‚Á‚½‚çA‚±‚ê‚àƒtƒ‰ƒCƒ“ƒOƒ^ƒCƒ€ƒAƒEƒg‚Ì––”ö‚É‰Á‚¦‚é */
+/*	ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç¾¤ã®å­˜åœ¨ã‚’ãƒã‚§ãƒƒã‚¯ã€‚
+	work->head.intervalãŒæ­£ãªã‚‰ã€EBXã‚’åŠ ãˆã‚‹
+	ãã®ã‚ã¨ã§ã€ãã®ãƒãƒ¼ãƒ‰ã‚’åˆ‡ã‚Šé›¢ã—ã€ãƒ•ãƒ©ã‚¤ãƒ³ã‚°ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒ«ãƒ¼ãƒãƒ³ã¸
+	work->head.intervalã¾ã§ã‚‚ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ã¦ã—ã¾ã£ãŸã‚‰ã€ã“ã‚Œã‚‚ãƒ•ãƒ©ã‚¤ãƒ³ã‚°ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®æœ«å°¾ã«åŠ ãˆã‚‹ */
 
-/*	2002.03.04 work->head.interval == 0‚Å‚±‚±‚É“ü‚Á‚Ä‚­‚é‚Æ”²‚¯‚ç‚ê‚È‚­‚È‚é */
+/*	2002.03.04 work->head.interval == 0ã§ã“ã“ã«å…¥ã£ã¦ãã‚‹ã¨æŠœã‘ã‚‰ã‚Œãªããªã‚‹ */
 
 	TimerNode *tnode == DS:ESI, *tnext == DS:EDI, *tback == DS:EBX;
 
 check_timeout:
 	EAX = work->head.interval;
-	EBX = 0; /* 0‚Ü‚½‚Í•‰‚Ì’l */
+	EBX = 0; /* 0ã¾ãŸã¯è² ã®å€¤ */
 	for (;;) {
 		/* (false) */ if ((signed) EAX < 0) {
-			/* Š„‚è‚İ—\’è - Œ»İ = c‚èŠÔ */
+			/* å‰²ã‚Šè¾¼ã¿äºˆå®šæ™‚åˆ» - ç¾åœ¨æ™‚åˆ» = æ®‹ã‚Šæ™‚é–“ */
 			(offset) tnode = work->head.next;
 			EAX = tnode->time[0];
 			ECX = tnode->time[4];
@@ -257,7 +257,7 @@ check_timeout:
 	//	work->head.interval = EAX;
 		if ((signed) EAX > 0)
 			break;
-		/* ƒ^ƒCƒ€ƒAƒEƒg */
+		/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ */
 		(offset) tnode = work->head.next;
 		(offset) tback = work->timeout.back;
 		(offset) tnext = tnode->next;
@@ -269,9 +269,9 @@ check_timeout:
 		tback->next = (offset) tnode;
 		EBX = EAX;
 		EAX = tnode->interval;
-	/*	Ø‚è—£‚µ‚ÄAƒ^ƒCƒ€ƒAƒEƒgƒ`ƒF[ƒ“‚ÉÚ‘±
-		‚»‚µ‚ÄA•‰‚É‚È‚Á‚½EAX‚ğŒ³‚ÉAEBX = - EAX;‚Æ‚µA
-		EAX‚ÉV‚µ‚¢work->head.interval‚ğƒ[ƒh‚µ‚ÄAƒ‹[ƒv‚É“Ë“ü‚·‚éB */
+	/*	åˆ‡ã‚Šé›¢ã—ã¦ã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒã‚§ãƒ¼ãƒ³ã«æ¥ç¶š
+		ãã—ã¦ã€è² ã«ãªã£ãŸEAXã‚’å…ƒã«ã€EBX = - EAX;ã¨ã—ã€
+		EAXã«æ–°ã—ã„work->head.intervalã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¦ã€ãƒ«ãƒ¼ãƒ—ã«çªå…¥ã™ã‚‹ã€‚ */
 	}
 
 	(offset) tnode = work->timeout.next;
@@ -282,12 +282,12 @@ check_timeout:
 
 	if ((signed) EAX < 0)
 		goto invalid_inverval;
-		/*	‚±‚ÌA0x80000000ˆÈã‚Ì‘Ò‚¿ŠÔ‚ª‚ ‚é‚±‚Æ‚ğ‰¼’è‚µ‚Ä‚¢‚¢EEElong32‚©max_wait
-			max_wait‚©‚ç’¼Ú‚É32bit-intervalƒ‚[ƒh‚ÉˆÚs‚·‚é‚±‚Æ‚Í‚È‚¢B‚©‚È‚ç‚¸Along32‚ğŒo—R‚·‚é
-			‚±‚¤‚·‚é‚±‚Æ‚ÅAƒR[ƒh‚ğƒRƒ“ƒpƒNƒg‚É‚Å‚«‚é */
+		/*	ã“ã®æ™‚ã€0x80000000ä»¥ä¸Šã®å¾…ã¡æ™‚é–“ãŒã‚ã‚‹ã“ã¨ã‚’ä»®å®šã—ã¦ã„ã„ãƒ»ãƒ»ãƒ»long32ã‹max_wait
+			max_waitã‹ã‚‰ç›´æ¥ã«32bit-intervalãƒ¢ãƒ¼ãƒ‰ã«ç§»è¡Œã™ã‚‹ã“ã¨ã¯ãªã„ã€‚ã‹ãªã‚‰ãšã€long32ã‚’çµŒç”±ã™ã‚‹
+			ã“ã†ã™ã‚‹ã“ã¨ã§ã€ã‚³ãƒ¼ãƒ‰ã‚’ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆã«ã§ãã‚‹ */
 short_wait:
 
-/*	EAX‚¾‚¯‘Ò‚ÂB */
+/*	EAXã ã‘å¾…ã¤ã€‚ */
 
 	work->longcounter = EAX;
 	ECX = 0;
@@ -312,9 +312,9 @@ short_wait:
 	IRETD();
 
 check_nesting:
-	work->status = 0 /* ’ÊíŠ„‚è‚İ‘Ò‹@’†(Œ»İ‚Í–³Œø) */;
+	work->status = 0 /* é€šå¸¸å‰²ã‚Šè¾¼ã¿å¾…æ©Ÿä¸­(ç¾åœ¨æ™‚åˆ»ã¯ç„¡åŠ¹) */;
 
-	ss0->cli_count--; /* Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{ */
+	ss0->cli_count--; /* å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬ */
 	if (== 0) goto call_clicall;
 	POPAD();
 	POP(EAX);
@@ -339,51 +339,51 @@ call_ring0call:
 	/* (ss0->ring0call)() */ jmp_system_count0();
 //	IRETD();
 
-exec3: /* ƒtƒ‰ƒCƒ“ƒOƒ^ƒCƒ€ƒAƒEƒg—p‡—¬’n“_ */
+exec3: /* ãƒ•ãƒ©ã‚¤ãƒ³ã‚°ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç”¨åˆæµåœ°ç‚¹ */
 
 	if (work->status == 0) {
-		work->status = 1 /* ƒ^ƒCƒ€ƒAƒEƒgˆ—’†(Œ»İ‚Í—LŒø) */;
+		work->status = 1 /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†ä¸­(ç¾åœ¨æ™‚åˆ»ã¯æœ‰åŠ¹) */;
 
-		ss0->ring0_count++; /* Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{ */
-		ss0->cli_count++; /* (‚±‚ê‚ğ‚â‚Á‚½‚©‚Ç‚¤‚©‚ÍAwork->status != 0‚©‚Ç‚¤‚©‚Å‚í‚©‚é) */
+		ss0->ring0_count++; /* å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬ */
+		ss0->cli_count++; /* (ã“ã‚Œã‚’ã‚„ã£ãŸã‹ã©ã†ã‹ã¯ã€work->status != 0ã‹ã©ã†ã‹ã§ã‚ã‹ã‚‹) */
 	}
-	/*	Š„‚è‚İ‰Â”\ŠúŠÔ’†‚ÍAƒ^ƒCƒ}[ƒ`ƒF[ƒ“‚ğŒq‚¬•Ï‚¦‚Ä‚æ‚¢B
-		Š„‚è‚İƒVƒOƒiƒ‹‚ÍAƒ`ƒF[ƒ“‚ğØ‚Á‚Ä‚©‚çAŠ„‚è‚İ‚ğ‹–‰Â‚µ‚ÄA
-		‚»‚ÌŒã‚ÉƒR[ƒ‹‚³‚ê‚éB */
+	/*	å‰²ã‚Šè¾¼ã¿å¯èƒ½æœŸé–“ä¸­ã¯ã€ã‚¿ã‚¤ãƒãƒ¼ãƒã‚§ãƒ¼ãƒ³ã‚’ç¹‹ãå¤‰ãˆã¦ã‚ˆã„ã€‚
+		å‰²ã‚Šè¾¼ã¿ã‚·ã‚°ãƒŠãƒ«ã¯ã€ãƒã‚§ãƒ¼ãƒ³ã‚’åˆ‡ã£ã¦ã‹ã‚‰ã€å‰²ã‚Šè¾¼ã¿ã‚’è¨±å¯ã—ã¦ã€
+		ãã®å¾Œã«ã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ã€‚ */
 
-	/* ƒ^ƒCƒ€ƒAƒEƒgƒ`ƒF[ƒ“‚©‚çˆê‚Âæ‚èo‚·B */
+	/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒã‚§ãƒ¼ãƒ³ã‹ã‚‰ä¸€ã¤å–ã‚Šå‡ºã™ã€‚ */
 //	(offset) tnode = work->timeout.next;
 	(offset) tnext = tnode->next;
-	/* (char) tnode->back = 1 */ asmout("MOV BYTE PTR DS:[ESI+#TN_back],1"); /* ‚±‚Ìƒm[ƒh‚Í‚ªƒZƒbƒg‚³‚ê‚Ä‚¨‚èAƒ^ƒCƒ€ƒAƒEƒg‚µ‚½(Ø‚è—£‚³‚ê‚½) */
+	/* (char) tnode->back = 1 */ asmout("MOV BYTE PTR DS:[ESI+#TN_back],1"); /* ã“ã®ãƒãƒ¼ãƒ‰ã¯æ™‚åˆ»ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ãŠã‚Šã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ãŸ(åˆ‡ã‚Šé›¢ã•ã‚ŒãŸ) */
 	work->timeout.next = (offset) tnext;
 	/* tnext->back = (offset) &(work->timeout) */ asmout("MOV DWORD PTR DS:[EDI+#TN_back],#work_timeout");
-//	STI(); /* 2000/05/24 Š„‚è‚İˆ—’†‚ÍˆêŠÑ‚µ‚ÄCLI‚µ‚Ä‚¨‚­‚±‚Æ‚É‚È‚Á‚½B */
+//	STI(); /* 2000/05/24 å‰²ã‚Šè¾¼ã¿å‡¦ç†ä¸­ã¯ä¸€è²«ã—ã¦CLIã—ã¦ãŠãã“ã¨ã«ãªã£ãŸã€‚ */
 	asmout("CALL FAR DWORD DS:[ESI+#TN_call_vector]");
 //	CLI();
-	if (CF == 1 /* ˜A‘±Š„‚İ—v‹ */) {
-		/* CF‚ğ1‚É‚·‚é‚È‚çAESI‚ğ‰ó‚µ‚Ä‚Í‚¢‚¯‚È‚¢ */
+	if (CF == 1 /* é€£ç¶šå‰²è¾¼ã¿è¦æ±‚ */) {
+		/* CFã‚’1ã«ã™ã‚‹ãªã‚‰ã€ESIã‚’å£Šã—ã¦ã¯ã„ã‘ãªã„ */
 
-		/*	ƒm[ƒh‚ğXV‚µ‚ÄA“o˜^EEE“o˜^ƒ‹[ƒ`ƒ“‚ÍA
-			head‚ÌŸ‚Ìƒm[ƒh‚ÉŒq‚®‚±‚Æ‚ª‚ ‚Á‚½‚©‚Ç‚¤‚©‚Íƒ`ƒFƒbƒN‚Å‚«‚é‚æ‚¤‚É‚·‚é‚ª
-			Ÿè‚ÉTimerExecute‚ğŒÄ‚ñ‚¾‚è‚Í‚µ‚È‚¢ */
+		/*	ãƒãƒ¼ãƒ‰ã‚’æ›´æ–°ã—ã¦ã€ç™»éŒ²ãƒ»ãƒ»ãƒ»ç™»éŒ²ãƒ«ãƒ¼ãƒãƒ³ã¯ã€
+			headã®æ¬¡ã®ãƒãƒ¼ãƒ‰ã«ç¹‹ãã“ã¨ãŒã‚ã£ãŸã‹ã©ã†ã‹ã¯ãƒã‚§ãƒƒã‚¯ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ãŒ
+			å‹æ‰‹ã«TimerExecuteã‚’å‘¼ã‚“ã ã‚Šã¯ã—ãªã„ */
 		EAX += tnode->time[0];
 		ADC(ECX, tnode->time[4]);
 		tnode->time[0] = EAX;
 		ADC(EDX, tnode->time[8]);
 		tnode->time[4] = ECX;
 		tnode->time[8] = EDX;
-		TimerRegister(); /* ESI, EDX:ECX:EAX ‚ÉB‚±‚ê‚ªŒÄ‚Î‚ê‚é‚Æ‚«AŒ»İ‚Í—LŒøB */
+		TimerRegister(); /* ESI, EDX:ECX:EAX ã«æ™‚åˆ»ã€‚ã“ã‚ŒãŒå‘¼ã°ã‚Œã‚‹ã¨ãã€ç¾åœ¨æ™‚åˆ»ã¯æœ‰åŠ¹ã€‚ */
 	}
 
-/*	ƒ^ƒCƒ€ƒAƒEƒgŒQ‚Ì‘¶İ‚ğƒ`ƒFƒbƒNB
-	work->head.interval‚ª³‚È‚çAESI‚ğ‰Á‚¦‚é
-	‚»‚Ì‚ ‚Æ‚ÅA‚»‚Ìƒm[ƒh‚ğØ‚è—£‚µAƒtƒ‰ƒCƒ“ƒOƒ^ƒCƒ€ƒAƒEƒgƒ‹[ƒ`ƒ“‚Ö
-	work->head.interval‚Ü‚Å‚àƒ^ƒCƒ€ƒAƒEƒg‚µ‚Ä‚µ‚Ü‚Á‚½‚çA‚±‚ê‚àƒtƒ‰ƒCƒ“ƒOƒ^ƒCƒ€ƒAƒEƒg‚Ì––”ö‚É‰Á‚¦‚é */
+/*	ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç¾¤ã®å­˜åœ¨ã‚’ãƒã‚§ãƒƒã‚¯ã€‚
+	work->head.intervalãŒæ­£ãªã‚‰ã€ESIã‚’åŠ ãˆã‚‹
+	ãã®ã‚ã¨ã§ã€ãã®ãƒãƒ¼ãƒ‰ã‚’åˆ‡ã‚Šé›¢ã—ã€ãƒ•ãƒ©ã‚¤ãƒ³ã‚°ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒ«ãƒ¼ãƒãƒ³ã¸
+	work->head.intervalã¾ã§ã‚‚ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ã¦ã—ã¾ã£ãŸã‚‰ã€ã“ã‚Œã‚‚ãƒ•ãƒ©ã‚¤ãƒ³ã‚°ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®æœ«å°¾ã«åŠ ãˆã‚‹ */
 
 	goto check_timeout;
 
 invalid_inverval:
-	/* ‚±‚ÌA0x80000000ˆÈã‚Ì‘Ò‚¿ŠÔ‚ª‚ ‚é‚±‚Æ‚ğ‰¼’è‚µ‚Ä‚¢‚¢EEElong32‚©max_wait */
+	/* ã“ã®æ™‚ã€0x80000000ä»¥ä¸Šã®å¾…ã¡æ™‚é–“ãŒã‚ã‚‹ã“ã¨ã‚’ä»®å®šã—ã¦ã„ã„ãƒ»ãƒ»ãƒ»long32ã‹max_wait */
 	(offset) tnode = work->head.next;
 	EAX = tnode->time[0];
 	ECX = tnode->time[4];
@@ -451,9 +451,9 @@ void near TimerMouseSignal()
 	work->mousedefault0 ^= ECX;
 	work->mousedefault1 ^= EDX;
 	PUSHAD();
-	AL = 0x60 /* IRQ-00‚ğI—¹ */;
+	AL = 0x60 /* IRQ-00ã‚’çµ‚äº† */;
 	OUT(PIC_mastar_OCW2, AL);
-	ss0->ring0_count++; /* Š„‚è‚İƒ‹[ƒ`ƒ“‚ÌŠî–{ */
+	ss0->ring0_count++; /* å‰²ã‚Šè¾¼ã¿ãƒ«ãƒ¼ãƒãƒ³ã®åŸºæœ¬ */
 	ss0->cli_count++;
 	LEA(ESI, work->mousesignalbuf[0]);
 	asmout("CALL FAR DWORD DS:[0080H]"); /* mousevector */
@@ -477,7 +477,7 @@ void near GetTimeAndFixZero();
 void near GetNowTime();
 
 void near TimerRegister0()
-/* EDX:ECX:EAX‚Ìƒ[ƒh‚ğ‚â‚é */
+/* EDX:ECX:EAXã®ãƒ­ãƒ¼ãƒ‰ã‚’ã‚„ã‚‹ */
 {
 	TimerNode *tnode == DS:ESI;
 	EAX = tnode->time[0];
@@ -486,8 +486,8 @@ void near TimerRegister0()
 }
 
 void near TimerRegister()
-/*	ESI, EDX:ECX:EAX ‚ÉB‚±‚ê‚ªŒÄ‚Î‚ê‚é‚Æ‚«AŒ»İ‚Í—LŒøB
-	Š„‚è‚İ‚ğ‹Ö~‚µ‚Ä‚¨‚­‚±‚ÆB */
+/*	ESI, EDX:ECX:EAX ã«æ™‚åˆ»ã€‚ã“ã‚ŒãŒå‘¼ã°ã‚Œã‚‹ã¨ãã€ç¾åœ¨æ™‚åˆ»ã¯æœ‰åŠ¹ã€‚
+	å‰²ã‚Šè¾¼ã¿ã‚’ç¦æ­¢ã—ã¦ãŠãã“ã¨ã€‚ */
 {
 	asmout("#work_timeout EQU 384");
 	asmout("#TN_next EQU 60");
@@ -498,8 +498,8 @@ void near TimerRegister()
 	EAX -= work->head.time[0];
 	SBB(ECX, work->head.time[4]);
 	SBB(EDX, work->head.time[8]);
-	/* (false) */ if ((unsigned) < 0 /* Šù‚Éƒ^ƒCƒ€ƒAƒEƒg? */) {
-		/* ³Šm‚É‚ÍA0‚Å‚àƒ^ƒCƒ€ƒAƒEƒg‚È‚Ì‚¾‚ªAEDX‚¾‚¯‚Å‚Í•ª‚©‚ç‚È‚¢‚Ì‚ÅA•ú‚Á‚Ä‚¨‚­B */
+	/* (false) */ if ((unsigned) < 0 /* æ—¢ã«ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ? */) {
+		/* æ­£ç¢ºã«ã¯ã€0ã§ã‚‚ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãªã®ã ãŒã€EDXã ã‘ã§ã¯åˆ†ã‹ã‚‰ãªã„ã®ã§ã€æ”¾ã£ã¦ãŠãã€‚ */
 		/* (false) */ if (work->status == 0) {
 			EBX = ESI;
 			GetTimeAndFixZero();
@@ -512,10 +512,10 @@ void near TimerRegister()
 			/* ECX -= work->head.time[4] + CF */ SBB(ECX, work->head.time[4]);
 		//	work->status = 0;
 			/* EDX -= work->head.time[8] + CF */ SBB(EDX, work->head.time[8]);
-			if ((unsigned) >= 0 /* ƒ^ƒCƒ€ƒAƒEƒg‚µ‚Ä‚È‚¢ */)
+			if ((unsigned) >= 0 /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ã¦ãªã„ */)
 				goto entry2;
 		}
-		/* ƒ^ƒCƒ€ƒAƒEƒg‚É’¼Ú“o˜^ */
+		/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã«ç›´æ¥ç™»éŒ² */
 		(offset) tback = work->timeout.back;
 		work->timeout.back = (offset) tnode;
 		/* tnode->next = (offset) &(work->timeout) */ asmout("MOV DWORD PTR DS:[ESI+#TN_next],#work_timeout");
@@ -524,31 +524,31 @@ void near TimerRegister()
 		return;
 	}
 entry2:
-	/* ‚±‚±‚É—ˆ‚é‚Æ‚«AEDX‚Ìó‘Ô‚É‚æ‚Á‚ÄZF‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚éB‚µ‚©‚àAEDX‚Í•‰‚Å‚Í‚È‚¢B */
+	/* ã“ã“ã«æ¥ã‚‹ã¨ãã€EDXã®çŠ¶æ…‹ã«ã‚ˆã£ã¦ZFãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹ã€‚ã—ã‹ã‚‚ã€EDXã¯è² ã§ã¯ãªã„ã€‚ */
 	ECX |= EDX;
 	if (!= 0)
 		goto comp_time;
 	if ((signed) EAX < 0)
 		goto comp_time;
 
-	// c‚èŠÔ‚Í31bitˆÈ‰ºB
+	// æ®‹ã‚Šæ™‚é–“ã¯31bitä»¥ä¸‹ã€‚
 
-	// CF == 0‚Å‚ ‚éŒÀ‚èA‚Ç‚ñ‚Ç‚ñˆø‚­B
-	// CF == 1‚É‚È‚Á‚½‚çAinvalid_interval‚Ì‚¹‚¢‚©A’P‚ÉŠÔ‚ª‘«‚è‚È‚­‚È‚Á‚½‚©‚Ì‚Ç‚¿‚ç‚©‚Å‚ ‚éB
-	// ‚Ç‚Á‚¿‚É‚µ‚Ä‚àA‚»‚Ì‘O‚É‘}“ü‚·‚×‚«‚È‚Ì‚ÍŠmÀB
+	// CF == 0ã§ã‚ã‚‹é™ã‚Šã€ã©ã‚“ã©ã‚“å¼•ãã€‚
+	// CF == 1ã«ãªã£ãŸã‚‰ã€invalid_intervalã®ã›ã„ã‹ã€å˜ã«æ™‚é–“ãŒè¶³ã‚Šãªããªã£ãŸã‹ã®ã©ã¡ã‚‰ã‹ã§ã‚ã‚‹ã€‚
+	// ã©ã£ã¡ã«ã—ã¦ã‚‚ã€ãã®å‰ã«æŒ¿å…¥ã™ã¹ããªã®ã¯ç¢ºå®Ÿã€‚
 
-	ECX = work->head.interval; /* ‚±‚ê‚Í•‰‚É‚È‚è‚¤‚é‚Ì‚ÅA“Á•Êˆ—B */
+	ECX = work->head.interval; /* ã“ã‚Œã¯è² ã«ãªã‚Šã†ã‚‹ã®ã§ã€ç‰¹åˆ¥å‡¦ç†ã€‚ */
 	/* (offset) tback = &work->head */ LEA((offset) tback, (int) work->head);
 	EAX -= ECX;
 	(offset) tnext = work->head.next;
 	/* if (OF == 1) goto comp_time; */ asmout("JO #comp_time");
-	if ((signed) < 0) /* unsigned‚Å”äŠr‚·‚ê‚Î‰º‚Ìif‚ÍÈ—ª‚Å‚«‚é‚ªAECX‚ª—LŒø‚È•‰‚Ì’l‚Å‚ ‚éê‡‚ğæ‚èˆµ‚¦‚È‚¢ */
+	if ((signed) < 0) /* unsignedã§æ¯”è¼ƒã™ã‚Œã°ä¸‹ã®ifã¯çœç•¥ã§ãã‚‹ãŒã€ECXãŒæœ‰åŠ¹ãªè² ã®å€¤ã§ã‚ã‚‹å ´åˆã‚’å–ã‚Šæ‰±ãˆãªã„ */
 		goto insert;
 	if ((signed) ECX < 0xa0000000)
 		goto insert;
 
 	do {
-		(offset) tback = (offset) tnext; // ‚±‚Ì•¶‚ÍÀs‘¬“x‚ğŒ¸­‚µ‚È‚¢(AGI)B
+		(offset) tback = (offset) tnext; // ã“ã®æ–‡ã¯å®Ÿè¡Œé€Ÿåº¦ã‚’æ¸›å°‘ã—ãªã„(AGI)ã€‚
 		EAX -= tnext->interval;
 		(offset) tnext = tnext->next;
 	} while ((unsigned) >= 0);
@@ -569,8 +569,8 @@ insert:
 	if ((signed) < 0)
 		goto invalid_interval;
 
-	/* ‚±‚±‚É‚­‚é‚±‚Æ‚¢‚¤‚±‚Æ‚ÍA‘}“ü‘O‚Ìtback‚Ìinterval‚ª31bit‚Åû‚Ü‚Á‚Ä‚¢‚½‚±‚Æ‚ğˆÓ–¡‚·‚éB
-	   ‚¾‚©‚çA‘}“üŒã‚Ìtnode‚Ìinterval‚à31bit‚Åû‚Ü‚éB */
+	/* ã“ã“ã«ãã‚‹ã“ã¨ã„ã†ã“ã¨ã¯ã€æŒ¿å…¥å‰ã®tbackã®intervalãŒ31bitã§åã¾ã£ã¦ã„ãŸã“ã¨ã‚’æ„å‘³ã™ã‚‹ã€‚
+	   ã ã‹ã‚‰ã€æŒ¿å…¥å¾Œã®tnodeã®intervalã‚‚31bitã§åã¾ã‚‹ã€‚ */
 	EAX -= tnode->time[0];
 	tnode->interval = EAX;
 	return;
@@ -594,8 +594,8 @@ skip2:
 	return;
 
 comp_time:
-	/* ‘Ò‚¿ŠÔ‚ÍAŒ»İ‚©‚çŒ©‚ÄA32bitˆÈãB
-	   •Ê‚É32bitˆÈ‰º‚Å‚à‚¢‚¢‚ªA’x‚¢B */
+	/* å¾…ã¡æ™‚é–“ã¯ã€ç¾åœ¨æ™‚åˆ»ã‹ã‚‰è¦‹ã¦ã€32bitä»¥ä¸Šã€‚
+	   åˆ¥ã«32bitä»¥ä¸‹ã§ã‚‚ã„ã„ãŒã€é…ã„ã€‚ */
 	/* (offset) tnext = &work->head */ LEA((offset) tnext, (int) work->head);
 	EAX = tnode->time[0];
 	do {
@@ -603,14 +603,14 @@ comp_time:
 		CMP(EAX, tnext->time[0]);
 		EDX = tnode->time[8];
 		/* ECX -= tnext->time[4] + CF */ SBB(ECX, tnext->time[4]);
-		(offset) tback = (offset) tnext; // ‘½•ªA‚±‚Ì•¶‚ÍÀs‘¬“x‚É‰e‹¿‚µ‚È‚¢(ƒtƒ‰ƒOƒXƒg[ƒ‹)B
+		(offset) tback = (offset) tnext; // å¤šåˆ†ã€ã“ã®æ–‡ã¯å®Ÿè¡Œé€Ÿåº¦ã«å½±éŸ¿ã—ãªã„(ãƒ•ãƒ©ã‚°ã‚¹ãƒˆãƒ¼ãƒ«)ã€‚
 		/* EDX -= tnext->time[8] + CF */ SBB(EDX, tnext->time[8]);
 		(offset) tnext = tnext->next;
 	} while ((unsigned) >= 0);
-	/* ª‚±‚ê‚ÍEDX‚µ‚©Œ©‚Ä‚¢‚È‚¢‚±‚Æ‚É‚È‚é‚ªA•‰‚É‚È‚Á‚½‚©‚Ç‚¤‚©‚ª’m‚è‚½‚¢‚Ì‚ÅA‚±‚ê‚Å‚æ‚¢B */
+	/* â†‘ã“ã‚Œã¯EDXã—ã‹è¦‹ã¦ã„ãªã„ã“ã¨ã«ãªã‚‹ãŒã€è² ã«ãªã£ãŸã‹ã©ã†ã‹ãŒçŸ¥ã‚ŠãŸã„ã®ã§ã€ã“ã‚Œã§ã‚ˆã„ã€‚ */
 
-/*	tnode < tback < tnext ‚¾‚Á‚½I(2000/05/25)
-	‚¾‚©‚çAˆê‚Â–ß‚é‚×‚« */
+/*	tnode < tback < tnext ã ã£ãŸï¼(2000/05/25)
+	ã ã‹ã‚‰ã€ä¸€ã¤æˆ»ã‚‹ã¹ã */
 	(offset) tnext = (offset) tback;
 	(offset) tback = tback->back;
 
@@ -647,15 +647,15 @@ comp_time:
 }
 
 void near GetNowTime()
-/*	work->status == 0‚Ì‚Æ‚«ˆÈŠO‚ÍŒÄ‚Ô‚È
-	CLI‚µ‚Ä‚¨‚­‚±‚Æ
-	Œ»İ‚ğæ“¾‚µ‚½‚©‚ç‚Æ‚¢‚Á‚ÄAŠ„‚è‚İ‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢‚È‚ñ‚Ä‚±‚Æ‚Í‚È‚¢B
-	EDX:ECX:EAX‚ÉŒ»İ‚ğ•Ô‚·
-	EDI:ESI‚Éc‚èƒJƒEƒ“ƒg(•K‚¸³) */
+/*	work->status == 0ã®ã¨ãä»¥å¤–ã¯å‘¼ã¶ãª
+	CLIã—ã¦ãŠãã“ã¨
+	ç¾åœ¨æ™‚åˆ»ã‚’å–å¾—ã—ãŸã‹ã‚‰ã¨ã„ã£ã¦ã€å‰²ã‚Šè¾¼ã¿ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ãªã‘ã‚Œã°ã„ã‘ãªã„ãªã‚“ã¦ã“ã¨ã¯ãªã„ã€‚
+	EDX:ECX:EAXã«ç¾åœ¨æ™‚åˆ»ã‚’è¿”ã™
+	EDI:ESIã«æ®‹ã‚Šã‚«ã‚¦ãƒ³ãƒˆ(å¿…ãšæ­£) */
 {
-	/* c‚èƒJƒEƒ“ƒg‚ÌZo•û–@ : (longcounter - 1) * 0x10000 + PIT0‚ÌƒJƒEƒ“ƒg
-	   (‘å‚«‚È”‚â0‚Ì‚Æ‚«‚ÍAIRQ0‚ª—ˆ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚É‚æ‚Á‚ÄAlongcounter‚ğ¬‚³‚­Œ©‚Ä‚â‚é•K—v‚ª‚ ‚é‚©‚à‚µ‚ê‚È‚¢)
-	   0‚ÅIRQ‚ª—ˆ‚Ä‚¢‚È‚©‚Á‚½‚çEEE‚»‚ñ‚È‚±‚Æ‚Í‚ ‚è‚¦‚È‚¢Bâ‘Î‚É—ˆ‚Ä‚¢‚éB‚ªAlongcount‚ÍŒ¸‚ç‚µ‚Ä‚Í‚¢‚¯‚È‚¢B */
+	/* æ®‹ã‚Šã‚«ã‚¦ãƒ³ãƒˆã®ç®—å‡ºæ–¹æ³• : (longcounter - 1) * 0x10000 + PIT0ã®ã‚«ã‚¦ãƒ³ãƒˆ
+	   (å¤§ããªæ•°ã‚„0ã®ã¨ãã¯ã€IRQ0ãŒæ¥ã¦ã„ã‚‹ã‹ã©ã†ã‹ã«ã‚ˆã£ã¦ã€longcounterã‚’å°ã•ãè¦‹ã¦ã‚„ã‚‹å¿…è¦ãŒã‚ã‚‹ã‹ã‚‚ã—ã‚Œãªã„)
+	   0ã§IRQãŒæ¥ã¦ã„ãªã‹ã£ãŸã‚‰ãƒ»ãƒ»ãƒ»ãã‚“ãªã“ã¨ã¯ã‚ã‚Šãˆãªã„ã€‚çµ¶å¯¾ã«æ¥ã¦ã„ã‚‹ã€‚ãŒã€longcountã¯æ¸›ã‚‰ã—ã¦ã¯ã„ã‘ãªã„ã€‚ */
 
 	TimerWork *work == DS:0x0000;
 
@@ -671,14 +671,14 @@ void near GetNowTime()
 }
 
 void near GetTimeAndFixZero()
-/* work->status == 0‚Ì‚Æ‚«ˆÈŠO‚ÍŒÄ‚Ô‚È
-   EDI:ESI‚Éc‚èƒJƒEƒ“ƒg
-   CLI‚µ‚Ä‚¨‚­‚±‚Æ
-   ƒI[ƒo[ƒ‰ƒ“‚É‘Î‰‚Å‚«‚é‚æ‚¤‚É‚·‚×‚«
-   work->longcounter‚ª1‚ÅA‚µ‚©‚àƒJƒEƒ“ƒgƒAƒEƒg‚µ‚Ä‚¢‚½‚çA•’Ê‚Ì•û–@‚ÅŒ»İ‚ğo‚· */
+/* work->status == 0ã®ã¨ãä»¥å¤–ã¯å‘¼ã¶ãª
+   EDI:ESIã«æ®‹ã‚Šã‚«ã‚¦ãƒ³ãƒˆ
+   CLIã—ã¦ãŠãã“ã¨
+   ã‚ªãƒ¼ãƒãƒ¼ãƒ©ãƒ³ã«å¯¾å¿œã§ãã‚‹ã‚ˆã†ã«ã™ã¹ã
+   work->longcounterãŒ1ã§ã€ã—ã‹ã‚‚ã‚«ã‚¦ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ãŸã‚‰ã€æ™®é€šã®æ–¹æ³•ã§ç¾åœ¨æ™‚åˆ»ã‚’å‡ºã™ */
 {
-	// c‚èƒJƒEƒ“ƒg‚Íhead.interval‚É”½‰f‚³‚ê‚éB
-	// ‚±‚ê‚ğ‚â‚é‚ÆAstatus‚Í2‚É‚È‚éB
+	// æ®‹ã‚Šã‚«ã‚¦ãƒ³ãƒˆã¯head.intervalã«åæ˜ ã•ã‚Œã‚‹ã€‚
+	// ã“ã‚Œã‚’ã‚„ã‚‹ã¨ã€statusã¯2ã«ãªã‚‹ã€‚
 
 	TimerWork *work == DS:0x0000;
 
@@ -711,16 +711,16 @@ interval_over:
 }
 
 void near CancelTimer()
-// DS:ESI‚Ìƒ^ƒCƒ}[‚ğƒLƒƒƒ“ƒZƒ‹
-// CLI‚µ‚Ä‚¨‚­‚±‚Æ
+// DS:ESIã®ã‚¿ã‚¤ãƒãƒ¼ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+// CLIã—ã¦ãŠãã“ã¨
 {
 	TimerNode *tnode == DS:ESI, *tnext == DS:EDI, *tback == DS:EBX;
-	/* head‚ÉŒq‚ª‚Á‚Ä‚¢‚ÄA‚©‚ÂAstatus == 0‚È‚çAGetNowTime() + FixZero()‚µ‚Ä‚©‚çØ‚è—£‚· */
+	/* headã«ç¹‹ãŒã£ã¦ã„ã¦ã€ã‹ã¤ã€status == 0ãªã‚‰ã€GetNowTime() + FixZero()ã—ã¦ã‹ã‚‰åˆ‡ã‚Šé›¢ã™ */
 	(offset) tback = tnode->back;
 //	TEST((char) (offset) tback, 0x0f);
 	TEST(BL, 0x0f);
 	if (== 0) {
-	//	if ((offset) tnode == work->head.next) { // ‚±‚ñ‚È‚Ì‚â‚Á‚Ä‚àAc‚èŠÔ‚ª‘‚¦‚é‚¾‚¯‚¾‚©‚çA‚¢‚¿‚¢‚¿Š„‚è‚Ü‚È‚¢B
+	//	if ((offset) tnode == work->head.next) { // ã“ã‚“ãªã®ã‚„ã£ã¦ã‚‚ã€æ®‹ã‚Šæ™‚é–“ãŒå¢—ãˆã‚‹ã ã‘ã ã‹ã‚‰ã€ã„ã¡ã„ã¡å‰²ã‚Šè¾¼ã¾ãªã„ã€‚
 	//		if (work->status == 0) {
 	//			GetTimeAndFixZero();
 	//		}
@@ -731,7 +731,7 @@ void near CancelTimer()
 		interval = tnode->interval;
 		tback->next = (offset) tnext;
 		tnext->back = (offset) tback;
-		(char) tnode->back = 0x02; /* ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½ */
+		(char) tnode->back = 0x02; /* ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚ŒãŸ */
 		interval2 = tback->interval;
 		if ((signed) interval < 0)
 			goto interval_over;
@@ -750,7 +750,7 @@ interval_over:
 }
 
 void far TimerSC_EOC()
-// I—¹ƒRƒ}ƒ“ƒh
+// çµ‚äº†ã‚³ãƒãƒ³ãƒ‰
 {
 	EAX = [SS:ESP +  0];
 	ECX = [SS:ESP +  4];
@@ -788,8 +788,8 @@ void near TimerSC_GetNode()
 	asmout("MOV DWORD PTR DS:[EDX+#TN_back],#work_last");
 	POPFD();
 //	STI();
-	[FS:EBX + 4] = ECX; /* ‘‚«‚İ‘¦’l */
-	(char) tnode->back = 0x03; /* ‚·‚çƒZƒbƒg‚³‚ê‚Ä‚¢‚È‚¢ */
+	[FS:EBX + 4] = ECX; /* æ›¸ãè¾¼ã¿å³å€¤ */
+	(char) tnode->back = 0x03; /* æ™‚åˆ»ã™ã‚‰ã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„ */
 	EBX += 8;
 	asmout("JMP DWORD PTR DS:[TimerSC_JmpTbl+EAX]");
 }
@@ -818,8 +818,8 @@ void near TimerSC_FreeNode()
 }
 
 void near TimerSC_SetNowTime()
-/*	Œ»İ‚ğ’m‚é
-	Š„‚è‚İ’†‚ÉÀs‚µ‚½‚ç”n­BEEE‚Å‚à‘½•ªAŠ„‚è‚İ’†‚Å‚à•½‹C */
+/*	ç¾åœ¨æ™‚åˆ»ã‚’çŸ¥ã‚‹
+	å‰²ã‚Šè¾¼ã¿ä¸­ã«å®Ÿè¡Œã—ãŸã‚‰é¦¬é¹¿ã€‚ãƒ»ãƒ»ãƒ»ã§ã‚‚å¤šåˆ†ã€å‰²ã‚Šè¾¼ã¿ä¸­ã§ã‚‚å¹³æ°— */
 {
 	TimerWork *work == DS:0x0000;
 
@@ -889,8 +889,8 @@ void near TimerSC_CancelTimer()
 }
 
 void near TimerSC_SetNowTimeNode()
-/*	Œ»İ‚ğ’m‚é
-	Š„‚è‚İ’†‚ÉÀs‚µ‚½‚ç”n­BEEE‚Å‚à‘½•ªAŠ„‚è‚İ’†‚Å‚à•½‹C */
+/*	ç¾åœ¨æ™‚åˆ»ã‚’çŸ¥ã‚‹
+	å‰²ã‚Šè¾¼ã¿ä¸­ã«å®Ÿè¡Œã—ãŸã‚‰é¦¬é¹¿ã€‚ãƒ»ãƒ»ãƒ»ã§ã‚‚å¤šåˆ†ã€å‰²ã‚Šè¾¼ã¿ä¸­ã§ã‚‚å¹³æ°— */
 {
 	TimerWork *work == DS:0x0000;
 	TimerNode *tnode == DS:ESI;
@@ -1020,21 +1020,21 @@ void TimerInit();
 
 void TimerSC_Special()
 {
-	EAX = (int) [FS:EBX + 4]; /* sub-cmd(4‚Ì”{”) */
+	EAX = (int) [FS:EBX + 4]; /* sub-cmd(4ã®å€æ•°) */
 	if (EAX == 0) {
-		/* ‰Šú‰» */
+		/* åˆæœŸåŒ– */
 		EBX += 16;
 		PUSH(EBX);
 		TimerInit();
 		POP(EBX);
 	} else if (EAX == 4) {
-		// ƒm[ƒh\¬‚ÆŠÔ’PˆÊ‚Ì’ñ‹Ÿ
-		// +08 : ƒƒbƒZ[ƒWƒGƒŠƒA’·
-		// +0c : far vectorƒGƒŠƒAƒIƒtƒZƒbƒg(6ƒoƒCƒg)
-		// +10 : ƒ^ƒCƒ€ƒtƒB[ƒ‹ƒh(12ƒoƒCƒg)
+		// ãƒãƒ¼ãƒ‰æ§‹æˆã¨æ™‚é–“å˜ä½ã®æä¾›
+		// +08 : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¨ãƒªã‚¢é•·
+		// +0c : far vectorã‚¨ãƒªã‚¢ã‚ªãƒ•ã‚»ãƒƒãƒˆ(6ãƒã‚¤ãƒˆ)
+		// +10 : ã‚¿ã‚¤ãƒ ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(12ãƒã‚¤ãƒˆ)
 		// +14 : reserve
-		// +18 : Š„‚è‚İüŠú[sec]‚Ì2^64”{(8ƒoƒCƒg)
-		// +20 : Š„‚è‚İü”g”[Hz]‚Ì2^32”{(8ƒoƒCƒg)
+		// +18 : å‰²ã‚Šè¾¼ã¿å‘¨æœŸ[sec]ã®2^64å€(8ãƒã‚¤ãƒˆ)
+		// +20 : å‰²ã‚Šè¾¼ã¿å‘¨æ³¢æ•°[Hz]ã®2^32å€(8ãƒã‚¤ãƒˆ)
 		(int) [FS:EBX + 0x08] = 32;
 		(int) [FS:EBX + 0x0c] = 32;
 		(int) [FS:EBX + 0x10] = 40;
@@ -1045,8 +1045,8 @@ void TimerSC_Special()
 		(int) [FS:EBX + 0x24] = 1000;
 		EBX += 40;
 	} else if (EAX == 8) {
-		// Intƒnƒ“ƒhƒ‰î•ñ
-		// +08 : ƒGƒ“ƒgƒŠ
+		// Intãƒãƒ³ãƒ‰ãƒ©æƒ…å ±
+		// +08 : ã‚¨ãƒ³ãƒˆãƒª
 		// +0c : reserve
 		// +10 : reserve
 		// +14 : reserve
@@ -1078,16 +1078,16 @@ void TimerSC_Special()
 
 void near TimerSC_SetMouseParam()
 /*
-	+00 : ƒRƒ}ƒ“ƒhƒR[ƒh(0x0030)
-    +04 : ƒIƒvƒVƒ‡ƒ“
-		bit0 : ƒm[ƒhŠm•Û(type0)
-		bit1 : ƒm[ƒhŠJ•ú
-		bit2 : ƒpƒ‰ƒ[ƒ^[“]‘—(type1)
-		bit3 : ƒpƒ‰ƒ[ƒ^[“]‘—(type2)
-		bit8 : mouseflag0(bit3==1‚Ì‚Æ‚«‚Ì‚İ—LŒø)
-		bit9 : mouseflag1(bit3==1‚Ì‚Æ‚«‚Ì‚İ—LŒø)
+	+00 : ã‚³ãƒãƒ³ãƒ‰ã‚³ãƒ¼ãƒ‰(0x0030)
+    +04 : ã‚ªãƒ—ã‚·ãƒ§ãƒ³
+		bit0 : ãƒãƒ¼ãƒ‰ç¢ºä¿(type0)
+		bit1 : ãƒãƒ¼ãƒ‰é–‹æ”¾
+		bit2 : ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è»¢é€(type1)
+		bit3 : ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è»¢é€(type2)
+		bit8 : mouseflag0(bit3==1ã®ã¨ãã®ã¿æœ‰åŠ¹)
+		bit9 : mouseflag1(bit3==1ã®ã¨ãã®ã¿æœ‰åŠ¹)
 	<type0>
-	+00 : ƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg
+	+00 : ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆ
 	<type1>
 	+00 : mousevector[8]
     +08 : mousesignalbuf[16]
@@ -1111,7 +1111,7 @@ void near TimerSC_SetMouseParam()
 	(offset) cmd += 8;
 	TEST(AL, 0x01);
 	if (!= 0) {
-		/* timernodeŠm•Û */
+		/* timernodeç¢ºä¿ */
 		PUSHFD();
 		CLI();
 		(offset) tnode = work->last.next;
@@ -1127,14 +1127,14 @@ void near TimerSC_SetMouseParam()
 		asmout("MOV DWORD PTR DS:[EDX+#TN_back],#work_last");
 		POPFD();
 		work->mousetimernode = (offset) tnode;
-		asmout("MOV BYTE PTR DS:[ESI+#TN_back],03H"); /* ‚·‚çƒZƒbƒg‚³‚ê‚Ä‚¢‚È‚¢ */
+		asmout("MOV BYTE PTR DS:[ESI+#TN_back],03H"); /* æ™‚åˆ»ã™ã‚‰ã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„ */
 		ECX = cmd[0];
 		(offset) cmd += 4;
 		tnode->signalbuf[0] = ECX;
 	}
 	TEST(AL, 0x02);
 	if (!= 0) {
-		/* timernodeŠJ•ú */
+		/* timernodeé–‹æ”¾ */
 		PUSH(EBX);
 		PUSH(EAX);
 		(offset) tnode = work->mousetimernode;
@@ -1155,7 +1155,7 @@ void near TimerSC_SetMouseParam()
 	}
 	TEST(AL, 0x04);
 	if (!= 0) {
-		/* type1ƒpƒ‰ƒ[ƒ^[“]‘— */
+		/* type1ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è»¢é€ */
 		ECX = cmd[ 0];
 		EDX = cmd[ 4];
 		work->mousevector[0] = ECX;
@@ -1177,7 +1177,7 @@ void near TimerSC_SetMouseParam()
 	}
 	TEST(AL, 0x08);
 	if (!= 0) {
-		/* type2ƒpƒ‰ƒ[ƒ^[“]‘— */
+		/* type2ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è»¢é€ */
 		ECX = cmd[ 0];
 		EDX = cmd[ 4];
 		work->mousemask0 = ECX;
@@ -1263,7 +1263,7 @@ timeout:
 }
 
 void near TimerInit()
-//	”Ä—pƒŒƒWƒXƒ^‚Í‚·‚×‚Ä”j‰ó
+//	æ±ç”¨ãƒ¬ã‚¸ã‚¹ã‚¿ã¯ã™ã¹ã¦ç ´å£Š
 {
 	TimerWork *work == DS:0x0000;
 	unsigned short PIT_CMD == 0x0046, PIT0_COUNT == 0x0040;
@@ -1306,13 +1306,13 @@ void near TimerInit()
 	/* work->last.back = &(work->head) */ asmout("MOV DWORD PTR DS:[#work_last+#TN_back],#work_head");
 //	/* work->last.next = &(work->head) */ asmout("MOV DWORD PTR DS:[#work_last+#TN_next],#work_head");
 	// work->last.call_vector[0] = (offset) ???;
-	// work->last.call_vector[4] = (segment) ???; // –ñˆêç’›”NŒã‚Écall‚³‚ê‚é
+	// work->last.call_vector[4] = (segment) ???; // ç´„ä¸€åƒå…†å¹´å¾Œã«callã•ã‚Œã‚‹
 
 	asmout("MOV EAX,#work_timeout");
 	work->timeout.back = EAX;
 	work->timeout.next = EAX;
 
-// ECX‚ğ•Û‘¶‚µ‚ë
+// ECXã‚’ä¿å­˜ã—ã‚
 
 	TimerNode *tnode == DS:ESI, *tback == DS:EBX, *tnext == DS:EDI;
 
@@ -1340,7 +1340,7 @@ void near TimerInit()
 	asmout("MOV DWORD PTR DS:[#work_freenode+#TN_back],#work_last");
 	/* tback->next = (offset) &work->head */ asmout("MOV DWORD PTR DS:[EBX+#TN_back],#work_head");
 
-	work->mousetimernode = /* 0 */ EAX; /* –¢g—p */
+	work->mousetimernode = /* 0 */ EAX; /* æœªä½¿ç”¨ */
 
 	asmout("MOV EAX,TimerSC_JmpTbl");
 	asmout("MOV DWORD DS:[EAX+ 0],TimerSC_EOC");
@@ -1365,19 +1365,19 @@ void near TimerInit()
 	AL |= 0x81;
 	OUT(0x0060, AL);
 	AL = 0x80;
-	OUT(0x0068, AL); // timer2‚ğdisable‚É‚·‚é(10FˆÈ~)
+	OUT(0x0068, AL); // timer2ã‚’disableã«ã™ã‚‹(10Fä»¥é™)
 	NOP();
 	IN(AL, 0x0068);
 	NOP();
 
-	// IRQ-00‚Ìƒ}ƒXƒN‚ğ‰ğœ‚µ‚ÄAŠ„‚è‚İ‚ğ‹N‚±‚³‚¹‚éB
+	// IRQ-00ã®ãƒã‚¹ã‚¯ã‚’è§£é™¤ã—ã¦ã€å‰²ã‚Šè¾¼ã¿ã‚’èµ·ã“ã•ã›ã‚‹ã€‚
 	IN(AL, PIC_master_IMR);
-	AL &= 0xfe; // IRQ-00‹–‰Â
+	AL &= 0xfe; // IRQ-00è¨±å¯
 	OUT(PIC_master_OCW1, AL);
 
 	AL = 0x36 /* PIT0, Low/High, mode3, binary */;
 	OUT(PIT_CMD, AL);
-	AL = 0x33; // İ’è’l(307)
+	AL = 0x33; // è¨­å®šå€¤(307)
 	OUT(PIT0_COUNT, AL);
 	AL = 0x01;
 	OUT(PIT0_COUNT, AL);
@@ -1387,7 +1387,7 @@ void near TimerInit()
 	return;
 }
 
-/* mscountŒvZ—p */
+/* mscountè¨ˆç®—ç”¨ */
 
 void calc_count1ms_sub()
 {
@@ -1410,7 +1410,7 @@ void far int8vect()
 {
 	ECX = EAX;
 	IN(AL, 0x0060);
-	/* PIT0‚Ìƒ^ƒCƒ€ƒAƒEƒg‚ğó— */
+	/* PIT0ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚’å—ç† */
 	AL >>= 2;
 	AL &= 0x87;
 	AL |= 0x80;
@@ -1422,14 +1422,14 @@ void far int8vect()
 }
 
 void calc_count1ms()
-/* do { EAX--; } while (!= 0);‚Å1.0ms‚É—v‚·‚éŠÔ‚ğ‚Å‚«‚é‚¾‚¯³Šm‚É‘ª’è */
-/* 4GHz‚Å1clock/loop‚Ìê‡A0x003d0900‚ª‹A‚Á‚Ä‚­‚é */
+/* do { EAX--; } while (!= 0);ã§1.0msã«è¦ã™ã‚‹æ™‚é–“ã‚’ã§ãã‚‹ã ã‘æ­£ç¢ºã«æ¸¬å®š */
+/* 4GHzã§1clock/loopã®å ´åˆã€0x003d0900ãŒå¸°ã£ã¦ãã‚‹ */
 {
 	PUSH(EBX);
 	PUSH(EDX);
 	PUSH(ECX);
 
-	/* ˆÀ‘S‚Ì‚½‚ß‚Ìƒ_ƒ~[İ’è */
+	/* å®‰å…¨ã®ãŸã‚ã®ãƒ€ãƒŸãƒ¼è¨­å®š */
 	AL = 0x36;
 	OUT(0x46, AL);
 	EAX = 0;
@@ -1438,32 +1438,32 @@ void calc_count1ms()
 	OUT(0x40, AL);
 	NOP();
 
-	/* PIT0‚¾‚¯‚É‚·‚é */
+	/* PIT0ã ã‘ã«ã™ã‚‹ */
 	IN(AL, 0x0060);
 	AL >>= 2;
 	AL &= 0x05;
 	AL |= 0x81;
 	OUT(0x0060, AL);
 	AL = 0x80;
-	OUT(0x0068, AL); // timer2‚ğdisable‚É‚·‚é(10FˆÈ~)
+	OUT(0x0068, AL); // timer2ã‚’disableã«ã™ã‚‹(10Fä»¥é™)
 	NOP();
 	IN(AL, 0x0068);
 	NOP();
 
-	/* ƒfƒtƒHƒ‹ƒg‚Í65536‚ç‚µ‚¢ „ PIT0 */
+	/* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯65536ã‚‰ã—ã„ ï¼ PIT0 */
 
 	IN(AL, 0x02);
 	BL = AL;
 	AL = 0xfe;
-	OUT(0x02, AL);	/* ‘ª’èŒë·‚ğ‚È‚­‚·‚½‚ß‚ÉAPIC‚ğƒ^ƒCƒ}[‚Ì‚İ‚É‚·‚é */
+	OUT(0x02, AL);	/* æ¸¬å®šèª¤å·®ã‚’ãªãã™ãŸã‚ã«ã€PICã‚’ã‚¿ã‚¤ãƒãƒ¼ã®ã¿ã«ã™ã‚‹ */
 
-	EAX = 31; /* ƒLƒƒƒbƒVƒ…‚É‚Í‚ß‚é‚½‚ß(0.1ms) */
+	EAX = 31; /* ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ã¯ã‚ã‚‹ãŸã‚(0.1ms) */
 	calc_count1ms_sub();
 	EAX = 307 * 2;
 	calc_count1ms_sub();
 	EDX = ECX;
 	EAX = 307;
-	calc_count1ms_sub(); /* ‡Œv(3.1ms) */
+	calc_count1ms_sub(); /* åˆè¨ˆ(3.1ms) */
 	EDX -= ECX;
 
 	AL = 0x36;

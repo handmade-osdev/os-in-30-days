@@ -1,5 +1,5 @@
 /*
-	ƒtƒ@ƒCƒ‹ƒ‚ƒWƒ…[ƒ‹‰»ƒNƒ‰ƒX@`module.h + module.cpp`
+	ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åŒ–ã‚¯ãƒ©ã‚¹ã€€ã€œmodule.h + module.cppã€œ
 */
 #ifndef	__MODULE_H
 #define	__MODULE_H
@@ -23,16 +23,16 @@ using namespace std;
 #include "macro.h"
 
 class Module{
-	LPVOID	lpMdlAdr;		// ƒ‚ƒWƒ…[ƒ‹ƒAƒhƒŒƒX
-	DWORD	dwMdlSize;		// ƒ‚ƒWƒ…[ƒ‹ƒTƒCƒY
-	LPSTR	lpMdlPos;		// ReadLine‚Ìˆ—ˆÊ’u
-	string	FileName;		// ƒ‚ƒWƒ…[ƒ‹‰»‚µ‚Ä‚¢‚éƒtƒ@ƒCƒ‹–¼
+	LPVOID	lpMdlAdr;		// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
+	DWORD	dwMdlSize;		// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚µã‚¤ã‚º
+	LPSTR	lpMdlPos;		// ReadLineã®å‡¦ç†ä½ç½®
+	string	FileName;		// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åŒ–ã—ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«å
 
-	string	MakeFullPath(string& filename);		// ƒfƒBƒŒƒNƒgƒŠ‚ð•â‚¤
+	string	MakeFullPath(string& filename);		// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è£œã†
 
   public:
 	Module(void){ lpMdlAdr=NULL; dwMdlSize=0; lpMdlPos=NULL; }
-	~Module(){ Release(); }
+	â€¾Module(){ Release(); }
 #ifdef WINVC
 	void	Release(void){ DELETEPTR_SAFE(lpMdlAdr); dwMdlSize=0; lpMdlPos=NULL; }
 #else
@@ -43,12 +43,12 @@ class Module{
 	LPVOID	GetModuleAddress(void){ return lpMdlAdr; }
 	DWORD	GetModuleSize(void){ return dwMdlSize; }
 	HRESULT ReadFile(string& filename);
-		// –ß‚è’l 0:³íI—¹  1:fileopenŽ¸”s  3:ƒƒ‚ƒŠŠm•ÛŽ¸”s  4:“Ç‚Ýž‚ÝŽ¸”s  5:filecloseŽ¸”s
+		// æˆ»ã‚Šå€¤ 0:æ­£å¸¸çµ‚äº†  1:fileopenå¤±æ•—  3:ãƒ¡ãƒ¢ãƒªç¢ºä¿å¤±æ•—  4:èª­ã¿è¾¼ã¿å¤±æ•—  5:filecloseå¤±æ•—
 	HRESULT ReadLine(LPSTR buf);
-		// –ß‚è’l 0:³íI—¹  1:EOF  2:ƒoƒbƒtƒ@‚ ‚Ó‚ê  3:ƒtƒ@ƒCƒ‹“Ç‚Ýž‚ñ‚Å‚È‚¢
+		// æˆ»ã‚Šå€¤ 0:æ­£å¸¸çµ‚äº†  1:EOF  2:ãƒãƒƒãƒ•ã‚¡ã‚ãµã‚Œ  3:ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã‚“ã§ãªã„
 };
 
-//Œ»’iŠK‚Å‚ÍƒfƒBƒŒƒNƒgƒŠ‚Ì’Ç‰Á‚È‚Ç‚Í‚µ‚Ä‚¢‚È‚¢B‚»‚Ì‚¤‚¿
-//includeƒfƒBƒŒƒNƒgƒŠ‚ð’Ç‰Á‚µ‚ÄA‡‚ÉŒŸõ‚µ‚Ä‚¢‚­•ûŽ®‚É‚µ‚½‚¢B
+//ç¾æ®µéšŽã§ã¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®è¿½åŠ ãªã©ã¯ã—ã¦ã„ãªã„ã€‚ãã®ã†ã¡
+//includeãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¿½åŠ ã—ã¦ã€é †ã«æ¤œç´¢ã—ã¦ã„ãæ–¹å¼ã«ã—ãŸã„ã€‚
 
 #endif

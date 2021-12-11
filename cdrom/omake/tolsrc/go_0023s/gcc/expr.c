@@ -7218,10 +7218,10 @@ expand_expr (exp, target, tmode, modifier)
 	   of the set.  */
 	if (GET_CODE (lo_r) == CONST_INT)
 	  rlow = GEN_INT (INTVAL (lo_r)
-			  & ~((HOST_WIDE_INT) 1 << BITS_PER_UNIT));
+			  & ‾((HOST_WIDE_INT) 1 << BITS_PER_UNIT));
 	else
 	  rlow = expand_binop (index_mode, and_optab, lo_r,
-			       GEN_INT (~((HOST_WIDE_INT) 1 << BITS_PER_UNIT)),
+			       GEN_INT (‾((HOST_WIDE_INT) 1 << BITS_PER_UNIT)),
 			       NULL_RTX, iunsignedp, OPTAB_LIB_WIDEN);
 
 	diff = expand_binop (index_mode, sub_optab, index_val, rlow,

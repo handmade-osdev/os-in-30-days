@@ -1,6 +1,6 @@
 #include "windows.h"
 
-/* ƒRƒ“ƒpƒNƒg‚Å‚Í‚ ‚é‚ªA’x‚¢ */
+/* ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆã§ã¯ã‚ã‚‹ãŒã€é…ã„ */
 
 void *malloc(unsigned int bytes)
 {

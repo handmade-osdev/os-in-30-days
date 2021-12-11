@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* �ǂ񂾕��������ǂݖ߂��Ȃ��o�[�W���� */
-/* �{����ungetc�Ƃ͎d�l���قȂ� */
+/* 読んだ文字しか読み戻せないバージョン */
+/* 本来のungetcとは仕様が異なる */
 
 int GO_ungetc(int c, GO_FILE *stream)
 {

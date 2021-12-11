@@ -20,7 +20,7 @@ public:
     if ((_p = lp._p) != NULL)
       _p->AddRef();
   }
-  ~CMyComPtr() { if (_p) _p->Release(); }
+  ‾CMyComPtr() { if (_p) _p->Release(); }
   void Release() { if (_p) { _p->Release(); _p = NULL; } }
   operator T*() const {  return (T*)_p;  }
   // T& operator*() const {  return *_p; }
@@ -92,7 +92,7 @@ public:
     CoTaskMemFree(szGuid);
   }
   */
-  ~CMyComBSTR() { ::SysFreeString(m_str); }
+  ‾CMyComBSTR() { ::SysFreeString(m_str); }
   CMyComBSTR& operator=(const CMyComBSTR& src)
   {
     if (m_str != src.m_str)

@@ -701,7 +701,7 @@ dequote_string (pfile, str, len)
   if (CHAR_BIT < HOST_BITS_PER_WIDE_INT)
     mask = ((unsigned HOST_WIDE_INT) 1 << CHAR_BIT) - 1;
   else
-    mask = ~(unsigned HOST_WIDE_INT)0;
+    mask = ‾(unsigned HOST_WIDE_INT)0;
   
   while (str < limit)
     {
@@ -1529,7 +1529,7 @@ parse_answer (pfile, answerp, type)
 
       /* Drop whitespace at start, for answer equivalence purposes.  */
       if (acount == 0)
-	dest->flags &= ~PREV_WHITE;
+	dest->flags &= ‾PREV_WHITE;
     }
 
   if (acount == 0)

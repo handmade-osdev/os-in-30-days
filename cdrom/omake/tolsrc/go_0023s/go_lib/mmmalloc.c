@@ -6,7 +6,7 @@ void *GOL_memmanalloc(struct GOL_STR_MEMMAN *p, size_t size)
 {
 	struct GOL_STR_MEMMAN *b, *r;
 	size += sizeof (struct GOL_STR_MEMMAN) + sizeof (struct GOL_STR_MEMMAN) - 1;
-	size &= ~(sizeof (struct GOL_STR_MEMMAN) - 1);
+	size &= â€¾(sizeof (struct GOL_STR_MEMMAN) - 1);
 	do {
 		b = p;
 		p = p->u.s.next;
@@ -41,7 +41,7 @@ void GOL_memmanfree(struct GOL_STR_MEMMAN *man, void *p0)
 		b->u.s.next = p;
 		p->u.s.next = q;
 		if (q == p + p->u.s.bytes / sizeof (struct GOL_STR_MEMMAN)) {
-			/* ã‹LŽ®‚ª¬—§‚·‚é‚È‚çA‚à‚¿‚ë‚ñ q != NULL ‚Å‚ ‚é */
+			/* ä¸Šè¨˜å¼ãŒæˆç«‹ã™ã‚‹ãªã‚‰ã€ã‚‚ã¡ã‚ã‚“ q != NULL ã§ã‚ã‚‹ */
 			p->u.s.bytes += q->u.s.bytes;
 			p->u.s.next = q->u.s.next;
 		}
@@ -54,8 +54,8 @@ void GOL_memmanfree(struct GOL_STR_MEMMAN *man, void *p0)
 }
 
 void *GOL_memmaninit(struct GOL_STR_MEMMAN *man, size_t size, void *p)
-/* size‚Í\•ª‚É‘å‚«‚¢‚±‚Æ */
-/* p‚ÍŠù‚É\•ª‚ÉƒAƒ‰ƒCƒ“‚³‚ê‚Ä‚¢‚é‚±‚Æ */
+/* sizeã¯ååˆ†ã«å¤§ãã„ã“ã¨ */
+/* pã¯æ—¢ã«ååˆ†ã«ã‚¢ãƒ©ã‚¤ãƒ³ã•ã‚Œã¦ã„ã‚‹ã“ã¨ */
 {
 	man->u.s.bytes = sizeof (struct GOL_STR_MEMMAN);
 	man->u.s.next = p;

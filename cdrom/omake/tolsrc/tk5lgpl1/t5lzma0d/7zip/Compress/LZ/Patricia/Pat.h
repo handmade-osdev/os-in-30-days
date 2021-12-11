@@ -197,7 +197,7 @@ class CPatricia:
   void FreeMemory();
 public:
   CPatricia();
-  ~CPatricia();
+  ‾CPatricia();
 
   UInt32 _sizeHistory;
   UInt32 _matchMaxLen;

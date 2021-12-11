@@ -2545,10 +2545,10 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 
 	      /* Warn if two unsigned values are being compared in a size
 		 larger than their original size, and one (and only one) is the
-		 result of a `~' operator.  This comparison will always fail.
+		 result of a `‾' operator.  This comparison will always fail.
 
 		 Also warn if one operand is a constant, and the constant
-		 does not have all bits set that are set in the ~ operand
+		 does not have all bits set that are set in the ‾ operand
 		 when it is extended.  */
 
 	      if ((TREE_CODE (primop0) == BIT_NOT_EXPR)
@@ -2584,9 +2584,9 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 		      if (bits < TYPE_PRECISION (result_type)
 			  && bits < HOST_BITS_PER_WIDE_INT && unsignedp)
 			{
-			  mask = (~ (HOST_WIDE_INT) 0) << bits;
+			  mask = (‾ (HOST_WIDE_INT) 0) << bits;
 			  if ((mask & constant) != mask)
-			    warning ("comparison of promoted ~unsigned with constant");
+			    warning ("comparison of promoted ‾unsigned with constant");
 			}
 		    }
 		  else if (unsignedp0 && unsignedp1
@@ -2594,7 +2594,7 @@ build_binary_op (code, orig_op0, orig_op1, convert_p)
 			       < TYPE_PRECISION (result_type))
 			   && (TYPE_PRECISION (TREE_TYPE (primop1))
 			       < TYPE_PRECISION (result_type)))
-		    warning ("comparison of promoted ~unsigned with unsigned");
+		    warning ("comparison of promoted ‾unsigned with unsigned");
 		}
 	    }
 	}
@@ -2775,7 +2775,7 @@ build_unary_op (code, xarg, flag)
 	{
 	  code = CONJ_EXPR;
 	  if (pedantic)
-	    pedwarn ("ISO C does not support `~' for complex conjugation");
+	    pedwarn ("ISO C does not support `‾' for complex conjugation");
 	  if (!noconvert)
 	    arg = default_conversion (arg);
 	}
@@ -3732,9 +3732,9 @@ build_c_cast (type, expr)
 		 are added, not when they're taken away.  */
 	      if (TREE_CODE (in_otype) == FUNCTION_TYPE
 		  && TREE_CODE (in_type) == FUNCTION_TYPE)
-		added |= (TYPE_QUALS (in_type) & ~TYPE_QUALS (in_otype));
+		added |= (TYPE_QUALS (in_type) & ‾TYPE_QUALS (in_otype));
 	      else
-		discarded |= (TYPE_QUALS (in_otype) & ~TYPE_QUALS (in_type));
+		discarded |= (TYPE_QUALS (in_otype) & ‾TYPE_QUALS (in_type));
 	    }
 	  while (TREE_CODE (in_type) == POINTER_TYPE
 		 && TREE_CODE (in_otype) == POINTER_TYPE);
@@ -4153,11 +4153,11 @@ convert_for_assignment (type, rhs, errtype, fundecl, funname, parmnum)
 		     certain things, it is okay to use a const or volatile
 		     function where an ordinary one is wanted, but not
 		     vice-versa.  */
-		  if (TYPE_QUALS (ttl) & ~TYPE_QUALS (ttr))
+		  if (TYPE_QUALS (ttl) & ‾TYPE_QUALS (ttr))
 		    warn_for_assignment ("%s makes qualified function pointer from unqualified",
 					 errtype, funname, parmnum);
 		}
-	      else if (TYPE_QUALS (ttr) & ~TYPE_QUALS (ttl))
+	      else if (TYPE_QUALS (ttr) & ‾TYPE_QUALS (ttl))
 		warn_for_assignment ("%s discards qualifiers from pointer target type",
 				     errtype, funname,
 				     parmnum);
@@ -4200,7 +4200,7 @@ convert_for_assignment (type, rhs, errtype, fundecl, funname, parmnum)
 	  else if (TREE_CODE (ttr) != FUNCTION_TYPE
 		   && TREE_CODE (ttl) != FUNCTION_TYPE)
 	    {
-	      if (TYPE_QUALS (ttr) & ~TYPE_QUALS (ttl))
+	      if (TYPE_QUALS (ttr) & ‾TYPE_QUALS (ttl))
 		warn_for_assignment ("%s discards qualifiers from pointer target type",
 				     errtype, funname, parmnum);
 	      /* If this is not a case of ignoring a mismatch in signedness,
@@ -4220,7 +4220,7 @@ convert_for_assignment (type, rhs, errtype, fundecl, funname, parmnum)
 		 that say the function will not do certain things,
 		 it is okay to use a const or volatile function
 		 where an ordinary one is wanted, but not vice-versa.  */
-	      if (TYPE_QUALS (ttl) & ~TYPE_QUALS (ttr))
+	      if (TYPE_QUALS (ttl) & ‾TYPE_QUALS (ttr))
 		warn_for_assignment ("%s makes qualified function pointer from unqualified",
 				     errtype, funname, parmnum);
 	    }

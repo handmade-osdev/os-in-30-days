@@ -7,7 +7,7 @@ void *GOL_memmanrealloc(struct GOL_STR_MEMMAN *man, void *p0, size_t size)
 {
 	struct GOL_STR_MEMMAN *p = ((struct GOL_STR_MEMMAN *) p0) - 1, *q;
 	size += sizeof (struct GOL_STR_MEMMAN) + sizeof (struct GOL_STR_MEMMAN) - 1;
-	size &= ~(sizeof (struct GOL_STR_MEMMAN) - 1);
+	size &= ‾(sizeof (struct GOL_STR_MEMMAN) - 1);
 	if (p->u.s.bytes >= size) {
 		if (p->u.s.bytes > size) {
 			q = p + size / sizeof (struct GOL_STR_MEMMAN);

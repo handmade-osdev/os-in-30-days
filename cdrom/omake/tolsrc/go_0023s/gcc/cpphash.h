@@ -64,7 +64,7 @@ extern unsigned char *_cpp_unaligned_alloc PARAMS ((cpp_reader *, size_t));
 #define BUFF_FRONT(BUFF) ((BUFF)->cur)
 #define BUFF_LIMIT(BUFF) ((BUFF)->limit)
 
-/* ino_t‚âdev_t‚ÍAsys/types.h‚ª•K—v */
+/* ino_tã‚„dev_tã¯ã€sys/types.hãŒå¿…è¦ */
 typedef int ino_t;
 typedef int dev_t;
 

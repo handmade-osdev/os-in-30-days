@@ -9592,7 +9592,7 @@ gen_split_1010 (operands)
     }
 
   mask  = ((HOST_WIDE_INT)1 << (pos + len)) - 1;
-  mask &= ~(((HOST_WIDE_INT)1 << pos) - 1);
+  mask &= ‾(((HOST_WIDE_INT)1 << pos) - 1);
 
   operands[3] = gen_rtx_AND (mode, operands[0],
 			     GEN_INT (trunc_int_for_mode (mask, mode)));
@@ -11046,7 +11046,7 @@ gen_split_1057 (operands)
   rtx operand1;
   rtx _val = 0;
   start_sequence ();
-operands[1] = GEN_INT (trunc_int_for_mode (~0x80000000, SImode));
+operands[1] = GEN_INT (trunc_int_for_mode (‾0x80000000, SImode));
    operands[0] = gen_rtx_REG (SImode, REGNO (operands[0]));
   operand0 = operands[0];
   operand1 = operands[1];
@@ -11081,7 +11081,7 @@ gen_split_1058 (operands)
   if (size >= 12)
     size = 10;
   operands[0] = adjust_address (operands[0], QImode, size - 1);
-  operands[1] = GEN_INT (trunc_int_for_mode (~0x80, QImode));
+  operands[1] = GEN_INT (trunc_int_for_mode (‾0x80, QImode));
 }
   operand0 = operands[0];
   operand1 = operands[1];
@@ -11270,7 +11270,7 @@ gen_split_1064 (operands)
   rtx operand4;
   rtx _val = 0;
   start_sequence ();
-operands[4] = GEN_INT (trunc_int_for_mode (~0x80000000, SImode));
+operands[4] = GEN_INT (trunc_int_for_mode (‾0x80000000, SImode));
    split_di (operands+0, 1, operands+2, operands+3);
   operand0 = operands[0];
   operand1 = operands[1];
@@ -11380,7 +11380,7 @@ gen_split_1068 (operands)
   rtx operand1;
   rtx _val = 0;
   start_sequence ();
-operands[1] = GEN_INT (~0x8000);
+operands[1] = GEN_INT (‾0x8000);
    operands[0] = gen_rtx_REG (SImode,
 			      true_regnum (operands[0]) + (TARGET_64BIT ? 1 : 2));
   operand0 = operands[0];
@@ -11430,7 +11430,7 @@ gen_split_1070 (operands)
   rtx operand1;
   rtx _val = 0;
   start_sequence ();
-operands[1] = GEN_INT (~0x8000);
+operands[1] = GEN_INT (‾0x8000);
    operands[0] = gen_rtx_REG (SImode,
 			      true_regnum (operands[0]) + (TARGET_64BIT ? 1 : 2));
   operand0 = operands[0];

@@ -953,12 +953,12 @@ unroll_loop (loop, insn_count, strength_reduce_p)
 	     We have to deal with for (i = 0; --i < 6;) type loops.
 	     For such loops the real final value is the first time the
 	     loop variable overflows, so the diff we calculate is the
-	     distance from the overflow value.  This is 0 or ~0 for
+	     distance from the overflow value.  This is 0 or ‾0 for
 	     unsigned loops depending on the direction, or INT_MAX,
 	     INT_MAX+1 for signed loops.  We really do not need the
 	     exact value, since we are only interested in the diff
 	     modulo the increment, and the increment is a power of 2,
-	     so we can pretend that the overflow value is 0/~0.  */
+	     so we can pretend that the overflow value is 0/‾0.  */
 
 	  if (cc == NE || less_p != neg_inc)
 	    diff = expand_simple_binop (mode, MINUS, final_value,

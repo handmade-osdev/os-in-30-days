@@ -26,7 +26,7 @@ class CInBuffer
 
 public:
   CInBuffer(UInt32 bufferSize = (1 << 20));
-  ~CInBuffer();
+  ‾CInBuffer();
   
   void Init(ISequentialInStream *stream);
   // void ReleaseStream() { _stream.Release(); }

@@ -82,11 +82,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 /* Round a value to the lowest integer less than it that is a multiple of
    the required alignment.  Avoid using division in case the value is
    negative.  Assume the alignment is a power of two.  */
-#define FLOOR_ROUND(VALUE,ALIGN) ((VALUE) & ~((ALIGN) - 1))
+#define FLOOR_ROUND(VALUE,ALIGN) ((VALUE) & ‾((ALIGN) - 1))
 
 /* Similar, but round to the next highest integer that meets the
    alignment.  */
-#define CEIL_ROUND(VALUE,ALIGN)	(((VALUE) + (ALIGN) - 1) & ~((ALIGN)- 1))
+#define CEIL_ROUND(VALUE,ALIGN)	(((VALUE) + (ALIGN) - 1) & ‾((ALIGN)- 1))
 
 /* NEED_SEPARATE_AP means that we cannot derive ap from the value of fp
    during rtl generation.  If they are different register numbers, this is
@@ -7710,7 +7710,7 @@ thread_prologue_and_epilogue_insns (f)
 	  emit_barrier_after (last->end);
 	  emit_return_into_block (last, epilogue_line_note);
 	  epilogue_end = last->end;
-	  last->succ->flags &= ~EDGE_FALLTHRU;
+	  last->succ->flags &= ‾EDGE_FALLTHRU;
 	  goto epilogue_done;
 	}
     }

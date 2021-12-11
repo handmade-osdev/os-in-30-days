@@ -10,4 +10,4 @@ INCPATH    = ../z_tools/win32/
 CC1OPT     =
 include ../z_tools/com_mak.txt
 
-# osa_dir—pMakefile
+# osa_dirç”¨Makefile

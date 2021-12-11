@@ -1,5 +1,5 @@
 /*
-	\•¶‰ğÍƒNƒ‰ƒX@`parser.h + parser.cpp`
+	æ§‹æ–‡è§£æã‚¯ãƒ©ã‚¹ã€€ã€œparser.h + parser.cppã€œ
 */
 #ifndef	__PARSER_H
 #define	__PARSER_H
@@ -28,28 +28,28 @@ class Parser{
 	typedef	Generator::LineData	LineData;
 
   private:
-	Scanner		scanner;			// ƒXƒLƒƒƒ“ƒNƒ‰ƒX
-	Generator	generator;			// ƒR[ƒhƒWƒFƒlƒŒ[ƒ^
+	Scanner		scanner;			// ã‚¹ã‚­ãƒ£ãƒ³ã‚¯ãƒ©ã‚¹
+	Generator	generator;			// ã‚³ãƒ¼ãƒ‰ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿
 	
-	int			StructAlignCount;	// align‚Ì‚½‚ß‚Ì‹^—ƒ‰ƒxƒ‹–¼
-	int			LoopLabel[32];		// ƒlƒXƒg‚µ‚½loop•¶‚Åbreak‚·‚é‚½‚ß
-	int			LoopLabelPoint;		// ƒlƒXƒg”
-	int			LocalLabelCounter;	// ğŒ•ªŠò‚âƒ‹[ƒv‚Å“à•”“I‚Ég‚¤ƒ‰ƒxƒ‹
-	int			StatementLevel;		// statement‚ÌƒŒƒxƒ‹
-	LPSTR		lpFunctionName;		// Œ»İˆ—‚µ‚Ä‚¢‚éŠÖ”–¼
-	Parameter	defaultlocal;		// ƒ[ƒJƒ‹•Ï”—plocal == SS:EBP;
-	SegmentList*defaultsegment;		// ŠÖ”‚ğŠ„‚è•t‚¯‚édefault segment
-	SegmentList*defaultdatasegment;	// •Ï”‚ğŠ„‚è•t‚¯‚édefault segment
-	int			SysVarLocalValue;	// ŠÖ”“à‚Ìƒ[ƒJƒ‹•Ï”—Ìˆæ‚ÌƒoƒCƒg”
+	int			StructAlignCount;	// alignã®ãŸã‚ã®ç–‘ä¼¼ãƒ©ãƒ™ãƒ«å
+	int			LoopLabel[32];		// ãƒã‚¹ãƒˆã—ãŸloopæ–‡ã§breakã™ã‚‹ãŸã‚
+	int			LoopLabelPoint;		// ãƒã‚¹ãƒˆæ•°
+	int			LocalLabelCounter;	// æ¡ä»¶åˆ†å²ã‚„ãƒ«ãƒ¼ãƒ—ã§å†…éƒ¨çš„ã«ä½¿ã†ãƒ©ãƒ™ãƒ«
+	int			StatementLevel;		// statementã®ãƒ¬ãƒ™ãƒ«
+	LPSTR		lpFunctionName;		// ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹é–¢æ•°å
+	Parameter	defaultlocal;		// ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ç”¨local == SS:EBP;
+	SegmentList*defaultsegment;		// é–¢æ•°ã‚’å‰²ã‚Šä»˜ã‘ã‚‹default segment
+	SegmentList*defaultdatasegment;	// å¤‰æ•°ã‚’å‰²ã‚Šä»˜ã‘ã‚‹default segment
+	int			SysVarLocalValue;	// é–¢æ•°å†…ã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°é ˜åŸŸã®ãƒã‚¤ãƒˆæ•°
 	
-	LPSTR		lpLogFileName;		// ƒGƒ‰[ƒƒbƒZ[ƒWo—Íƒtƒ@ƒCƒ‹–¼			
-	FILE*		lpLogFP;			// ƒGƒ‰[ƒƒbƒZ[ƒWo—Í—pƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^
-	int			nErrorCount;		// \•¶‰ğÍ•”‚Å‹N‚«‚½ƒGƒ‰[‚Ì”
+	LPSTR		lpLogFileName;		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å			
+	FILE*		lpLogFP;			// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿
+	int			nErrorCount;		// æ§‹æ–‡è§£æéƒ¨ã§èµ·ããŸã‚¨ãƒ©ãƒ¼ã®æ•°
 
-	//int			stackpoint;		// ŠÖ”‚ªŒÄ‚Ño‚³‚ê‚½‚Æ‚«‚Ìstackpoint‚©‚çadd‚µ‚Ä‚¢‚é—Ê
+	//int			stackpoint;		// é–¢æ•°ãŒå‘¼ã³å‡ºã•ã‚ŒãŸã¨ãã®stackpointã‹ã‚‰addã—ã¦ã„ã‚‹é‡
 
-	// ˆÈ‰ºHRESULT‚ª‚ ‚é‚à‚Ì‚ÍA³íI—¹‚Í0A‰ºˆÊ‚Ìƒ‹[ƒ`ƒ“‚ÅƒGƒ‰[‚ª‹N‚«‚½‚Æ‚«‚Í1A
-	// ‚»‚êˆÈŠO‚Ì”š‚ÍŠÖ”“à•”‚Å‚ÌƒGƒ‰[‚Æ‚¢‚¤ˆÓ–¡‚ğ‚ÂBi‚Â‚Ü‚è!=0‚È‚çƒGƒ‰[j
+	// ä»¥ä¸‹HRESULTãŒã‚ã‚‹ã‚‚ã®ã¯ã€æ­£å¸¸çµ‚äº†æ™‚ã¯0ã€ä¸‹ä½ã®ãƒ«ãƒ¼ãƒãƒ³ã§ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã¨ãã¯1ã€
+	// ãã‚Œä»¥å¤–ã®æ•°å­—ã¯é–¢æ•°å†…éƒ¨ã§ã®ã‚¨ãƒ©ãƒ¼ã¨ã„ã†æ„å‘³ã‚’æŒã¤ã€‚ï¼ˆã¤ã¾ã‚Š!=0ãªã‚‰ã‚¨ãƒ©ãƒ¼ï¼‰
 	HRESULT	Sizeof(Parameter& param);
 	HRESULT	Address(Parameter& param);
 	HRESULT	LocalAddress(Parameter& param);
@@ -93,14 +93,14 @@ class Parser{
 
 
 //	void	alt_statement(void);
-//	bool	case_block(DWORD dw); // ƒ‰ƒxƒ‹ID
+//	bool	case_block(DWORD dw); // ãƒ©ãƒ™ãƒ«ID
 	void	StartParse(void);
 
 	void	Error(LPSTR str);
 
   public:
 	Parser(void);
-	~Parser(){}
+	â€¾Parser(){}
 	
 #ifdef WINVC
 	HRESULT	Compile(string& filename);

@@ -1,7 +1,7 @@
 /* for stdc */
 
 int GOLD_write_b(const UCHAR *name, int len, const UCHAR *p0)
-/* ƒoƒCƒiƒŠƒ‚[ƒh‚Åƒtƒ@ƒCƒ‹‚Éo—Í */
+/* ãƒã‚¤ãƒŠãƒªãƒ¢ãƒ¼ãƒ‰ã§ãƒ•ã‚¡ã‚¤ãƒ«ã«å‡ºåŠ› */
 {
 	int ll = 0;
 	FILE *fp;

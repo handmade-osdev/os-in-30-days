@@ -7,8 +7,8 @@ OBJS       = _chkstk.o dt.o dh.o ds00027.o ds00053.o ds00130.o ds00207.o \
 			 ds00421.o ds00424.o ds00175.o ds00611.o ds00088.o ds00070.o \
 			 ds00272.o ds00727.o
 
-# �ȏ�5�̓\�[�X���Ƃɏ���������
-# OBJS������������ƕ����R���p�C���Ή�
+# 以上5つはソースごとに書き換える
+# OBJSを書き換えると分割コンパイル対応
  
 TOOLPATH =
 INCPATH  = ..
@@ -27,7 +27,7 @@ NASKCNV  = $(TOOLPATH)naskcnv0 -l -s -w
 GOLIB    = $(TOOLPATH)golib00w
 DELE     = del
 
-# �ȏ�̍��ڂ͂��Ȃ��̃f�B���N�g���\���ɂ��킹�ď���������
+# 以上の項目はあなたのディレクトリ構成にあわせて書き換える
 
 ALL :
 	$(MAKE) $(TARGET).lib

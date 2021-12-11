@@ -3,8 +3,8 @@
 
 	usage : >naskcnv0 [-l] [-s] [-w] input-file output-file
 
-	-l:leaをmovに変換
-	-s:余計なdword、word、byteを削除
+	-l:lea繧知ov縺ｫ螟画鋤
+	-s:菴呵ｨ医↑dword縲『ord縲｜yte繧貞炎髯､
 */
 
 #include "../drv_w32/windows.h"
@@ -46,7 +46,7 @@ void mainCRTStartup(void)
 	struct stack_alloc work_image;
 	int j;
 
-	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & ~0x0f);
+	pwork = (struct stack_alloc *) ((((int) &work_image) + 0x0f) & 窶ｾ0x0f);
 
 	for (j = 0; j < 3; j++)
 		flags.opt[j] = 0;
@@ -110,5 +110,5 @@ static void output(UINT l, UCHAR *s)
 }
 
 #include "../drv_w32/msgout_c.c"
-#include "../drv_w32/wfile_b.c"	/* write_tがつかうから */
+#include "../drv_w32/wfile_b.c"	/* write_t縺後▽縺九≧縺九ｉ */
 #include "../funcs/m_naskcv.c"

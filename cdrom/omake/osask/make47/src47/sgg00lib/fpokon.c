@@ -60,7 +60,7 @@ void sgg_createtask(const int mdl_ent, const int fin_sig)
 	sgg_execcmd(&command);
 	return;
 
-	// ‚±‚ÌƒRƒ}ƒ“ƒh‚ª•Êƒ^ƒXƒN‚Åˆ—‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ÍAŒø—¦‚Ìˆ«‚¢‚±‚Æ‚¾B
+	// ã“ã®ã‚³ãƒãƒ³ãƒ‰ãŒåˆ¥ã‚¿ã‚¹ã‚¯ã§å‡¦ç†ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã¯ã€åŠ¹ç‡ã®æ‚ªã„ã“ã¨ã ã€‚
 }
 
 #endif
@@ -84,7 +84,7 @@ void sgg_settasklocallevel(const int task, const int local, const int global, co
 	sgg_execcmd(&command);
 	return;
 
-	// ‚±‚ÌƒRƒ}ƒ“ƒh‚ª•Êƒ^ƒXƒN‚Åˆ—‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ÍAŒø—¦‚Ìˆ«‚¢‚±‚Æ‚¾B
+	// ã“ã®ã‚³ãƒãƒ³ãƒ‰ãŒåˆ¥ã‚¿ã‚¹ã‚¯ã§å‡¦ç†ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã¯ã€åŠ¹ç‡ã®æ‚ªã„ã“ã¨ã ã€‚
 }
 
 void sgg_runtask(const int task, const int local)
@@ -104,7 +104,7 @@ void sgg_runtask(const int task, const int local)
 	sgg_execcmd(&command);
 	return;
 
-	// ‚±‚ÌƒRƒ}ƒ“ƒh‚ª•Êƒ^ƒXƒN‚Åˆ—‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ÍAŒø—¦‚Ìˆ«‚¢‚±‚Æ‚¾B
+	// ã“ã®ã‚³ãƒãƒ³ãƒ‰ãŒåˆ¥ã‚¿ã‚¹ã‚¯ã§å‡¦ç†ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã¯ã€åŠ¹ç‡ã®æ‚ªã„ã“ã¨ã ã€‚
 }
 
 #if 0
@@ -125,7 +125,7 @@ void sgg_freememory(const int mdl_ent)
 	sgg_execcmd(&command);
 	return;
 
-	// ‚±‚ÌƒRƒ}ƒ“ƒh‚ª•Êƒ^ƒXƒN‚Åˆ—‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ÍAŒø—¦‚Ìˆ«‚¢‚±‚Æ‚¾B
+	// ã“ã®ã‚³ãƒãƒ³ãƒ‰ãŒåˆ¥ã‚¿ã‚¹ã‚¯ã§å‡¦ç†ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã¯ã€åŠ¹ç‡ã®æ‚ªã„ã“ã¨ã ã€‚
 }
 
 #endif

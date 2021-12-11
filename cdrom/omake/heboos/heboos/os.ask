@@ -1,10 +1,10 @@
-/* �ւ�OS copyright(C) 2003 �썇�G��, KL-01 */
+/* へぼOS copyright(C) 2003 川合秀実, KL-01 */
 
-/* ASKA�����낢�낤�邳���̂ŁA�Ƃ肠���������Ă��� */
+/* ASKAがいろいろうるさいので、とりあえず書いておく */
 segment CODE(USE32, PARA);
 default(code == CODE);
 
-/* .COM�t�@�C���ɂ��邽�߂̋L�q */
+/* .COMファイルにするための記述 */
 void COMFILE()
 {
 	asmout("[BITS 16]");
@@ -24,17 +24,17 @@ void charfont();
 
 void main()
 {
-	/* IPL�̂��߂̋L�q */
+	/* IPLのための記述 */
 	goto skip;
-	DW(3072 / 512); /* ����OS�̑傫��(512�o�C�g�P��) */
+	DW(3072 / 512); /* このOSの大きさ(512バイト単位) */
 skip:
 
-	/* ��ʃ��[�h�ݒ� */
+	/* 画面モード設定 */
 	AX = 0x0013;
 	INT(0x10);
 
-	/* �p���b�g�ݒ� */
-	/* �Ƃ肠�����A��(0)�Ɣ�(15)�����g��Ȃ��̂ŁA���ꂵ���ݒ肵�ĂȂ� */
+	/* パレット設定 */
+	/* とりあえず、黒(0)と白(15)しか使わないので、それしか設定してない */
 	AX = 0x1010;
 	BX = 0;
 	DH = 0;
@@ -46,12 +46,12 @@ skip:
 	CX = 0x3f3f;
 	INT(0x10);
 
-	/* ��ʏ����� */
+	/* 画面初期化 */
 	cls();
 	asmout("MOV SI,.msg");
 	putstr();
 
-	/* �V�X�e���R�[���pINT�x�N�^�ݒ� */
+	/* システムコール用INTベクタ設定 */
 	PUSH(DS);
 	AX = 0;
 	DS = AX;
@@ -62,7 +62,7 @@ skip:
 	loaddir();
 
 command:
-	/* �R�}���h���C�����[�v */
+	/* コマンドラインループ */
 	for (;;) {
 		AX = 0;
 		asmout("MOV BX,.cmdlin");
@@ -127,7 +127,7 @@ command:
 				}
 			}
 		}
-		/* BASIC(�ǂ��Ȃ邩������Ȃ��B���R�}���h�E�E�E��) */
+		/* BASIC(どうなるか分からない隠しコマンド・・・笑) */
 		if (AX == 0x4142) {
 			if (CX == 0x4953) {
 				if (DX == 0x0043) {
@@ -176,7 +176,7 @@ command:
 			}
 		}
 
-		/* �R�}���h���Ƃ݂Ȃ��āA????????.hoa��T�� */
+		/* コマンド名とみなして、????????.hoaを探す */
 		CL = 8;
 		do {
 			AL = [DS:BX];
@@ -211,7 +211,7 @@ command:
 								if (AX == [DS:BX + 4]) {
 									AX = [ES:DI + 6];
 									if (AX == [DS:BX + 6]) {
-										/* �t�@�C�������I */
+										/* ファイル発見！ */
 										AX = [ES:DI + 26];
 										AX -= 2;
 										asmout("MUL WORD [loaddir.SIZ_CLU]");
@@ -234,7 +234,7 @@ command:
 										DS = AX;
 										PUSH(AX);
 										PUSH(0x0100);
-										RETF(); /* �A�v���P�[�V�����ɕ��� */
+										RETF(); /* アプリケーションに分岐 */
 									}
 								}
 							}
@@ -267,7 +267,7 @@ delcur_lf:
 	DB(8, 0x20, 10, 0);
 badcmd:
 	asmout("DB 'Bad command o','r file name',10,0");
-		/* naskcnv0���n���Ȃ̂ŁA'or'�Ƒf���ɏ����ƕςȔ��������Ă��܂� */
+		/* naskcnv0が馬鹿なので、'or'と素直に書くと変な反応をしてしまう */
 diskerr:
 	asmout("DB 'Disk error',10,0");
 	ALIGNB(2);
@@ -287,14 +287,14 @@ void cls()
 		BX += 2;
 	} while (!= 0);
 	POP(DS);
-	asmout("MOV [CS:putstr.curx],AX"); /* �\�����W��0�� */
+	asmout("MOV [CS:putstr.curx],AX"); /* 表示座標を0に */
 	return;
 }
 
 void putstr()
-/* DS:SI�Ƀe�L�X�g */
-/* �����ł���R���g���[���R�[�h��0x08,0x0a����(�������̎蔲��) */
-/* 0x00�ɑ���������I��� */
+/* DS:SIにテキスト */
+/* 理解できるコントロールコードは0x08,0x0aだけ(＝ただの手抜き) */
+/* 0x00に遭遇したら終わる */
 {
 	PUSH(ES);
 	PUSH(DI);
@@ -326,7 +326,7 @@ void putstr()
 		asmout("MOV CX,[CS:.cury]");
 		DI = CX;
 		DI *= 4;
-		DI += CX; /* ����ŁADI = CX * 5; */
+		DI += CX; /* これで、DI = CX * 5; */
 		DI *= 1024;
 		DI += AX;
 		CH = 16;
@@ -452,13 +452,13 @@ void readsec()
 }
 
 void loaddir()
-/* �f�B�X�N����f�B���N�g����ǂݍ��� */
+/* ディスクからディレクトリを読み込む */
 {
 	PUSH(ES);
 	AX = CS;
 	AX += SEG_DIR;
 	ES = AX;
-	(char) [ES:0] = 0x00; /* �G���[�̂Ƃ��́A�t�@�C���Ȃ��A�ɂȂ� */
+	(char) [ES:0] = 0x00; /* エラーのときは、ファイルなし、になる */
 	AX = CS;
 	AX += SEG_APP;
 	ES = AX;
@@ -493,7 +493,7 @@ void loaddir()
 	asmout("MOV BX,[.SIZ_DIR]");
 	BX--;
 	BX *= 32;
-	(char) [ES:BX] = 0x00; /* �������̂��߂̃^�[�~�l�[�^ */
+	(char) [ES:BX] = 0x00; /* もしものためのターミネータ */
 err:
 	POP(ES);
 	return;
@@ -514,7 +514,7 @@ SIZ_CLU:
 }
 
 void syscall()
-/* �A�v���P�[�V��������Ă΂�� */
+/* アプリケーションから呼ばれる */
 {
 	PUSH(DI);
 	PUSH(SI);
@@ -524,7 +524,7 @@ void syscall()
 	PUSH(CX);
 	PUSH(AX);
 	BP = SP;
-	if (AX == 0) { /* �A�v���I��, CX�ɖ߂�l�ł������΂����� */
+	if (AX == 0) { /* アプリ終了, CXに戻り値でも入れればいいね */
 		AX = CS;
 		SS = AX;
 		SP = 0xfffe;
@@ -532,11 +532,11 @@ void syscall()
 		ES = AX;
 		asmout("JMP main.command");
 	}
-	if (AX == 1) { /* �����\���t�@���N�V���� */
+	if (AX == 1) { /* 文字表示ファンクション */
 		putstr();
 		goto fin;
 	}
-	if (AX == 2) { /* ��ʃN���A�t�@���N�V���� */
+	if (AX == 2) { /* 画面クリアファンクション */
 		cls();
 		goto fin;
 	}
@@ -557,4 +557,4 @@ fin2:
 }
 
 void charfont() {}
-/* makeos.bat�������Ƀt�H���g�o�C�i������������ */
+/* makeos.batがここにフォントバイナリをくっつける */

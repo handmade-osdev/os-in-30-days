@@ -23,7 +23,7 @@ class CLZOutWindow
   void Free();
 public:
   CLZOutWindow(): _buffer(0), _stream(0) {}
-  ~CLZOutWindow() { Free();  /* ReleaseStream(); */ }
+  ‾CLZOutWindow() { Free();  /* ReleaseStream(); */ }
 	void Create(UInt32 windowSize);
   bool IsCreated() const { return _buffer != 0; }
 

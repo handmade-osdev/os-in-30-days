@@ -3,7 +3,7 @@
 
 #define INVALID		-0x7fffffff
 
-int strtol(char *s, char **endp, int base);	/* •W€ŠÖ”istdlib.hj */
+int strtol(char *s, char **endp, int base);	/* æ¨™æº–é–¢æ•°ï¼ˆstdlib.hï¼‰ */
 
 char *skipspace(char *p);
 int getnum(char **pp, int priority);
@@ -14,7 +14,7 @@ void HariMain(void)
 	char s[30], *p;
 
 	api_cmdline(s, 30);
-	for (p = s; *p > ' '; p++) { }	/* ƒXƒy[ƒX‚ª—ˆ‚é‚Ü‚Å“Ç‚İ”ò‚Î‚· */
+	for (p = s; *p > ' '; p++) { }	/* ã‚¹ãƒšãƒ¼ã‚¹ãŒæ¥ã‚‹ã¾ã§èª­ã¿é£›ã°ã™ */
 	i = getnum(&p, 9);
 	if (i == INVALID) {
 		api_putstr0("error!\n");
@@ -27,7 +27,7 @@ void HariMain(void)
 
 char *skipspace(char *p)
 {
-	for (; *p == ' '; p++) { }	/* ƒXƒy[ƒX‚ğ“Ç‚İ”ò‚Î‚· */
+	for (; *p == ' '; p++) { }	/* ã‚¹ãƒšãƒ¼ã‚¹ã‚’èª­ã¿é£›ã°ã™ */
 	return p;
 }
 
@@ -37,7 +37,7 @@ int getnum(char **pp, int priority)
 	int i = INVALID, j;
 	p = skipspace(p);
 
-	/* ’P€‰‰Zq */
+	/* å˜é …æ¼”ç®—å­ */
 	if (*p == '+') {
 		p = skipspace(p + 1);
 		i = getnum(&p, 0);
@@ -47,13 +47,13 @@ int getnum(char **pp, int priority)
 		if (i != INVALID) {
 			i = - i;
 		}
-	} else if (*p == '~') {
+	} else if (*p == 'â€¾') {
 		p = skipspace(p + 1);
 		i = getnum(&p, 0);
 		if (i != INVALID) {
-			i = ~i;
+			i = â€¾i;
 		}
-	} else if (*p == '(') {	/* ‚©‚Á‚± */
+	} else if (*p == '(') {	/* ã‹ã£ã“ */
 		p = skipspace(p + 1);
 		i = getnum(&p, 9);
 		if (*p == ')') {
@@ -61,13 +61,13 @@ int getnum(char **pp, int priority)
 		} else {
 			i = INVALID;
 		}
-	} else if ('0' <= *p && *p <= '9') { /* ”’l */
+	} else if ('0' <= *p && *p <= '9') { /* æ•°å€¤ */
 		i = strtol(p, &p, 0);
-	} else { /* ƒGƒ‰[ */
+	} else { /* ã‚¨ãƒ©ãƒ¼ */
 		i = INVALID;
 	}
 
-	/* “ñ€‰‰Zq */
+	/* äºŒé …æ¼”ç®—å­ */
 	for (;;) {
 		if (i == INVALID) {
 			break;

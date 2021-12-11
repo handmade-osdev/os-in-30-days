@@ -16,6 +16,6 @@ void HariMain(void)
 		}
 	}
 	api_refreshwin(win, 8, 28, 136, 156);
-	api_getkey(1); /* ‚Ä‚«‚Æ‚¤‚ÈƒL[“ü—Í‚ğ‘Ò‚Â */
+	api_getkey(1); /* ã¦ãã¨ã†ãªã‚­ãƒ¼å…¥åŠ›ã‚’å¾…ã¤ */
 	api_end();
 }

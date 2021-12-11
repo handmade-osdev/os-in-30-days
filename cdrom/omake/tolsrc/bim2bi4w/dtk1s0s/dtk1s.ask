@@ -7,7 +7,7 @@ asmout("GLOBAL _tek_decode");
 
 /* int tek_checkformat(int siz, UCHAR *p) */
 
-/* Å‚‚Å0.15[sec](osaskgo)‚ğƒ}[ƒN */
+/* æœ€é«˜ã§0.15[sec](osaskgo)ã‚’ãƒãƒ¼ã‚¯ */
 
 void getnum_s7s();
 
@@ -78,8 +78,8 @@ void _tek_decode()
 		goto err1;
 	TEST(AL, 0x40);
 	if (!= 0)
-		getnum_s7s(); /* ƒIƒvƒVƒ‡ƒ“î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ“Ç‚İ”ò‚Î‚· */
-	getnum_s7s(); /* •â•ƒoƒbƒtƒ@g—pH */
+		getnum_s7s(); /* ã‚ªãƒ—ã‚·ãƒ§ãƒ³æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’èª­ã¿é£›ã°ã™ */
+	getnum_s7s(); /* è£œåŠ©ãƒãƒƒãƒ•ã‚¡ä½¿ç”¨ï¼Ÿ */
 	if (!= 0) {
 err1:
 		POPAD();
@@ -90,7 +90,7 @@ err1:
 	if (EBP == 0)
 		goto fin;
 
-	/* stk1‚ÌƒfƒR[ƒh–{‘Ì */
+	/* stk1ã®ãƒ‡ã‚³ãƒ¼ãƒ‰æœ¬ä½“ */
 
 	PUSH(ES);
 	PUSHFD();
@@ -186,7 +186,7 @@ err:
 }
 
 void getnum_s7s()
-/* DS:ESI‚©‚çƒŠ[ƒh */
+/* DS:ESIã‹ã‚‰ãƒªãƒ¼ãƒ‰ */
 {
 	EAX = 0;
 	do {

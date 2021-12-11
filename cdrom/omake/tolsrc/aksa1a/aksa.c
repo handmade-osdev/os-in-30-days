@@ -185,7 +185,7 @@ int aksa_ea(UCHAR *p, UCHAR *s, UCHAR len, UCHAR adrsiz, UCHAR segovr)
 		}
 		sprintf(s, (displen == 1) ? "0x%02X" : "0x%08X", i);
 		if (displen == 2)
-			sprintf(s, "0x%04X", i & 0xffff); /* &����̂́Ac == 0�̂Ƃ��̂��� */
+			sprintf(s, "0x%04X", i & 0xffff); /* &するのは、c == 0のときのため */
 		do {
 			s++;
 		} while (*s);

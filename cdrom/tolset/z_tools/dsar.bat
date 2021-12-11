@@ -1,19 +1,19 @@
 @echo off
 
 set dsar_sartol=sartol.exe
-set dsar_bpath="%USERPROFILE%/ƒfƒXƒNƒgƒbƒv/"
+set dsar_bpath="%USERPROFILE%/ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—/"
 set dsar_autorun="%SystemRoot%\explorer.exe"
 
-rem |—á|
-rem set dsar_bpath="%USERPROFILE%/ƒfƒXƒNƒgƒbƒv/"
-rem set dsar_bpath="%USERPROFILE%/ƒfƒXƒNƒgƒbƒv"
+rem âˆ’ä¾‹âˆ’
+rem set dsar_bpath="%USERPROFILE%/ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—/"
+rem set dsar_bpath="%USERPROFILE%/ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—"
 rem set dsar_bpath=..@arcpath/
 rem set dsar_bpath=..@arcpath
 
-rem |—á|
+rem âˆ’ä¾‹âˆ’
 rem set dsar_autorun="%SystemRoot%\explorer.exe"
 rem set dsar_autorun=
-rem ’ˆÓIdsar_bpath‚Å‚ÍƒpƒX‚Ì‹æØ‚è‚É\‚ğg‚¤‚±‚Æ
+rem æ³¨æ„ï¼dsar_bpathã§ã¯ãƒ‘ã‚¹ã®åŒºåˆ‡ã‚Šã«\ã‚’ä½¿ã†ã“ã¨
 
 :loop
 if %1.==. goto end

@@ -1,4 +1,4 @@
-/* GDT‚âIDT‚È‚Ç‚ÌA descriptor table ŠÖŒW */
+/* GDTã‚„IDTãªã©ã®ã€ descriptor table é–¢ä¿‚ */
 
 #include "bootpack.h"
 
@@ -8,7 +8,7 @@ void init_gdtidt(void)
 	struct GATE_DESCRIPTOR    *idt = (struct GATE_DESCRIPTOR    *) ADR_IDT;
 	int i;
 
-	/* GDT‚Ì‰Šú‰» */
+	/* GDTã®åˆæœŸåŒ– */
 	for (i = 0; i <= LIMIT_GDT / 8; i++) {
 		set_segmdesc(gdt + i, 0, 0, 0);
 	}
@@ -16,13 +16,13 @@ void init_gdtidt(void)
 	set_segmdesc(gdt + 2, LIMIT_BOTPAK, ADR_BOTPAK, AR_CODE32_ER);
 	load_gdtr(LIMIT_GDT, ADR_GDT);
 
-	/* IDT‚Ì‰Šú‰» */
+	/* IDTã®åˆæœŸåŒ– */
 	for (i = 0; i <= LIMIT_IDT / 8; i++) {
 		set_gatedesc(idt + i, 0, 0, 0);
 	}
 	load_idtr(LIMIT_IDT, ADR_IDT);
 
-	/* IDT‚Ìİ’è */
+	/* IDTã®è¨­å®š */
 	set_gatedesc(idt + 0x0c, (int) asm_inthandler0c, 2 * 8, AR_INTGATE32);
 	set_gatedesc(idt + 0x0d, (int) asm_inthandler0d, 2 * 8, AR_INTGATE32);
 	set_gatedesc(idt + 0x20, (int) asm_inthandler20, 2 * 8, AR_INTGATE32);

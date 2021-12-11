@@ -62,7 +62,7 @@ struct objalloc_chunk
 
 #define CHUNK_HEADER_SIZE					\
   ((sizeof (struct objalloc_chunk) + OBJALLOC_ALIGN - 1)	\
-   &~ (OBJALLOC_ALIGN - 1))
+   &‾ (OBJALLOC_ALIGN - 1))
 
 /* We ask for this much memory each time we create a chunk which is to
    hold small objects.  */
@@ -114,7 +114,7 @@ _objalloc_alloc (o, len)
   if (len == 0)
     len = 1;
 
-  len = (len + OBJALLOC_ALIGN - 1) &~ (OBJALLOC_ALIGN - 1);
+  len = (len + OBJALLOC_ALIGN - 1) &‾ (OBJALLOC_ALIGN - 1);
 
   if (len <= o->current_space)
     {

@@ -11560,7 +11560,7 @@ function_units_used (insn)
       accum = i;
     }
   else
-    accum = ~accum;
+    accum = ‾accum;
   return accum;
 }
 

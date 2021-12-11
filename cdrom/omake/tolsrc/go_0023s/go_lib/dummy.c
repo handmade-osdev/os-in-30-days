@@ -36,7 +36,7 @@ const void *GO_bsearch(const void *key, const void *base,
 	size_t n, size_t size, 
 	int (*cmp)(const void *keyval, const void *datum))
 {
-	/* ‘S‘RƒoƒCƒiƒŠƒT[ƒ`‚É‚È‚Á‚Ä‚È‚¢ */
+	/* å…¨ç„¶ãƒã‚¤ãƒŠãƒªã‚µãƒ¼ãƒã«ãªã£ã¦ãªã„ */
 	size_t i;
 	for (i = 0; i < n; i++) {
 		if ((*cmp)(key, base) == 0)

@@ -80,7 +80,7 @@ struct GOL_STR_MEMMAN {
 	union {
 		double align;
 		struct {
-			size_t bytes; /* STR_MALLOC‚Ì•ª‚ğŠÜ‚Ş */
+			size_t bytes; /* STR_MALLOCã®åˆ†ã‚’å«ã‚€ */
 			struct GOL_STR_MEMMAN *next;
 		} s;
 	} u;

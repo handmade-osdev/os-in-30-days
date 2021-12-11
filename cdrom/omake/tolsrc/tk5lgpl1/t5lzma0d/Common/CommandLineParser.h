@@ -48,7 +48,7 @@ class CParser
 public:
   UStringVector NonSwitchStrings;
   CParser(int numSwitches);
-  ~CParser();
+  ‾CParser();
   void ParseStrings(const CSwitchForm *switchForms, 
     const UStringVector &commandStrings);
   const CSwitchResult& operator[](size_t index) const;

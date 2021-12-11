@@ -105,7 +105,7 @@ lvalue_p_1 (ref, treat_class_rvalues_as_lvalues)
 	{
 	  /* Clear the ordinary bit.  If this object was a class
 	     rvalue we want to preserve that information.  */
-	  op1_lvalue_kind &= ~clk_ordinary;
+	  op1_lvalue_kind &= ‾clk_ordinary;
 	  /* The lvalue is for a btifield.  */
 	  op1_lvalue_kind |= clk_bitfield;
 	}
@@ -185,8 +185,8 @@ lvalue_p_1 (ref, treat_class_rvalues_as_lvalues)
   op1_lvalue_kind = op1_lvalue_kind | op2_lvalue_kind;
   /* It's not an ordinary lvalue if it involves either a bit-field or
      a class rvalue.  */
-  if ((op1_lvalue_kind & ~clk_ordinary) != clk_none)
-    op1_lvalue_kind &= ~clk_ordinary;
+  if ((op1_lvalue_kind & ‾clk_ordinary) != clk_none)
+    op1_lvalue_kind &= ‾clk_ordinary;
   return op1_lvalue_kind;
 }
 
@@ -553,7 +553,7 @@ cp_build_qualified_type_real (type, type_quals, complain)
 	  || TREE_CODE (type) == METHOD_TYPE))
     {
       bad_quals |= type_quals & (TYPE_QUAL_CONST | TYPE_QUAL_VOLATILE);
-      type_quals &= ~(TYPE_QUAL_CONST | TYPE_QUAL_VOLATILE);
+      type_quals &= ‾(TYPE_QUAL_CONST | TYPE_QUAL_VOLATILE);
     }
   
   /* A restrict-qualified type must be a pointer (or reference)
@@ -564,7 +564,7 @@ cp_build_qualified_type_real (type, type_quals, complain)
       && !POINTER_TYPE_P (type))
     {
       bad_quals |= TYPE_QUAL_RESTRICT;
-      type_quals &= ~TYPE_QUAL_RESTRICT;
+      type_quals &= ‾TYPE_QUAL_RESTRICT;
     }
 
   if (bad_quals == TYPE_UNQUALIFIED)
@@ -576,7 +576,7 @@ cp_build_qualified_type_real (type, type_quals, complain)
       if (complain & tf_ignore_bad_quals)
  	/* We're not going to warn about constifying things that can't
  	   be constified.  */
- 	bad_quals &= ~TYPE_QUAL_CONST;
+ 	bad_quals &= ‾TYPE_QUAL_CONST;
       if (bad_quals)
  	{
  	  tree bad_type = build_qualified_type (ptr_type_node, bad_quals);

@@ -74,7 +74,7 @@ class CLiteralDecoder
   UInt32 _posMask;
 public:
   CLiteralDecoder(): _coders(0) {}
-  ~CLiteralDecoder()  { Free(); }
+  ‾CLiteralDecoder()  { Free(); }
   void Free()
   { 
     delete []_coders;
@@ -196,7 +196,7 @@ public:
     bool NeedFlush;
     CDecoderFlusher(CDecoder *decoder): 
           _decoder(decoder), NeedFlush(true) {}
-    ~CDecoderFlusher() 
+    ‾CDecoderFlusher() 
     { 
       if (NeedFlush)
         _decoder->Flush();

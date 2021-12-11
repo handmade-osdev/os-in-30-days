@@ -873,7 +873,7 @@ ereal_from_int (d, i, j, mode)
     {
       sign = 1;
       /* complement and add 1 */
-      high = ~high;
+      high = ‾high;
       if (low)
 	low = -low;
       else
@@ -1019,7 +1019,7 @@ ereal_to_int (low, high, rr)
   if (s)
     {
       /* complement and add 1 */
-      *high = ~(*high);
+      *high = ‾(*high);
       if (*low)
 	*low = -(*low);
       else
@@ -2683,7 +2683,7 @@ emdnorm (s, lost, subflg, exp, rcntrl)
 	  ++i;
 	}
     }
-  s[rw] &= ~rmsk;
+  s[rw] &= ‾rmsk;
   if ((r & rmbit) != 0)
     {
 #ifndef C4X
@@ -2736,7 +2736,7 @@ emdnorm (s, lost, subflg, exp, rcntrl)
       s[NI - 1] = 0;
       if ((rndprc < 64) || (rndprc == 113))
 	{
-	  s[rw] &= ~rmsk;
+	  s[rw] &= ‾rmsk;
 	  if (rndprc == 24)
 	    {
 	      s[5] = 0;
@@ -2849,7 +2849,7 @@ eadd1 (a, b, c)
   emovi (a, ai);
   emovi (b, bi);
   if (subflg)
-    ai[0] = ~ai[0];
+    ai[0] = ‾ai[0];
 
   /* compare exponents */
   lta = ai[E];
@@ -3035,7 +3035,7 @@ ediv (a, b, c)
       )
      *(c+(NE-1)) |= 0x8000;
   else
-     *(c+(NE-1)) &= ~0x8000;
+     *(c+(NE-1)) &= ‾0x8000;
 }
 
 /* Multiply e-types A and B, return e-type product C.  */
@@ -3132,7 +3132,7 @@ emul (a, b, c)
       )
      *(c+(NE-1)) |= 0x8000;
   else
-     *(c+(NE-1)) &= ~0x8000;
+     *(c+(NE-1)) &= ‾0x8000;
 }
 
 /* Convert double precision PE to e-type Y.  */
@@ -3173,7 +3173,7 @@ e53toe (pe, y)
   if (r & 0x8000)
     yy[0] = 0xffff;
   yy[M] = (r & 0x0f) | 0x10;
-  r &= ~0x800f;			/* strip sign and 4 significand bits */
+  r &= ‾0x800f;			/* strip sign and 4 significand bits */
 #ifdef INFINITY
   if (r == 0x7ff0)
     {
@@ -3211,7 +3211,7 @@ e53toe (pe, y)
   if (r == 0)
     {
       denorm = 1;
-      yy[M] &= ~0x10;
+      yy[M] &= ‾0x10;
     }
   r += EXONE - 01777;
   yy[E] = r;
@@ -3499,7 +3499,7 @@ e24toe (pe, y)
   if (r & 0x8000)
     yy[0] = 0xffff;
   yy[M] = (r & 0x7f) | 0200;
-  r &= ~0x807f;			/* strip sign and 7 significand bits */
+  r &= ‾0x807f;			/* strip sign and 7 significand bits */
 #ifdef INFINITY
   if (r == 0x7f80)
     {
@@ -3534,7 +3534,7 @@ e24toe (pe, y)
   if (r == 0)
     {
       denorm = 1;
-      yy[M] &= ~0200;
+      yy[M] &= ‾0200;
     }
   r += EXONE - 0177;
   yy[E] = r;
@@ -4459,9 +4459,9 @@ euifrac (x, i, frac)
     {
       /* Long integer overflow: output large integer
 	 and correct fraction.
-	 Note, the BSD MicroVAX compiler says that ~(0UL)
+	 Note, the BSD MicroVAX compiler says that ‾(0UL)
 	 is a syntax error.  */
-      *i = ~(0L);
+      *i = ‾(0L);
       eshift (xi, k);
       if (extra_warnings)
 	warning ("overflow on truncation to unsigned integer");
@@ -6105,7 +6105,7 @@ c4xtoe (d, e, mode)
 
   r >>= 8;			/* Shift exponent word down 8 bits.  */
   if (r & 0x80)			/* Make the exponent negative if it is.  */
-    r = r | (~0 & ~0xff);
+    r = r | (‾0 & ‾0xff);
 
   if (isnegative)
     {
@@ -6136,7 +6136,7 @@ c4xtoe (d, e, mode)
 	  else
 	    {
 	      /* No overflow, just invert and add carry.  */
-	      y[i] = ((~y[i]) + carry) & 0xffff;
+	      y[i] = ((‾y[i]) + carry) & 0xffff;
 	      carry = 0;
 	    }
         }
@@ -6247,7 +6247,7 @@ toc4x (x, y, mode)
 	    x[v] = carry ? 0x0000 : 0xffff;
 	  else
 	    {
-	      x[v] = ((~x[v]) + carry) & 0xffff;
+	      x[v] = ((‾x[v]) + carry) & 0xffff;
 	      carry = 0;
 	    }
 	  v--;
@@ -6626,7 +6626,7 @@ ditoe (di, e)
       carry = 0;
       for (k = M + 3; k >= M; k--)
 	{
-	  acc = (unsigned EMULONG) (~yi[k] & 0xffff) + carry;
+	  acc = (unsigned EMULONG) (‾yi[k] & 0xffff) + carry;
 	  yi[k] = acc;
 	  carry = 0;
 	  if (acc & 0x10000)
@@ -6812,7 +6812,7 @@ etodi (x, i)
 	isave += 3;
       for (k = 0; k < 4; k++)
 	{
-	  acc = (unsigned EMULONG) (~(*isave) & 0xffff) + carry;
+	  acc = (unsigned EMULONG) (‾(*isave) & 0xffff) + carry;
 	  if (WORDS_BIG_ENDIAN)
 	    *isave-- = acc;
 	  else

@@ -1,5 +1,5 @@
 /*
-	š‹å‰ğÍƒNƒ‰ƒX@`scanner.h + scanner.cpp`
+	å­—å¥è§£æã‚¯ãƒ©ã‚¹ã€€ã€œscanner.h + scanner.cppã€œ
 */
 #ifndef	__SCANNER_H
 #define	__SCANNER_H
@@ -22,41 +22,41 @@ using namespace std;
 #include "tokendef.h"
 
 class ScannerSub{
-	int		nLine;					// Œ»İˆ—‚µ‚Ä‚¢‚és”Ô†
-	Module	Mdl;					// Œ»İˆ—‚µ‚Ä‚¢‚éƒtƒ@ƒCƒ‹
-	FILE*	lpLogFP;				// ƒGƒ‰[ƒƒbƒZ[ƒWo—Í—pƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^
-	char	linebuf[1024];			// Œ»İˆ—‚µ‚Ä‚¢‚és‚Ìƒoƒbƒtƒ@
-	LPSTR	lpPos;					// Œ»İˆ—‚µ‚Ä‚¢‚és‚Ì’†‚ÌˆÊ’u
-	Token	token;					// ƒg[ƒNƒ“‚Ìí—Ş
-	char	labelbuf[256];			// token‚ªTK_LABEL“™‚Ì‚Ìƒoƒbƒtƒ@
-	LONG	numbuf;					// token‚ªTK_NUM‚Ì‚Ìƒoƒbƒtƒ@
-	bool	bPeeked;				// ‚·‚Å‚ÉPeekToken()‚Åƒg[ƒNƒ“‚ğ“¾‚Ä‚¢‚é‚©
-	int		nErrorCount;			// ‚±‚Ìƒ\[ƒX‚Å‹N‚±‚Á‚½ƒGƒ‰[‚Ì”
+	int		nLine;					// ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹è¡Œç•ªå·
+	Module	Mdl;					// ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«
+	FILE*	lpLogFP;				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿
+	char	linebuf[1024];			// ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹è¡Œã®ãƒãƒƒãƒ•ã‚¡
+	LPSTR	lpPos;					// ç¾åœ¨å‡¦ç†ã—ã¦ã„ã‚‹è¡Œã®ä¸­ã®ä½ç½®
+	Token	token;					// ãƒˆãƒ¼ã‚¯ãƒ³ã®ç¨®é¡
+	char	labelbuf[256];			// tokenãŒTK_LABELç­‰ã®æ™‚ã®ãƒãƒƒãƒ•ã‚¡
+	LONG	numbuf;					// tokenãŒTK_NUMã®æ™‚ã®ãƒãƒƒãƒ•ã‚¡
+	bool	bPeeked;				// ã™ã§ã«PeekToken()ã§ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å¾—ã¦ã„ã‚‹ã‹
+	int		nErrorCount;			// ã“ã®ã‚½ãƒ¼ã‚¹ã§èµ·ã“ã£ãŸã‚¨ãƒ©ãƒ¼ã®æ•°
 
-	void	Init(void);				// ƒoƒbƒtƒ@‚Ì‰Šú‰»
-	HRESULT	ReadLine(void);			// ‚Ps“Ç‚İ‚Ş
-	bool	IsToken(LPSTR &lp,LPSTR lp2);	// ˆê’v‚µ‚Ä‚¢‚ê‚Îlp1‚ğƒg[ƒNƒ“‚ÌI‚í‚è‚Ü‚Åi‚ß‚é
-	void	CopyLabel(LPSTR& lpPos);		// lpPos‚©‚çŸ‚Ìƒg[ƒNƒ“‚Ü‚ÅƒRƒs[
-	HRESULT	NumCheck(LPSTR& lpPos);			// ’²‚×‚Ä”’l‚È‚ç‚Înumbuf‚ÉB‚»‚¤‚Å‚È‚¯‚ê‚Î–ß‚è’lF”ñ0
-	void	GetQuotedLabel(LPSTR &lpPos);	// ˆø—pƒ‰ƒxƒ‹‚ğ“¾‚é
-	Token	PeekToken2(void);				// PeekToken()‚Ì–{‘Ì
-	void	Error(LPSTR str);				// ƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦
+	void	Init(void);				// ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
+	HRESULT	ReadLine(void);			// ï¼‘è¡Œèª­ã¿è¾¼ã‚€
+	bool	IsToken(LPSTR &lp,LPSTR lp2);	// ä¸€è‡´ã—ã¦ã„ã‚Œã°lp1ã‚’ãƒˆãƒ¼ã‚¯ãƒ³ã®çµ‚ã‚ã‚Šã¾ã§é€²ã‚ã‚‹
+	void	CopyLabel(LPSTR& lpPos);		// lpPosã‹ã‚‰æ¬¡ã®ãƒˆãƒ¼ã‚¯ãƒ³ã¾ã§ã‚³ãƒ”ãƒ¼
+	HRESULT	NumCheck(LPSTR& lpPos);			// èª¿ã¹ã¦æ•°å€¤ãªã‚‰ã°numbufã«ã€‚ãã†ã§ãªã‘ã‚Œã°æˆ»ã‚Šå€¤ï¼šé0
+	void	GetQuotedLabel(LPSTR &lpPos);	// å¼•ç”¨ãƒ©ãƒ™ãƒ«ã‚’å¾—ã‚‹
+	Token	PeekToken2(void);				// PeekToken()ã®æœ¬ä½“
+	void	Error(LPSTR str);				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤º
 
   public:
 	ScannerSub(){ lpLogFP=stderr; nErrorCount=0; Init(); }
-	~ScannerSub(){}
+	â€¾ScannerSub(){}
 
 #ifdef WINVC
-	HRESULT	ReadFile(string& filename);// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+	HRESULT	ReadFile(string& filename);// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 #else
-	HRESULT	ReadFile(string filename);// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+	HRESULT	ReadFile(string filename);// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 #endif
 	
-	Token	GetToken(void);			// Ÿ‚Ìtoken‚ğ“¾‚éi“Ç‚İ‚İƒ|ƒCƒ“ƒ^i‚ß‚éj
+	Token	GetToken(void);			// æ¬¡ã®tokenã‚’å¾—ã‚‹ï¼ˆèª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿é€²ã‚ã‚‹ï¼‰
 	Token	PeekToken(void){ token=PeekToken2(); return token; }
-									// Ÿ‚Ìtoken‚ğ“¾‚éi“Ç‚İ‚İƒ|ƒCƒ“ƒ^i‚ß‚È‚¢j
-	LPSTR	GetLabel(void){ return labelbuf; }	// token‚ªTK_LABEL“™‚ÌA‚»‚Ìƒ‰ƒxƒ‹‚ª“¾‚ç‚ê‚é
-	LONG	GetNum(void){ return numbuf; }		// token‚ªTK_NUM‚ÌA‚»‚Ì”’l‚ª“¾‚ç‚ê‚é
+									// æ¬¡ã®tokenã‚’å¾—ã‚‹ï¼ˆèª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿é€²ã‚ãªã„ï¼‰
+	LPSTR	GetLabel(void){ return labelbuf; }	// tokenãŒTK_LABELç­‰ã®æ™‚ã€ãã®ãƒ©ãƒ™ãƒ«ãŒå¾—ã‚‰ã‚Œã‚‹
+	LONG	GetNum(void){ return numbuf; }		// tokenãŒTK_NUMã®æ™‚ã€ãã®æ•°å€¤ãŒå¾—ã‚‰ã‚Œã‚‹
 
 	int		GetScanline(void){ return nLine; }
 	string	GetFileName(void){ return Mdl.GetFileName(); }
@@ -68,26 +68,26 @@ typedef stack<ScannerSub*> StacklpScannerSub;
 
 class Scanner{
 	StacklpScannerSub files;
-	int		nIncludeNest;			// ƒCƒ“ƒNƒ‹[ƒh‚ÌƒlƒXƒg”B‚È‚µ‚Ì‚Í 0
-	FILE*	lpLogFP;				// ƒGƒ‰[ƒƒbƒZ[ƒWo—Í—pƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^
-	int		nErrorCount;			// š‹å‰ğÍ•”‚Å‹N‚±‚Á‚½ƒGƒ‰[‚Ì”
+	int		nIncludeNest;			// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã®ãƒã‚¹ãƒˆæ•°ã€‚ãªã—ã®æ™‚ã¯ 0
+	FILE*	lpLogFP;				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿
+	int		nErrorCount;			// å­—å¥è§£æéƒ¨ã§èµ·ã“ã£ãŸã‚¨ãƒ©ãƒ¼ã®æ•°
 
   public:
 	Scanner(){ lpLogFP=stderr; nIncludeNest=0; nErrorCount=0; }
-	~Scanner(){ while(!files.empty()){ DELETE_SAFE(files.top()); files.pop(); } }
+	â€¾Scanner(){ while(!files.empty()){ DELETE_SAFE(files.top()); files.pop(); } }
 
 #ifdef WINVC
-	HRESULT	ReadFile(string& filename);// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+	HRESULT	ReadFile(string& filename);// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 #else
-	HRESULT	ReadFile(string filename);// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+	HRESULT	ReadFile(string filename);// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 #endif
 
-	Token	GetToken(void);		// Ÿ‚Ìtoken‚ğ“¾‚éi“Ç‚İ‚İƒ|ƒCƒ“ƒ^i‚ß‚éj
-	Token	PeekToken(void);	// Ÿ‚Ìtoken‚ğ“¾‚éi“Ç‚İ‚İƒ|ƒCƒ“ƒ^i‚ß‚È‚¢j
+	Token	GetToken(void);		// æ¬¡ã®tokenã‚’å¾—ã‚‹ï¼ˆèª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿é€²ã‚ã‚‹ï¼‰
+	Token	PeekToken(void);	// æ¬¡ã®tokenã‚’å¾—ã‚‹ï¼ˆèª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿é€²ã‚ãªã„ï¼‰
 	LPSTR	GetLabel(void){ return files.top()->GetLabel(); }
-								// token‚ªTK_LABEL“™‚ÌA‚»‚Ìƒ‰ƒxƒ‹‚ª“¾‚ç‚ê‚é
+								// tokenãŒTK_LABELç­‰ã®æ™‚ã€ãã®ãƒ©ãƒ™ãƒ«ãŒå¾—ã‚‰ã‚Œã‚‹
 	LONG	GetNum(void){ return files.top()->GetNum(); }
-								// token‚ªTK_NUM‚ÌA‚»‚Ì”’l‚ª“¾‚ç‚ê‚é
+								// tokenãŒTK_NUMã®æ™‚ã€ãã®æ•°å€¤ãŒå¾—ã‚‰ã‚Œã‚‹
 	int		GetScanline(void){ return files.top()->GetScanline(); }
 	string	GetFileName(void){ return files.top()->GetFileName(); }
 	void	SetLogFile(FILE* fp){ lpLogFP = fp; }

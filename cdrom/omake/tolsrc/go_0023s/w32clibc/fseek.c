@@ -12,6 +12,6 @@ int fseek(FILE *stream, int offset, int origin)
 		offset--;
 	if (SetFilePointer(stream->handle, offset, NULL, method[origin]) == 0xffffffff)
 		return EOF;
-	stream->flags &= ~0x18; /* EOF‚Æungetc‚ğÁ‚· */
+	stream->flags &= â€¾0x18; /* EOFã¨ungetcã‚’æ¶ˆã™ */
 	return 0;
 }

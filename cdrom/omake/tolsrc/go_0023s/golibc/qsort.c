@@ -1,4 +1,4 @@
-/* K&R����قڂ��̂܂܈��p */
+/* K&Rからほぼそのまま引用 */
 
 #include <stddef.h>
 #include <stdio.h>

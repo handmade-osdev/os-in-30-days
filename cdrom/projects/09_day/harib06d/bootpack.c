@@ -1,16 +1,16 @@
-/* bootpack‚ÌƒƒCƒ“ */
+/* bootpackã®ãƒ¡ã‚¤ãƒ³ */
 
 #include "bootpack.h"
 #include <stdio.h>
 
-#define MEMMAN_FREES		4090	/* ‚±‚ê‚Å–ñ32KB */
+#define MEMMAN_FREES		4090	/* ã“ã‚Œã§ç´„32KB */
 #define MEMMAN_ADDR			0x003c0000
 
-struct FREEINFO {	/* ‚ ‚«î•ñ */
+struct FREEINFO {	/* ã‚ãæƒ…å ± */
 	unsigned int addr, size;
 };
 
-struct MEMMAN {		/* ƒƒ‚ƒŠŠÇ— */
+struct MEMMAN {		/* ãƒ¡ãƒ¢ãƒªç®¡ç† */
 	int frees, maxfrees, lostsize, losts;
 	struct FREEINFO free[MEMMAN_FREES];
 };
@@ -32,11 +32,11 @@ void HariMain(void)
 
 	init_gdtidt();
 	init_pic();
-	io_sti(); /* IDT/PIC‚Ì‰Šú‰»‚ªI‚í‚Á‚½‚Ì‚ÅCPU‚ÌŠ„‚è‚İ‹Ö~‚ğ‰ğœ */
+	io_sti(); /* IDT/PICã®åˆæœŸåŒ–ãŒçµ‚ã‚ã£ãŸã®ã§CPUã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢ã‚’è§£é™¤ */
 	fifo8_init(&keyfifo, 32, keybuf);
 	fifo8_init(&mousefifo, 128, mousebuf);
-	io_out8(PIC0_IMR, 0xf9); /* PIC1‚ÆƒL[ƒ{[ƒh‚ğ‹–‰Â(11111001) */
-	io_out8(PIC1_IMR, 0xef); /* ƒ}ƒEƒX‚ğ‹–‰Â(11101111) */
+	io_out8(PIC0_IMR, 0xf9); /* PIC1ã¨ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’è¨±å¯(11111001) */
+	io_out8(PIC1_IMR, 0xef); /* ãƒã‚¦ã‚¹ã‚’è¨±å¯(11101111) */
 
 	init_keyboard();
 	enable_mouse(&mdec);
@@ -47,7 +47,7 @@ void HariMain(void)
 
 	init_palette();
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
-	mx = (binfo->scrnx - 16) / 2; /* ‰æ–Ê’†‰›‚É‚È‚é‚æ‚¤‚ÉÀ•WŒvZ */
+	mx = (binfo->scrnx - 16) / 2; /* ç”»é¢ä¸­å¤®ã«ãªã‚‹ã‚ˆã†ã«åº§æ¨™è¨ˆç®— */
 	my = (binfo->scrny - 28 - 16) / 2;
 	init_mouse_cursor8(mcursor, COL8_008484);
 	putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16);
@@ -73,7 +73,7 @@ void HariMain(void)
 				i = fifo8_get(&mousefifo);
 				io_sti();
 				if (mouse_decode(&mdec, i) != 0) {
-					/* ƒf[ƒ^‚ª3ƒoƒCƒg‘µ‚Á‚½‚Ì‚Å•\¦ */
+					/* ãƒ‡ãƒ¼ã‚¿ãŒ3ãƒã‚¤ãƒˆæƒã£ãŸã®ã§è¡¨ç¤º */
 					sprintf(s, "[lcr %4d %4d]", mdec.x, mdec.y);
 					if ((mdec.btn & 0x01) != 0) {
 						s[1] = 'L';
@@ -86,8 +86,8 @@ void HariMain(void)
 					}
 					boxfill8(binfo->vram, binfo->scrnx, COL8_008484, 32, 16, 32 + 15 * 8 - 1, 31);
 					putfonts8_asc(binfo->vram, binfo->scrnx, 32, 16, COL8_FFFFFF, s);
-					/* ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌˆÚ“® */
-					boxfill8(binfo->vram, binfo->scrnx, COL8_008484, mx, my, mx + 15, my + 15); /* ƒ}ƒEƒXÁ‚· */
+					/* ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®ç§»å‹• */
+					boxfill8(binfo->vram, binfo->scrnx, COL8_008484, mx, my, mx + 15, my + 15); /* ãƒã‚¦ã‚¹æ¶ˆã™ */
 					mx += mdec.x;
 					my += mdec.y;
 					if (mx < 0) {
@@ -103,9 +103,9 @@ void HariMain(void)
 						my = binfo->scrny - 16;
 					}
 					sprintf(s, "(%3d, %3d)", mx, my);
-					boxfill8(binfo->vram, binfo->scrnx, COL8_008484, 0, 0, 79, 15); /* À•WÁ‚· */
-					putfonts8_asc(binfo->vram, binfo->scrnx, 0, 0, COL8_FFFFFF, s); /* À•W‘‚­ */
-					putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16); /* ƒ}ƒEƒX•`‚­ */
+					boxfill8(binfo->vram, binfo->scrnx, COL8_008484, 0, 0, 79, 15); /* åº§æ¨™æ¶ˆã™ */
+					putfonts8_asc(binfo->vram, binfo->scrnx, 0, 0, COL8_FFFFFF, s); /* åº§æ¨™æ›¸ã */
+					putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16); /* ãƒã‚¦ã‚¹æã */
 				}
 			}
 		}
@@ -120,20 +120,20 @@ unsigned int memtest(unsigned int start, unsigned int end)
 	char flg486 = 0;
 	unsigned int eflg, cr0, i;
 
-	/* 386‚©A486ˆÈ~‚È‚Ì‚©‚ÌŠm”F */
+	/* 386ã‹ã€486ä»¥é™ãªã®ã‹ã®ç¢ºèª */
 	eflg = io_load_eflags();
 	eflg |= EFLAGS_AC_BIT; /* AC-bit = 1 */
 	io_store_eflags(eflg);
 	eflg = io_load_eflags();
-	if ((eflg & EFLAGS_AC_BIT) != 0) { /* 386‚Å‚ÍAC=1‚É‚µ‚Ä‚à©“®‚Å0‚É–ß‚Á‚Ä‚µ‚Ü‚¤ */
+	if ((eflg & EFLAGS_AC_BIT) != 0) { /* 386ã§ã¯AC=1ã«ã—ã¦ã‚‚è‡ªå‹•ã§0ã«æˆ»ã£ã¦ã—ã¾ã† */
 		flg486 = 1;
 	}
-	eflg &= ~EFLAGS_AC_BIT; /* AC-bit = 0 */
+	eflg &= â€¾EFLAGS_AC_BIT; /* AC-bit = 0 */
 	io_store_eflags(eflg);
 
 	if (flg486 != 0) {
 		cr0 = load_cr0();
-		cr0 |= CR0_CACHE_DISABLE; /* ƒLƒƒƒbƒVƒ…‹Ö~ */
+		cr0 |= CR0_CACHE_DISABLE; /* ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç¦æ­¢ */
 		store_cr0(cr0);
 	}
 
@@ -141,7 +141,7 @@ unsigned int memtest(unsigned int start, unsigned int end)
 
 	if (flg486 != 0) {
 		cr0 = load_cr0();
-		cr0 &= ~CR0_CACHE_DISABLE; /* ƒLƒƒƒbƒVƒ…‹–‰Â */
+		cr0 &= â€¾CR0_CACHE_DISABLE; /* ã‚­ãƒ£ãƒƒã‚·ãƒ¥è¨±å¯ */
 		store_cr0(cr0);
 	}
 
@@ -150,15 +150,15 @@ unsigned int memtest(unsigned int start, unsigned int end)
 
 void memman_init(struct MEMMAN *man)
 {
-	man->frees = 0;			/* ‚ ‚«î•ñ‚ÌŒÂ” */
-	man->maxfrees = 0;		/* ó‹µŠÏ@—pFfrees‚ÌÅ‘å’l */
-	man->lostsize = 0;		/* ‰ğ•ú‚É¸”s‚µ‚½‡ŒvƒTƒCƒY */
-	man->losts = 0;			/* ‰ğ•ú‚É¸”s‚µ‚½‰ñ” */
+	man->frees = 0;			/* ã‚ãæƒ…å ±ã®å€‹æ•° */
+	man->maxfrees = 0;		/* çŠ¶æ³è¦³å¯Ÿç”¨ï¼šfreesã®æœ€å¤§å€¤ */
+	man->lostsize = 0;		/* è§£æ”¾ã«å¤±æ•—ã—ãŸåˆè¨ˆã‚µã‚¤ã‚º */
+	man->losts = 0;			/* è§£æ”¾ã«å¤±æ•—ã—ãŸå›æ•° */
 	return;
 }
 
 unsigned int memman_total(struct MEMMAN *man)
-/* ‚ ‚«ƒTƒCƒY‚Ì‡Œv‚ğ•ñ */
+/* ã‚ãã‚µã‚¤ã‚ºã®åˆè¨ˆã‚’å ±å‘Š */
 {
 	unsigned int i, t = 0;
 	for (i = 0; i < man->frees; i++) {
@@ -168,34 +168,34 @@ unsigned int memman_total(struct MEMMAN *man)
 }
 
 unsigned int memman_alloc(struct MEMMAN *man, unsigned int size)
-/* Šm•Û */
+/* ç¢ºä¿ */
 {
 	unsigned int i, a;
 	for (i = 0; i < man->frees; i++) {
 		if (man->free[i].size >= size) {
-			/* \•ª‚ÈL‚³‚Ì‚ ‚«‚ğ”­Œ© */
+			/* ååˆ†ãªåºƒã•ã®ã‚ãã‚’ç™ºè¦‹ */
 			a = man->free[i].addr;
 			man->free[i].addr += size;
 			man->free[i].size -= size;
 			if (man->free[i].size == 0) {
-				/* free[i]‚ª‚È‚­‚È‚Á‚½‚Ì‚Å‘O‚Ö‚Â‚ß‚é */
+				/* free[i]ãŒãªããªã£ãŸã®ã§å‰ã¸ã¤ã‚ã‚‹ */
 				man->frees--;
 				for (; i < man->frees; i++) {
-					man->free[i] = man->free[i + 1]; /* \‘¢‘Ì‚Ì‘ã“ü */
+					man->free[i] = man->free[i + 1]; /* æ§‹é€ ä½“ã®ä»£å…¥ */
 				}
 			}
 			return a;
 		}
 	}
-	return 0; /* ‚ ‚«‚ª‚È‚¢ */
+	return 0; /* ã‚ããŒãªã„ */
 }
 
 int memman_free(struct MEMMAN *man, unsigned int addr, unsigned int size)
-/* ‰ğ•ú */
+/* è§£æ”¾ */
 {
 	int i, j;
-	/* ‚Ü‚Æ‚ß‚â‚·‚³‚ğl‚¦‚é‚ÆAfree[]‚ªaddr‡‚É•À‚ñ‚Å‚¢‚é‚Ù‚¤‚ª‚¢‚¢ */
-	/* ‚¾‚©‚ç‚Ü‚¸A‚Ç‚±‚É“ü‚ê‚é‚×‚«‚©‚ğŒˆ‚ß‚é */
+	/* ã¾ã¨ã‚ã‚„ã™ã•ã‚’è€ƒãˆã‚‹ã¨ã€free[]ãŒaddré †ã«ä¸¦ã‚“ã§ã„ã‚‹ã»ã†ãŒã„ã„ */
+	/* ã ã‹ã‚‰ã¾ãšã€ã©ã“ã«å…¥ã‚Œã‚‹ã¹ãã‹ã‚’æ±ºã‚ã‚‹ */
 	for (i = 0; i < man->frees; i++) {
 		if (man->free[i].addr > addr) {
 			break;
@@ -203,52 +203,52 @@ int memman_free(struct MEMMAN *man, unsigned int addr, unsigned int size)
 	}
 	/* free[i - 1].addr < addr < free[i].addr */
 	if (i > 0) {
-		/* ‘O‚ª‚ ‚é */
+		/* å‰ãŒã‚ã‚‹ */
 		if (man->free[i - 1].addr + man->free[i - 1].size == addr) {
-			/* ‘O‚Ì‚ ‚«—Ìˆæ‚É‚Ü‚Æ‚ß‚ç‚ê‚é */
+			/* å‰ã®ã‚ãé ˜åŸŸã«ã¾ã¨ã‚ã‚‰ã‚Œã‚‹ */
 			man->free[i - 1].size += size;
 			if (i < man->frees) {
-				/* Œã‚ë‚à‚ ‚é */
+				/* å¾Œã‚ã‚‚ã‚ã‚‹ */
 				if (addr + size == man->free[i].addr) {
-					/* ‚È‚ñ‚ÆŒã‚ë‚Æ‚à‚Ü‚Æ‚ß‚ç‚ê‚é */
+					/* ãªã‚“ã¨å¾Œã‚ã¨ã‚‚ã¾ã¨ã‚ã‚‰ã‚Œã‚‹ */
 					man->free[i - 1].size += man->free[i].size;
-					/* man->free[i]‚Ìíœ */
-					/* free[i]‚ª‚È‚­‚È‚Á‚½‚Ì‚Å‘O‚Ö‚Â‚ß‚é */
+					/* man->free[i]ã®å‰Šé™¤ */
+					/* free[i]ãŒãªããªã£ãŸã®ã§å‰ã¸ã¤ã‚ã‚‹ */
 					man->frees--;
 					for (; i < man->frees; i++) {
-						man->free[i] = man->free[i + 1]; /* \‘¢‘Ì‚Ì‘ã“ü */
+						man->free[i] = man->free[i + 1]; /* æ§‹é€ ä½“ã®ä»£å…¥ */
 					}
 				}
 			}
-			return 0; /* ¬Œ÷I—¹ */
+			return 0; /* æˆåŠŸçµ‚äº† */
 		}
 	}
-	/* ‘O‚Æ‚Í‚Ü‚Æ‚ß‚ç‚ê‚È‚©‚Á‚½ */
+	/* å‰ã¨ã¯ã¾ã¨ã‚ã‚‰ã‚Œãªã‹ã£ãŸ */
 	if (i < man->frees) {
-		/* Œã‚ë‚ª‚ ‚é */
+		/* å¾Œã‚ãŒã‚ã‚‹ */
 		if (addr + size == man->free[i].addr) {
-			/* Œã‚ë‚Æ‚Í‚Ü‚Æ‚ß‚ç‚ê‚é */
+			/* å¾Œã‚ã¨ã¯ã¾ã¨ã‚ã‚‰ã‚Œã‚‹ */
 			man->free[i].addr = addr;
 			man->free[i].size += size;
-			return 0; /* ¬Œ÷I—¹ */
+			return 0; /* æˆåŠŸçµ‚äº† */
 		}
 	}
-	/* ‘O‚É‚àŒã‚ë‚É‚à‚Ü‚Æ‚ß‚ç‚ê‚È‚¢ */
+	/* å‰ã«ã‚‚å¾Œã‚ã«ã‚‚ã¾ã¨ã‚ã‚‰ã‚Œãªã„ */
 	if (man->frees < MEMMAN_FREES) {
-		/* free[i]‚æ‚èŒã‚ë‚ğAŒã‚ë‚Ö‚¸‚ç‚µ‚ÄA‚·‚«‚Ü‚ğì‚é */
+		/* free[i]ã‚ˆã‚Šå¾Œã‚ã‚’ã€å¾Œã‚ã¸ãšã‚‰ã—ã¦ã€ã™ãã¾ã‚’ä½œã‚‹ */
 		for (j = man->frees; j > i; j--) {
 			man->free[j] = man->free[j - 1];
 		}
 		man->frees++;
 		if (man->maxfrees < man->frees) {
-			man->maxfrees = man->frees; /* Å‘å’l‚ğXV */
+			man->maxfrees = man->frees; /* æœ€å¤§å€¤ã‚’æ›´æ–° */
 		}
 		man->free[i].addr = addr;
 		man->free[i].size = size;
-		return 0; /* ¬Œ÷I—¹ */
+		return 0; /* æˆåŠŸçµ‚äº† */
 	}
-	/* Œã‚ë‚É‚¸‚ç‚¹‚È‚©‚Á‚½ */
+	/* å¾Œã‚ã«ãšã‚‰ã›ãªã‹ã£ãŸ */
 	man->losts++;
 	man->lostsize += size;
-	return -1; /* ¸”sI—¹ */
+	return -1; /* å¤±æ•—çµ‚äº† */
 }

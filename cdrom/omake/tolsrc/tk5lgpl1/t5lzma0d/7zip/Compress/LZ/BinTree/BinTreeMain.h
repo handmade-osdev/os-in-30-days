@@ -63,7 +63,7 @@ void CInTree::FreeMemory()
   CLZInWindow::Free();
 }
 
-CInTree::~CInTree()
+CInTree::‾CInTree()
 { 
   FreeMemory();
 }

@@ -6636,7 +6636,7 @@ simplify_giv_expr (loop, x, ext_val, benefit)
 				ext_val, benefit);
 
     case NOT:
-      /* "~a" is "-a - 1". Silly, but easy.  */
+      /* "‾a" is "-a - 1". Silly, but easy.  */
       return simplify_giv_expr (loop,
 				gen_rtx_MINUS (mode,
 					       gen_rtx_NEG (mode, XEXP (x, 0)),

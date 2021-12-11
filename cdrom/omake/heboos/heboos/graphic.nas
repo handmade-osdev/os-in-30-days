@@ -1,10 +1,10 @@
-; �ւ�OS�p�A�v�� "GRAPHIC.NAS"
+; へぼOS用アプリ "GRAPHIC.NAS"
 ; TAB = 4
-; copyright(C) 2003 �썇�G��, KL-01
+; copyright(C) 2003 川合秀実, KL-01
 
 ;	prompt>nask graphic.nas graphic.hoa graphic.lst
-; �ŃA�Z���u���ł��܂��Bnask��tolset05�ȍ~�Ɋ܂܂�Ă��܂��B
-; tolset05�� http://www.imasy.orr/~kawai/osask/developers.html �ɂ���܂��B
+; でアセンブルできます。naskはtolset05以降に含まれています。
+; tolset05は http://www.imasy.orr/‾kawai/osask/developers.html にあります。
 
 [FORMAT "BIN"]
 [INSTRSET "i386"]
@@ -13,8 +13,8 @@
 [BITS 16]
 			ORG		0x0100
 
-;	�p���b�g�̐ݒ�
-;	0-15�̓V�X�e���p���b�g�ŁA16�ȍ~�͎��R�Ɏg����A���Ă��Ƃɂ���(��)
+;	パレットの設定
+;	0-15はシステムパレットで、16以降は自由に使える、ってことにした(笑)
 
 			MOV		BX,64
 PALLOP:
@@ -30,14 +30,14 @@ PALLOP:
 			CMP		BX,0x7f
 			JBE		PALLOP
 
-;	VRAM�ւ̏�������
+;	VRAMへの書き込み
 
 			PUSH	DS
 			MOV		AX,0xa000
 			MOV		DS,AX
 			XOR		BX,BX
 
-;	�܂�8���C�����N���A
+;	まず8ラインをクリア
 
 			MOV		AX,0x4040
 CLR8LOP:
@@ -46,7 +46,7 @@ CLR8LOP:
 			CMP		BX,320*8
 			JB		CLR8LOP
 
-;	�O���f�[�V��������
+;	グラデーション生成
 
 GRALOP0:
 			MOV		CX,320*3/2
@@ -61,12 +61,12 @@ GRALOP1:
 
 			POP		DS
 
-;	�����L�[�������Ă��炤
+;	何かキーを押してもらう
 
 			MOV		AH,0x00
 			INT		0x16
 
-;	��ʂ��N���A����OS�ɖ߂�
+;	画面をクリアしてOSに戻る
 
 			MOV		AX,2
 			INT		0x80

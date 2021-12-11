@@ -27,7 +27,7 @@ struct STR_SYSWORK {
 	unsigned int mscount[8];
 };
 
-#define ENT_SYSWORK		0x0000 /* ‚±‚ê‚Í•K‚¸ 0x0000 */
+#define ENT_SYSWORK		0x0000 /* ã“ã‚Œã¯å¿…ãš 0x0000 */
 #define	ENT_INIT		0x0010
 #define	ENT_VGADRV0		0x0020
 #define	ENT_KEYMOS0		0x0030
@@ -43,8 +43,8 @@ struct STR_SYSWORK {
 #define	ENT_PAPI0		0x00d0
 #define	ENT_VESA16		0x00e0
 #define	ENT_VESA32		0x00f0
-#define	ENT_BOOT32		0x0100	/* ‚±‚ê‚Í”ñˆ³k (‚±‚ê‚Í’Êí“]‘—‚³‚ê‚È‚¢) */
-#define	ENT_FDIMAGE		0x0110	/* “Á•Ê“]‘— (‚±‚ê‚Í’Êí“]‘—‚³‚ê‚È‚¢) */
+#define	ENT_BOOT32		0x0100	/* ã“ã‚Œã¯éåœ§ç¸® (ã“ã‚Œã¯é€šå¸¸è»¢é€ã•ã‚Œãªã„) */
+#define	ENT_FDIMAGE		0x0110	/* ç‰¹åˆ¥è»¢é€ (ã“ã‚Œã¯é€šå¸¸è»¢é€ã•ã‚Œãªã„) */
 
 #define ENT_PDEPTE		0x0000
 #define	ENT_IDTGDT		0x0010
@@ -58,7 +58,7 @@ struct STR_SYSWORK {
 #define	ENT_FDCWORK		0x0090
 #define	ENT_PAPIWORK	0x00a0
 
-/* ASKA‚ÌƒoƒO‰ñ”ğ‚Ì‚½‚ß‚â‚Ş‚È‚­g‚¤(boot32.ask) */
+/* ASKAã®ãƒã‚°å›é¿ã®ãŸã‚ã‚„ã‚€ãªãä½¿ã†(boot32.ask) */
 #define	SYSWORK_MLIST	0x0020
 #define	SYSWORK_ALIST	0x0140
 

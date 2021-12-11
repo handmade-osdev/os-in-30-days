@@ -1,18 +1,18 @@
 /*
-	ƒg[ƒNƒ“‚Ì’è‹`@`tokendef.h`						Ver.[2000/02/16]
+	ãƒˆãƒ¼ã‚¯ãƒ³ã®å®šç¾©ã€€ã€œtokendef.hã€œ						Ver.[2000/02/16]
 */
 #ifndef	__TOKENDEF_H
 #define	__TOKENDEF_H
 
 enum Token{
 	TK_EOF,		// EOF
-	TK_ERROR,	// Žš‹å‰ðÍ’†‚ÉƒGƒ‰[
+	TK_ERROR,	// å­—å¥è§£æžä¸­ã«ã‚¨ãƒ©ãƒ¼
 	TK_INCLUDE,	// include
 	TK_DEFINE,	// define
 	
-	TK_LABEL,	// •Ï”–¼AŠÖ”–¼AƒAƒhƒŒƒXƒ‰ƒxƒ‹
-	TK_NUM,		// ”’l
-	TK_NOTHING,	// ‚»‚êˆÈŠO‚Ìƒf[ƒ^i–{“–‚ÍToken‚É¬‚º‚é‚Ì‚Í—Ç‚­‚È‚¢j
+	TK_LABEL,	// å¤‰æ•°åã€é–¢æ•°åã€ã‚¢ãƒ‰ãƒ¬ã‚¹ãƒ©ãƒ™ãƒ«
+	TK_NUM,		// æ•°å€¤
+	TK_NOTHING,	// ãã‚Œä»¥å¤–ã®ãƒ‡ãƒ¼ã‚¿ï¼ˆæœ¬å½“ã¯Tokenã«æ··ãœã‚‹ã®ã¯è‰¯ããªã„ï¼‰
 
 	TK_DLM,		// ;
 	TK_COLON,	// :
@@ -25,7 +25,7 @@ enum Token{
 	TK_AND,		// &
 	TK_OR,		// |
 	TK_XOR,		// ^
-	TK_CPL,		// ~
+	TK_CPL,		// â€¾
 	TK_NOT,		// !
 	TK_DOT,		// .
 	TK_COMMA,	// ,
@@ -42,7 +42,7 @@ enum Token{
 	TK_QUOTE,	// '...'
 	TK_WQUOTE,	// "..."
 
-	TK_CMP,		// Op2()‚Ìcommand—pB–{“–‚Í‚±‚±‚É‘‚­‚Ì‚Í—Ç‚­‚È‚¢
+	TK_CMP,		// Op2()ã®commandç”¨ã€‚æœ¬å½“ã¯ã“ã“ã«æ›¸ãã®ã¯è‰¯ããªã„
 	TK_BE,		// <
 	TK_LE,		// <=
 	TK_AB,		// >
@@ -61,7 +61,7 @@ enum Token{
 	TK_SHRA,	// >>=
 	TK_SHLA,	// <<=
 	TK_NEG,		// =-
-	TK_CPLA,	// =~
+	TK_CPLA,	// =â€¾
 
 	TK_INC,		// ++
 	TK_DEC,		// --
@@ -73,7 +73,7 @@ enum Token{
 
 	TK_IF,		// if
 	TK_ELSE,	// else
-	TK_LOOP,	// loop		// loop{}‚Æbreak
+	TK_LOOP,	// loop		// loop{}ã¨break
 	TK_BREAK,	// break
 	TK_ALT,		// alt		// alt { case a : st , case b: st , default:xxx }
 	TK_CASE,	// case
@@ -112,10 +112,10 @@ enum Token{
 	TK_SIZEOF,	// sizeof
 //	TK_CODE,	// default(code == CODE);
 
-	TK_PARA, TK_PAGE, TK_PAGE4K,		// ƒAƒ‰ƒCƒ“‘®«BBYTE,WORD,DWORD‚à‚ ‚é
-	TK_PRIVATE, TK_PUBLIC, TK_STACK, TK_COMMON,	// ƒRƒ“ƒoƒCƒ“‘®«
-	TK_USE16, TK_USE32,							// USE‘®«
-	TK_RO, TK_EO, TK_ER, TK_RW,					// ƒAƒNƒZƒX‘®«
+	TK_PARA, TK_PAGE, TK_PAGE4K,		// ã‚¢ãƒ©ã‚¤ãƒ³å±žæ€§ã€‚BYTE,WORD,DWORDã‚‚ã‚ã‚‹
+	TK_PRIVATE, TK_PUBLIC, TK_STACK, TK_COMMON,	// ã‚³ãƒ³ãƒã‚¤ãƒ³å±žæ€§
+	TK_USE16, TK_USE32,							// USEå±žæ€§
+	TK_RO, TK_EO, TK_ER, TK_RW,					// ã‚¢ã‚¯ã‚»ã‚¹å±žæ€§
 };
 
 #endif

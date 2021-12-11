@@ -1,15 +1,15 @@
-tk5lgpl �̐���
+tk5lgpl の説明
 
-  t5lzma��LZMA_Alone�̔h�����ŁA�����bim2bin4n�ȍ~�Ɋ܂܂��LZMA�p�b�`����荞
-�񂾉���LZMA�ł��i�p�b�`���̂��̂�KL-01�ł��j�B
+  t5lzmaはLZMA_Aloneの派生物で、これはbim2bin4n以降に含まれるLZMAパッチを取り込
+んだ改造LZMAです（パッチそのものはKL-01です）。
 
-  t5lzma0d��SDK�Ɋ܂܂�Ă���LZMA_C�iC����œW�J���[�`���j�̔h�����ŁA�����
-bim2bin4n�ȍ~�Ɋ܂܂��LZMA�p�b�`����荞�񂾉���LZMA�ł��i�p�b�`���̂��̂�
-KL-01�ł��j�B
+  t5lzma0dはSDKに含まれていたLZMA_C（C言語版展開ルーチン）の派生物で、これも
+bim2bin4n以降に含まれるLZMAパッチを取り込んだ改造LZMAです（パッチそのものは
+KL-01です）。
 
-  t5lzma0d�ł́Abim2bin��eopt���w�肵�Ȃ��ł�����Ȃ�Ɉ��k���|����悤�ɁA�f�t
-�H���g�̃I�v�V�������C�����܂����B
+  t5lzma0dでは、bim2binでeoptを指定しないでもそれなりに圧縮が掛かるように、デフ
+ォルトのオプションを修正しました。
 
-  ���̃p�b�P�[�W��LGPL��K�p���Ă��������B
+  このパッケージはLGPLを適用してください。
 
-       2004.10.09  �썇�G��    http://osask.jp/
+       2004.10.09  川合秀実    http://osask.jp/

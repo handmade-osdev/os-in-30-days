@@ -1,4 +1,4 @@
-// ƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–
 
 #include <sysgg00.h>
 

@@ -200,7 +200,7 @@ extern REAL_VALUE_TYPE ereal_from_double PARAMS ((HOST_WIDE_INT *));
 
 #define REAL_VALUE_TO_INT ereal_to_int
 
-/* Here the cast to HOST_WIDE_INT sign-extends arguments such as ~0.  */
+/* Here the cast to HOST_WIDE_INT sign-extends arguments such as ‾0.  */
 #define REAL_VALUE_FROM_INT(d, lo, hi, mode) \
   ereal_from_int (&d, (HOST_WIDE_INT) (lo), (HOST_WIDE_INT) (hi), mode)
 

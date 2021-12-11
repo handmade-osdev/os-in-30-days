@@ -3,7 +3,7 @@
 
 	usage : >sjisconv [-e] [-s] input-file output-file
 
-	-s:ShiftJISÉÇÅ[Éh
+	-s:ShiftJIS„É¢„Éº„Éâ
 */
 
 #include <stdio.h>

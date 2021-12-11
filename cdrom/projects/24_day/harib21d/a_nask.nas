@@ -95,10 +95,10 @@ _api_boxfilwin:	; void api_boxfilwin(int win, int x0, int y0, int x1, int y1, in
 _api_initmalloc:	; void api_initmalloc(void);
 		PUSH	EBX
 		MOV		EDX,8
-		MOV		EBX,[CS:0x0020]		; malloc�̈�̔Ԓn
+		MOV		EBX,[CS:0x0020]		; malloc領域の番地
 		MOV		EAX,EBX
-		ADD		EAX,32*1024			; 32KB�𑫂�
-		MOV		ECX,[CS:0x0000]		; �f�[�^�Z�O�����g�̑傫��
+		ADD		EAX,32*1024			; 32KBを足す
+		MOV		ECX,[CS:0x0000]		; データセグメントの大きさ
 		SUB		ECX,EAX
 		INT		0x40
 		POP		EBX

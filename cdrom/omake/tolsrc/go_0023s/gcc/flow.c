@@ -432,7 +432,7 @@ life_analysis (f, file, flags)
 #endif
 
   if (! optimize)
-    flags &= ~(PROP_LOG_LINKS | PROP_AUTOINC | PROP_ALLOW_CFG_CHANGES);
+    flags &= ‾(PROP_LOG_LINKS | PROP_AUTOINC | PROP_ALLOW_CFG_CHANGES);
 
   /* The post-reload life analysis have (on a global basis) the same
      registers live as was computed by reload itself.  elimination
@@ -445,7 +445,7 @@ life_analysis (f, file, flags)
      are unlikely to be useful and can cause problems with shared
      stack slots.  */
   if (reload_completed)
-    flags &= ~(PROP_REG_INFO | PROP_AUTOINC);
+    flags &= ‾(PROP_REG_INFO | PROP_AUTOINC);
 
   /* We want alias analysis information for local dead store elimination.  */
   if (optimize && (flags & PROP_SCAN_DEAD_CODE))
@@ -687,7 +687,7 @@ update_life_info (blocks, extent, prop_flags)
 	     removing dead code can affect global register liveness, which
 	     is supposed to be finalized for this call after this loop.  */
 	  stabilized_prop_flags
-	    &= ~(PROP_SCAN_DEAD_CODE | PROP_KILL_DEAD_CODE);
+	    &= ‾(PROP_SCAN_DEAD_CODE | PROP_KILL_DEAD_CODE);
 
 	  if (! changed)
 	    break;
@@ -1258,7 +1258,7 @@ calculate_global_regs_live (blocks_in, blocks_out, flags)
 
 	      /* If any of the changed bits overlap with local_set,
 		 we'll have to rescan the block.  Detect overlap by
-		 the AND with ~local_set turning off bits.  */
+		 the AND with ‾local_set turning off bits.  */
 	      rescan = bitmap_operation (tmp, tmp, bb->local_set,
 					 BITMAP_AND_COMPL);
 	    }
@@ -1725,7 +1725,7 @@ propagate_one_insn (pbi, insn)
 		/* We do not want REG_UNUSED notes for these registers.  */
 		mark_set_1 (pbi, CLOBBER, gen_rtx_REG (reg_raw_mode[i], i),
 			    cond, insn,
-			    pbi->flags & ~(PROP_DEATH_NOTES | PROP_REG_INFO));
+			    pbi->flags & ‾(PROP_DEATH_NOTES | PROP_REG_INFO));
 	      }
 	}
 
@@ -3002,12 +3002,12 @@ ior_reg_cond (old, x, add)
 	  if (op0 == NULL)
 	    op0 = gen_rtx_IOR (0, XEXP (old, 0), x);
 	  else if (rtx_equal_p (x, op0))
-	    /* (x | A) | x ~ (x | A).  */
+	    /* (x | A) | x ‾ (x | A).  */
 	    return old;
 	  if (op1 == NULL)
 	    op1 = gen_rtx_IOR (0, XEXP (old, 1), x);
 	  else if (rtx_equal_p (x, op1))
-	    /* (A | x) | x ~ (A | x).  */
+	    /* (A | x) | x ‾ (A | x).  */
 	    return old;
 	  return gen_rtx_IOR (0, op0, op1);
 	}
@@ -3029,12 +3029,12 @@ ior_reg_cond (old, x, add)
 	  if (op0 == NULL)
 	    op0 = gen_rtx_IOR (0, XEXP (old, 0), x);
 	  else if (rtx_equal_p (x, op0))
-	    /* (x & A) | x ~ x.  */
+	    /* (x & A) | x ‾ x.  */
 	    return op0;
 	  if (op1 == NULL)
 	    op1 = gen_rtx_IOR (0, XEXP (old, 1), x);
 	  else if (rtx_equal_p (x, op1))
-	    /* (A & x) | x ~ x.  */
+	    /* (A & x) | x ‾ x.  */
 	    return op1;
 	  return gen_rtx_AND (0, op0, op1);
 	}
@@ -3117,12 +3117,12 @@ and_reg_cond (old, x, add)
 	  if (op0 == NULL)
 	    op0 = gen_rtx_AND (0, XEXP (old, 0), x);
 	  else if (rtx_equal_p (x, op0))
-	    /* (x | A) & x ~ x.  */
+	    /* (x | A) & x ‾ x.  */
 	    return op0;
 	  if (op1 == NULL)
 	    op1 = gen_rtx_AND (0, XEXP (old, 1), x);
 	  else if (rtx_equal_p (x, op1))
-	    /* (A | x) & x ~ x.  */
+	    /* (A | x) & x ‾ x.  */
 	    return op1;
 	  return gen_rtx_IOR (0, op0, op1);
 	}
@@ -3144,12 +3144,12 @@ and_reg_cond (old, x, add)
 	  if (op0 == NULL)
 	    op0 = gen_rtx_AND (0, XEXP (old, 0), x);
 	  else if (rtx_equal_p (x, op0))
-	    /* (x & A) & x ~ (x & A).  */
+	    /* (x & A) & x ‾ (x & A).  */
 	    return old;
 	  if (op1 == NULL)
 	    op1 = gen_rtx_AND (0, XEXP (old, 1), x);
 	  else if (rtx_equal_p (x, op1))
-	    /* (A & x) & x ~ (A & x).  */
+	    /* (A & x) & x ‾ (A & x).  */
 	    return old;
 	  return gen_rtx_AND (0, op0, op1);
 	}

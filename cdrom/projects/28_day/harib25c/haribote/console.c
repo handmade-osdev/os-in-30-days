@@ -1,4 +1,4 @@
-/* ƒRƒ“ƒ\[ƒ‹ŠÖŒW */
+/* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«é–¢ä¿‚ */
 
 #include "bootpack.h"
 #include <stdio.h>
@@ -26,12 +26,12 @@ void console_task(struct SHEET *sheet, int memtotal)
 	}
 	file_readfat(fat, (unsigned char *) (ADR_DISKIMG + 0x000200));
 	for (i = 0; i < 8; i++) {
-		fhandle[i].buf = 0;	/* –¢g—pƒ}[ƒN */
+		fhandle[i].buf = 0;	/* æœªä½¿ç”¨ãƒãƒ¼ã‚¯ */
 	}
 	task->fhandle = fhandle;
 	task->fat = fat;
 
-	/* ƒvƒƒ“ƒvƒg•\¦ */
+	/* ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆè¡¨ç¤º */
 	cons_putchar(&cons, '>', 1);
 
 	for (;;) {
@@ -42,63 +42,63 @@ void console_task(struct SHEET *sheet, int memtotal)
 		} else {
 			i = fifo32_get(&task->fifo);
 			io_sti();
-			if (i <= 1 && cons.sht != 0) { /* ƒJ[ƒ\ƒ‹—pƒ^ƒCƒ} */
+			if (i <= 1 && cons.sht != 0) { /* ã‚«ãƒ¼ã‚½ãƒ«ç”¨ã‚¿ã‚¤ãƒ */
 				if (i != 0) {
-					timer_init(cons.timer, &task->fifo, 0); /* Ÿ‚Í0‚ğ */
+					timer_init(cons.timer, &task->fifo, 0); /* æ¬¡ã¯0ã‚’ */
 					if (cons.cur_c >= 0) {
 						cons.cur_c = COL8_FFFFFF;
 					}
 				} else {
-					timer_init(cons.timer, &task->fifo, 1); /* Ÿ‚Í1‚ğ */
+					timer_init(cons.timer, &task->fifo, 1); /* æ¬¡ã¯1ã‚’ */
 					if (cons.cur_c >= 0) {
 						cons.cur_c = COL8_000000;
 					}
 				}
 				timer_settime(cons.timer, 50);
 			}
-			if (i == 2) {	/* ƒJ[ƒ\ƒ‹ON */
+			if (i == 2) {	/* ã‚«ãƒ¼ã‚½ãƒ«ON */
 				cons.cur_c = COL8_FFFFFF;
 			}
-			if (i == 3) {	/* ƒJ[ƒ\ƒ‹OFF */
+			if (i == 3) {	/* ã‚«ãƒ¼ã‚½ãƒ«OFF */
 				if (cons.sht != 0) {
 					boxfill8(cons.sht->buf, cons.sht->bxsize, COL8_000000,
 						cons.cur_x, cons.cur_y, cons.cur_x + 7, cons.cur_y + 15);
 				}
 				cons.cur_c = -1;
 			}
-			if (i == 4) {	/* ƒRƒ“ƒ\[ƒ‹‚Ìu~vƒ{ƒ^ƒ“ƒNƒŠƒbƒN */
+			if (i == 4) {	/* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ã€ŒÃ—ã€ãƒœã‚¿ãƒ³ã‚¯ãƒªãƒƒã‚¯ */
 				cmd_exit(&cons, fat);
 			}
-			if (256 <= i && i <= 511) { /* ƒL[ƒ{[ƒhƒf[ƒ^iƒ^ƒXƒNAŒo—Rj */
+			if (256 <= i && i <= 511) { /* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ï¼ˆã‚¿ã‚¹ã‚¯AçµŒç”±ï¼‰ */
 				if (i == 8 + 256) {
-					/* ƒoƒbƒNƒXƒy[ƒX */
+					/* ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹ */
 					if (cons.cur_x > 16) {
-						/* ƒJ[ƒ\ƒ‹‚ğƒXƒy[ƒX‚ÅÁ‚µ‚Ä‚©‚çAƒJ[ƒ\ƒ‹‚ğ1‚Â–ß‚· */
+						/* ã‚«ãƒ¼ã‚½ãƒ«ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã§æ¶ˆã—ã¦ã‹ã‚‰ã€ã‚«ãƒ¼ã‚½ãƒ«ã‚’1ã¤æˆ»ã™ */
 						cons_putchar(&cons, ' ', 0);
 						cons.cur_x -= 8;
 					}
 				} else if (i == 10 + 256) {
 					/* Enter */
-					/* ƒJ[ƒ\ƒ‹‚ğƒXƒy[ƒX‚ÅÁ‚µ‚Ä‚©‚ç‰üs‚·‚é */
+					/* ã‚«ãƒ¼ã‚½ãƒ«ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã§æ¶ˆã—ã¦ã‹ã‚‰æ”¹è¡Œã™ã‚‹ */
 					cons_putchar(&cons, ' ', 0);
 					cmdline[cons.cur_x / 8 - 2] = 0;
 					cons_newline(&cons);
-					cons_runcmd(cmdline, &cons, fat, memtotal);	/* ƒRƒ}ƒ“ƒhÀs */
+					cons_runcmd(cmdline, &cons, fat, memtotal);	/* ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œ */
 					if (cons.sht == 0) {
 						cmd_exit(&cons, fat);
 					}
-					/* ƒvƒƒ“ƒvƒg•\¦ */
+					/* ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆè¡¨ç¤º */
 					cons_putchar(&cons, '>', 1);
 				} else {
-					/* ˆê”Ê•¶š */
+					/* ä¸€èˆ¬æ–‡å­— */
 					if (cons.cur_x < 240) {
-						/* ˆê•¶š•\¦‚µ‚Ä‚©‚çAƒJ[ƒ\ƒ‹‚ğ1‚Âi‚ß‚é */
+						/* ä¸€æ–‡å­—è¡¨ç¤ºã—ã¦ã‹ã‚‰ã€ã‚«ãƒ¼ã‚½ãƒ«ã‚’1ã¤é€²ã‚ã‚‹ */
 						cmdline[cons.cur_x / 8 - 2] = i - 256;
 						cons_putchar(&cons, i - 256, 1);
 					}
 				}
 			}
-			/* ƒJ[ƒ\ƒ‹Ä•\¦ */
+			/* ã‚«ãƒ¼ã‚½ãƒ«å†è¡¨ç¤º */
 			if (cons.sht != 0) {
 				if (cons.cur_c >= 0) {
 					boxfill8(cons.sht->buf, cons.sht->bxsize, cons.cur_c, 
@@ -115,7 +115,7 @@ void cons_putchar(struct CONSOLE *cons, int chr, char move)
 	char s[2];
 	s[0] = chr;
 	s[1] = 0;
-	if (s[0] == 0x09) {	/* ƒ^ƒu */
+	if (s[0] == 0x09) {	/* ã‚¿ãƒ– */
 		for (;;) {
 			if (cons->sht != 0) {
 				putfonts8_asc_sht(cons->sht, cons->cur_x, cons->cur_y, COL8_FFFFFF, COL8_000000, " ", 1);
@@ -125,19 +125,19 @@ void cons_putchar(struct CONSOLE *cons, int chr, char move)
 				cons_newline(cons);
 			}
 			if (((cons->cur_x - 8) & 0x1f) == 0) {
-				break;	/* 32‚ÅŠ„‚èØ‚ê‚½‚çbreak */
+				break;	/* 32ã§å‰²ã‚Šåˆ‡ã‚ŒãŸã‚‰break */
 			}
 		}
-	} else if (s[0] == 0x0a) {	/* ‰üs */
+	} else if (s[0] == 0x0a) {	/* æ”¹è¡Œ */
 		cons_newline(cons);
-	} else if (s[0] == 0x0d) {	/* •œ‹A */
-		/* ‚Æ‚è‚ ‚¦‚¸‚È‚É‚à‚µ‚È‚¢ */
-	} else {	/* •’Ê‚Ì•¶š */
+	} else if (s[0] == 0x0d) {	/* å¾©å¸° */
+		/* ã¨ã‚Šã‚ãˆãšãªã«ã‚‚ã—ãªã„ */
+	} else {	/* æ™®é€šã®æ–‡å­— */
 		if (cons->sht != 0) {
 			putfonts8_asc_sht(cons->sht, cons->cur_x, cons->cur_y, COL8_FFFFFF, COL8_000000, s, 1);
 		}
 		if (move != 0) {
-			/* move‚ª0‚Ì‚Æ‚«‚ÍƒJ[ƒ\ƒ‹‚ği‚ß‚È‚¢ */
+			/* moveãŒ0ã®ã¨ãã¯ã‚«ãƒ¼ã‚½ãƒ«ã‚’é€²ã‚ãªã„ */
 			cons->cur_x += 8;
 			if (cons->cur_x == 8 + 240) {
 				cons_newline(cons);
@@ -152,9 +152,9 @@ void cons_newline(struct CONSOLE *cons)
 	int x, y;
 	struct SHEET *sheet = cons->sht;
 	if (cons->cur_y < 28 + 112) {
-		cons->cur_y += 16; /* Ÿ‚Ìs‚Ö */
+		cons->cur_y += 16; /* æ¬¡ã®è¡Œã¸ */
 	} else {
-		/* ƒXƒNƒ[ƒ‹ */
+		/* ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ« */
 		if (sheet != 0) {
 			for (y = 28; y < 28 + 112; y++) {
 				for (x = 8; x < 8 + 240; x++) {
@@ -208,7 +208,7 @@ void cons_runcmd(char *cmdline, struct CONSOLE *cons, int *fat, int memtotal)
 		cmd_ncst(cons, cmdline, memtotal);
 	} else if (cmdline[0] != 0) {
 		if (cmd_app(cons, fat, cmdline) == 0) {
-			/* ƒRƒ}ƒ“ƒh‚Å‚Í‚È‚­AƒAƒvƒŠ‚Å‚à‚È‚­A‚³‚ç‚É‹ós‚Å‚à‚È‚¢ */
+			/* ã‚³ãƒãƒ³ãƒ‰ã§ã¯ãªãã€ã‚¢ãƒ—ãƒªã§ã‚‚ãªãã€ã•ã‚‰ã«ç©ºè¡Œã§ã‚‚ãªã„ */
 			cons_putstr0(cons, "Bad command.\n\n");
 		}
 	}
@@ -270,13 +270,13 @@ void cmd_type(struct CONSOLE *cons, int *fat, char *cmdline)
 	struct FILEINFO *finfo = file_search(cmdline + 5, (struct FILEINFO *) (ADR_DISKIMG + 0x002600), 224);
 	char *p;
 	if (finfo != 0) {
-		/* ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚Á‚½ê‡ */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã£ãŸå ´åˆ */
 		p = (char *) memman_alloc_4k(memman, finfo->size);
 		file_loadfile(finfo->clustno, finfo->size, p, fat, (char *) (ADR_DISKIMG + 0x003e00));
 		cons_putstr1(cons, p, finfo->size);
 		memman_free_4k(memman, (int) p, finfo->size);
 	} else {
-		/* ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡ */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆ */
 		cons_putstr0(cons, "File not found.\n");
 	}
 	cons_newline(cons);
@@ -295,9 +295,9 @@ void cmd_exit(struct CONSOLE *cons, int *fat)
 	memman_free_4k(memman, (int) fat, 4 * 2880);
 	io_cli();
 	if (cons->sht != 0) {
-		fifo32_put(fifo, cons->sht - shtctl->sheets0 + 768);	/* 768`1023 */
+		fifo32_put(fifo, cons->sht - shtctl->sheets0 + 768);	/* 768ã€œ1023 */
 	} else {
-		fifo32_put(fifo, task - taskctl->tasks0 + 1024);	/* 1024`2023 */
+		fifo32_put(fifo, task - taskctl->tasks0 + 1024);	/* 1024ã€œ2023 */
 	}
 	io_sti();
 	for (;;) {
@@ -313,7 +313,7 @@ void cmd_start(struct CONSOLE *cons, char *cmdline, int memtotal)
 	int i;
 	sheet_slide(sht, 32, 4);
 	sheet_updown(sht, shtctl->top);
-	/* ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚É“ü—Í‚³‚ê‚½•¶š—ñ‚ğAˆê•¶š‚¸‚ÂV‚µ‚¢ƒRƒ“ƒ\[ƒ‹‚É“ü—Í */
+	/* ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã«å…¥åŠ›ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’ã€ä¸€æ–‡å­—ãšã¤æ–°ã—ã„ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«å…¥åŠ› */
 	for (i = 6; cmdline[i] != 0; i++) {
 		fifo32_put(fifo, cmdline[i] + 256);
 	}
@@ -327,7 +327,7 @@ void cmd_ncst(struct CONSOLE *cons, char *cmdline, int memtotal)
 	struct TASK *task = open_constask(0, memtotal);
 	struct FIFO32 *fifo = &task->fifo;
 	int i;
-	/* ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚É“ü—Í‚³‚ê‚½•¶š—ñ‚ğAˆê•¶š‚¸‚ÂV‚µ‚¢ƒRƒ“ƒ\[ƒ‹‚É“ü—Í */
+	/* ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã«å…¥åŠ›ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’ã€ä¸€æ–‡å­—ãšã¤æ–°ã—ã„ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«å…¥åŠ› */
 	for (i = 5; cmdline[i] != 0; i++) {
 		fifo32_put(fifo, cmdline[i] + 256);
 	}
@@ -346,19 +346,19 @@ int cmd_app(struct CONSOLE *cons, int *fat, char *cmdline)
 	struct SHTCTL *shtctl;
 	struct SHEET *sht;
 
-	/* ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚çƒtƒ@ƒCƒ‹–¼‚ğ¶¬ */
+	/* ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç”Ÿæˆ */
 	for (i = 0; i < 13; i++) {
 		if (cmdline[i] <= ' ') {
 			break;
 		}
 		name[i] = cmdline[i];
 	}
-	name[i] = 0; /* ‚Æ‚è‚ ‚¦‚¸ƒtƒ@ƒCƒ‹–¼‚ÌŒã‚ë‚ğ0‚É‚·‚é */
+	name[i] = 0; /* ã¨ã‚Šã‚ãˆãšãƒ•ã‚¡ã‚¤ãƒ«åã®å¾Œã‚ã‚’0ã«ã™ã‚‹ */
 
-	/* ƒtƒ@ƒCƒ‹‚ğ’T‚· */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¢ã™ */
 	finfo = file_search(name, (struct FILEINFO *) (ADR_DISKIMG + 0x002600), 224);
 	if (finfo == 0 && name[i - 1] != '.') {
-		/* Œ©‚Â‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅŒã‚ë‚É".HRB"‚ğ‚Â‚¯‚Ä‚à‚¤ˆê“x’T‚µ‚Ä‚İ‚é */
+		/* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã®ã§å¾Œã‚ã«".HRB"ã‚’ã¤ã‘ã¦ã‚‚ã†ä¸€åº¦æ¢ã—ã¦ã¿ã‚‹ */
 		name[i    ] = '.';
 		name[i + 1] = 'H';
 		name[i + 2] = 'R';
@@ -368,7 +368,7 @@ int cmd_app(struct CONSOLE *cons, int *fat, char *cmdline)
 	}
 
 	if (finfo != 0) {
-		/* ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚Á‚½ê‡ */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã£ãŸå ´åˆ */
 		p = (char *) memman_alloc_4k(memman, finfo->size);
 		file_loadfile(finfo->clustno, finfo->size, p, fat, (char *) (ADR_DISKIMG + 0x003e00));
 		if (finfo->size >= 36 && strncmp(p + 4, "Hari", 4) == 0 && *p == 0x00) {
@@ -388,11 +388,11 @@ int cmd_app(struct CONSOLE *cons, int *fat, char *cmdline)
 			for (i = 0; i < MAX_SHEETS; i++) {
 				sht = &(shtctl->sheets0[i]);
 				if ((sht->flags & 0x11) == 0x11 && sht->task == task) {
-					/* ƒAƒvƒŠ‚ªŠJ‚«‚Á‚Ï‚È‚µ‚É‚µ‚½‰º‚¶‚«‚ğ”­Œ© */
-					sheet_free(sht);	/* •Â‚¶‚é */
+					/* ã‚¢ãƒ—ãƒªãŒé–‹ãã£ã±ãªã—ã«ã—ãŸä¸‹ã˜ãã‚’ç™ºè¦‹ */
+					sheet_free(sht);	/* é–‰ã˜ã‚‹ */
 				}
 			}
-			for (i = 0; i < 8; i++) {	/* ƒNƒ[ƒY‚µ‚Ä‚È‚¢ƒtƒ@ƒCƒ‹‚ğƒNƒ[ƒY */
+			for (i = 0; i < 8; i++) {	/* ã‚¯ãƒ­ãƒ¼ã‚ºã—ã¦ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¯ãƒ­ãƒ¼ã‚º */
 				if (task->fhandle[i].buf != 0) {
 					memman_free_4k(memman, (int) task->fhandle[i].buf, task->fhandle[i].size);
 					task->fhandle[i].buf = 0;
@@ -407,7 +407,7 @@ int cmd_app(struct CONSOLE *cons, int *fat, char *cmdline)
 		cons_newline(cons);
 		return 1;
 	}
-	/* ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆ */
 	return 0;
 }
 
@@ -419,8 +419,8 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 	struct SHTCTL *shtctl = (struct SHTCTL *) *((int *) 0x0fe4);
 	struct SHEET *sht;
 	struct FIFO32 *sys_fifo = (struct FIFO32 *) *((int *) 0x0fec);
-	int *reg = &eax + 1;	/* eax‚ÌŸ‚Ì”Ô’n */
-		/* •Û‘¶‚Ì‚½‚ß‚ÌPUSHAD‚ğ‹­ˆø‚É‘‚«Š·‚¦‚é */
+	int *reg = &eax + 1;	/* eaxã®æ¬¡ã®ç•ªåœ° */
+		/* ä¿å­˜ã®ãŸã‚ã®PUSHADã‚’å¼·å¼•ã«æ›¸ãæ›ãˆã‚‹ */
 		/* reg[0] : EDI,   reg[1] : ESI,   reg[2] : EBP,   reg[3] : ESP */
 		/* reg[4] : EBX,   reg[5] : EDX,   reg[6] : ECX,   reg[7] : EAX */
 	int i;
@@ -442,8 +442,8 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 		sht->flags |= 0x10;
 		sheet_setbuf(sht, (char *) ebx + ds_base, esi, edi, eax);
 		make_window8((char *) ebx + ds_base, esi, edi, (char *) ecx + ds_base, 0);
-		sheet_slide(sht, ((shtctl->xsize - esi) / 2) & ~3, (shtctl->ysize - edi) / 2);
-		sheet_updown(sht, shtctl->top); /* ¡‚Ìƒ}ƒEƒX‚Æ“¯‚¶‚‚³‚É‚È‚é‚æ‚¤‚Éw’èF ƒ}ƒEƒX‚Í‚±‚Ìã‚É‚È‚é */
+		sheet_slide(sht, ((shtctl->xsize - esi) / 2) & â€¾3, (shtctl->ysize - edi) / 2);
+		sheet_updown(sht, shtctl->top); /* ä»Šã®ãƒã‚¦ã‚¹ã¨åŒã˜é«˜ã•ã«ãªã‚‹ã‚ˆã†ã«æŒ‡å®šï¼š ãƒã‚¦ã‚¹ã¯ã“ã®ä¸Šã«ãªã‚‹ */
 		reg[7] = (int) sht;
 	} else if (edx == 6) {
 		sht = (struct SHEET *) (ebx & 0xfffffffe);
@@ -459,13 +459,13 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 		}
 	} else if (edx == 8) {
 		memman_init((struct MEMMAN *) (ebx + ds_base));
-		ecx &= 0xfffffff0;	/* 16ƒoƒCƒg’PˆÊ‚É */
+		ecx &= 0xfffffff0;	/* 16ãƒã‚¤ãƒˆå˜ä½ã« */
 		memman_free((struct MEMMAN *) (ebx + ds_base), eax, ecx);
 	} else if (edx == 9) {
-		ecx = (ecx + 0x0f) & 0xfffffff0; /* 16ƒoƒCƒg’PˆÊ‚ÉØ‚èã‚° */
+		ecx = (ecx + 0x0f) & 0xfffffff0; /* 16ãƒã‚¤ãƒˆå˜ä½ã«åˆ‡ã‚Šä¸Šã’ */
 		reg[7] = memman_alloc((struct MEMMAN *) (ebx + ds_base), ecx);
 	} else if (edx == 10) {
-		ecx = (ecx + 0x0f) & 0xfffffff0; /* 16ƒoƒCƒg’PˆÊ‚ÉØ‚èã‚° */
+		ecx = (ecx + 0x0f) & 0xfffffff0; /* 16ãƒã‚¤ãƒˆå˜ä½ã«åˆ‡ã‚Šä¸Šã’ */
 		memman_free((struct MEMMAN *) (ebx + ds_base), eax, ecx);
 	} else if (edx == 11) {
 		sht = (struct SHEET *) (ebx & 0xfffffffe);
@@ -489,7 +489,7 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 			io_cli();
 			if (fifo32_status(&task->fifo) == 0) {
 				if (eax != 0) {
-					task_sleep(task);	/* FIFO‚ª‹ó‚È‚Ì‚ÅQ‚Ä‘Ò‚Â */
+					task_sleep(task);	/* FIFOãŒç©ºãªã®ã§å¯ã¦å¾…ã¤ */
 				} else {
 					io_sti();
 					reg[7] = -1;
@@ -498,32 +498,32 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 			}
 			i = fifo32_get(&task->fifo);
 			io_sti();
-			if (i <= 1 && cons->sht != 0) { /* ƒJ[ƒ\ƒ‹—pƒ^ƒCƒ} */
-				/* ƒAƒvƒŠÀs’†‚ÍƒJ[ƒ\ƒ‹‚ªo‚È‚¢‚Ì‚ÅA‚¢‚Â‚àŸ‚Í•\¦—p‚Ì1‚ğ’•¶‚µ‚Ä‚¨‚­ */
-				timer_init(cons->timer, &task->fifo, 1); /* Ÿ‚Í1‚ğ */
+			if (i <= 1 && cons->sht != 0) { /* ã‚«ãƒ¼ã‚½ãƒ«ç”¨ã‚¿ã‚¤ãƒ */
+				/* ã‚¢ãƒ—ãƒªå®Ÿè¡Œä¸­ã¯ã‚«ãƒ¼ã‚½ãƒ«ãŒå‡ºãªã„ã®ã§ã€ã„ã¤ã‚‚æ¬¡ã¯è¡¨ç¤ºç”¨ã®1ã‚’æ³¨æ–‡ã—ã¦ãŠã */
+				timer_init(cons->timer, &task->fifo, 1); /* æ¬¡ã¯1ã‚’ */
 				timer_settime(cons->timer, 50);
 			}
-			if (i == 2) {	/* ƒJ[ƒ\ƒ‹ON */
+			if (i == 2) {	/* ã‚«ãƒ¼ã‚½ãƒ«ON */
 				cons->cur_c = COL8_FFFFFF;
 			}
-			if (i == 3) {	/* ƒJ[ƒ\ƒ‹OFF */
+			if (i == 3) {	/* ã‚«ãƒ¼ã‚½ãƒ«OFF */
 				cons->cur_c = -1;
 			}
-			if (i == 4) {	/* ƒRƒ“ƒ\[ƒ‹‚¾‚¯‚ğ•Â‚¶‚é */
+			if (i == 4) {	/* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã ã‘ã‚’é–‰ã˜ã‚‹ */
 				timer_cancel(cons->timer);
 				io_cli();
-				fifo32_put(sys_fifo, cons->sht - shtctl->sheets0 + 2024);	/* 2024`2279 */
+				fifo32_put(sys_fifo, cons->sht - shtctl->sheets0 + 2024);	/* 2024ã€œ2279 */
 				cons->sht = 0;
 				io_sti();
 			}
-			if (i >= 256) { /* ƒL[ƒ{[ƒhƒf[ƒ^iƒ^ƒXƒNAŒo—Rj‚È‚Ç */
+			if (i >= 256) { /* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ï¼ˆã‚¿ã‚¹ã‚¯AçµŒç”±ï¼‰ãªã© */
 				reg[7] = i - 256;
 				return 0;
 			}
 		}
 	} else if (edx == 16) {
 		reg[7] = (int) timer_alloc();
-		((struct TIMER *) reg[7])->flags2 = 1;	/* ©“®ƒLƒƒƒ“ƒZƒ‹—LŒø */
+		((struct TIMER *) reg[7])->flags2 = 1;	/* è‡ªå‹•ã‚­ãƒ£ãƒ³ã‚»ãƒ«æœ‰åŠ¹ */
 	} else if (edx == 17) {
 		timer_init((struct TIMER *) ebx, &task->fifo, eax + 256);
 	} else if (edx == 18) {
@@ -611,7 +611,7 @@ int *inthandler0c(int *esp)
 	cons_putstr0(cons, "\nINT 0C :\n Stack Exception.\n");
 	sprintf(s, "EIP = %08X\n", esp[11]);
 	cons_putstr0(cons, s);
-	return &(task->tss.esp0);	/* ˆÙíI—¹‚³‚¹‚é */
+	return &(task->tss.esp0);	/* ç•°å¸¸çµ‚äº†ã•ã›ã‚‹ */
 }
 
 int *inthandler0d(int *esp)
@@ -622,7 +622,7 @@ int *inthandler0d(int *esp)
 	cons_putstr0(cons, "\nINT 0D :\n General Protected Exception.\n");
 	sprintf(s, "EIP = %08X\n", esp[11]);
 	cons_putstr0(cons, s);
-	return &(task->tss.esp0);	/* ˆÙíI—¹‚³‚¹‚é */
+	return &(task->tss.esp0);	/* ç•°å¸¸çµ‚äº†ã•ã›ã‚‹ */
 }
 
 void hrb_api_linewin(struct SHEET *sht, int x0, int y0, int x1, int y1, int col)

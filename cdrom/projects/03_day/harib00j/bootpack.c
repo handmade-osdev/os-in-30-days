@@ -1,15 +1,15 @@
-/* ���̃t�@�C���ō�����֐�������܂���C�R���p�C���ɋ����� */
+/* 他のファイルで作った関数がありますとCコンパイラに教える */
 
 void io_hlt(void);
 
-/* �֐��錾�Ȃ̂ɁA{}���Ȃ��Ă����Ȃ�;�������ƁA
-	���̃t�@�C���ɂ��邩���낵���ˁA�Ƃ����Ӗ��ɂȂ�̂ł��B */
+/* 関数宣言なのに、{}がなくていきなり;を書くと、
+	他のファイルにあるからよろしくね、という意味になるのです。 */
 
 void HariMain(void)
 {
 
 fin:
-	io_hlt(); /* �����naskfunc.nas��_io_hlt�����s����܂� */
+	io_hlt(); /* これでnaskfunc.nasの_io_hltが実行されます */
 	goto fin;
 
 }

@@ -917,7 +917,7 @@ _nl_find_msg (domain_file, domainbinding, msgid, lengthp)
 	  freemem_size -= outbuf - freemem;
 	  freemem = outbuf;
 	  freemem += freemem_size & (alignof (size_t) - 1);
-	  freemem_size = freemem_size & ~ (alignof (size_t) - 1);
+	  freemem_size = freemem_size & ‾ (alignof (size_t) - 1);
 
 	  __libc_lock_unlock (lock);
 	}
