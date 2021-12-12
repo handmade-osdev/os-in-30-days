@@ -1,0 +1,110 @@
+
+This is a translation of a japanese book called
+
+  「30日でできる！ OS自作入門」; or
+  "Make it in 30 days! Introduction to self-made OS"
+
+The title is a bit lengthy so it was shortened. This book has a few differences
+from the original worth talking about beforehead. First, if you are using
+Windows XP or earlier you may not be able to follow this tutorial. If you are
+using Windows 2000 or earlier you *won't* be able to follow this tutorial, due
+to differences in the software that this book provides. The software provided
+in this book is partially the software provided by the author and partially
+is free open source cross-platform software.
+
+Unlike the original book, this book includes the instruction for linux users
+within the text rather than putting it onto the support website. Speaking of
+the support website, the start of the book contains the link to the support
+website. But since that website is in japanese all the other mentions of it
+have been safely removed.
+
+You can join the discord server to receive help if you have any trouble or
+questions. We generally try to be helpful to beginners so don't be afraid to
+ask if you don't understand something:
+
+  https://discord.gg/TkxhtTGVAu
+
+If you encounter factual error/mistranslation/bad explanation/typographic error
+you can either file an issue at:
+
+  https://github.com/bumbread/handmade-os-in-30-days/issues/new
+
+Or create a pull request. How to do this is described below.
+
+Contributing
+
+  All contributions are welcome. In order to submit an error, fork this
+  repository to your hard drive. Then navigate to book/ subdirectory and find
+  an .md file corresponding to the chapter number. Note that filenames starting
+  with "!" do not correspond to chaters of the book, but rather to other
+  sections of the book. Edit the markdown file to fix the error, then you will
+  have to rebuild the book.html file. When editing .md files make sure to
+  enable some kind of wrapping in your text editor. Otherwise you may
+  experience difficulty editing the contents of the book. Avoid putting manual
+  line breaks.
+
+  For this make sure you've got pandoc installed. If you haven't got pandoc
+  installed on your machine follow this URL:
+
+    https://pandoc.org/installing.html
+
+  Now you can build the book into an HTML document. Open your shell and type
+  the command described next. Depending on your shell the command will look
+  a bit different.
+
+  Windows (cmd.exe):
+    build
+
+  Linux (/bin/sh) or Windows (powershell):
+    ./build
+
+  Now book.html should be updated. You can open this file in your browser and
+  verify that the changes are correct and that there are no errors. After that
+  you can commit your changes and create a pull request.
+
+  Please check the following section to better understand the organization of
+  the project.
+
+Notes:
+
+  1/ I have tried organizing the project in a way that would work for multiple
+  OS but it requires some assumptions, mainly that your OS sorts the folders
+  alphabetically. It is important that the sort order in book/ folder is
+  alphabetical. To check run `ls` (linux) or `dir` (windows) command and check
+  whether the order is correct. It should look something like that:
+
+    !000!-start.md
+    !001!-preface.md
+    !002!-toc.md
+    00.md
+    01.md
+    02.md
+    ...
+    31.md
+
+  If it does not, after you build the project the resulting HTML will have
+  content in the wrong order. Note that different programs have different
+  opinion on what constitutes "alphabetical sorting". The exclamation mark
+  is a character whose codepoint is less than any other character or digit and
+  its positions within filenames makes it so that different sorting algorithm
+  no matter what sorts them correctly. If this causes any further issue I
+  believe I'll have to write a utility that will concatenate files in the
+  correct order.
+
+  2/ When dealing with footnotes note that the footnote number is common for
+  every single file in the book/ directory. The structure here is the following.
+
+    file whose name starts with ! don't contain footnotes.
+    chapter 0 contains footnote numbers 0..9
+    chapter 1 contains footnote numbers 10..19
+    chapter 2 contains footnote numbers 20..29
+    ...
+    chapter 31 contains footnote numbers 30..39
+
+  This means that every chapter is limited to 10 footnotes. This simplifies the
+  insertion and removal of footnotes.
+
+  3/ Make sure that every file starts and ends with one or two empty lines.
+  This is to make sure that after concatenation different files occupy at least
+  different paragraphs.
+
