@@ -1,6 +1,0 @@
-F LZMA.H;1                                                                                                                                                                                                        	LZMA.h
-F LZMADECO.CPP;1                                                                                                                                                                                                  	LZMADecoder.cpp
-F LZMADECO.H;1                                                                                                                                                                                                    	LZMADecoder.h
-F LZMAENCO.CPP;1                                                                                                                                                                                                  	LZMAEncoder.cpp
-F LZMAENCO.H;1                                                                                                                                                                                                    	LZMAEncoder.h
-F STDAFX.H;1                                                                                                                                                                                                      	StdAfx.h
