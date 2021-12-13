@@ -5,18 +5,18 @@ This is a translation of a japanese book called
   "Make it in 30 days! Introduction to self-made OS"
 
 The title is a bit lengthy so it was shortened. This book has a few differences
-from the original worth talking about beforehead. First, if you are using
+from the original worth talking about beforehand. First, if you are using
 Windows XP or earlier you may not be able to follow this tutorial. If you are
 using Windows 2000 or earlier you *won't* be able to follow this tutorial, due
 to differences in the software that this book provides. The software provided
-in this book is partially the software provided by the author and partially
-is free open source cross-platform software.
+in this book is partly software provided by the author and partly
+free open source cross-platform software.
 
 Unlike the original book, this book includes the instruction for linux users
 within the text rather than putting it onto the support website. Speaking of
 the support website, the start of the book contains the link to the support
 website. But since that website is in japanese all the other mentions of it
-have been safely removed.
+have been removed.
 
 Setup
 
@@ -57,10 +57,10 @@ Setup
   The letters "rc" mean "release candidate", it's a sort of "pre-release"
   version. You probably want to install the latest non-rc version of NASM.
   Click on the corresponding folder. Then navigate to either win32/ or win64/
-  depending on the bit-ness of your system. Chosing win32 will work either way.
-  Download the .zip archive (not the installer!). Unpack it into whatever
-  directory you want NASM to live in. Then add that directory into %PATH%
-  environment variable, since we'll use nasm from command line.
+  depending on the bit-ness of your system (most likely 64 bit unless your PC is old).
+  Choosing win32 will work either way. Download the .zip archive (not the installer!).
+  Unpack it into whatever directory you want NASM to live in. Then add that directory
+  into %PATH% environment variable, since we'll use nasm from command line.
 
   For Linux (Ubuntu/Debian) the command would be the following:
 
@@ -86,7 +86,7 @@ Setup
 
     $ sudo apt-get install qemu
 
-  All for now! Now you can proceed reading from the point where you left off.
+  That's all for now! Now you can proceed reading from the point where you left off.
 
 Contributing
 
@@ -96,7 +96,7 @@ Contributing
 
     https://discord.gg/TkxhtTGVAu
 
-  If you encounter factual error/mistranslation/bad explanation/typographic error
+  If you encounter a factual error/mistranslation/bad explanation/typographic error
   you can either file an issue at:
 
     https://github.com/handmade-osdev/os-in-30-days/issues/new
@@ -130,7 +130,7 @@ Contributing
 
   Now book.html should be updated. You can open this file in your browser and
   verify that the changes are correct and that there are no errors. After that
-  you can commit your changes and create a pull request.
+  you may commit your changes and create a pull request.
 
   Please check the following section to better understand the organization of
   the project.
@@ -138,7 +138,7 @@ Contributing
 Notes:
 
   1/ I have tried organizing the project in a way that would work for multiple
-  OS but it requires some assumptions, mainly that your OS sorts the folders
+  OS's but it requires some assumptions, mainly that your OS sorts the folders
   alphabetically. It is important that the sort order in book/ folder is
   alphabetical. To check run `ls` (linux) or `dir` (windows) command and check
   whether the order is correct. It should look something like that:
@@ -154,7 +154,7 @@ Notes:
 
   If it does not, after you build the project the resulting HTML will have
   content in the wrong order. Note that different programs have different
-  opinion on what constitutes "alphabetical sorting". The exclamation mark
+  opinions on what constitutes "alphabetical sorting". The exclamation mark
   is a character whose codepoint is less than any other character or digit and
   its positions within filenames makes it so that different sorting algorithm
   no matter what sorts them correctly. If this causes any further issue I
@@ -169,7 +169,7 @@ Notes:
     chapter 1 contains footnote numbers 10..19
     chapter 2 contains footnote numbers 20..29
     ...
-    chapter 31 contains footnote numbers 30..39
+    chapter 31 contains footnote numbers 310..319
 
   This means that every chapter is limited to 10 footnotes. This simplifies the
   insertion and removal of footnotes.
