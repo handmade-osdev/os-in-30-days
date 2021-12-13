@@ -18,20 +18,90 @@ the support website, the start of the book contains the link to the support
 website. But since that website is in japanese all the other mentions of it
 have been safely removed.
 
-You can join the discord server to receive help if you have any trouble or
-questions. We generally try to be helpful to beginners so don't be afraid to
-ask if you don't understand something:
+Setup
 
-  https://discord.gg/TkxhtTGVAu
+  The complete version of this book will ship with all the dependencies you
+  might need to follow through the tutorial. Now you will have to download and
+  use the tools that are freely available on the internet.
 
-If you encounter factual error/mistranslation/bad explanation/typographic error
-you can either file an issue at:
+  Linux users should note that all the commands in the tutorial are written for
+  windows users exclusively. Adjust these commands according to your shell's
+  syntax.
 
-  https://github.com/bumbread/handmade-os-in-30-days/issues/new
+  The further setup instructions follow for Windows and Linux separately.
 
-Or create a pull request. How to do this is described below.
+  First you will need a tool that will help you write a disk image files onto a
+  USB drive. For linux you can use the POSIX dd command. For windows I recommend
+  downloading win32diskimager from:
+
+      https://sourceforge.net/projects/win32diskimager/
+
+  Then you will need a hex editor. Any one is good. If you haven't got one
+  I recommend HxD editor (windows). HxD editor can be downloaded at:
+
+      https://mh-nexus.de/en/hxd/
+
+  For Linux users I don't have recommendations, but hexedit is a reasonably
+  good TUI tool. For Debian/Ubuntu the install command is:
+
+      $ sudo apt-get install hexedit
+  
+  If you use another distribution use the corresponding package manager command
+  or a different tool.
+
+  Then, let's install the NASM assembler. For windows users, navigate to
+
+      https://nasm.us/
+
+  and find the Download button. You will be shown a listing of NASM versions.
+  The letters "rc" mean "release candidate", it's a sort of "pre-release"
+  version. You probably want to install the latest non-rc version of NASM.
+  Click on the corresponding folder. Then navigate to either win32/ or win64/
+  depending on the bit-ness of your system. Chosing win32 will work either way.
+  Download the .zip archive (not the installer!). Unpack it into whatever
+  directory you want NASM to live in. Then add that directory into %PATH%
+  environment variable, since we'll use nasm from command line.
+
+  For Linux (Ubuntu/Debian) the command would be the following:
+
+    $ sudo apt-get install nasm
+
+  For other distributions find out how to install NASM and add it to PATH
+  by yourself.
+
+  After that we'll install the GCC compiler. If you have one already, make sure
+  it's in %PATH% ($PATH). If you don't windows users would want to install
+  TDM-GCC, and similarly to NASM installation, unpack and add the folder where
+  gcc.exe is located in into the PATH variable. For most linux distrubutions
+  GCC is installed by default. If it isn't please install it and add to PATH.
+
+  And finally we'll download an emulator called QEMU. Install on the website:
+
+    https://www.qemu.org/download/#windows
+
+  After installing make sure the directory where qemu-system-i386.exe is
+  located is in the %PATH% environment variable.
+
+  And for Ubuntu/Debian the install command is:
+
+    $ sudo apt-get install qemu
+
+  All for now! Now you can proceed reading from the point where you left off.
 
 Contributing
+
+  You can join the discord server to receive help if you have any trouble or
+  questions. We generally try to be helpful to beginners so don't be afraid to
+  ask if you don't understand something:
+
+    https://discord.gg/TkxhtTGVAu
+
+  If you encounter factual error/mistranslation/bad explanation/typographic error
+  you can either file an issue at:
+
+    https://github.com/handmade-osdev/os-in-30-days/issues/new
+
+  Or create a pull request. How to do this is described below.
 
   All contributions are welcome. In order to submit an error, fork this
   repository to your hard drive. Then navigate to book/ subdirectory and find
