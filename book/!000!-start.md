@@ -1,5 +1,6 @@
-
-# Handmade OS in 30 days.
+---
+title: 'Handmade OS in 30 days.'
+...
 
 Original book by Hidemi Kawai
 
