@@ -1,10 +1,12 @@
 body {
     font-family: 'Times New Roman';
-    width: 80ch;
+    width: 100ch;
     max-width: 100%;
 }
 
 pre code {
+    margin-left: 4ch;
+    width: 80ch;
     display: block;
     overflow-x: auto;
     white-space: pre;
