@@ -1,7 +1,9 @@
 #!/bin/sh
-# Run with repository root directory as working directory.
-
-cat book/*.md > book.md
 
 extensions="-markdown_in_html_blocks-smart+tex_math_dollars+implicit_figures+link_attributes+tex_math_single_backslash+header_attributes"
-pandoc -s -c simple.css book.md -fmarkdown$extensions -o book.html --ascii
+
+cat book/*.md > html/book.md
+pandoc html/book.md -fmarkdown$extensions -o html/book.html --ascii
+cat html/template.html html/book.html > html/index.html
+rm html/book.html
+rm html/book.md

@@ -1,26 +1,15 @@
----
-title: 'Handmade OS in 30 days.'
-...
-
-## Disclaimer.
-
-This book is inspired by a Japanese book with similar name, that's called "Self-made OS in 30 days". The code and explanations don't change as much, although the structure of the book has changed a bit.
-
-In particular, the original book used to ship all the programs for building the OS. In particular NASK (modified NASM), modified gcc, modified QEMU are shipped together with the CD-ROM of the original book. In this book these tools have to be downloaded according to your operating system. For the instructions see the readme file.
-
----
 
 ## Preface
 
-"I want to create an OS". Every programmer has had friends that had this dream. Well, "every" is probably an overstatement, but this phrase most likely hits the top 10 programmer's dreams.
+Making an Operating System has probably crossed the mind of every programmer who is eager to try programming different things and fiddle around with code.
 
-You might think that creating an OS is a tremendous task. Most likely this is a conspiracy by the OS development companies :D. In reality the OS'es are not that hard to create compared to other programs, at least I think so.
+You might think that creating an OS is a very difficult task. Most likely this is a conspiracy devised by the OS development companies, heh. In reality the Operating Systems are not that hard to create, compared to other programs, at least I think so.
 
-There may be readers who tried to make an OS once, and gave up because they thought that it was too difficult. People like this probably won't believe what I say. Most likely, it didn't fail because it was difficult, it failed because there was no one to explain that it was easy.
+There may be readers who tried to make an OS and gave up because it was too difficult. It didn't fail because it was difficult, it failed because there was no one to explain that it was easy.
 
-It doesn't just apply to the OS creation. If your teacher (be it a school teacher or an author of an article on the internet) thinks that something difficult to understand, then his explanation will also be confusing. You won't expect a simple-to-understand explanation from such people.
+In general, if your teacher thinks that something difficult to understand, then his explanation will also be confusing. You won't expect a simple-to-understand explanation from such people.
 
-Would you challenge the OS creation together with me? If you ever thought about making an OS, I think you will probably enjoy it.
+So here I am to prove you that creating an Operating System is actually easy. Would you challenge the OS creation together with me? If you ever thought about making an OS, I think you will probably enjoy it.
 
 ---
 

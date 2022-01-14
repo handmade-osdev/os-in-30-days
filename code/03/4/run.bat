@@ -1,0 +1,1 @@
+qemu-system-i386 -drive format=raw,if=floppy,file=papieros.img -boot order=a
