@@ -63,6 +63,7 @@ small {
 i {font-style: italic;}
 b {font-weight: bold;}
 strong {font-weight: bold;}
+em {font-style: italic;}
 
 ul {
     list-style: circle inside none;
@@ -89,9 +90,17 @@ td {
 th {
     padding-right: 10px;
     font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid black;
 }
 
 code {
     font-family: 'Cutive';
     letter-spacing: -1px;
+}
+
+pre code {
+    display: block;
+    margin: 0 4ch 5px 2ch;
+    overflow: auto;
 }
